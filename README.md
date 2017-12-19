@@ -9,67 +9,36 @@
 ## Table of content
 
 - [Key Features](#key-features)
-- [Install](#install)
-- [Building](#building)
 - [Usage](#usage)
-- [Examples](#examples)
 - [Changelog](#changelog)
 - [Contribute](#contribute)
 - [License](#license)
-- [FAQ](#faq)
 - [Links](#links)
 - [You may also like...](#you-may-also-like)
 
 ## Key Features
 
-* KEY_FEATURE_0
-	- KEY_SUBFEATURE_0
-
-## Install
-
-```bash
-$
-```
-
-## Building
-
-```bash
-$
-```
+* analyze profit and ROI of transactions
+* plot charts of your capital
+* stats and trends
+* cross-OS
 
 ## Usage
 
 ```bash
-$
+$ pyhodl [options]
 ```
 
 ### Supported commands
-
-```bash
-$  --help
-```
 
 The following flags are supported:
 
 | Flag | Default | Description |
 | --- | --- | --- |
-| `in` | n/a | Input file |
-| `out` | n/a | Output file |
-| `blur` | 4 | Blur radius |
-| `max` | 2500 | Maximum number of points |
-| `noise` | 0 | Noise factor |
-| `points` | 20 | Points threshold |
-| `sobel` | 10 | Sobel filter threshold |
-| `solid` | false | Solid line color |
-| `wireframe` | 0 | Wireframe mode (without,with,both) |
-| `width` | 1 | Wireframe line width |
-
-## Examples
-
-#### Example 0
-#### Output
-```text
-```
+| `in` | n/a | Input folder |
+| `out` | n/a | Output folder |
+| `since` | first of your transactions | Analyze since this date |
+| `upto` | last of your transactions | Analyze up to this date |
 
 ## Changelog
 See [CHANGELOG](https://github.com/sirfoga/pyhodl/blob/master/CHANGELOG.md)
@@ -93,10 +62,9 @@ See [CHANGELOG](https://github.com/sirfoga/pyhodl/blob/master/CHANGELOG.md)
 
 ## Links
 
-* [Web site](https://sirfoga.github.io)
+* [Documentation](https://sirfoga.github.io/pyhodl)
 * [Issue tracker](https://github.com/sirfoga/pyhodl/issues)
 * [Source code](https://github.com/sirfoga/pyhodl)
-* [Email](mailto:MY_EMAIL)
 
 ## You may also like...
 
