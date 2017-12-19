@@ -1,7 +1,5 @@
 # Pyhodl
 
-<!--[![Build Status](https://travis-ci.org/sirfoga/pyhodl.svg?branch=master)](https://travis-ci.org/sirfoga/pyhodl) [![Build status](https://ci.appveyor.com/api/projects/status/isfmmdaqhkbgqaeu?svg=true)](https://ci.appveyor.com/project/sirfoga/pyhodl) [![Coverage Status](https://coveralls.io/repos/github/sirfoga/pyhodl/badge.svg?branch=master)](https://coveralls.io/github/sirfoga/pyhodl?branch=master)-->
-
 [![Open Source Love](https://badges.frapsoft.com/os/v1/open-source.svg?v=103)](https://opensource.org/licenses/Apache-2.0) [![Contributions welcome](https://img.shields.io/badge/contributions-welcome-brightgreen.svg?style=flat)](https://github.com/MY_USERNAME/MY_REPOSITORY/issues) [![License](https://img.shields.io/badge/license-Apache%202.0-blue.svg)](https://www.apache.org/licenses/LICENSE-2.0)
 
 > Static analysis of your crypto-transactions. Completely off-line and security-oriented
@@ -28,6 +26,8 @@
 ```bash
 $ pyhodl [options]
 ```
+
+To import your transactions, please refer to [the guide](IMPORT_DATA.md).
 
 ### Supported commands
 
