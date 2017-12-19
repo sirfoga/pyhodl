@@ -1,30 +1,7 @@
 # Change Log
 All notable changes to this project will be documented in this file.
 
-## [version] - {yyyy}-{mm}-{dd}
+## 0.1 - 2017-12-19
 
 ### Added
-- something has been added
-
-### Changed
-- something has changed
-
-### Fixed
-- somebug has been fixed
-
-### Removed
-- because it was too old
-
-## [a previous version] - {yyyy}-{mm}-{dd}
-
-### Added
-- something has been added
-
-### Changed
-- something has changed
-
-### Fixed
-- somebug has been fixed
-
-### Removed
-- because it was too old
+- marketing stuff (readme)
