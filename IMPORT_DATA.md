@@ -37,4 +37,5 @@
 0. Go to [your accounts page](https://www.gdax.com/accounts).
 0. Click the `Download Receipt/Statement` button
 0. Select the dates and the `CSV` format (not `PDF`)
+0. Soon you'll receive an e-mail from Coinbase with a link to download the report
 ![Bitfinex](extra/import-data/gdax.png)
