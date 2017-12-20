@@ -52,7 +52,7 @@ class Transaction(object):
 
         for key, value in self.raw.items():
             try:
-                if str(item) in str(value):
+                if str(item) in str(value) or str(item) in str(key):
                     return True
             except:
                 pass
@@ -60,6 +60,9 @@ class Transaction(object):
 
     def __getitem__(self, key):
         return self.raw[key]
+
+    def __str__(self):
+        return str(self.raw)
 
 
 class Wallet(object):

@@ -44,7 +44,7 @@ The following flags are supported:
 | `in` | n/a | Input folder |
 | `out` | n/a | Output folder |
 | `since` | first of your transactions | Analyze since this date |
-| `upto` | last of your transactions | Analyze up to this date |
+| `until` | last of your transactions | Analyze up to this date |
 
 ## Changelog
 See [CHANGELOG](https://github.com/sirfoga/pyhodl/blob/master/CHANGELOG.md)

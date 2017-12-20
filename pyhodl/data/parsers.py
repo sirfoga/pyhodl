@@ -127,7 +127,7 @@ class CoinbaseParser(Parser):
         return super().get_transactions_list(
             "Timestamp",
             "%Y-%m-%d %H:%M:%S %z",
-            ["Price Per Coin", "Total", "Amount", "Fees", "Subtotal", coin_key]
+            ["Price Per Coin", "Total", "Fees", "Subtotal", coin_key]
         )
 
 
