@@ -68,9 +68,9 @@ class CryptoExchange(object):
     def get_transactions(self, since, until):
         """
         :param since: datetime
-            Date and time when you want to get balance
+            Get transactions done since this date
         :param until: datetime
-            Date until you want the transactions
+            Get transactions done until this date
         :return: (generator of) [] of Transaction
             List of transactions done between the dates
         """

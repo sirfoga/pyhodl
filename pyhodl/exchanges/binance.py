@@ -19,7 +19,7 @@
 """ Binance exchange """
 
 from pyhodl.data.core import Parser
-from .core import CryptoExchange
+from .core import CryptoExchange, Wallet
 
 
 class BinanceParser(Parser):
@@ -35,3 +35,31 @@ class BinanceParser(Parser):
 
 class Binance(CryptoExchange):
     """ Models Binance exchange """
+
+    def get_balance(self, since, until):
+        """
+        :param since: datetime
+            Get transactions done since this date
+        :param until: datetime
+            Get transactions done until this date
+        :return: {} of Wallet
+            List of wallets for each coin
+        """
+
+        transactions = self.get_transactions(since, until)
+        wallet = {}
+        for transaction in transactions:
+            coin_sell = transaction["Fee Coin"]
+            coin_buy = transaction["Market"].replace(coin_sell, "")
+            if transaction["Type"] == "SELL":  # other way around
+                coin_buy, coin_sell = coin_sell, coin_buy
+
+            if coin_sell not in wallet:  # update sell side
+                wallet[coin_sell] = Wallet()
+            wallet[coin_sell].remove(transaction["Total"])
+
+            if coin_buy not in wallet:  # update buy side
+                wallet[coin_buy] = Wallet()
+            wallet[coin_buy].add(transaction["Amount"])
+            wallet[coin_buy].remove(transaction["Fee"])
+        return wallet
