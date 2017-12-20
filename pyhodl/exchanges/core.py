@@ -20,11 +20,21 @@
 
 import abc
 
+from pyhodl.utils import generate_dates
+
 
 class CryptoExchange(object):
     """ Exchange dealing with crypto-coins """
 
-    balance_intervals = ["1h", "1d", "7d", "30d", "3m", "6m", "1y"]
+    balance_intervals = {
+        "1h": 1,
+        "1d": 24,
+        "7d": 24 * 7,
+        "30d": 24 * 30,
+        "3m": 24 * 30 * 3,
+        "6m": 24 * 30 * 6,
+        "1y": 24 * 365
+    }  # interval -> hours
 
     def __init__(self, transactions):
         """
@@ -116,11 +126,26 @@ class CryptoExchange(object):
             Get transactions done until this date
         :param interval: str
             Interval of times (1h, 1d, 7d, 30d, 3m, 6m, 1y)
-        :return: {} of Wallet
-            List of wallets for each coin
+        :return: [] of {}
+            List of wallets for each coin for each time-frame
         """
 
+        if interval not in self.balance_intervals:
+            raise ValueError("Interval must be one of ",
+                             self.balance_intervals.keys())
 
+        dates_list = list(generate_dates(since, until, interval))
+        wallet_list = []
+        for i, date in enumerate(dates_list[:-1]):
+            date_min = date
+            date_max = dates_list[i + 1]
+            wallet_list.append(
+                {
+                    "date": date_max,
+                    "balance": self.get_balance(date_min, date_max)
+                }
+            )
+        return wallet_list
 
 
 class Transaction(object):

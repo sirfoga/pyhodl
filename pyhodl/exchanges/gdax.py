@@ -52,5 +52,3 @@ class Gdax(CryptoExchange):
                 wallet[coin].add(abs(amount))
 
         return wallet
-
-    def get_balance_subtotals(self, since, until, interval):
