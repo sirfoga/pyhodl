@@ -97,13 +97,6 @@ class BinanceParser(Parser):
     """ Parse transactions from Binance exchange """
 
     def get_transactions_list(self, **kwargs):
-        """
-        :param kwargs: tuple
-            Extra args
-        :return: [] of Transaction
-            List of transactions of exchange
-        """
-
         return super().get_transactions_list(
             "Date",
             "%Y-%m-%d %H:%M:%S",
@@ -115,13 +108,6 @@ class BitfinexParser(Parser):
     """ Parse transactions from Bitfinex exchange """
 
     def get_transactions_list(self, **kwargs):
-        """
-        :param kwargs: tuple
-            Extra args
-        :return: [] of Transaction
-            List of transactions of exchange
-        """
-
         return super().get_transactions_list(
             "Date",
             "%Y-%m-%d %H:%M:%S",
@@ -133,13 +119,6 @@ class CoinbaseParser(Parser):
     """ Parse transactions from Coinbase exchange """
 
     def get_transactions_list(self, **kwargs):
-        """
-        :param kwargs: tuple
-            Extra args
-        :return: [] of Transaction
-            List of transactions of exchange
-        """
-
         coin_key = self.get_raw_data().keys()[2]
         return super().get_transactions_list(
             "Timestamp",
@@ -151,22 +130,9 @@ class CoinbaseParser(Parser):
 class GdaxParser(Parser):
     """ Parse transactions from GDAX exchange """
 
-    def get_transactions_list(self):
-        """
-        :return: [] of Transaction
-            List of transactions of exchange
-        """
-
-        raw_list = self.get_raw_data()  # parse raw
-        for i, x in enumerate(raw_list):
-            raw_list[i]["Date"] = datetime.strptime(
-                x["Date"],
-                "%Y-%m-%d %H:%M:%S"
-            )  # parse date
-
-            number_keys = [
-                "Price", "Amount", "Total", "fee"
-            ]  # parse floats
-            for key in number_keys:
-                raw_list[i][key] = float(x[key])
-        return raw_list
+    def get_transactions_list(self, **kwargs):
+        return super().get_transactions_list(
+            "time",
+            "%Y-%m-%dT%H:%M:%S.%fZ",
+            ["amount", "balance"]
+        )
