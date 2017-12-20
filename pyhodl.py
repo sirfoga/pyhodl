@@ -22,8 +22,7 @@ import argparse
 import os
 from datetime import datetime
 
-from pyhodl.data import parsers
-from pyhodl.data.exchanges import CryptoExchange
+from pyhodl.data.exchanges.coinbase import CoinbaseParser, Coinbase
 
 DATETIME_FORMAT = "%Y-%M-%D_%H:%M:%S"
 DATETIME_HUMAN = "[YYYY]-[MM]-[DD]_[HH]:[MM]:[SS]"
@@ -110,10 +109,13 @@ def main():
     params = parse_args(create_args())
     try:
         if check_args(params):
-            parser = parsers.CoinbaseParser(params["in"])
+            parser = CoinbaseParser(params["in"])
             transactions = parser.get_transactions_list()
-            exchange = CryptoExchange(transactions)
-            result = list(exchange.get_transactions_with("BTC"))
+            exchange = Coinbase(transactions)
+            result = list(exchange.get_transactions(
+                exchange.get_first_transaction().date,
+                exchange.get_last_transaction().date
+            ))
             print([
                 str(x) for x in result
             ])

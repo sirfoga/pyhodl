@@ -23,7 +23,7 @@ from datetime import datetime
 
 import pandas as pd
 
-from .transactions import Transaction
+from .exchanges.core import Transaction
 
 
 class Parser(object):
@@ -95,48 +95,3 @@ class Parser(object):
         return [
             Transaction(raw_dict, date_key) for raw_dict in raw_list
         ]
-
-
-class BinanceParser(Parser):
-    """ Parse transactions from Binance exchange """
-
-    def get_transactions_list(self, **kwargs):
-        return super().get_transactions_list(
-            "Date",
-            "%Y-%m-%d %H:%M:%S",
-            ["Price", "Amount", "Fee", "Total"]
-        )
-
-
-class BitfinexParser(Parser):
-    """ Parse transactions from Bitfinex exchange """
-
-    def get_transactions_list(self, **kwargs):
-        return super().get_transactions_list(
-            "Date",
-            "%Y-%m-%d %H:%M:%S",
-            ["Price", "Amount", "Fee"]
-        )
-
-
-class CoinbaseParser(Parser):
-    """ Parse transactions from Coinbase exchange """
-
-    def get_transactions_list(self, **kwargs):
-        coin_key = self.get_raw_data().keys()[2]
-        return super().get_transactions_list(
-            "Timestamp",
-            "%Y-%m-%d %H:%M:%S %z",
-            ["Price Per Coin", "Total", "Fees", "Subtotal", coin_key]
-        )
-
-
-class GdaxParser(Parser):
-    """ Parse transactions from GDAX exchange """
-
-    def get_transactions_list(self, **kwargs):
-        return super().get_transactions_list(
-            "time",
-            "%Y-%m-%dT%H:%M:%S.%fZ",
-            ["amount", "balance"]
-        )

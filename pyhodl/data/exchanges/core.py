@@ -16,13 +16,86 @@
 # limitations under the License.
 
 
-""" Deal with transactions data """
+""" Analyze transactions in exchanges """
+
+
+class CryptoExchange(object):
+    """ Exchange dealing with crypto-coins """
+
+    def __init__(self, transactions):
+        """
+        :param transactions: [] of Transaction
+            List of transactions
+        """
+
+        object.__init__(self)
+        self.transactions = transactions
+        if not self.transactions:
+            raise ValueError("Creating exchange with no past transaction!")
+
+    def get_transactions_count(self):
+        """
+        :return: int
+            Number of transactions
+        """
+
+        return len(self.transactions)
+
+    def get_first_transaction(self):
+        """
+        :return: Transaction
+            First transaction done (with respect to time)
+        """
+
+        first = self.transactions[0]
+        for transaction in self.transactions:
+            if transaction.date < first.date:
+                first = transaction
+        return first
+
+    def get_last_transaction(self):
+        """
+        :return: Transaction
+            Last transaction done (with respect to time)
+        """
+
+        last = self.transactions[0]
+        for transaction in self.transactions:
+            if transaction.date > last.date:
+                last = transaction
+        return last
+
+    def get_transactions(self, since, until):
+        """
+        :param since: datetime
+            Date and time when you want to get balance
+        :param until: datetime
+            Date until you want the transactions
+        :return: (generator of) [] of Transaction
+            List of transactions done between the dates
+        """
+
+        for transaction in self.transactions:
+            if since <= transaction.date <= until:
+                yield transaction
+
+    def get_transactions_with(self, symbol):
+        """
+        :param symbol: str
+            Currency e.g EUR, BTC, LTC ...
+        :return: (generator of) [] of Transaction
+            List of transactions done with this currency
+        """
+
+        for transaction in self.transactions:
+            if transaction.has(symbol):
+                yield transaction
 
 
 class Transaction(object):
     """ Exchange transaction """
 
-    def __init__(self, raw_dict, date_key):
+    def __init__(self, raw_dict, date_key=None):
         """
         :param raw_dict: {}
             Dict containing raw data
@@ -32,7 +105,10 @@ class Transaction(object):
 
         object.__init__(self)
         self.raw = raw_dict
-        self.date = self.raw[date_key]
+        if date_key:
+            self.date = self.raw[date_key]
+        else:
+            self.date = None
 
     def get_attrs(self):
         """
