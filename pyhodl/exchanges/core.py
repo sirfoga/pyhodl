@@ -24,6 +24,8 @@ import abc
 class CryptoExchange(object):
     """ Exchange dealing with crypto-coins """
 
+    balance_intervals = ["1h", "1d", "7d", "30d", "3m", "6m", "1y"]
+
     def __init__(self, transactions):
         """
         :param transactions: [] of Transaction
@@ -105,6 +107,20 @@ class CryptoExchange(object):
         """
 
         return
+
+    def get_balance_subtotals(self, since, until, interval):
+        """
+        :param since: datetime
+            Get transactions done since this date
+        :param until: datetime
+            Get transactions done until this date
+        :param interval: str
+            Interval of times (1h, 1d, 7d, 30d, 3m, 6m, 1y)
+        :return: {} of Wallet
+            List of wallets for each coin
+        """
+
+
 
 
 class Transaction(object):
