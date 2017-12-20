@@ -20,6 +20,12 @@
 * plot charts of your capital
 * stats and trends
 * cross-OS
+* supported exchanges:
+    - Binance
+    - Bitfinex
+    - Coinbase
+    - GDAX
+    - maybe other, but not sure
 
 ## Usage
 

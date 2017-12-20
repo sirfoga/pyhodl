@@ -19,6 +19,7 @@
 """ Parse raw data """
 
 import os
+from datetime import datetime
 
 import pandas as pd
 
@@ -39,19 +40,46 @@ class Parser(object):
 
     def get_raw(self):
         """
-        :return: pandas.DataFrame
-            Read content of file
+        :return: [] of {}
+            List of transactions. Each transaction is a dict with keys
+            directly from input file
         """
 
         if self.is_excel:
-            return pd.read_excel(self.input_file)
+            df = pd.read_excel(self.input_file)
         elif self.is_csv:
             try:
-                return pd.read_csv(self.input_file)
+                df = pd.read_csv(self.input_file)
             except ValueError as e:
                 if type(e) == pd.errors.ParserError:
-                    return pd.read_csv(self.input_file, skiprows=2)
+                    df = pd.read_csv(self.input_file, skiprows=2)
                 else:
                     raise ValueError("File not supported!")
         else:
             raise ValueError("File not supported!")
+
+        return df.T.to_dict().values()
+
+
+class BinanceParser(Parser):
+    """ Parse transactions from Binance exchange """
+
+    def get_transactions_list(self):
+        """
+        :return: [] of Transaction
+            List of transactions of exchange
+        """
+
+        raw_list = self.get_raw()  # parse raw
+        for i, x in enumerate(raw_list):
+            raw_list[i]["Date"] = datetime.strptime(
+                x["Date"],
+                "%Y-%m-%d %H:%M:%S"
+            )  # parse date
+
+            number_keys = [
+                "Price", "Amount", "Total", "fee"
+            ]  # parse floats
+            for key in number_keys:
+                raw_list[i][key] = float(x[key])
+        return raw_list
