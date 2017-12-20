@@ -22,7 +22,7 @@ from datetime import datetime
 
 
 class CryptoExchange(object):
-    """ Exchange dealing with cryptocoins """
+    """ Exchange dealing with crypto-coins """
 
     def __init__(self, transactions):
         """
@@ -41,10 +41,30 @@ class CryptoExchange(object):
 
         return len(self.transactions)
 
-    def get_balance(self, date=datetime.now()):
+    def get_transactions_between(
+            self, since=datetime.fromtimestamp(0), until=datetime.now()
+    ):
         """
-        :param date: datetime
+        :param since: datetime
             Date and time when you want to get balance
-        :return: float
-
+        :param until: datetime
+            Date until you want the transactions
+        :return: (generator of) [] of Transaction
+            List of transactions done between the dates
         """
+
+        for transaction in self.transactions:
+            if since <= transaction.date <= until:
+                yield transaction
+
+    def get_transactions_with(self, symbol):
+        """
+        :param symbol: str
+            Currency e.g EUR, BTC, LTC ...
+        :return: (generator of) [] of Transaction
+            List of transactions done with this currency
+        """
+
+        for transaction in self.transactions:
+            if transaction.has(symbol):
+                yield transaction

@@ -93,7 +93,7 @@ class Parser(object):
             for key in number_keys:
                 raw_list[i][key] = float(x[key])
         return [
-            Transaction(raw_dict) for raw_dict in raw_list
+            Transaction(raw_dict, date_key) for raw_dict in raw_list
         ]
 
 

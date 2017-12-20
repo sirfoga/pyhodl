@@ -22,14 +22,41 @@
 class Transaction(object):
     """ Exchange transaction """
 
-    def __init__(self, raw_dict):
+    def __init__(self, raw_dict, date_key):
         """
         :param raw_dict: {}
             Dict containing raw data
+        :param date_key: str
+            Key to get date info
         """
 
         object.__init__(self)
         self.raw = raw_dict
+        self.date = self.raw[date_key]
+
+    def get_attrs(self):
+        """
+        :return: []
+            Keys of internal dict
+        """
+
+        return list(self.raw.keys())
+
+    def has(self, item):
+        """
+        :param item: str
+            Item to look for
+        :return: bool
+            True iff item is in any of the data
+        """
+
+        for key, value in self.raw.items():
+            try:
+                if str(item) in str(value):
+                    return True
+            except:
+                pass
+        return False
 
     def __getitem__(self, key):
         return self.raw[key]
