@@ -23,6 +23,8 @@ from datetime import datetime
 
 import pandas as pd
 
+from .transactions import Transaction
+
 
 class Parser(object):
     """ Abstract parser """
@@ -90,7 +92,9 @@ class Parser(object):
 
             for key in number_keys:
                 raw_list[i][key] = float(x[key])
-        return raw_list
+        return [
+            Transaction(raw_dict) for raw_dict in raw_list
+        ]
 
 
 class BinanceParser(Parser):
