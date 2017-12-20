@@ -19,7 +19,7 @@
 """ Bitfinex exchange """
 
 from pyhodl.data.core import Parser
-from .core import CryptoExchange
+from .core import CryptoExchange, Wallet
 
 
 class BitfinexParser(Parser):
@@ -35,3 +35,34 @@ class BitfinexParser(Parser):
 
 class Bitfinex(CryptoExchange):
     """ Models Bitfinex exchange """
+
+    def get_balance(self, since, until):
+        """
+        :param since: datetime
+            Get transactions done since this date
+        :param until: datetime
+            Get transactions done until this date
+        :return: {} of Wallet
+            List of wallets for each coin
+        """
+
+        transactions = self.get_transactions(since, until)
+        wallet = {}
+        for transaction in transactions:
+            coin_buy, coin_sell = transaction["Pair"].split("/")
+            coin_fee = transaction["FeeCurrency"]
+
+            if coin_sell not in wallet:  # update sell side
+                wallet[coin_sell] = Wallet()
+
+            sell_amount = transaction["Amount"] * transaction["Price"]
+            wallet[coin_sell].remove(sell_amount)
+
+            if coin_buy not in wallet:  # update buy side
+                wallet[coin_buy] = Wallet()
+            wallet[coin_buy].add(transaction["Amount"])
+
+            if coin_fee not in wallet:  # update fees
+                wallet[coin_fee] = Wallet()
+            wallet[coin_fee].remove(abs(transaction["Fee"]))
+        return wallet
