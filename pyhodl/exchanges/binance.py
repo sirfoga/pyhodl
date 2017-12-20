@@ -37,15 +37,6 @@ class Binance(CryptoExchange):
     """ Models Binance exchange """
 
     def get_balance(self, since, until):
-        """
-        :param since: datetime
-            Get transactions done since this date
-        :param until: datetime
-            Get transactions done until this date
-        :return: {} of Wallet
-            List of wallets for each coin
-        """
-
         transactions = self.get_transactions(since, until)
         wallet = {}
         for transaction in transactions:

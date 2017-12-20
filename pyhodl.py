@@ -109,13 +109,7 @@ def main():
     params = parse_args(create_args())  # TODO: add nice try-catch block
     if check_args(params):
         exchange = parse_transactions(params["in"])
-        result = list(exchange.get_transactions(
-            exchange.get_first_transaction().date,
-            exchange.get_last_transaction().date
-        ))
-        print([
-            str(x) for x in result
-        ])
+        balance = exchange.get_balance()
 
 
 if __name__ == '__main__':

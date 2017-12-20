@@ -18,6 +18,8 @@
 
 """ Analyze transactions in exchanges """
 
+import abc
+
 
 class CryptoExchange(object):
     """ Exchange dealing with crypto-coins """
@@ -90,6 +92,19 @@ class CryptoExchange(object):
         for transaction in self.transactions:
             if transaction.has(symbol):
                 yield transaction
+
+    @abc.abstractmethod
+    def get_balance(self, since, until):
+        """
+        :param since: datetime
+            Get transactions done since this date
+        :param until: datetime
+            Get transactions done until this date
+        :return: {} of Wallet
+            List of wallets for each coin
+        """
+
+        return
 
 
 class Transaction(object):
