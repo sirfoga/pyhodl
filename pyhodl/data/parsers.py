@@ -37,7 +37,7 @@ class Parser(object):
         self.is_csv = self.input_file.endswith(".csv")
         self.is_excel = self.input_file.endswith(".xlsx")
 
-    def read(self):
+    def get_raw(self):
         """
         :return: pandas.DataFrame
             Read content of file
@@ -50,7 +50,7 @@ class Parser(object):
                 return pd.read_csv(self.input_file)
             except ValueError as e:
                 if type(e) == pd.errors.ParserError:
-                    pass  # coinbase files handling
+                    return pd.read_csv(self.input_file, skiprows=2)
                 else:
                     raise ValueError("File not supported!")
         else:
