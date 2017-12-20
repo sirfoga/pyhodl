@@ -19,7 +19,7 @@
 """ GDAX exchange """
 
 from pyhodl.data.core import Parser
-from .core import CryptoExchange
+from .core import CryptoExchange, Wallet
 
 
 class GdaxParser(Parser):
@@ -35,3 +35,29 @@ class GdaxParser(Parser):
 
 class Gdax(CryptoExchange):
     """ Models GDAX exchange """
+
+    def get_balance(self, since, until):
+        """
+        :param since: datetime
+            Get transactions done since this date
+        :param until: datetime
+            Get transactions done until this date
+        :return: {} of Wallet
+            List of wallets for each coin
+        """
+
+        transactions = self.get_transactions(since, until)
+        wallet = {}
+        for transaction in transactions:
+            coin = transaction["amount/balance unit"]
+
+            if coin not in wallet:  # update sell side
+                wallet[coin] = Wallet()
+
+            amount = transaction["amount"]
+            if amount < 0:
+                wallet[coin].remove(abs(amount))
+            else:
+                wallet[coin].add(abs(amount))
+
+        return wallet
