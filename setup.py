@@ -35,7 +35,7 @@ DESCRIPTION = \
 
 setup(
     name="pyhodl",
-    version="0.1",
+    version="0.2",
     author="sirfoga",
     author_email="sirfoga@protonmail.com",
     description="Static analysis of your crypto-transactions. Completely "
@@ -48,6 +48,7 @@ setup(
     install_requires=[
         "matplotlib",
         "numpy",
-        "xlrd"
+        "xlrd",
+        "pandas"
     ]
 )

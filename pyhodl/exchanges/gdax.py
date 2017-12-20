@@ -16,22 +16,22 @@
 # limitations under the License.
 
 
-""" Bitfinex exchange """
+""" GDAX exchange """
 
+from pyhodl.data.core import Parser
 from .core import CryptoExchange
-from ..parsers import Parser
 
 
-class BitfinexParser(Parser):
-    """ Parse transactions from Bitfinex exchange """
+class GdaxParser(Parser):
+    """ Parse transactions from GDAX exchange """
 
     def get_transactions_list(self, **kwargs):
         return super().get_transactions_list(
-            "Date",
-            "%Y-%m-%d %H:%M:%S",
-            ["Price", "Amount", "Fee"]
+            "time",
+            "%Y-%m-%dT%H:%M:%S.%fZ",
+            ["amount", "balance"]
         )
 
 
-class Bitfinex(CryptoExchange):
-    """ Models Bitfinex exchange """
+class Gdax(CryptoExchange):
+    """ Models GDAX exchange """

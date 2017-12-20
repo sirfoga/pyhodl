@@ -22,7 +22,7 @@ import argparse
 import os
 from datetime import datetime
 
-from pyhodl.data.exchanges.coinbase import CoinbaseParser, Coinbase
+from pyhodl.data.parsers import parse_transactions
 
 DATETIME_FORMAT = "%Y-%M-%D_%H:%M:%S"
 DATETIME_HUMAN = "[YYYY]-[MM]-[DD]_[HH]:[MM]:[SS]"
@@ -106,22 +106,16 @@ def check_args(params):
 
 
 def main():
-    params = parse_args(create_args())
-    try:
-        if check_args(params):
-            parser = CoinbaseParser(params["in"])
-            transactions = parser.get_transactions_list()
-            exchange = Coinbase(transactions)
-            result = list(exchange.get_transactions(
-                exchange.get_first_transaction().date,
-                exchange.get_last_transaction().date
-            ))
-            print([
-                str(x) for x in result
-            ])
-    except Exception as e:
-        print("Ooops ... something went wrong!")
-        print(str(e))
+    params = parse_args(create_args())  # TODO: add nice try-catch block
+    if check_args(params):
+        exchange = parse_transactions(params["in"])
+        result = list(exchange.get_transactions(
+            exchange.get_first_transaction().date,
+            exchange.get_last_transaction().date
+        ))
+        print([
+            str(x) for x in result
+        ])
 
 
 if __name__ == '__main__':

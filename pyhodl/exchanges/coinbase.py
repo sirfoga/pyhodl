@@ -18,8 +18,8 @@
 
 """ Coinbase exchange """
 
+from pyhodl.data.core import Parser
 from .core import CryptoExchange
-from ..parsers import Parser
 
 
 class CoinbaseParser(Parser):

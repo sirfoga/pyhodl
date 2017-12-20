@@ -18,80 +18,38 @@
 
 """ Parse raw data """
 
-import os
-from datetime import datetime
+from .core import Parser
+from ..exchanges.binance import BinanceParser, Binance
+from ..exchanges.bitfinex import BitfinexParser, Bitfinex
+from ..exchanges.coinbase import CoinbaseParser, Coinbase
+from ..exchanges.gdax import GdaxParser, Gdax
 
-import pandas as pd
 
-from .exchanges.core import Transaction
-
-
-class Parser(object):
-    """ Abstract parser """
-
-    def __init__(self, input_file):
+def parse_transactions(input_file):
         """
         :param input_file: str
             File to parse
+        :return: CryptoExchange
+            Builds exchange model based on transactions
         """
 
-        object.__init__(self)
-        self.input_file = os.path.join(input_file)  # reformat file path
-        self.is_csv = self.input_file.endswith(".csv")
-        self.is_excel = self.input_file.endswith(".xlsx")
-
-    def get_raw_data(self):
-        """
-        :return: pandas.DataFrame
-            Raw data from file
-        """
-
-        if self.is_excel:
-            df = pd.read_excel(self.input_file)
-        elif self.is_csv:
-            try:
-                df = pd.read_csv(self.input_file)
-            except ValueError as e:
-                if type(e) == pd.errors.ParserError:
-                    df = pd.read_csv(self.input_file, skiprows=2)
-                else:
-                    raise ValueError("File not supported!")
+        parser = Parser(input_file)
+        transaction_attrs = parser.get_raw_data().keys()
+        if "Timestamp" in transaction_attrs:
+            return Coinbase(
+                CoinbaseParser(input_file).get_transactions_list()
+            )
+        elif "amount/balance unit" in transaction_attrs:
+            return Gdax(
+                GdaxParser(input_file).get_transactions_list()
+            )
+        elif "FeeCurrency" in transaction_attrs:
+            return Bitfinex(
+                BitfinexParser(input_file).get_transactions_list()
+            )
+        elif "Fee Coin" and "Market" in transaction_attrs:
+            return Binance(
+                BinanceParser(input_file).get_transactions_list()
+            )
         else:
-            raise ValueError("File not supported!")
-
-        return df
-
-    def get_raw_list(self):
-        """
-        :return: [] of {}
-            List of transactions. Each transaction is a dict with keys
-            directly from input file
-        """
-
-        df = self.get_raw_data()
-        return list(df.T.to_dict().values())
-
-    def get_transactions_list(self, date_key, date_format, number_keys):
-        """
-        :param date_key: str
-            Key containing date values
-        :param date_format: str
-            Date parsing format
-        :param number_keys: [] of keys
-            List of keys containing numbers to be parsed
-        :return: [] of Transaction
-            List of transactions of exchange
-        """
-
-        raw_list = self.get_raw_list()  # parse raw
-        for i, x in enumerate(raw_list):
-            raw_list[i][date_key] = datetime.strptime(
-                x[date_key],
-                date_format
-            )  # parse date
-
-            for key in number_keys:
-                raw_list[i][key] = float(x[key])
-        return [
-            Transaction(raw_dict, date_key) for raw_dict in raw_list
-        ]
+            raise ValueError("Cannot infer type of exchange!")
