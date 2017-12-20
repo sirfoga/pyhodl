@@ -134,17 +134,24 @@ class CryptoExchange(object):
             raise ValueError("Interval must be one of ",
                              self.balance_intervals.keys())
 
-        dates_list = list(generate_dates(since, until, interval))
+        dates_list = list(
+            generate_dates(since, until, self.balance_intervals[interval])
+        )
+
         wallet_list = []
         for i, date in enumerate(dates_list[:-1]):
             date_min = date
             date_max = dates_list[i + 1]
+            date_balances = self.get_balance(date_min, date_max)
+            if not wallet_list:  # merge with last
+
             wallet_list.append(
                 {
                     "date": date_max,
-                    "balance": self.get_balance(date_min, date_max)
+                    "balance": date_balances
                 }
             )
+
         return wallet_list
 
 
@@ -260,3 +267,36 @@ class Wallet(object):
         """
 
         return self.balance
+
+
+class Balance(object):
+    """ Balance of something, expressed in many coins """
+
+    def __init__(self, wallets):
+        """
+        :param wallets: {} of Wallet
+            List of wallet (and coins)
+        """
+
+        object.__init__(self)
+        self.wallets = wallets
+
+    def merge(self, other):
+        """
+        :param other: Balance
+            Other balance to merge with
+        :return: Balance
+            New balance
+        """
+
+        return None
+
+    def get_balance(self):
+        """
+        :return: {} str -> float
+            For each coin, evaluate balance
+        """
+
+        return {
+            coin: wallet.get_balance() for coin, wallet in self.wallets.items()
+        }

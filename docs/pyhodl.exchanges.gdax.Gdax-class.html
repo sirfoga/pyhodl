@@ -62,14 +62,17 @@
 <h1 class="epydoc">Class Gdax</h1><p class="nomargin-top"><span class="codelink"><a href="pyhodl.exchanges.gdax-pysrc.html#Gdax">source&nbsp;code</a></span></p>
 <center>
 <center>  <map id="uml_class_diagram_for_pyhodl_e_10" name="uml_class_diagram_for_pyhodl_e_10">
-<area shape="rect" id="node1" href="pyhodl.exchanges.gdax.Gdax-class.html" title="Models GDAX exchange" alt="" coords="97,183,153,227"/>
-<area shape="rect" id="node2_6" href="pyhodl.exchanges.core.CryptoExchange-class.html#__init__" title=":param transactions: [] of Transaction..." alt="" coords="18,38,230,58"/>
-<area shape="rect" id="node2_7" href="pyhodl.exchanges.core.CryptoExchange-class.html#get_transactions_count" title=":return: int..." alt="" coords="18,58,230,78"/>
-<area shape="rect" id="node2_8" href="pyhodl.exchanges.core.CryptoExchange-class.html#get_first_transaction" title=":return: Transaction..." alt="" coords="18,78,230,98"/>
-<area shape="rect" id="node2_9" href="pyhodl.exchanges.core.CryptoExchange-class.html#get_last_transaction" title=":return: Transaction..." alt="" coords="18,98,230,118"/>
-<area shape="rect" id="node2_10" href="pyhodl.exchanges.core.CryptoExchange-class.html#get_transactions" title=":param since: datetime..." alt="" coords="18,118,230,138"/>
-<area shape="rect" id="node2_11" href="pyhodl.exchanges.core.CryptoExchange-class.html#get_transactions_with" title=":param symbol: str &#160;&#160;&#160;&#160;Currency e.g EUR, BTC, LTC ..." alt="" coords="18,138,230,158"/>
-<area shape="rect" id="node2" href="pyhodl.exchanges.core.CryptoExchange-class.html" title="Exchange dealing with crypto&#45;coins" alt="" coords="5,5,241,164"/>
+<area shape="rect" id="node1_9" href="pyhodl.exchanges.gdax.Gdax-class.html#get_balance" title=":param since: datetime..." alt="" coords="74,249,250,269"/>
+<area shape="rect" id="node1" href="pyhodl.exchanges.gdax.Gdax-class.html" title="Models GDAX exchange" alt="" coords="62,217,262,276"/>
+<area shape="rect" id="node2_10" href="pyhodl.exchanges.core.CryptoExchange-class.html#balance_intervals" title="pyhodl.exchanges.core.CryptoExchange.balance_intervals" alt="" coords="18,30,305,50"/>
+<area shape="rect" id="node2_11" href="pyhodl.exchanges.core.CryptoExchange-class.html#__init__" title=":param transactions: [] of Transaction..." alt="" coords="18,53,305,73"/>
+<area shape="rect" id="node2_12" href="pyhodl.exchanges.core.CryptoExchange-class.html#get_transactions_count" title=":return: int..." alt="" coords="18,73,305,93"/>
+<area shape="rect" id="node2_13" href="pyhodl.exchanges.core.CryptoExchange-class.html#get_first_transaction" title=":return: Transaction..." alt="" coords="18,93,305,113"/>
+<area shape="rect" id="node2_14" href="pyhodl.exchanges.core.CryptoExchange-class.html#get_last_transaction" title=":return: Transaction..." alt="" coords="18,113,305,133"/>
+<area shape="rect" id="node2_15" href="pyhodl.exchanges.core.CryptoExchange-class.html#get_transactions" title=":param since: datetime..." alt="" coords="18,133,305,153"/>
+<area shape="rect" id="node2_16" href="pyhodl.exchanges.core.CryptoExchange-class.html#get_transactions_with" title=":param symbol: str &#160;&#160;&#160;&#160;Currency e.g EUR, BTC, LTC ..." alt="" coords="18,153,305,173"/>
+<area shape="rect" id="node2_17" href="pyhodl.exchanges.core.CryptoExchange-class.html#get_balance_subtotals" title=":param since: datetime..." alt="" coords="18,173,305,193"/>
+<area shape="rect" id="node2" href="pyhodl.exchanges.core.CryptoExchange-class.html" title="Exchange dealing with crypto&#45;coins" alt="" coords="5,5,316,199"/>
 </map>
   <img src="uml_class_diagram_for_pyhodl_e_10.gif" alt='' usemap="#uml_class_diagram_for_pyhodl_e_10" ismap="ismap" class="graph-without-title" />
 </center>
@@ -97,10 +100,30 @@ Models GDAX exchange
     </table>
   </td>
 </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="pyhodl.exchanges.gdax.Gdax-class.html#get_balance" class="summary-sig-name">get_balance</a>(<span class="summary-sig-arg">self</span>,
+        <span class="summary-sig-arg">since</span>,
+        <span class="summary-sig-arg">until</span>)</span><br />
+      :param since: datetime...</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="pyhodl.exchanges.gdax-pysrc.html#Gdax.get_balance">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
   <tr>
     <td colspan="2" class="summary">
     <p class="indent-wrapped-lines"><b>Inherited from <code><a href="pyhodl.exchanges.core.CryptoExchange-class.html">core.CryptoExchange</a></code></b>:
       <code><a href="pyhodl.exchanges.core.CryptoExchange-class.html#__init__">__init__</a></code>,
+      <code><a href="pyhodl.exchanges.core.CryptoExchange-class.html#get_balance_subtotals">get_balance_subtotals</a></code>,
       <code><a href="pyhodl.exchanges.core.CryptoExchange-class.html#get_first_transaction">get_first_transaction</a></code>,
       <code><a href="pyhodl.exchanges.core.CryptoExchange-class.html#get_last_transaction">get_last_transaction</a></code>,
       <code><a href="pyhodl.exchanges.core.CryptoExchange-class.html#get_transactions">get_transactions</a></code>,
@@ -120,6 +143,31 @@ Models GDAX exchange
       <code>__sizeof__</code>,
       <code>__str__</code>,
       <code>__subclasshook__</code>
+      </p>
+    </td>
+  </tr>
+</table>
+<!-- ==================== CLASS VARIABLES ==================== -->
+<a name="section-ClassVariables"></a>
+<table class="summary" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr bgcolor="#70b0f0" class="table-header">
+  <td colspan="2" class="table-header">
+    <table border="0" cellpadding="0" cellspacing="0" width="100%">
+      <tr valign="top">
+        <td align="left"><span class="table-header">Class Variables</span></td>
+        <td align="right" valign="top"
+         ><span class="options">[<a href="#section-ClassVariables"
+         class="privatelink" onclick="toggle_private();"
+         >hide private</a>]</span></td>
+      </tr>
+    </table>
+  </td>
+</tr>
+  <tr>
+    <td colspan="2" class="summary">
+    <p class="indent-wrapped-lines"><b>Inherited from <code><a href="pyhodl.exchanges.core.CryptoExchange-class.html">core.CryptoExchange</a></code></b>:
+      <code><a href="pyhodl.exchanges.core.CryptoExchange-class.html#balance_intervals">balance_intervals</a></code>
       </p>
     </td>
   </tr>
@@ -149,6 +197,59 @@ Models GDAX exchange
     </td>
   </tr>
 </table>
+<!-- ==================== METHOD DETAILS ==================== -->
+<a name="section-MethodDetails"></a>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr bgcolor="#70b0f0" class="table-header">
+  <td colspan="2" class="table-header">
+    <table border="0" cellpadding="0" cellspacing="0" width="100%">
+      <tr valign="top">
+        <td align="left"><span class="table-header">Method Details</span></td>
+        <td align="right" valign="top"
+         ><span class="options">[<a href="#section-MethodDetails"
+         class="privatelink" onclick="toggle_private();"
+         >hide private</a>]</span></td>
+      </tr>
+    </table>
+  </td>
+</tr>
+</table>
+<a name="get_balance"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">get_balance</span>(<span class="sig-arg">self</span>,
+        <span class="sig-arg">since</span>,
+        <span class="sig-arg">until</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="pyhodl.exchanges.gdax-pysrc.html#Gdax.get_balance">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <pre class="literalblock">
+
+:param since: datetime
+    Get transactions done since this date
+:param until: datetime
+    Get transactions done until this date
+:return: {} of Wallet
+    List of wallets for each coin
+
+</pre>
+  <dl class="fields">
+    <dt>Overrides:
+        <a href="pyhodl.exchanges.core.CryptoExchange-class.html#get_balance">core.CryptoExchange.get_balance</a>
+        <dd><em class="note">(inherited documentation)</em></dd>
+    </dt>
+  </dl>
+</td></tr></table>
+</div>
+<br />
 <!-- ==================== NAVIGATION BAR ==================== -->
 <table class="navbar" border="0" width="100%" cellpadding="0"
        bgcolor="#a0c0ff" cellspacing="0">
@@ -177,7 +278,7 @@ Models GDAX exchange
 <table border="0" cellpadding="0" cellspacing="0" width="100%%">
   <tr>
     <td align="left" class="footer">
-    Generated by Epydoc 3.0.1 on Wed Dec 20 19:18:06 2017
+    Generated by Epydoc 3.0.1 on Wed Dec 20 23:52:41 2017
     </td>
     <td align="right" class="footer">
       <a target="mainFrame" href="http://epydoc.sourceforge.net"
