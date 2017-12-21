@@ -62,16 +62,17 @@
 <h1 class="epydoc">Class CryptoExchange</h1><p class="nomargin-top"><span class="codelink"><a href="pyhodl.exchanges.core-pysrc.html#CryptoExchange">source&nbsp;code</a></span></p>
 <center>
 <center>  <map id="uml_class_diagram_for_pyhodl_e_8" name="uml_class_diagram_for_pyhodl_e_8">
-<area shape="rect" id="node1_9" href="pyhodl.exchanges.core.CryptoExchange-class.html#balance_intervals" title="pyhodl.exchanges.core.CryptoExchange.balance_intervals" alt="" coords="18,29,305,49"/>
-<area shape="rect" id="node1_10" href="pyhodl.exchanges.core.CryptoExchange-class.html#__init__" title=":param transactions: [] of Transaction..." alt="" coords="18,52,305,72"/>
-<area shape="rect" id="node1_11" href="pyhodl.exchanges.core.CryptoExchange-class.html#get_transactions_count" title=":return: int..." alt="" coords="18,72,305,92"/>
-<area shape="rect" id="node1_12" href="pyhodl.exchanges.core.CryptoExchange-class.html#get_first_transaction" title=":return: Transaction..." alt="" coords="18,92,305,112"/>
-<area shape="rect" id="node1_13" href="pyhodl.exchanges.core.CryptoExchange-class.html#get_last_transaction" title=":return: Transaction..." alt="" coords="18,112,305,132"/>
-<area shape="rect" id="node1_14" href="pyhodl.exchanges.core.CryptoExchange-class.html#get_transactions" title=":param since: datetime..." alt="" coords="18,132,305,152"/>
-<area shape="rect" id="node1_15" href="pyhodl.exchanges.core.CryptoExchange-class.html#get_transactions_with" title=":param symbol: str &#160;&#160;&#160;&#160;Currency e.g EUR, BTC, LTC ..." alt="" coords="18,152,305,172"/>
-<area shape="rect" id="node1_16" href="pyhodl.exchanges.core.CryptoExchange-class.html#get_balance" title=":param since: datetime..." alt="" coords="18,172,305,192"/>
-<area shape="rect" id="node1_17" href="pyhodl.exchanges.core.CryptoExchange-class.html#get_balance_subtotals" title=":param since: datetime..." alt="" coords="18,192,305,212"/>
-<area shape="rect" id="node1" href="pyhodl.exchanges.core.CryptoExchange-class.html" title="Exchange dealing with crypto&#45;coins" alt="" coords="5,5,316,219"/>
+<area shape="rect" id="node1_10" href="pyhodl.exchanges.core.CryptoExchange-class.html#balance_intervals" title="pyhodl.exchanges.core.CryptoExchange.balance_intervals" alt="" coords="18,30,307,50"/>
+<area shape="rect" id="node1_11" href="pyhodl.exchanges.core.CryptoExchange-class.html#__init__" title=":param transactions: [] of Transaction..." alt="" coords="18,53,307,73"/>
+<area shape="rect" id="node1_12" href="pyhodl.exchanges.core.CryptoExchange-class.html#get_transactions_count" title=":return: int..." alt="" coords="18,73,307,93"/>
+<area shape="rect" id="node1_13" href="pyhodl.exchanges.core.CryptoExchange-class.html#get_first_transaction" title=":return: Transaction..." alt="" coords="18,93,307,113"/>
+<area shape="rect" id="node1_14" href="pyhodl.exchanges.core.CryptoExchange-class.html#get_last_transaction" title=":return: Transaction..." alt="" coords="18,113,307,133"/>
+<area shape="rect" id="node1_15" href="pyhodl.exchanges.core.CryptoExchange-class.html#get_transactions" title=":param since: datetime..." alt="" coords="18,133,307,153"/>
+<area shape="rect" id="node1_16" href="pyhodl.exchanges.core.CryptoExchange-class.html#get_transactions_with" title=":param symbol: str &#160;&#160;&#160;&#160;Currency e.g EUR, BTC, LTC ..." alt="" coords="18,153,307,173"/>
+<area shape="rect" id="node1_17" href="pyhodl.exchanges.core.CryptoExchange-class.html#get_balance" title=":param since: datetime..." alt="" coords="18,173,307,193"/>
+<area shape="rect" id="node1_18" href="pyhodl.exchanges.core.CryptoExchange-class.html#get_balance_subtotals" title=":param since: datetime..." alt="" coords="18,193,307,213"/>
+<area shape="rect" id="node1_19" href="pyhodl.exchanges.core.CryptoExchange-class.html#plot_balance_subtotals" title=":param since: datetime..." alt="" coords="18,213,307,233"/>
+<area shape="rect" id="node1" href="pyhodl.exchanges.core.CryptoExchange-class.html" title="Exchange dealing with crypto&#45;coins" alt="" coords="5,5,319,239"/>
 </map>
   <img src="uml_class_diagram_for_pyhodl_e_8.gif" alt='' usemap="#uml_class_diagram_for_pyhodl_e_8" ismap="ismap" class="graph-without-title" />
 </center>
@@ -238,6 +239,26 @@ Exchange dealing with crypto-coins
       :param since: datetime...</td>
           <td align="right" valign="top">
             <span class="codelink"><a href="pyhodl.exchanges.core-pysrc.html#CryptoExchange.get_balance_subtotals">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="pyhodl.exchanges.core.CryptoExchange-class.html#plot_balance_subtotals" class="summary-sig-name">plot_balance_subtotals</a>(<span class="summary-sig-arg">self</span>,
+        <span class="summary-sig-arg">since</span>,
+        <span class="summary-sig-arg">until</span>,
+        <span class="summary-sig-arg">interval</span>)</span><br />
+      :param since: datetime...</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="pyhodl.exchanges.core-pysrc.html#CryptoExchange.plot_balance_subtotals">source&nbsp;code</a></span>
             
           </td>
         </tr>
@@ -458,9 +479,9 @@ Exchange dealing with crypto-coins
   <pre class="literalblock">
 
 :param since: datetime
-    Get transactions done since this date
+    Get transactions done since this date (included)
 :param until: datetime
-    Get transactions done until this date
+    Get transactions done until this date (excluded)
 :return: (generator of) [] of Transaction
     List of transactions done between the dates
 
@@ -563,6 +584,39 @@ Exchange dealing with crypto-coins
   </dl>
 </td></tr></table>
 </div>
+<a name="plot_balance_subtotals"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">plot_balance_subtotals</span>(<span class="sig-arg">self</span>,
+        <span class="sig-arg">since</span>,
+        <span class="sig-arg">until</span>,
+        <span class="sig-arg">interval</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="pyhodl.exchanges.core-pysrc.html#CryptoExchange.plot_balance_subtotals">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <pre class="literalblock">
+
+:param since: datetime
+    Get transactions done since this date
+:param until: datetime
+    Get transactions done until this date
+:param interval: str
+    Interval of times (1h, 1d, 7d, 30d, 3m, 6m, 1y)
+:return: void
+    Shows plot with subtotals
+
+</pre>
+  <dl class="fields">
+  </dl>
+</td></tr></table>
+</div>
 <br />
 <!-- ==================== CLASS VARIABLE DETAILS ==================== -->
 <a name="section-ClassVariableDetails"></a>
@@ -635,7 +689,7 @@ Exchange dealing with crypto-coins
 <table border="0" cellpadding="0" cellspacing="0" width="100%%">
   <tr>
     <td align="left" class="footer">
-    Generated by Epydoc 3.0.1 on Thu Dec 21 01:02:24 2017
+    Generated by Epydoc 3.0.1 on Thu Dec 21 02:07:33 2017
     </td>
     <td align="right" class="footer">
       <a target="mainFrame" href="http://epydoc.sourceforge.net"

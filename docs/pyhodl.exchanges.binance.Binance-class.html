@@ -62,17 +62,18 @@
 <h1 class="epydoc">Class Binance</h1><p class="nomargin-top"><span class="codelink"><a href="pyhodl.exchanges.binance-pysrc.html#Binance">source&nbsp;code</a></span></p>
 <center>
 <center>  <map id="uml_class_diagram_for_pyhodl_e" name="uml_class_diagram_for_pyhodl_e">
-<area shape="rect" id="node1_9" href="pyhodl.exchanges.binance.Binance-class.html#get_balance" title=":param since: datetime..." alt="" coords="74,249,250,269"/>
-<area shape="rect" id="node1" href="pyhodl.exchanges.binance.Binance-class.html" title="Models Binance exchange" alt="" coords="62,217,262,276"/>
-<area shape="rect" id="node2_10" href="pyhodl.exchanges.core.CryptoExchange-class.html#balance_intervals" title="pyhodl.exchanges.core.CryptoExchange.balance_intervals" alt="" coords="18,30,305,50"/>
-<area shape="rect" id="node2_11" href="pyhodl.exchanges.core.CryptoExchange-class.html#__init__" title=":param transactions: [] of Transaction..." alt="" coords="18,53,305,73"/>
-<area shape="rect" id="node2_12" href="pyhodl.exchanges.core.CryptoExchange-class.html#get_transactions_count" title=":return: int..." alt="" coords="18,73,305,93"/>
-<area shape="rect" id="node2_13" href="pyhodl.exchanges.core.CryptoExchange-class.html#get_first_transaction" title=":return: Transaction..." alt="" coords="18,93,305,113"/>
-<area shape="rect" id="node2_14" href="pyhodl.exchanges.core.CryptoExchange-class.html#get_last_transaction" title=":return: Transaction..." alt="" coords="18,113,305,133"/>
-<area shape="rect" id="node2_15" href="pyhodl.exchanges.core.CryptoExchange-class.html#get_transactions" title=":param since: datetime..." alt="" coords="18,133,305,153"/>
-<area shape="rect" id="node2_16" href="pyhodl.exchanges.core.CryptoExchange-class.html#get_transactions_with" title=":param symbol: str &#160;&#160;&#160;&#160;Currency e.g EUR, BTC, LTC ..." alt="" coords="18,153,305,173"/>
-<area shape="rect" id="node2_17" href="pyhodl.exchanges.core.CryptoExchange-class.html#get_balance_subtotals" title=":param since: datetime..." alt="" coords="18,173,305,193"/>
-<area shape="rect" id="node2" href="pyhodl.exchanges.core.CryptoExchange-class.html" title="Exchange dealing with crypto&#45;coins" alt="" coords="5,5,316,199"/>
+<area shape="rect" id="node1_10" href="pyhodl.exchanges.binance.Binance-class.html#get_balance" title=":param since: datetime..." alt="" coords="75,269,251,289"/>
+<area shape="rect" id="node1" href="pyhodl.exchanges.binance.Binance-class.html" title="Models Binance exchange" alt="" coords="63,237,263,296"/>
+<area shape="rect" id="node2_11" href="pyhodl.exchanges.core.CryptoExchange-class.html#balance_intervals" title="pyhodl.exchanges.core.CryptoExchange.balance_intervals" alt="" coords="18,29,307,49"/>
+<area shape="rect" id="node2_12" href="pyhodl.exchanges.core.CryptoExchange-class.html#__init__" title=":param transactions: [] of Transaction..." alt="" coords="18,52,307,72"/>
+<area shape="rect" id="node2_13" href="pyhodl.exchanges.core.CryptoExchange-class.html#get_transactions_count" title=":return: int..." alt="" coords="18,72,307,92"/>
+<area shape="rect" id="node2_14" href="pyhodl.exchanges.core.CryptoExchange-class.html#get_first_transaction" title=":return: Transaction..." alt="" coords="18,92,307,112"/>
+<area shape="rect" id="node2_15" href="pyhodl.exchanges.core.CryptoExchange-class.html#get_last_transaction" title=":return: Transaction..." alt="" coords="18,112,307,132"/>
+<area shape="rect" id="node2_16" href="pyhodl.exchanges.core.CryptoExchange-class.html#get_transactions" title=":param since: datetime..." alt="" coords="18,132,307,152"/>
+<area shape="rect" id="node2_17" href="pyhodl.exchanges.core.CryptoExchange-class.html#get_transactions_with" title=":param symbol: str &#160;&#160;&#160;&#160;Currency e.g EUR, BTC, LTC ..." alt="" coords="18,152,307,172"/>
+<area shape="rect" id="node2_18" href="pyhodl.exchanges.core.CryptoExchange-class.html#get_balance_subtotals" title=":param since: datetime..." alt="" coords="18,172,307,192"/>
+<area shape="rect" id="node2_19" href="pyhodl.exchanges.core.CryptoExchange-class.html#plot_balance_subtotals" title=":param since: datetime..." alt="" coords="18,192,307,212"/>
+<area shape="rect" id="node2" href="pyhodl.exchanges.core.CryptoExchange-class.html" title="Exchange dealing with crypto&#45;coins" alt="" coords="5,5,319,219"/>
 </map>
   <img src="uml_class_diagram_for_pyhodl_e.gif" alt='' usemap="#uml_class_diagram_for_pyhodl_e" ismap="ismap" class="graph-without-title" />
 </center>
@@ -128,7 +129,8 @@ Models Binance exchange
       <code><a href="pyhodl.exchanges.core.CryptoExchange-class.html#get_last_transaction">get_last_transaction</a></code>,
       <code><a href="pyhodl.exchanges.core.CryptoExchange-class.html#get_transactions">get_transactions</a></code>,
       <code><a href="pyhodl.exchanges.core.CryptoExchange-class.html#get_transactions_count">get_transactions_count</a></code>,
-      <code><a href="pyhodl.exchanges.core.CryptoExchange-class.html#get_transactions_with">get_transactions_with</a></code>
+      <code><a href="pyhodl.exchanges.core.CryptoExchange-class.html#get_transactions_with">get_transactions_with</a></code>,
+      <code><a href="pyhodl.exchanges.core.CryptoExchange-class.html#plot_balance_subtotals">plot_balance_subtotals</a></code>
       </p>
     <p class="indent-wrapped-lines"><b>Inherited from <code>object</code></b>:
       <code>__delattr__</code>,
@@ -278,7 +280,7 @@ Models Binance exchange
 <table border="0" cellpadding="0" cellspacing="0" width="100%%">
   <tr>
     <td align="left" class="footer">
-    Generated by Epydoc 3.0.1 on Thu Dec 21 01:02:24 2017
+    Generated by Epydoc 3.0.1 on Thu Dec 21 02:07:33 2017
     </td>
     <td align="right" class="footer">
       <a target="mainFrame" href="http://epydoc.sourceforge.net"

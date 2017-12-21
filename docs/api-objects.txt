@@ -15,6 +15,7 @@ pyhodl.exchanges.bitfinex	pyhodl.exchanges.bitfinex-module.html
 pyhodl.exchanges.coinbase	pyhodl.exchanges.coinbase-module.html
 pyhodl.exchanges.coinbase.infer_currency	pyhodl.exchanges.coinbase-module.html#infer_currency
 pyhodl.exchanges.core	pyhodl.exchanges.core-module.html
+pyhodl.exchanges.core.get_full_lists	pyhodl.utils-module.html#get_full_lists
 pyhodl.exchanges.core.generate_dates	pyhodl.utils-module.html#generate_dates
 pyhodl.exchanges.core.__package__	pyhodl.exchanges.core-module.html#__package__
 pyhodl.exchanges.gdax	pyhodl.exchanges.gdax-module.html
@@ -22,6 +23,7 @@ pyhodl.user	pyhodl.user-module.html
 pyhodl.user.__package__	pyhodl.user-module.html#__package__
 pyhodl.utils	pyhodl.utils-module.html
 pyhodl.utils.generate_dates	pyhodl.utils-module.html#generate_dates
+pyhodl.utils.get_full_lists	pyhodl.utils-module.html#get_full_lists
 pyhodl.utils.__package__	pyhodl.utils-module.html#__package__
 pyhodl.data.core.Parser	pyhodl.data.core.Parser-class.html
 pyhodl.data.core.Parser.get_raw_list	pyhodl.data.core.Parser-class.html#get_raw_list
@@ -30,6 +32,7 @@ pyhodl.data.core.Parser.get_raw_data	pyhodl.data.core.Parser-class.html#get_raw_
 pyhodl.data.core.Parser.__init__	pyhodl.data.core.Parser-class.html#__init__
 pyhodl.exchanges.binance.Binance	pyhodl.exchanges.binance.Binance-class.html
 pyhodl.exchanges.core.CryptoExchange.get_last_transaction	pyhodl.exchanges.core.CryptoExchange-class.html#get_last_transaction
+pyhodl.exchanges.core.CryptoExchange.plot_balance_subtotals	pyhodl.exchanges.core.CryptoExchange-class.html#plot_balance_subtotals
 pyhodl.exchanges.core.CryptoExchange.__init__	pyhodl.exchanges.core.CryptoExchange-class.html#__init__
 pyhodl.exchanges.core.CryptoExchange.get_transactions	pyhodl.exchanges.core.CryptoExchange-class.html#get_transactions
 pyhodl.exchanges.binance.Binance.get_balance	pyhodl.exchanges.binance.Binance-class.html#get_balance
@@ -45,6 +48,7 @@ pyhodl.data.core.Parser.get_raw_data	pyhodl.data.core.Parser-class.html#get_raw_
 pyhodl.data.core.Parser.__init__	pyhodl.data.core.Parser-class.html#__init__
 pyhodl.exchanges.bitfinex.Bitfinex	pyhodl.exchanges.bitfinex.Bitfinex-class.html
 pyhodl.exchanges.core.CryptoExchange.get_last_transaction	pyhodl.exchanges.core.CryptoExchange-class.html#get_last_transaction
+pyhodl.exchanges.core.CryptoExchange.plot_balance_subtotals	pyhodl.exchanges.core.CryptoExchange-class.html#plot_balance_subtotals
 pyhodl.exchanges.core.CryptoExchange.__init__	pyhodl.exchanges.core.CryptoExchange-class.html#__init__
 pyhodl.exchanges.core.CryptoExchange.get_transactions	pyhodl.exchanges.core.CryptoExchange-class.html#get_transactions
 pyhodl.exchanges.bitfinex.Bitfinex.get_balance	pyhodl.exchanges.bitfinex.Bitfinex-class.html#get_balance
@@ -60,6 +64,7 @@ pyhodl.data.core.Parser.get_raw_data	pyhodl.data.core.Parser-class.html#get_raw_
 pyhodl.data.core.Parser.__init__	pyhodl.data.core.Parser-class.html#__init__
 pyhodl.exchanges.coinbase.Coinbase	pyhodl.exchanges.coinbase.Coinbase-class.html
 pyhodl.exchanges.core.CryptoExchange.get_last_transaction	pyhodl.exchanges.core.CryptoExchange-class.html#get_last_transaction
+pyhodl.exchanges.core.CryptoExchange.plot_balance_subtotals	pyhodl.exchanges.core.CryptoExchange-class.html#plot_balance_subtotals
 pyhodl.exchanges.core.CryptoExchange.__init__	pyhodl.exchanges.core.CryptoExchange-class.html#__init__
 pyhodl.exchanges.core.CryptoExchange.get_transactions	pyhodl.exchanges.core.CryptoExchange-class.html#get_transactions
 pyhodl.exchanges.coinbase.Coinbase.get_balance	pyhodl.exchanges.coinbase.Coinbase-class.html#get_balance
@@ -79,6 +84,7 @@ pyhodl.exchanges.core.Balance.get_balance	pyhodl.exchanges.core.Balance-class.ht
 pyhodl.exchanges.core.Balance.__init__	pyhodl.exchanges.core.Balance-class.html#__init__
 pyhodl.exchanges.core.CryptoExchange	pyhodl.exchanges.core.CryptoExchange-class.html
 pyhodl.exchanges.core.CryptoExchange.get_last_transaction	pyhodl.exchanges.core.CryptoExchange-class.html#get_last_transaction
+pyhodl.exchanges.core.CryptoExchange.plot_balance_subtotals	pyhodl.exchanges.core.CryptoExchange-class.html#plot_balance_subtotals
 pyhodl.exchanges.core.CryptoExchange.get_balance	pyhodl.exchanges.core.CryptoExchange-class.html#get_balance
 pyhodl.exchanges.core.CryptoExchange.get_transactions	pyhodl.exchanges.core.CryptoExchange-class.html#get_transactions
 pyhodl.exchanges.core.CryptoExchange.__init__	pyhodl.exchanges.core.CryptoExchange-class.html#__init__
@@ -101,6 +107,7 @@ pyhodl.exchanges.core.Wallet.__init__	pyhodl.exchanges.core.Wallet-class.html#__
 pyhodl.exchanges.core.Wallet.get_balance	pyhodl.exchanges.core.Wallet-class.html#get_balance
 pyhodl.exchanges.gdax.Gdax	pyhodl.exchanges.gdax.Gdax-class.html
 pyhodl.exchanges.core.CryptoExchange.get_last_transaction	pyhodl.exchanges.core.CryptoExchange-class.html#get_last_transaction
+pyhodl.exchanges.core.CryptoExchange.plot_balance_subtotals	pyhodl.exchanges.core.CryptoExchange-class.html#plot_balance_subtotals
 pyhodl.exchanges.gdax.Gdax.get_balance	pyhodl.exchanges.gdax.Gdax-class.html#get_balance
 pyhodl.exchanges.core.CryptoExchange.get_transactions	pyhodl.exchanges.core.CryptoExchange-class.html#get_transactions
 pyhodl.exchanges.core.CryptoExchange.__init__	pyhodl.exchanges.core.CryptoExchange-class.html#__init__

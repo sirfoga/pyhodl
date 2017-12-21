@@ -18,6 +18,7 @@
 
 """ Tools """
 
+from collections import Counter
 from datetime import timedelta
 
 
@@ -37,3 +38,24 @@ def generate_dates(since, until, interval):
     while date <= until:
         yield date
         date += timedelta(hours=interval)
+    yield until
+
+
+def get_full_lists(big_dict):
+    """
+    :param big_dict: {}
+        Dict of similar dicts with varying keys
+    :return: {} of {}
+        Big dict of dicts with same keys (the dates).
+    """
+
+    big_counter = Counter()
+    for key, inner_dict in big_dict.items():
+        big_counter += inner_dict
+    all_keys = big_counter.keys()
+    return {
+        key: {
+            inner_key: inner_value[key] if key in inner_value else None
+            for inner_key, inner_value in big_dict.items()
+        } for key in all_keys
+    }

@@ -1,6 +1,11 @@
 # Change Log
 All notable changes to this project will be documented in this file.
 
+## 0.2.1 - 2017-12-21
+
+### Added
+- first plots
+
 ## 0.2 - 2017-12-20
 
 ### Refactored

@@ -19,8 +19,11 @@
 """ Analyze transactions in exchanges """
 
 import abc
+from datetime import timedelta
 
-from pyhodl.utils import generate_dates
+import matplotlib.pylab as plt
+
+from pyhodl.utils import generate_dates, get_full_lists
 
 
 class CryptoExchange(object):
@@ -82,15 +85,15 @@ class CryptoExchange(object):
     def get_transactions(self, since, until):
         """
         :param since: datetime
-            Get transactions done since this date
+            Get transactions done since this date (included)
         :param until: datetime
-            Get transactions done until this date
+            Get transactions done until this date (excluded)
         :return: (generator of) [] of Transaction
             List of transactions done between the dates
         """
 
         for transaction in self.transactions:
-            if since <= transaction.date <= until:
+            if since <= transaction.date < until:
                 yield transaction
 
     def get_transactions_with(self, symbol):
@@ -135,7 +138,10 @@ class CryptoExchange(object):
                              self.balance_intervals.keys())
 
         dates_list = list(
-            generate_dates(since, until, self.balance_intervals[interval])
+            generate_dates(
+                since, until + timedelta(seconds=1),  # add little margin
+                self.balance_intervals[interval]
+            )
         )
 
         wallet_list = []
@@ -154,6 +160,48 @@ class CryptoExchange(object):
             )
 
         return wallet_list
+
+    def plot_balance_subtotals(self, since, until, interval):
+        """
+        :param since: datetime
+            Get transactions done since this date
+        :param until: datetime
+            Get transactions done until this date
+        :param interval: str
+            Interval of times (1h, 1d, 7d, 30d, 3m, 6m, 1y)
+        :return: void
+            Shows plot with subtotals
+        """
+
+        subtotals = self.get_balance_subtotals(since, until, interval)
+        data = {
+            date_balance["date"]: date_balance["balance"].get_balance()
+            for date_balance in subtotals
+        }
+        data = get_full_lists(data)
+
+        plt.grid(True)
+        for key, value in data.items():
+            sorted_values = sorted(value.items())
+            dates = [
+                item[0] for item in sorted_values
+            ]
+            values = [
+                float(item[1]) if item[1] else float("nan")
+                for item in sorted_values
+            ]
+
+            plt.plot(
+                dates,
+                values,
+                label=key
+            )  # plot data
+
+        plt.xlabel("Time")
+        plt.ylabel("Amount")
+        plt.legend()  # build legend
+        plt.title("Subtotal cap")
+        plt.show()
 
 
 class Transaction(object):

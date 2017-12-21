@@ -35,7 +35,7 @@ DESCRIPTION = \
 
 setup(
     name="pyhodl",
-    version="0.2",
+    version="0.2.1",
     author="sirfoga",
     author_email="sirfoga@protonmail.com",
     description="Static analysis of your crypto-transactions. Completely "
