@@ -3,7 +3,7 @@
           "DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
 <head>
-  <title>pyhodl.exchanges.coinbase.CoinbaseParser</title>
+  <title>pyhodl.exchanges.core.Balance</title>
   <link rel="stylesheet" href="epydoc.css" type="text/css" />
   <script type="text/javascript" src="epydoc.js"></script>
 </head>
@@ -41,8 +41,8 @@
       <span class="breadcrumbs">
         <a href="pyhodl-module.html">Package&nbsp;pyhodl</a> ::
         <a href="pyhodl.exchanges-module.html">Package&nbsp;exchanges</a> ::
-        <a href="pyhodl.exchanges.coinbase-module.html">Module&nbsp;coinbase</a> ::
-        Class&nbsp;CoinbaseParser
+        <a href="pyhodl.exchanges.core-module.html">Module&nbsp;core</a> ::
+        Class&nbsp;Balance
       </span>
     </td>
     <td>
@@ -52,29 +52,27 @@
     onclick="toggle_private();">hide&nbsp;private</a>]</span></td></tr>
         <tr><td align="right"><span class="options"
             >[<a href="frames.html" target="_top">frames</a
-            >]&nbsp;|&nbsp;<a href="pyhodl.exchanges.coinbase.CoinbaseParser-class.html"
+            >]&nbsp;|&nbsp;<a href="pyhodl.exchanges.core.Balance-class.html"
             target="_top">no&nbsp;frames</a>]</span></td></tr>
       </table>
     </td>
   </tr>
 </table>
 <!-- ==================== CLASS DESCRIPTION ==================== -->
-<h1 class="epydoc">Class CoinbaseParser</h1><p class="nomargin-top"><span class="codelink"><a href="pyhodl.exchanges.coinbase-pysrc.html#CoinbaseParser">source&nbsp;code</a></span></p>
+<h1 class="epydoc">Class Balance</h1><p class="nomargin-top"><span class="codelink"><a href="pyhodl.exchanges.core-pysrc.html#Balance">source&nbsp;code</a></span></p>
 <center>
-<center>  <map id="uml_class_diagram_for_pyhodl_e_6" name="uml_class_diagram_for_pyhodl_e_6">
-<area shape="rect" id="node1_4" href="pyhodl.exchanges.coinbase.CoinbaseParser-class.html#get_transactions_list" title=":param date_key: str..." alt="" coords="18,155,233,175"/>
-<area shape="rect" id="node1" href="pyhodl.exchanges.coinbase.CoinbaseParser-class.html" title="Parse transactions from Coinbase exchange" alt="" coords="5,123,244,181"/>
-<area shape="rect" id="node2_5" href="pyhodl.data.core.Parser-class.html#__init__" title=":param input_file: str..." alt="" coords="55,37,195,57"/>
-<area shape="rect" id="node2_6" href="pyhodl.data.core.Parser-class.html#get_raw_data" title=":return: pandas.DataFrame..." alt="" coords="55,57,195,77"/>
-<area shape="rect" id="node2_7" href="pyhodl.data.core.Parser-class.html#get_raw_list" title=":return: [] of {} &#160;&#160;&#160;&#160;List of transactions." alt="" coords="55,77,195,97"/>
-<area shape="rect" id="node2" href="pyhodl.data.core.Parser-class.html" title="Abstract parser" alt="" coords="43,5,207,104"/>
+<center>  <map id="uml_class_diagram_for_pyhodl_e_7" name="uml_class_diagram_for_pyhodl_e_7">
+<area shape="rect" id="node1_3" href="pyhodl.exchanges.core.Balance-class.html#__init__" title=":param wallets: {} of Wallet..." alt="" coords="18,37,147,57"/>
+<area shape="rect" id="node1_4" href="pyhodl.exchanges.core.Balance-class.html#merge" title=":param other: Balance..." alt="" coords="18,57,147,77"/>
+<area shape="rect" id="node1_5" href="pyhodl.exchanges.core.Balance-class.html#get_balance" title=":return: {} str &#45;&gt; float..." alt="" coords="18,77,147,97"/>
+<area shape="rect" id="node1" href="pyhodl.exchanges.core.Balance-class.html" title="Balance of something, expressed in many coins" alt="" coords="5,5,159,104"/>
 </map>
-  <img src="uml_class_diagram_for_pyhodl_e_6.gif" alt='' usemap="#uml_class_diagram_for_pyhodl_e_6" ismap="ismap" class="graph-without-title" />
+  <img src="uml_class_diagram_for_pyhodl_e_7.gif" alt='' usemap="#uml_class_diagram_for_pyhodl_e_7" ismap="ismap" class="graph-without-title" />
 </center>
 </center>
 <hr />
 <pre class="literalblock">
-Parse transactions from Coinbase exchange 
+Balance of something, expressed in many coins 
 
 </pre>
 
@@ -101,11 +99,46 @@ Parse transactions from Coinbase exchange
     </td><td class="summary">
       <table width="100%" cellpadding="0" cellspacing="0" border="0">
         <tr>
-          <td><span class="summary-sig"><a href="pyhodl.exchanges.coinbase.CoinbaseParser-class.html#get_transactions_list" class="summary-sig-name">get_transactions_list</a>(<span class="summary-sig-arg">self</span>,
-        <span class="summary-sig-arg">**kwargs</span>)</span><br />
-      :param date_key: str...</td>
+          <td><span class="summary-sig"><a href="pyhodl.exchanges.core.Balance-class.html#__init__" class="summary-sig-name">__init__</a>(<span class="summary-sig-arg">self</span>,
+        <span class="summary-sig-arg">wallets</span>)</span><br />
+      :param wallets: {} of Wallet...</td>
           <td align="right" valign="top">
-            <span class="codelink"><a href="pyhodl.exchanges.coinbase-pysrc.html#CoinbaseParser.get_transactions_list">source&nbsp;code</a></span>
+            <span class="codelink"><a href="pyhodl.exchanges.core-pysrc.html#Balance.__init__">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="pyhodl.exchanges.core.Balance-class.html#merge" class="summary-sig-name">merge</a>(<span class="summary-sig-arg">self</span>,
+        <span class="summary-sig-arg">other</span>)</span><br />
+      :param other: Balance...</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="pyhodl.exchanges.core-pysrc.html#Balance.merge">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="pyhodl.exchanges.core.Balance-class.html#get_balance" class="summary-sig-name">get_balance</a>(<span class="summary-sig-arg">self</span>)</span><br />
+      :return: {} str -&gt; float...</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="pyhodl.exchanges.core-pysrc.html#Balance.get_balance">source&nbsp;code</a></span>
             
           </td>
         </tr>
@@ -115,11 +148,6 @@ Parse transactions from Coinbase exchange
   </tr>
   <tr>
     <td colspan="2" class="summary">
-    <p class="indent-wrapped-lines"><b>Inherited from <code><a href="pyhodl.data.core.Parser-class.html">data.core.Parser</a></code></b>:
-      <code><a href="pyhodl.data.core.Parser-class.html#__init__">__init__</a></code>,
-      <code><a href="pyhodl.data.core.Parser-class.html#get_raw_data">get_raw_data</a></code>,
-      <code><a href="pyhodl.data.core.Parser-class.html#get_raw_list">get_raw_list</a></code>
-      </p>
     <p class="indent-wrapped-lines"><b>Inherited from <code>object</code></b>:
       <code>__delattr__</code>,
       <code>__format__</code>,
@@ -180,38 +208,83 @@ Parse transactions from Coinbase exchange
   </td>
 </tr>
 </table>
-<a name="get_transactions_list"></a>
+<a name="__init__"></a>
 <div>
 <table class="details" border="1" cellpadding="3"
        cellspacing="0" width="100%" bgcolor="white">
 <tr><td>
   <table width="100%" cellpadding="0" cellspacing="0" border="0">
   <tr valign="top"><td>
-  <h3 class="epydoc"><span class="sig"><span class="sig-name">get_transactions_list</span>(<span class="sig-arg">self</span>,
-        <span class="sig-arg">**kwargs</span>)</span>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">__init__</span>(<span class="sig-arg">self</span>,
+        <span class="sig-arg">wallets</span>)</span>
+    <br /><em class="fname">(Constructor)</em>
   </h3>
   </td><td align="right" valign="top"
-    ><span class="codelink"><a href="pyhodl.exchanges.coinbase-pysrc.html#CoinbaseParser.get_transactions_list">source&nbsp;code</a></span>&nbsp;
+    ><span class="codelink"><a href="pyhodl.exchanges.core-pysrc.html#Balance.__init__">source&nbsp;code</a></span>&nbsp;
     </td>
   </tr></table>
   
   <pre class="literalblock">
 
-:param date_key: str
-    Key containing date values
-:param date_format: str
-    Date parsing format
-:param number_keys: [] of keys
-    List of keys containing numbers to be parsed
-:return: [] of Transaction
-    List of transactions of exchange
+:param wallets: {} of Wallet
+    List of wallet (and coins)
 
 </pre>
   <dl class="fields">
     <dt>Overrides:
-        <a href="pyhodl.data.core.Parser-class.html#get_transactions_list">data.core.Parser.get_transactions_list</a>
-        <dd><em class="note">(inherited documentation)</em></dd>
+        object.__init__
     </dt>
+  </dl>
+</td></tr></table>
+</div>
+<a name="merge"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">merge</span>(<span class="sig-arg">self</span>,
+        <span class="sig-arg">other</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="pyhodl.exchanges.core-pysrc.html#Balance.merge">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <pre class="literalblock">
+
+:param other: Balance
+    Other balance to merge with
+:return: void
+    Merges other's wallets
+
+</pre>
+  <dl class="fields">
+  </dl>
+</td></tr></table>
+</div>
+<a name="get_balance"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">get_balance</span>(<span class="sig-arg">self</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="pyhodl.exchanges.core-pysrc.html#Balance.get_balance">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <pre class="literalblock">
+
+:return: {} str -&gt; float
+    For each coin, evaluate balance
+
+</pre>
+  <dl class="fields">
   </dl>
 </td></tr></table>
 </div>

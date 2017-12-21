@@ -19,7 +19,34 @@
 """ Binance exchange """
 
 from pyhodl.data.core import Parser
-from .core import CryptoExchange, Wallet
+from .core import CryptoExchange, Wallet, Balance
+
+
+def infer_coins(transaction):
+    """
+    :param transaction: Transaction
+        Transaction
+    :return: tuple (str, str, str, float, float, float)
+        Buy coin, sell coin, fee coin, buy amount, sell amount, fee amount
+    """
+
+    market = transaction["Market"]
+    coin_fee = transaction["Fee Coin"]
+    is_sell = transaction["Type"] == "SELL"
+    buy_amount = transaction["Total"] if is_sell else transaction["Amount"]
+    sell_amount = transaction["Amount"] if is_sell else transaction["Total"]
+    fee_amount = transaction["Fee"]
+
+    if market.endswith("USDT"):
+        coin_sell = "USDT"
+        coin_buy = market.replace(coin_sell, "")
+    else:
+        coin_buy, coin_sell = market[:3], market[3:]
+
+    if is_sell:  # other way around
+        coin_buy, coin_sell = coin_sell, coin_buy
+
+    return coin_buy, coin_sell, coin_fee, buy_amount, sell_amount, fee_amount
 
 
 class BinanceParser(Parser):
@@ -40,17 +67,19 @@ class Binance(CryptoExchange):
         transactions = self.get_transactions(since, until)
         wallet = {}
         for transaction in transactions:
-            coin_sell = transaction["Fee Coin"]
-            coin_buy = transaction["Market"].replace(coin_sell, "")
-            if transaction["Type"] == "SELL":  # other way around
-                coin_buy, coin_sell = coin_sell, coin_buy
+            coin_buy, coin_sell, coin_fee, buy_amount, sell_amount, fee_amount \
+                = infer_coins(transaction)
 
             if coin_sell not in wallet:  # update sell side
                 wallet[coin_sell] = Wallet()
-            wallet[coin_sell].remove(transaction["Total"])
+            wallet[coin_sell].remove(sell_amount)
 
             if coin_buy not in wallet:  # update buy side
                 wallet[coin_buy] = Wallet()
-            wallet[coin_buy].add(transaction["Amount"])
-            wallet[coin_buy].remove(transaction["Fee"])
-        return wallet
+            wallet[coin_buy].add(buy_amount)
+
+            if coin_fee not in wallet:  # update fee side
+                wallet[coin_fee] = Wallet()
+            wallet[coin_fee].remove(fee_amount)
+
+        return Balance(wallet)

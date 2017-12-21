@@ -19,7 +19,7 @@
 """ Bitfinex exchange """
 
 from pyhodl.data.core import Parser
-from .core import CryptoExchange, Wallet
+from .core import CryptoExchange, Wallet, Balance
 
 
 class BitfinexParser(Parser):
@@ -56,4 +56,5 @@ class Bitfinex(CryptoExchange):
             if coin_fee not in wallet:  # update fees
                 wallet[coin_fee] = Wallet()
             wallet[coin_fee].remove(abs(transaction["Fee"]))
-        return wallet
+
+        return Balance(wallet)

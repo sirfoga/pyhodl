@@ -19,7 +19,7 @@
 """ GDAX exchange """
 
 from pyhodl.data.core import Parser
-from .core import CryptoExchange, Wallet
+from .core import CryptoExchange, Wallet, Balance
 
 
 class GdaxParser(Parser):
@@ -51,4 +51,4 @@ class Gdax(CryptoExchange):
             else:
                 wallet[coin].add(abs(amount))
 
-        return wallet
+        return Balance(wallet)

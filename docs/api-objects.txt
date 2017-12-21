@@ -10,6 +10,7 @@ pyhodl.data.parsers.parse_transactions	pyhodl.data.parsers-module.html#parse_tra
 pyhodl.exchanges	pyhodl.exchanges-module.html
 pyhodl.exchanges.__package__	pyhodl.exchanges-module.html#__package__
 pyhodl.exchanges.binance	pyhodl.exchanges.binance-module.html
+pyhodl.exchanges.binance.infer_coins	pyhodl.exchanges.binance-module.html#infer_coins
 pyhodl.exchanges.bitfinex	pyhodl.exchanges.bitfinex-module.html
 pyhodl.exchanges.coinbase	pyhodl.exchanges.coinbase-module.html
 pyhodl.exchanges.coinbase.infer_currency	pyhodl.exchanges.coinbase-module.html#infer_currency
@@ -72,6 +73,10 @@ pyhodl.data.core.Parser.get_raw_list	pyhodl.data.core.Parser-class.html#get_raw_
 pyhodl.exchanges.coinbase.CoinbaseParser.get_transactions_list	pyhodl.exchanges.coinbase.CoinbaseParser-class.html#get_transactions_list
 pyhodl.data.core.Parser.get_raw_data	pyhodl.data.core.Parser-class.html#get_raw_data
 pyhodl.data.core.Parser.__init__	pyhodl.data.core.Parser-class.html#__init__
+pyhodl.exchanges.core.Balance	pyhodl.exchanges.core.Balance-class.html
+pyhodl.exchanges.core.Balance.merge	pyhodl.exchanges.core.Balance-class.html#merge
+pyhodl.exchanges.core.Balance.get_balance	pyhodl.exchanges.core.Balance-class.html#get_balance
+pyhodl.exchanges.core.Balance.__init__	pyhodl.exchanges.core.Balance-class.html#__init__
 pyhodl.exchanges.core.CryptoExchange	pyhodl.exchanges.core.CryptoExchange-class.html
 pyhodl.exchanges.core.CryptoExchange.get_last_transaction	pyhodl.exchanges.core.CryptoExchange-class.html#get_last_transaction
 pyhodl.exchanges.core.CryptoExchange.get_balance	pyhodl.exchanges.core.CryptoExchange-class.html#get_balance
@@ -90,6 +95,7 @@ pyhodl.exchanges.core.Transaction.has	pyhodl.exchanges.core.Transaction-class.ht
 pyhodl.exchanges.core.Transaction.__init__	pyhodl.exchanges.core.Transaction-class.html#__init__
 pyhodl.exchanges.core.Wallet	pyhodl.exchanges.core.Wallet-class.html
 pyhodl.exchanges.core.Wallet.remove	pyhodl.exchanges.core.Wallet-class.html#remove
+pyhodl.exchanges.core.Wallet.merge	pyhodl.exchanges.core.Wallet-class.html#merge
 pyhodl.exchanges.core.Wallet.add	pyhodl.exchanges.core.Wallet-class.html#add
 pyhodl.exchanges.core.Wallet.__init__	pyhodl.exchanges.core.Wallet-class.html#__init__
 pyhodl.exchanges.core.Wallet.get_balance	pyhodl.exchanges.core.Wallet-class.html#get_balance

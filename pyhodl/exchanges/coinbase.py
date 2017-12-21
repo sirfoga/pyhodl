@@ -19,7 +19,7 @@
 """ Coinbase exchange """
 
 from pyhodl.data.core import Parser
-from .core import CryptoExchange, Wallet
+from .core import CryptoExchange, Wallet, Balance
 
 
 def infer_currency(candidates):
@@ -67,4 +67,5 @@ class Coinbase(CryptoExchange):
             if coin_buy not in wallet:  # update buy side
                 wallet[coin_buy] = Wallet()
             wallet[coin_buy].add(transaction[coin_buy])
-        return wallet
+
+        return Balance(wallet)

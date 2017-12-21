@@ -109,6 +109,14 @@ def main():
     params = parse_args(create_args())  # TODO: add nice try-catch block
     if check_args(params):
         exchange = parse_transactions(params["in"])
+        balance = exchange.get_balance(
+            since=exchange.get_first_transaction().date,
+            until=exchange.get_last_transaction().date
+        )
+        result = balance.get_balance()
+        for k, v in sorted(result.items(), key=lambda x: x[1], reverse=True):
+            print(k, v)
+
         balances = exchange.get_balance_subtotals(
             since=exchange.get_first_transaction().date,
             until=exchange.get_last_transaction().date,
@@ -117,11 +125,10 @@ def main():
 
         for date_balance in balances:
             date = date_balance["date"]
-            balances = date_balance["balance"]
+            balance = date_balance["balance"]
 
             print(date)
-            for key, value in balances.items():
-                print("\t", key, value.get_balance())
+            print("\t", balance.get_balance())
 
 
 if __name__ == '__main__':

@@ -112,7 +112,7 @@ class CryptoExchange(object):
             Get transactions done since this date
         :param until: datetime
             Get transactions done until this date
-        :return: {} of Wallet
+        :return: Balance
             List of wallets for each coin
         """
 
@@ -143,7 +143,8 @@ class CryptoExchange(object):
             date_min = date
             date_max = dates_list[i + 1]
             date_balances = self.get_balance(date_min, date_max)
-            if not wallet_list:  # merge with last
+            if wallet_list:  # merge with last
+                date_balances.merge(wallet_list[-1]["balance"])
 
             wallet_list.append(
                 {
@@ -268,6 +269,20 @@ class Wallet(object):
 
         return self.balance
 
+    def merge(self, other):
+        """
+        :param other: Wallet
+            Other wallet to merge with
+        :return: void
+            Add other's transactions to this wallet
+        """
+
+        for transaction in other.transactions:  # redo same actions
+            if transaction["action"] == "add":
+                self.add(transaction["amount"])
+            else:
+                self.remove(transaction["amount"])
+
 
 class Balance(object):
     """ Balance of something, expressed in many coins """
@@ -285,11 +300,15 @@ class Balance(object):
         """
         :param other: Balance
             Other balance to merge with
-        :return: Balance
-            New balance
+        :return: void
+            Merges other's wallets
         """
 
-        return None
+        for coin, wallet in other.wallets.items():
+            if coin not in self.wallets:  # new coin
+                self.wallets[coin] = wallet
+            else:  # coin wallet has to be merged
+                self.wallets[coin].merge(wallet)
 
     def get_balance(self):
         """
