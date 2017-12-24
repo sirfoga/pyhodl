@@ -37,6 +37,7 @@ class Parser(object):
 
         object.__init__(self)
         self.input_file = os.path.join(input_file)  # reformat file path
+        self.filename = os.path.basename(self.input_file)
         self.is_csv = self.input_file.endswith(".csv")
         self.is_excel = self.input_file.endswith(".xlsx")
 
@@ -95,3 +96,27 @@ class Parser(object):
         return [
             Transaction(raw_dict, date_key) for raw_dict in raw_list
         ]
+
+    def is_deposit_history(self):
+        """
+        :return: bool
+            True iff file contains history of deposits
+        """
+
+        return "depo" in self.filename.lower()
+
+    def is_withdrawal_history(self):
+        """
+        :return: bool
+            True iff file contains history of withdrawals
+        """
+
+        return "withd" in self.filename.lower()
+
+    def is_trading_history(self):
+        """
+        :return: bool
+            True iff file contains history of tradings
+        """
+
+        return not self.is_deposit_history() and not self.is_withdrawal_history()

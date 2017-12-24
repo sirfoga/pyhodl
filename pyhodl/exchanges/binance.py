@@ -49,6 +49,18 @@ def infer_coins(transaction):
     return coin_buy, coin_sell, coin_fee, buy_amount, sell_amount, fee_amount
 
 
+def is_deposit_or_withdrawal(transaction):
+    """
+    :param transaction: Transaction
+        Transaction
+    :return: bool
+        True iff is a deposit
+    """
+
+    keys = transaction.get_attrs()
+    return "Address" in keys and "TXID" in keys
+
+
 class BinanceParser(Parser):
     """ Parse transactions from Binance exchange """
 
@@ -66,6 +78,7 @@ class Binance(CryptoExchange):
     def get_balance(self, since, until):
         transactions = self.get_transactions(since, until)
         wallet = {}
+
         for transaction in transactions:
             coin_buy, coin_sell, coin_fee, buy_amount, sell_amount, fee_amount \
                 = infer_coins(transaction)

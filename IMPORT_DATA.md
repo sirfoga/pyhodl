@@ -12,6 +12,7 @@
 0. Go to the [trade page](https://www.binance.com/userCenter/tradeHistory.html).
 0. Click the `Export Complete Trade History` link on the right
 0. Select the dates and click `Export`
+0. Do the same for [your deposit history](https://www.binance.com/user/getMoneyLog.html?action=download&direction=0) and [your withdrawal history](https://www.binance.com/user/getMoneyLog.html?action=download&direction=1)
 ![Bitfinex](extra/import-data/binance.png)
 
 ## Bitfinex
@@ -19,13 +20,14 @@
 0. Go to the [report page](https://www.bitfinex.com/reports).
 0. Scroll down and click the `Trade History` link
 0. Select the dates and download the file
+0. Do the same for your `Deposits` and `Withdrawals` movements
 ![Bitfinex](extra/import-data/bitfinex.png)
 
 ## Coinbase
 
 0. Go to the [report page](https://www.coinbase.com/reports).
 0. Click the `New Report` button
-0. Select `Buys, sells, and merchant payouts`
+0. Select `Transaction history`
 0. Select the dates and the account (`BTC`, `LTC` ...)
 0. Click `Create Report`
 0. Soon you'll receive an e-mail from Coinbase with a link to download the report
