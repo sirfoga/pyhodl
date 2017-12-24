@@ -26,10 +26,17 @@ class BitfinexParser(Parser):
     """ Parse transactions from Bitfinex exchange """
 
     def get_transactions_list(self, **kwargs):
+        if self.is_deposit_history() or self.is_withdrawal_history():
+            date_key = "Updated"
+            number_keys = ["Amount"]
+        else:
+            date_key = "Date"
+            number_keys = ["Price", "Amount", "Fee"]
+
         return super().get_transactions_list(
-            "Date",
+            date_key,
             "%Y-%m-%d %H:%M:%S",
-            ["Price", "Amount", "Fee"]
+            number_keys
         )
 
 
@@ -40,21 +47,39 @@ class Bitfinex(CryptoExchange):
         transactions = self.get_transactions(since, until)
         wallet = {}
         for transaction in transactions:
-            coin_buy, coin_sell = transaction["Pair"].split("/")
-            coin_fee = transaction["FeeCurrency"]
+            if transaction.is_deposit() or transaction.is_withdrawal():
+                coin = transaction["Currency"]
+                amount = transaction["Amount"]
+                is_successful = transaction["Status"] == "COMPLETED"
 
-            if coin_sell not in wallet:  # update sell side
-                wallet[coin_sell] = Wallet()
+                if is_successful:
+                    if coin not in wallet:
+                        wallet[coin] = Wallet()
 
-            sell_amount = transaction["Amount"] * transaction["Price"]
-            wallet[coin_sell].remove(sell_amount)
+                    if transaction.is_deposit():
+                        wallet[coin].add(amount)
+                    elif transaction.is_withdrawal():
+                        wallet[coin].remove(amount)
+                    else:
+                        pass
 
-            if coin_buy not in wallet:  # update buy side
-                wallet[coin_buy] = Wallet()
-            wallet[coin_buy].add(transaction["Amount"])
+            else:
+                coin_buy, coin_sell = transaction["Pair"].split( \
+                    "/")
+                coin_fee = transaction["FeeCurrency"]
 
-            if coin_fee not in wallet:  # update fees
-                wallet[coin_fee] = Wallet()
-            wallet[coin_fee].remove(abs(transaction["Fee"]))
+                if coin_sell not in wallet:  # update sell side
+                    wallet[coin_sell] = Wallet()
+
+                sell_amount = transaction["Amount"] * transaction["Price"]
+                wallet[coin_sell].remove(sell_amount)
+
+                if coin_buy not in wallet:  # update buy side
+                    wallet[coin_buy] = Wallet()
+                wallet[coin_buy].add(transaction["Amount"])
+
+                if coin_fee not in wallet:  # update fees
+                    wallet[coin_fee] = Wallet()
+                wallet[coin_fee].remove(abs(transaction["Fee"]))
 
         return Balance(wallet)

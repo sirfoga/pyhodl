@@ -43,7 +43,8 @@ def parse_transactions(input_file):
             return Gdax(
                 GdaxParser(input_file).get_transactions_list()
             )
-        elif "FeeCurrency" in transaction_attrs:
+        elif ("Created" in transaction_attrs and "Updated" in
+            transaction_attrs) or ("FeeCurrency" in transaction_attrs):
             return Bitfinex(
                 BitfinexParser(input_file).get_transactions_list()
             )
