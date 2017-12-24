@@ -26,11 +26,11 @@ class CoinbaseParser(Parser):
     """ Parse transactions from Coinbase exchange """
 
     def get_transactions_list(self, **kwargs):
-        coin_key = self.get_raw_data()["Currency"][0]
         return super().get_transactions_list(
             "Timestamp",
             "%Y-%m-%d %H:%M:%S %z",
-            ["Price Per Coin", "Total", "Fees", "Subtotal", coin_key]
+            ["Balance", "Amount", "Transfer Total",
+             "Transfer Fee"]
         )
 
 
@@ -43,6 +43,7 @@ class Coinbase(CryptoExchange):
         for transaction in transactions:
             coin_buy = transaction["Currency"]
             coin_sell = transaction["Transfer Total Currency"]
+            coin_fee = transaction["Transfer Fee Currency"]
 
             if coin_sell not in wallet:  # update sell side
                 wallet[coin_sell] = Wallet()
@@ -51,5 +52,9 @@ class Coinbase(CryptoExchange):
             if coin_buy not in wallet:  # update buy side
                 wallet[coin_buy] = Wallet()
             wallet[coin_buy].add(transaction["Amount"])
+
+            if coin_fee not in wallet:  # update fee side
+                wallet[coin_fee] = Wallet()
+            wallet[coin_fee].remove(transaction["Transfer Fee"])
 
         return Balance(wallet)
