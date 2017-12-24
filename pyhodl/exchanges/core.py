@@ -23,6 +23,7 @@ from datetime import timedelta
 
 import matplotlib.pylab as plt
 
+from pyhodl.data.core import TransactionType
 from pyhodl.utils import generate_dates, get_full_lists
 
 
@@ -254,6 +255,30 @@ class Transaction(object):
 
     def __str__(self):
         return str(self.raw)
+
+    def is_deposit(self):
+        """
+        :return: bool
+            True iff transaction is a deposit
+        """
+
+        return self.transaction_type == TransactionType.DEPOSIT
+
+    def is_withdrawal(self):
+        """
+        :return: bool
+            True iff transaction is a withdrawal
+        """
+
+        return self.transaction_type == TransactionType.WITHDRAWAL
+
+    def is_trading(self):
+        """
+        :return: bool
+            True iff transaction is a simple trading
+        """
+
+        return self.transaction_type == TransactionType.TRADING
 
 
 class Wallet(object):

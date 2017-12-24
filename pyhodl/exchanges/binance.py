@@ -49,18 +49,6 @@ def infer_coins(transaction):
     return coin_buy, coin_sell, coin_fee, buy_amount, sell_amount, fee_amount
 
 
-def is_deposit_or_withdrawal(transaction):
-    """
-    :param transaction: Transaction
-        Transaction
-    :return: bool
-        True iff is a deposit
-    """
-
-    keys = transaction.get_attrs()
-    return "Address" in keys and "TXID" in keys
-
-
 class BinanceParser(Parser):
     """ Parse transactions from Binance exchange """
 
@@ -80,19 +68,35 @@ class Binance(CryptoExchange):
         wallet = {}
 
         for transaction in transactions:
-            coin_buy, coin_sell, coin_fee, buy_amount, sell_amount, fee_amount \
-                = infer_coins(transaction)
+            if transaction.is_deposit() or transaction.is_withdrawal():
+                coin = transaction["Coin"]
+                amount = transaction["Amount"]
+                is_succedeed = transaction["Status"] == "Completed"
 
-            if coin_sell not in wallet:  # update sell side
-                wallet[coin_sell] = Wallet()
-            wallet[coin_sell].remove(sell_amount)
+                if is_succedeed:
+                    if coin not in wallet:
+                        wallet[coin] = Wallet
 
-            if coin_buy not in wallet:  # update buy side
-                wallet[coin_buy] = Wallet()
-            wallet[coin_buy].add(buy_amount)
+                    if transaction.is_deposit():
+                        wallet[coin].add(amount)
+                    elif transaction.is_withdrawal():
+                        wallet[coin].remove(amount)
+                    else:
+                        pass
+            else:
+                coin_buy, coin_sell, coin_fee, buy_amount, sell_amount, fee_amount \
+                    = infer_coins(transaction)
 
-            if coin_fee not in wallet:  # update fee side
-                wallet[coin_fee] = Wallet()
-            wallet[coin_fee].remove(fee_amount)
+                if coin_sell not in wallet:  # update sell side
+                    wallet[coin_sell] = Wallet()
+                wallet[coin_sell].remove(sell_amount)
+
+                if coin_buy not in wallet:  # update buy side
+                    wallet[coin_buy] = Wallet()
+                wallet[coin_buy].add(buy_amount)
+
+                if coin_fee not in wallet:  # update fee side
+                    wallet[coin_fee] = Wallet()
+                wallet[coin_fee].remove(fee_amount)
 
         return Balance(wallet)
