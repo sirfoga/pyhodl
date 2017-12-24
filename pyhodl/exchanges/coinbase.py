@@ -22,27 +22,11 @@ from pyhodl.data.core import Parser
 from .core import CryptoExchange, Wallet, Balance
 
 
-def infer_currency(candidates):
-    """
-    :param candidates: [] of str
-        List of candidates
-    :return: str
-        Currency among those candidates
-    """
-
-    try:
-        return [
-            x for x in candidates if len(x) == 3 and x.isupper()
-        ][0]
-    except:
-        raise ValueError("Cannot infer currency among", ",".join(candidates))
-
-
 class CoinbaseParser(Parser):
     """ Parse transactions from Coinbase exchange """
 
     def get_transactions_list(self, **kwargs):
-        coin_key = infer_currency(self.get_raw_data().keys())
+        coin_key = self.get_raw_data()["Currency"][0]
         return super().get_transactions_list(
             "Timestamp",
             "%Y-%m-%d %H:%M:%S %z",
@@ -57,15 +41,15 @@ class Coinbase(CryptoExchange):
         transactions = self.get_transactions(since, until)
         wallet = {}
         for transaction in transactions:
-            coin_buy = infer_currency(transaction.get_attrs())
-            coin_sell = transaction["Currency"]
+            coin_buy = transaction["Currency"]
+            coin_sell = transaction["Transfer Total Currency"]
 
             if coin_sell not in wallet:  # update sell side
                 wallet[coin_sell] = Wallet()
-            wallet[coin_sell].remove(transaction["Total"])
+            wallet[coin_sell].remove(transaction["Transfer Total"])
 
             if coin_buy not in wallet:  # update buy side
                 wallet[coin_buy] = Wallet()
-            wallet[coin_buy].add(transaction[coin_buy])
+            wallet[coin_buy].add(transaction["Amount"])
 
         return Balance(wallet)

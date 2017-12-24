@@ -52,11 +52,8 @@ class Parser(object):
         elif self.is_csv:
             try:
                 df = pd.read_csv(self.input_file)
-            except ValueError as e:
-                if type(e) == pd.errors.ParserError:
-                    df = pd.read_csv(self.input_file, skiprows=2)
-                else:
-                    raise ValueError("File not supported!")
+            except pd.errors.ParserError:
+                df = pd.read_csv(self.input_file, skiprows=3)
         else:
             raise ValueError("File not supported!")
 

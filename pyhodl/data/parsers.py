@@ -35,7 +35,7 @@ def parse_transactions(input_file):
 
         parser = Parser(input_file)
         transaction_attrs = parser.get_raw_data().keys()
-        if "Timestamp" in transaction_attrs:
+        if "Coinbase" in parser.filename:
             return Coinbase(
                 CoinbaseParser(input_file).get_transactions_list()
             )
