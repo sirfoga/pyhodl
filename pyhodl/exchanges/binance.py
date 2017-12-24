@@ -53,10 +53,15 @@ class BinanceParser(Parser):
     """ Parse transactions from Binance exchange """
 
     def get_transactions_list(self, **kwargs):
+        if self.is_deposit_history() or self.is_withdrawal_history():
+            number_keys = ["Amount"]
+        else:
+            number_keys = ["Price", "Amount", "Fee", "Total"]
+
         return super().get_transactions_list(
             "Date",
             "%Y-%m-%d %H:%M:%S",
-            ["Price", "Amount", "Fee", "Total"]
+            number_keys
         )
 
 
@@ -71,11 +76,11 @@ class Binance(CryptoExchange):
             if transaction.is_deposit() or transaction.is_withdrawal():
                 coin = transaction["Coin"]
                 amount = transaction["Amount"]
-                is_succedeed = transaction["Status"] == "Completed"
+                is_successful = transaction["Status"] == "Completed"
 
-                if is_succedeed:
+                if is_successful:
                     if coin not in wallet:
-                        wallet[coin] = Wallet
+                        wallet[coin] = Wallet()
 
                     if transaction.is_deposit():
                         wallet[coin].add(amount)

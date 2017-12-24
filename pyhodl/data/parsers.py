@@ -47,7 +47,7 @@ def parse_transactions(input_file):
             return Bitfinex(
                 BitfinexParser(input_file).get_transactions_list()
             )
-        elif "Fee Coin" and "Market" in transaction_attrs:
+        elif parser.is_excel or ("Fee Coin" and "Market" in transaction_attrs):
             return Binance(
                 BinanceParser(input_file).get_transactions_list()
             )

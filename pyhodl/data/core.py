@@ -20,21 +20,10 @@
 
 import os
 from datetime import datetime
-from enum import Enum
 
 import pandas as pd
 
-from ..exchanges.core import Transaction
-
-
-class TransactionType(Enum):
-    """ Deposit, withdrawal ... """
-
-    NULL = 0
-    DEPOSIT = 1
-    WITHDRAWAL = 2
-    TRADING = 3
-    FUNDING = 4
+from ..exchanges.core import Transaction, TransactionType
 
 
 class Parser(object):

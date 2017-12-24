@@ -20,10 +20,10 @@
 
 import abc
 from datetime import timedelta
+from enum import Enum
 
 import matplotlib.pylab as plt
 
-from pyhodl.data.core import TransactionType
 from pyhodl.utils import generate_dates, get_full_lists
 
 
@@ -205,10 +205,21 @@ class CryptoExchange(object):
         plt.show()
 
 
+class TransactionType(Enum):
+    """ Deposit, withdrawal ... """
+
+    NULL = 0
+    DEPOSIT = 1
+    WITHDRAWAL = 2
+    TRADING = 3
+    FUNDING = 4
+
+
 class Transaction(object):
     """ Exchange transaction """
 
-    def __init__(self, raw_dict, trans_type, date_key=None):
+    def __init__(self, raw_dict, trans_type=TransactionType.TRADING,
+                 date_key=None):
         """
         :param raw_dict: {}
             Dict containing raw data
