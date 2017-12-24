@@ -20,10 +20,21 @@
 
 import os
 from datetime import datetime
+from enum import Enum
 
 import pandas as pd
 
 from ..exchanges.core import Transaction
+
+
+class TransactionType(Enum):
+    """ Deposit, withdrawal ... """
+
+    NULL = 0
+    DEPOSIT = 1
+    WITHDRAWAL = 2
+    TRADING = 3
+    FUNDING = 4
 
 
 class Parser(object):
@@ -94,7 +105,8 @@ class Parser(object):
             for key in number_keys:
                 raw_list[i][key] = float(x[key])
         return [
-            Transaction(raw_dict, date_key) for raw_dict in raw_list
+            Transaction(raw_dict, self.get_type_file(), date_key)
+            for raw_dict in raw_list
         ]
 
     def is_deposit_history(self):
@@ -120,3 +132,18 @@ class Parser(object):
         """
 
         return not self.is_deposit_history() and not self.is_withdrawal_history()
+
+    def get_type_file(self):
+        """
+        :return: TransactionType
+            Type of file inferred
+        """
+
+        if self.is_deposit_history():
+            return TransactionType.DEPOSIT
+        elif self.is_withdrawal_history():
+            return TransactionType.WITHDRAWAL
+        elif self.is_trading_history():
+            return TransactionType.TRADING
+        else:
+            return TransactionType.NULL

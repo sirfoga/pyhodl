@@ -207,16 +207,19 @@ class CryptoExchange(object):
 class Transaction(object):
     """ Exchange transaction """
 
-    def __init__(self, raw_dict, date_key=None):
+    def __init__(self, raw_dict, trans_type, date_key=None):
         """
         :param raw_dict: {}
             Dict containing raw data
+        :param trans_type: TransactionType
+            Type of transactions
         :param date_key: str
             Key to get date info
         """
 
         object.__init__(self)
         self.raw = raw_dict
+        self.transaction_type = trans_type
         if date_key:
             self.date = self.raw[date_key]
         else:
