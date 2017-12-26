@@ -18,9 +18,11 @@
 
 """ Plot balances data with trends and stats """
 
+import time
+
 import matplotlib.pylab as plt
 
-from ..data.core import BalancesParser
+from ..data.core import BalanceParser
 
 
 class Plotter(object):
@@ -34,13 +36,16 @@ class Plotter(object):
 
         object.__init__(self)
 
-        self.parser = BalancesParser(input_file)
+        self.parser = BalanceParser(input_file)
         self.data = sorted(self.parser.balances, key=lambda x: x["date"])
         self.data = {
             self.data[i]["date"]: self.data[i]
             for i, date in enumerate(self.data)
         }
         self.dates = sorted(self.data.keys())
+        self.unix_timestamps = [
+            int(time.mktime(date.timetuple())) for date in self.dates
+        ]
         self.coins = self.data[list(self.data.keys())[0]].keys()
         self.coins = [
             coin for coin in self.coins if coin != "date"
@@ -70,7 +75,7 @@ class Plotter(object):
                 label=coin
             )  # plot data
 
-    def plot_equiv(self, min_to_plot=0.05):
+    def plot_equiv(self, min_to_plot=0.1):
         """
         :param min_to_plot: float
             Min percentage of total cap to plot coin equivalent
@@ -93,7 +98,7 @@ class Plotter(object):
                 plt.plot(
                     self.dates,
                     values,
-                    "-o",
+                    "o-",
                     label=coin
                 )  # plot data
 

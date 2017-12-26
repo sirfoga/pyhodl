@@ -22,7 +22,9 @@ import os
 from datetime import datetime
 
 import pandas as pd
+from hal.files.models.system import ls_recurse, is_file
 from hal.files.parsers import CSVParser
+from hal.files.save_as import write_dicts_to_csv
 
 from ..exchanges.core import CryptoExchange, Transaction, TransactionType
 
@@ -136,7 +138,7 @@ class CryptoParser(object):
             return TransactionType.NULL
 
 
-class BalancesParser(CSVParser):
+class BalanceParser(CSVParser):
     """ Parses raw balances data """
 
     def __init__(self, input_file):
@@ -148,6 +150,71 @@ class BalancesParser(CSVParser):
         CSVParser.__init__(self, input_file, "utf-8")
         self.filename = os.path.basename(input_file)
         self.balances = list(self.parse_raw_balances(self.get_dicts()))
+
+    @staticmethod
+    def parse_balances_folder(input_folder):
+        """
+        :param input_folder: str
+            Path to folder where to look for transactions files
+        :return: [] of Plotter
+            Exchanges found (with balances)
+        """
+
+        files = [
+            doc for doc in ls_recurse(input_folder)
+            if is_file(doc) and doc.endswith("balances.csv")
+        ]
+        for input_file in files:
+            yield BalanceParser(input_file)
+
+    @staticmethod
+    def parse_folder(input_folder, output_file):
+        """
+        :param input_folder: str
+            Folder to parse
+        :param output_file: str
+            Path to output file
+        """
+
+        parsers = list(BalanceParser.parse_balances_folder(input_folder))
+        balances = []
+        for parser in parsers:
+            balances += parser.balances
+
+        dates = set()  # dates of all transactions
+        coins = set()  # all coins
+        for balance in balances:
+            for coin in balance.keys():
+                if coin != "date":
+                    coins.add(coin)
+            dates.add(balance["date"])  # add date
+        dates = sorted(list(dates))  # sort by date
+        coins = sorted(list(coins))  # sort alphabetically
+
+        first = {"date": dates[0]}
+        for coin in coins:
+            amount = 0.0
+            for balance in balances:
+                if balance["date"] == first["date"] and coin in balance:
+                    amount += balance[coin]
+            first[coin] = float(amount)
+        all_balances = [
+            first
+        ]
+
+        for date in dates[1:]:
+            date_balance = {}
+            for coin in coins:
+                amount = 0.0
+                for balance in balances:
+                    if balance["date"] == date and coin in balance:
+                        amount += balance[coin]
+                date_balance[coin] = amount
+            date_balance["date"] = date
+            all_balances.append(date_balance)
+
+        write_dicts_to_csv(all_balances, output_file)
+
 
     @staticmethod
     def parse_raw_balances(balances):
