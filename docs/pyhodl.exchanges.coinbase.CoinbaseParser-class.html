@@ -65,13 +65,13 @@
 <area shape="rect" id="node1_8" href="pyhodl.exchanges.coinbase.CoinbaseParser-class.html#get_raw_list" title=":return: [] of {} &#160;&#160;&#160;&#160;List of transactions." alt="" coords="18,215,233,235"/>
 <area shape="rect" id="node1_9" href="pyhodl.exchanges.coinbase.CoinbaseParser-class.html#get_transactions_list" title=":param date_key: str..." alt="" coords="18,235,233,255"/>
 <area shape="rect" id="node1" href="pyhodl.exchanges.coinbase.CoinbaseParser-class.html" title="Parse transactions from Coinbase exchange" alt="" coords="5,183,244,261"/>
-<area shape="rect" id="node2_10" href="pyhodl.data.core.Parser-class.html#__init__" title=":param input_file: str..." alt="" coords="46,38,206,58"/>
-<area shape="rect" id="node2_11" href="pyhodl.data.core.Parser-class.html#get_raw_data" title=":return: pandas.DataFrame..." alt="" coords="46,58,206,78"/>
-<area shape="rect" id="node2_12" href="pyhodl.data.core.Parser-class.html#is_deposit_history" title=":return: bool..." alt="" coords="46,78,206,98"/>
-<area shape="rect" id="node2_13" href="pyhodl.data.core.Parser-class.html#is_withdrawal_history" title=":return: bool..." alt="" coords="46,98,206,118"/>
-<area shape="rect" id="node2_14" href="pyhodl.data.core.Parser-class.html#is_trading_history" title=":return: bool..." alt="" coords="46,118,206,138"/>
-<area shape="rect" id="node2_15" href="pyhodl.data.core.Parser-class.html#get_type_file" title=":return: TransactionType..." alt="" coords="46,138,206,158"/>
-<area shape="rect" id="node2" href="pyhodl.data.core.Parser-class.html" title="Abstract parser" alt="" coords="34,5,218,164"/>
+<area shape="rect" id="node2_10" href="pyhodl.data.core.CryptoParser-class.html#__init__" title=":param input_file: str..." alt="" coords="46,38,206,58"/>
+<area shape="rect" id="node2_11" href="pyhodl.data.core.CryptoParser-class.html#get_raw_data" title=":return: pandas.DataFrame..." alt="" coords="46,58,206,78"/>
+<area shape="rect" id="node2_12" href="pyhodl.data.core.CryptoParser-class.html#is_deposit_history" title=":return: bool..." alt="" coords="46,78,206,98"/>
+<area shape="rect" id="node2_13" href="pyhodl.data.core.CryptoParser-class.html#is_withdrawal_history" title=":return: bool..." alt="" coords="46,98,206,118"/>
+<area shape="rect" id="node2_14" href="pyhodl.data.core.CryptoParser-class.html#is_trading_history" title=":return: bool..." alt="" coords="46,118,206,138"/>
+<area shape="rect" id="node2_15" href="pyhodl.data.core.CryptoParser-class.html#get_type_file" title=":return: TransactionType..." alt="" coords="46,138,206,158"/>
+<area shape="rect" id="node2" href="pyhodl.data.core.CryptoParser-class.html" title="Abstract parser" alt="" coords="34,5,218,164"/>
 </map>
   <img src="uml_class_diagram_for_pyhodl_e_6.gif" alt='' usemap="#uml_class_diagram_for_pyhodl_e_6" ismap="ismap" class="graph-without-title" />
 </center>
@@ -137,13 +137,13 @@ Parse transactions from Coinbase exchange
   </tr>
   <tr>
     <td colspan="2" class="summary">
-    <p class="indent-wrapped-lines"><b>Inherited from <code><a href="pyhodl.data.core.Parser-class.html">data.core.Parser</a></code></b>:
-      <code><a href="pyhodl.data.core.Parser-class.html#__init__">__init__</a></code>,
-      <code><a href="pyhodl.data.core.Parser-class.html#get_raw_data">get_raw_data</a></code>,
-      <code><a href="pyhodl.data.core.Parser-class.html#get_type_file">get_type_file</a></code>,
-      <code><a href="pyhodl.data.core.Parser-class.html#is_deposit_history">is_deposit_history</a></code>,
-      <code><a href="pyhodl.data.core.Parser-class.html#is_trading_history">is_trading_history</a></code>,
-      <code><a href="pyhodl.data.core.Parser-class.html#is_withdrawal_history">is_withdrawal_history</a></code>
+    <p class="indent-wrapped-lines"><b>Inherited from <code><a href="pyhodl.data.core.CryptoParser-class.html">data.core.CryptoParser</a></code></b>:
+      <code><a href="pyhodl.data.core.CryptoParser-class.html#__init__">__init__</a></code>,
+      <code><a href="pyhodl.data.core.CryptoParser-class.html#get_raw_data">get_raw_data</a></code>,
+      <code><a href="pyhodl.data.core.CryptoParser-class.html#get_type_file">get_type_file</a></code>,
+      <code><a href="pyhodl.data.core.CryptoParser-class.html#is_deposit_history">is_deposit_history</a></code>,
+      <code><a href="pyhodl.data.core.CryptoParser-class.html#is_trading_history">is_trading_history</a></code>,
+      <code><a href="pyhodl.data.core.CryptoParser-class.html#is_withdrawal_history">is_withdrawal_history</a></code>
       </p>
     <p class="indent-wrapped-lines"><b>Inherited from <code>object</code></b>:
       <code>__delattr__</code>,
@@ -228,7 +228,7 @@ Parse transactions from Coinbase exchange
 </pre>
   <dl class="fields">
     <dt>Overrides:
-        <a href="pyhodl.data.core.Parser-class.html#get_raw_list">data.core.Parser.get_raw_list</a>
+        <a href="pyhodl.data.core.CryptoParser-class.html#get_raw_list">data.core.CryptoParser.get_raw_list</a>
     </dt>
   </dl>
 </td></tr></table>
@@ -262,7 +262,7 @@ Parse transactions from Coinbase exchange
 </pre>
   <dl class="fields">
     <dt>Overrides:
-        <a href="pyhodl.data.core.Parser-class.html#get_transactions_list">data.core.Parser.get_transactions_list</a>
+        <a href="pyhodl.data.core.CryptoParser-class.html#get_transactions_list">data.core.CryptoParser.get_transactions_list</a>
         <dd><em class="note">(inherited documentation)</em></dd>
     </dt>
   </dl>
@@ -297,7 +297,7 @@ Parse transactions from Coinbase exchange
 <table border="0" cellpadding="0" cellspacing="0" width="100%%">
   <tr>
     <td align="left" class="footer">
-    Generated by Epydoc 3.0.1 on Tue Dec 26 18:36:31 2017
+    Generated by Epydoc 3.0.1 on Tue Dec 26 20:20:51 2017
     </td>
     <td align="right" class="footer">
       <a target="mainFrame" href="http://epydoc.sourceforge.net"

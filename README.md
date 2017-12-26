@@ -45,6 +45,17 @@ The following flags are supported:
 | `out` | n/a | Output folder |
 | `since` | first of your transactions | Analyze since this date |
 | `until` | last of your transactions | Analyze up to this date |
+| `plot` | n/a | shall plot something? |
+
+### Example
+A simple run with parameters like
+```bash
+python3 pyhodl.py -in "/home/stefano/Documents/out/" -plot "y"
+```
+would result in a series of plot like this one:
+![Example bitfinex](extra/bitfinex_balances.jpg)
+
+Note that actual data has been omitted
 
 ## Changelog
 See [CHANGELOG](https://github.com/sirfoga/pyhodl/blob/master/CHANGELOG.md)

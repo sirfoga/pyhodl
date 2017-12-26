@@ -3,7 +3,7 @@
           "DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
 <head>
-  <title>pyhodl.exchanges.core.Balance</title>
+  <title>pyhodl.charts.balances.Plotter</title>
   <link rel="stylesheet" href="epydoc.css" type="text/css" />
   <script type="text/javascript" src="epydoc.js"></script>
 </head>
@@ -40,9 +40,9 @@
     <td width="100%">
       <span class="breadcrumbs">
         <a href="pyhodl-module.html">Package&nbsp;pyhodl</a> ::
-        <a href="pyhodl.exchanges-module.html">Package&nbsp;exchanges</a> ::
-        <a href="pyhodl.exchanges.core-module.html">Module&nbsp;core</a> ::
-        Class&nbsp;Balance
+        <a href="pyhodl.charts-module.html">Package&nbsp;charts</a> ::
+        <a href="pyhodl.charts.balances-module.html">Module&nbsp;balances</a> ::
+        Class&nbsp;Plotter
       </span>
     </td>
     <td>
@@ -52,27 +52,30 @@
     onclick="toggle_private();">hide&nbsp;private</a>]</span></td></tr>
         <tr><td align="right"><span class="options"
             >[<a href="frames.html" target="_top">frames</a
-            >]&nbsp;|&nbsp;<a href="pyhodl.exchanges.core.Balance-class.html"
+            >]&nbsp;|&nbsp;<a href="pyhodl.charts.balances.Plotter-class.html"
             target="_top">no&nbsp;frames</a>]</span></td></tr>
       </table>
     </td>
   </tr>
 </table>
 <!-- ==================== CLASS DESCRIPTION ==================== -->
-<h1 class="epydoc">Class Balance</h1><p class="nomargin-top"><span class="codelink"><a href="pyhodl.exchanges.core-pysrc.html#Balance">source&nbsp;code</a></span></p>
+<h1 class="epydoc">Class Plotter</h1><p class="nomargin-top"><span class="codelink"><a href="pyhodl.charts.balances-pysrc.html#Plotter">source&nbsp;code</a></span></p>
 <center>
-<center>  <map id="uml_class_diagram_for_pyhodl_e_7" name="uml_class_diagram_for_pyhodl_e_7">
-<area shape="rect" id="node1_3" href="pyhodl.exchanges.core.Balance-class.html#__init__" title=":param wallets: {} of Wallet..." alt="" coords="18,37,147,57"/>
-<area shape="rect" id="node1_4" href="pyhodl.exchanges.core.Balance-class.html#merge" title=":param other: Balance..." alt="" coords="18,57,147,77"/>
-<area shape="rect" id="node1_5" href="pyhodl.exchanges.core.Balance-class.html#get_balance" title=":return: {} str &#45;&gt; float..." alt="" coords="18,77,147,97"/>
-<area shape="rect" id="node1" href="pyhodl.exchanges.core.Balance-class.html" title="Balance of something, expressed in many coins" alt="" coords="5,5,159,104"/>
+<center>  <map id="uml_class_diagram_for_pyhodl_c" name="uml_class_diagram_for_pyhodl_c">
+<area shape="rect" id="node1_6" href="pyhodl.charts.balances.Plotter-class.html#__init__" title=":param input_file: str..." alt="" coords="17,38,297,58"/>
+<area shape="rect" id="node1_7" href="pyhodl.charts.balances.Plotter-class.html#plot_amount" title=":return: void..." alt="" coords="17,58,297,78"/>
+<area shape="rect" id="node1_8" href="pyhodl.charts.balances.Plotter-class.html#plot_equiv" title=":param min_to_plot: float..." alt="" coords="17,78,297,98"/>
+<area shape="rect" id="node1_9" href="pyhodl.charts.balances.Plotter-class.html#plot_total_equiv" title=":return: void..." alt="" coords="17,98,297,118"/>
+<area shape="rect" id="node1_10" href="pyhodl.charts.balances.Plotter-class.html#plot" title=":return: void..." alt="" coords="17,118,297,138"/>
+<area shape="rect" id="node1_11" href="pyhodl.charts.balances.Plotter-class.html#get_last_total" title=":return: float..." alt="" coords="17,138,297,158"/>
+<area shape="rect" id="node1" href="pyhodl.charts.balances.Plotter-class.html" title="Plots data" alt="" coords="5,5,309,164"/>
 </map>
-  <img src="uml_class_diagram_for_pyhodl_e_7.gif" alt='' usemap="#uml_class_diagram_for_pyhodl_e_7" ismap="ismap" class="graph-without-title" />
+  <img src="uml_class_diagram_for_pyhodl_c.gif" alt='' usemap="#uml_class_diagram_for_pyhodl_c" ismap="ismap" class="graph-without-title" />
 </center>
 </center>
 <hr />
 <pre class="literalblock">
-Balance of something, expressed in many coins 
+Plots data 
 
 </pre>
 
@@ -99,11 +102,12 @@ Balance of something, expressed in many coins
     </td><td class="summary">
       <table width="100%" cellpadding="0" cellspacing="0" border="0">
         <tr>
-          <td><span class="summary-sig"><a href="pyhodl.exchanges.core.Balance-class.html#__init__" class="summary-sig-name">__init__</a>(<span class="summary-sig-arg">self</span>,
-        <span class="summary-sig-arg">wallets</span>)</span><br />
-      :param wallets: {} of Wallet...</td>
+          <td><span class="summary-sig"><a href="pyhodl.charts.balances.Plotter-class.html#__init__" class="summary-sig-name">__init__</a>(<span class="summary-sig-arg">self</span>,
+        <span class="summary-sig-arg">input_file</span>,
+        <span class="summary-sig-arg">base_currency</span>=<span class="summary-sig-default">&quot;USD&quot;</span>)</span><br />
+      :param input_file: str...</td>
           <td align="right" valign="top">
-            <span class="codelink"><a href="pyhodl.exchanges.core-pysrc.html#Balance.__init__">source&nbsp;code</a></span>
+            <span class="codelink"><a href="pyhodl.charts.balances-pysrc.html#Plotter.__init__">source&nbsp;code</a></span>
             
           </td>
         </tr>
@@ -117,11 +121,10 @@ Balance of something, expressed in many coins
     </td><td class="summary">
       <table width="100%" cellpadding="0" cellspacing="0" border="0">
         <tr>
-          <td><span class="summary-sig"><a href="pyhodl.exchanges.core.Balance-class.html#merge" class="summary-sig-name">merge</a>(<span class="summary-sig-arg">self</span>,
-        <span class="summary-sig-arg">other</span>)</span><br />
-      :param other: Balance...</td>
+          <td><span class="summary-sig"><a href="pyhodl.charts.balances.Plotter-class.html#plot_amount" class="summary-sig-name">plot_amount</a>(<span class="summary-sig-arg">self</span>)</span><br />
+      :return: void...</td>
           <td align="right" valign="top">
-            <span class="codelink"><a href="pyhodl.exchanges.core-pysrc.html#Balance.merge">source&nbsp;code</a></span>
+            <span class="codelink"><a href="pyhodl.charts.balances-pysrc.html#Plotter.plot_amount">source&nbsp;code</a></span>
             
           </td>
         </tr>
@@ -135,10 +138,62 @@ Balance of something, expressed in many coins
     </td><td class="summary">
       <table width="100%" cellpadding="0" cellspacing="0" border="0">
         <tr>
-          <td><span class="summary-sig"><a href="pyhodl.exchanges.core.Balance-class.html#get_balance" class="summary-sig-name">get_balance</a>(<span class="summary-sig-arg">self</span>)</span><br />
-      :return: {} str -&gt; float...</td>
+          <td><span class="summary-sig"><a href="pyhodl.charts.balances.Plotter-class.html#plot_equiv" class="summary-sig-name">plot_equiv</a>(<span class="summary-sig-arg">self</span>,
+        <span class="summary-sig-arg">min_to_plot</span>=<span class="summary-sig-default">0.05</span>)</span><br />
+      :param min_to_plot: float...</td>
           <td align="right" valign="top">
-            <span class="codelink"><a href="pyhodl.exchanges.core-pysrc.html#Balance.get_balance">source&nbsp;code</a></span>
+            <span class="codelink"><a href="pyhodl.charts.balances-pysrc.html#Plotter.plot_equiv">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="pyhodl.charts.balances.Plotter-class.html#plot_total_equiv" class="summary-sig-name">plot_total_equiv</a>(<span class="summary-sig-arg">self</span>)</span><br />
+      :return: void...</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="pyhodl.charts.balances-pysrc.html#Plotter.plot_total_equiv">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="pyhodl.charts.balances.Plotter-class.html#plot" class="summary-sig-name">plot</a>(<span class="summary-sig-arg">self</span>)</span><br />
+      :return: void...</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="pyhodl.charts.balances-pysrc.html#Plotter.plot">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="pyhodl.charts.balances.Plotter-class.html#get_last_total" class="summary-sig-name">get_last_total</a>(<span class="summary-sig-arg">self</span>)</span><br />
+      :return: float...</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="pyhodl.charts.balances-pysrc.html#Plotter.get_last_total">source&nbsp;code</a></span>
             
           </td>
         </tr>
@@ -216,18 +271,19 @@ Balance of something, expressed in many coins
   <table width="100%" cellpadding="0" cellspacing="0" border="0">
   <tr valign="top"><td>
   <h3 class="epydoc"><span class="sig"><span class="sig-name">__init__</span>(<span class="sig-arg">self</span>,
-        <span class="sig-arg">wallets</span>)</span>
+        <span class="sig-arg">input_file</span>,
+        <span class="sig-arg">base_currency</span>=<span class="sig-default">&quot;USD&quot;</span>)</span>
     <br /><em class="fname">(Constructor)</em>
   </h3>
   </td><td align="right" valign="top"
-    ><span class="codelink"><a href="pyhodl.exchanges.core-pysrc.html#Balance.__init__">source&nbsp;code</a></span>&nbsp;
+    ><span class="codelink"><a href="pyhodl.charts.balances-pysrc.html#Plotter.__init__">source&nbsp;code</a></span>&nbsp;
     </td>
   </tr></table>
   
   <pre class="literalblock">
 
-:param wallets: {} of Wallet
-    List of wallet (and coins)
+:param input_file: str
+    File to parse
 
 </pre>
   <dl class="fields">
@@ -237,51 +293,123 @@ Balance of something, expressed in many coins
   </dl>
 </td></tr></table>
 </div>
-<a name="merge"></a>
+<a name="plot_amount"></a>
 <div>
 <table class="details" border="1" cellpadding="3"
        cellspacing="0" width="100%" bgcolor="white">
 <tr><td>
   <table width="100%" cellpadding="0" cellspacing="0" border="0">
   <tr valign="top"><td>
-  <h3 class="epydoc"><span class="sig"><span class="sig-name">merge</span>(<span class="sig-arg">self</span>,
-        <span class="sig-arg">other</span>)</span>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">plot_amount</span>(<span class="sig-arg">self</span>)</span>
   </h3>
   </td><td align="right" valign="top"
-    ><span class="codelink"><a href="pyhodl.exchanges.core-pysrc.html#Balance.merge">source&nbsp;code</a></span>&nbsp;
+    ><span class="codelink"><a href="pyhodl.charts.balances-pysrc.html#Plotter.plot_amount">source&nbsp;code</a></span>&nbsp;
     </td>
   </tr></table>
   
   <pre class="literalblock">
 
-:param other: Balance
-    Other balance to merge with
 :return: void
-    Merges other's wallets
+    Adds to chart coins amount
 
 </pre>
   <dl class="fields">
   </dl>
 </td></tr></table>
 </div>
-<a name="get_balance"></a>
+<a name="plot_equiv"></a>
 <div>
 <table class="details" border="1" cellpadding="3"
        cellspacing="0" width="100%" bgcolor="white">
 <tr><td>
   <table width="100%" cellpadding="0" cellspacing="0" border="0">
   <tr valign="top"><td>
-  <h3 class="epydoc"><span class="sig"><span class="sig-name">get_balance</span>(<span class="sig-arg">self</span>)</span>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">plot_equiv</span>(<span class="sig-arg">self</span>,
+        <span class="sig-arg">min_to_plot</span>=<span class="sig-default">0.05</span>)</span>
   </h3>
   </td><td align="right" valign="top"
-    ><span class="codelink"><a href="pyhodl.exchanges.core-pysrc.html#Balance.get_balance">source&nbsp;code</a></span>&nbsp;
+    ><span class="codelink"><a href="pyhodl.charts.balances-pysrc.html#Plotter.plot_equiv">source&nbsp;code</a></span>&nbsp;
     </td>
   </tr></table>
   
   <pre class="literalblock">
 
-:return: {} str -&gt; float
-    For each coin, evaluate balance
+:param min_to_plot: float
+    Min percentage of total cap to plot coin equivalent
+:return: void
+    Plots currency equivalent for each coin
+
+</pre>
+  <dl class="fields">
+  </dl>
+</td></tr></table>
+</div>
+<a name="plot_total_equiv"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">plot_total_equiv</span>(<span class="sig-arg">self</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="pyhodl.charts.balances-pysrc.html#Plotter.plot_total_equiv">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <pre class="literalblock">
+
+:return: void
+    Adds to chart total equiv
+
+</pre>
+  <dl class="fields">
+  </dl>
+</td></tr></table>
+</div>
+<a name="plot"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">plot</span>(<span class="sig-arg">self</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="pyhodl.charts.balances-pysrc.html#Plotter.plot">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <pre class="literalblock">
+
+:return: void
+    Shows plot
+
+</pre>
+  <dl class="fields">
+  </dl>
+</td></tr></table>
+</div>
+<a name="get_last_total"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">get_last_total</span>(<span class="sig-arg">self</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="pyhodl.charts.balances-pysrc.html#Plotter.get_last_total">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <pre class="literalblock">
+
+:return: float
+    Total equivalent (last indexed)
 
 </pre>
   <dl class="fields">
@@ -317,7 +445,7 @@ Balance of something, expressed in many coins
 <table border="0" cellpadding="0" cellspacing="0" width="100%%">
   <tr>
     <td align="left" class="footer">
-    Generated by Epydoc 3.0.1 on Tue Dec 26 20:20:51 2017
+    Generated by Epydoc 3.0.1 on Tue Dec 26 20:20:50 2017
     </td>
     <td align="right" class="footer">
       <a target="mainFrame" href="http://epydoc.sourceforge.net"

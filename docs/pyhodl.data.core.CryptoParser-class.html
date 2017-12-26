@@ -3,7 +3,7 @@
           "DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
 <head>
-  <title>pyhodl.exchanges.core.Wallet</title>
+  <title>pyhodl.data.core.CryptoParser</title>
   <link rel="stylesheet" href="epydoc.css" type="text/css" />
   <script type="text/javascript" src="epydoc.js"></script>
 </head>
@@ -40,9 +40,9 @@
     <td width="100%">
       <span class="breadcrumbs">
         <a href="pyhodl-module.html">Package&nbsp;pyhodl</a> ::
-        <a href="pyhodl.exchanges-module.html">Package&nbsp;exchanges</a> ::
-        <a href="pyhodl.exchanges.core-module.html">Module&nbsp;core</a> ::
-        Class&nbsp;Wallet
+        <a href="pyhodl.data-module.html">Package&nbsp;data</a> ::
+        <a href="pyhodl.data.core-module.html">Module&nbsp;core</a> ::
+        Class&nbsp;CryptoParser
       </span>
     </td>
     <td>
@@ -52,32 +52,32 @@
     onclick="toggle_private();">hide&nbsp;private</a>]</span></td></tr>
         <tr><td align="right"><span class="options"
             >[<a href="frames.html" target="_top">frames</a
-            >]&nbsp;|&nbsp;<a href="pyhodl.exchanges.core.Wallet-class.html"
+            >]&nbsp;|&nbsp;<a href="pyhodl.data.core.CryptoParser-class.html"
             target="_top">no&nbsp;frames</a>]</span></td></tr>
       </table>
     </td>
   </tr>
 </table>
 <!-- ==================== CLASS DESCRIPTION ==================== -->
-<h1 class="epydoc">Class Wallet</h1><p class="nomargin-top"><span class="codelink"><a href="pyhodl.exchanges.core-pysrc.html#Wallet">source&nbsp;code</a></span></p>
+<h1 class="epydoc">Class CryptoParser</h1><p class="nomargin-top"><span class="codelink"><a href="pyhodl.data.core-pysrc.html#CryptoParser">source&nbsp;code</a></span></p>
 <center>
-<center>  <map id="uml_class_diagram_for_pyhodl_e_11" name="uml_class_diagram_for_pyhodl_e_11">
-<area shape="rect" id="node1_8" href="pyhodl.exchanges.core.Wallet-class.html#__init__" title=":param create_date: datetime..." alt="" coords="18,38,273,58"/>
-<area shape="rect" id="node1_9" href="pyhodl.exchanges.core.Wallet-class.html#add" title=":param amount: float..." alt="" coords="18,58,273,78"/>
-<area shape="rect" id="node1_10" href="pyhodl.exchanges.core.Wallet-class.html#remove" title=":param amount: float..." alt="" coords="18,78,273,98"/>
-<area shape="rect" id="node1_11" href="pyhodl.exchanges.core.Wallet-class.html#get_balance" title=":return: float..." alt="" coords="18,98,273,118"/>
-<area shape="rect" id="node1_12" href="pyhodl.exchanges.core.Wallet-class.html#merge" title=":param other: Wallet..." alt="" coords="18,118,273,138"/>
-<area shape="rect" id="node1_13" href="pyhodl.exchanges.core.Wallet-class.html#get_transactions_dict" title=":return: [] of {}..." alt="" coords="18,138,273,158"/>
-<area shape="rect" id="node1_14" href="pyhodl.exchanges.core.Wallet-class.html#dates" title=":return: [] of datetime..." alt="" coords="18,158,273,178"/>
-<area shape="rect" id="node1_15" href="pyhodl.exchanges.core.Wallet-class.html#get_amount" title=":param date: datetime..." alt="" coords="18,178,273,198"/>
-<area shape="rect" id="node1" href="pyhodl.exchanges.core.Wallet-class.html" title="A general wallet, tracking addition, deletions and fees" alt="" coords="5,5,284,204"/>
+<center>  <map id="uml_class_diagram_for_pyhodl_d_2" name="uml_class_diagram_for_pyhodl_d_2">
+<area shape="rect" id="node1_8" href="pyhodl.data.core.CryptoParser-class.html#__init__" title=":param input_file: str..." alt="" coords="17,38,396,58"/>
+<area shape="rect" id="node1_9" href="pyhodl.data.core.CryptoParser-class.html#get_raw_data" title=":return: pandas.DataFrame..." alt="" coords="17,58,396,78"/>
+<area shape="rect" id="node1_10" href="pyhodl.data.core.CryptoParser-class.html#get_raw_list" title=":return: [] of {} &#160;&#160;&#160;&#160;List of transactions." alt="" coords="17,78,396,98"/>
+<area shape="rect" id="node1_11" href="pyhodl.data.core.CryptoParser-class.html#get_transactions_list" title=":param date_key: str..." alt="" coords="17,98,396,118"/>
+<area shape="rect" id="node1_12" href="pyhodl.data.core.CryptoParser-class.html#is_deposit_history" title=":return: bool..." alt="" coords="17,118,396,138"/>
+<area shape="rect" id="node1_13" href="pyhodl.data.core.CryptoParser-class.html#is_withdrawal_history" title=":return: bool..." alt="" coords="17,138,396,158"/>
+<area shape="rect" id="node1_14" href="pyhodl.data.core.CryptoParser-class.html#is_trading_history" title=":return: bool..." alt="" coords="17,158,396,178"/>
+<area shape="rect" id="node1_15" href="pyhodl.data.core.CryptoParser-class.html#get_type_file" title=":return: TransactionType..." alt="" coords="17,178,396,198"/>
+<area shape="rect" id="node1" href="pyhodl.data.core.CryptoParser-class.html" title="Abstract parser" alt="" coords="5,5,408,204"/>
 </map>
-  <img src="uml_class_diagram_for_pyhodl_e_11.gif" alt='' usemap="#uml_class_diagram_for_pyhodl_e_11" ismap="ismap" class="graph-without-title" />
+  <img src="uml_class_diagram_for_pyhodl_d_2.gif" alt='' usemap="#uml_class_diagram_for_pyhodl_d_2" ismap="ismap" class="graph-without-title" />
 </center>
 </center>
 <hr />
 <pre class="literalblock">
-A general wallet, tracking addition, deletions and fees 
+Abstract parser 
 
 </pre>
 
@@ -104,12 +104,11 @@ A general wallet, tracking addition, deletions and fees
     </td><td class="summary">
       <table width="100%" cellpadding="0" cellspacing="0" border="0">
         <tr>
-          <td><span class="summary-sig"><a href="pyhodl.exchanges.core.Wallet-class.html#__init__" class="summary-sig-name">__init__</a>(<span class="summary-sig-arg">self</span>,
-        <span class="summary-sig-arg">create_date</span>,
-        <span class="summary-sig-arg">start_amount</span>=<span class="summary-sig-default">0</span>)</span><br />
-      :param create_date: datetime...</td>
+          <td><span class="summary-sig"><a href="pyhodl.data.core.CryptoParser-class.html#__init__" class="summary-sig-name">__init__</a>(<span class="summary-sig-arg">self</span>,
+        <span class="summary-sig-arg">input_file</span>)</span><br />
+      :param input_file: str...</td>
           <td align="right" valign="top">
-            <span class="codelink"><a href="pyhodl.exchanges.core-pysrc.html#Wallet.__init__">source&nbsp;code</a></span>
+            <span class="codelink"><a href="pyhodl.data.core-pysrc.html#CryptoParser.__init__">source&nbsp;code</a></span>
             
           </td>
         </tr>
@@ -123,12 +122,10 @@ A general wallet, tracking addition, deletions and fees
     </td><td class="summary">
       <table width="100%" cellpadding="0" cellspacing="0" border="0">
         <tr>
-          <td><span class="summary-sig"><a href="pyhodl.exchanges.core.Wallet-class.html#add" class="summary-sig-name">add</a>(<span class="summary-sig-arg">self</span>,
-        <span class="summary-sig-arg">amount</span>,
-        <span class="summary-sig-arg">date</span>)</span><br />
-      :param amount: float...</td>
+          <td><span class="summary-sig"><a href="pyhodl.data.core.CryptoParser-class.html#get_raw_data" class="summary-sig-name">get_raw_data</a>(<span class="summary-sig-arg">self</span>)</span><br />
+      :return: pandas.DataFrame...</td>
           <td align="right" valign="top">
-            <span class="codelink"><a href="pyhodl.exchanges.core-pysrc.html#Wallet.add">source&nbsp;code</a></span>
+            <span class="codelink"><a href="pyhodl.data.core-pysrc.html#CryptoParser.get_raw_data">source&nbsp;code</a></span>
             
           </td>
         </tr>
@@ -142,12 +139,11 @@ A general wallet, tracking addition, deletions and fees
     </td><td class="summary">
       <table width="100%" cellpadding="0" cellspacing="0" border="0">
         <tr>
-          <td><span class="summary-sig"><a href="pyhodl.exchanges.core.Wallet-class.html#remove" class="summary-sig-name">remove</a>(<span class="summary-sig-arg">self</span>,
-        <span class="summary-sig-arg">amount</span>,
-        <span class="summary-sig-arg">date</span>)</span><br />
-      :param amount: float...</td>
+          <td><span class="summary-sig"><a href="pyhodl.data.core.CryptoParser-class.html#get_raw_list" class="summary-sig-name">get_raw_list</a>(<span class="summary-sig-arg">self</span>)</span><br />
+      :return: [] of {}
+    List of transactions.</td>
           <td align="right" valign="top">
-            <span class="codelink"><a href="pyhodl.exchanges.core-pysrc.html#Wallet.remove">source&nbsp;code</a></span>
+            <span class="codelink"><a href="pyhodl.data.core-pysrc.html#CryptoParser.get_raw_list">source&nbsp;code</a></span>
             
           </td>
         </tr>
@@ -161,10 +157,13 @@ A general wallet, tracking addition, deletions and fees
     </td><td class="summary">
       <table width="100%" cellpadding="0" cellspacing="0" border="0">
         <tr>
-          <td><span class="summary-sig"><a href="pyhodl.exchanges.core.Wallet-class.html#get_balance" class="summary-sig-name">get_balance</a>(<span class="summary-sig-arg">self</span>)</span><br />
-      :return: float...</td>
+          <td><span class="summary-sig"><a href="pyhodl.data.core.CryptoParser-class.html#get_transactions_list" class="summary-sig-name">get_transactions_list</a>(<span class="summary-sig-arg">self</span>,
+        <span class="summary-sig-arg">date_key</span>,
+        <span class="summary-sig-arg">date_format</span>,
+        <span class="summary-sig-arg">number_keys</span>)</span><br />
+      :param date_key: str...</td>
           <td align="right" valign="top">
-            <span class="codelink"><a href="pyhodl.exchanges.core-pysrc.html#Wallet.get_balance">source&nbsp;code</a></span>
+            <span class="codelink"><a href="pyhodl.data.core-pysrc.html#CryptoParser.get_transactions_list">source&nbsp;code</a></span>
             
           </td>
         </tr>
@@ -178,11 +177,10 @@ A general wallet, tracking addition, deletions and fees
     </td><td class="summary">
       <table width="100%" cellpadding="0" cellspacing="0" border="0">
         <tr>
-          <td><span class="summary-sig"><a href="pyhodl.exchanges.core.Wallet-class.html#merge" class="summary-sig-name">merge</a>(<span class="summary-sig-arg">self</span>,
-        <span class="summary-sig-arg">other</span>)</span><br />
-      :param other: Wallet...</td>
+          <td><span class="summary-sig"><a href="pyhodl.data.core.CryptoParser-class.html#is_deposit_history" class="summary-sig-name">is_deposit_history</a>(<span class="summary-sig-arg">self</span>)</span><br />
+      :return: bool...</td>
           <td align="right" valign="top">
-            <span class="codelink"><a href="pyhodl.exchanges.core-pysrc.html#Wallet.merge">source&nbsp;code</a></span>
+            <span class="codelink"><a href="pyhodl.data.core-pysrc.html#CryptoParser.is_deposit_history">source&nbsp;code</a></span>
             
           </td>
         </tr>
@@ -196,10 +194,10 @@ A general wallet, tracking addition, deletions and fees
     </td><td class="summary">
       <table width="100%" cellpadding="0" cellspacing="0" border="0">
         <tr>
-          <td><span class="summary-sig"><a href="pyhodl.exchanges.core.Wallet-class.html#get_transactions_dict" class="summary-sig-name">get_transactions_dict</a>(<span class="summary-sig-arg">self</span>)</span><br />
-      :return: [] of {}...</td>
+          <td><span class="summary-sig"><a href="pyhodl.data.core.CryptoParser-class.html#is_withdrawal_history" class="summary-sig-name">is_withdrawal_history</a>(<span class="summary-sig-arg">self</span>)</span><br />
+      :return: bool...</td>
           <td align="right" valign="top">
-            <span class="codelink"><a href="pyhodl.exchanges.core-pysrc.html#Wallet.get_transactions_dict">source&nbsp;code</a></span>
+            <span class="codelink"><a href="pyhodl.data.core-pysrc.html#CryptoParser.is_withdrawal_history">source&nbsp;code</a></span>
             
           </td>
         </tr>
@@ -213,10 +211,10 @@ A general wallet, tracking addition, deletions and fees
     </td><td class="summary">
       <table width="100%" cellpadding="0" cellspacing="0" border="0">
         <tr>
-          <td><span class="summary-sig"><a href="pyhodl.exchanges.core.Wallet-class.html#dates" class="summary-sig-name">dates</a>(<span class="summary-sig-arg">self</span>)</span><br />
-      :return: [] of datetime...</td>
+          <td><span class="summary-sig"><a href="pyhodl.data.core.CryptoParser-class.html#is_trading_history" class="summary-sig-name">is_trading_history</a>(<span class="summary-sig-arg">self</span>)</span><br />
+      :return: bool...</td>
           <td align="right" valign="top">
-            <span class="codelink"><a href="pyhodl.exchanges.core-pysrc.html#Wallet.dates">source&nbsp;code</a></span>
+            <span class="codelink"><a href="pyhodl.data.core-pysrc.html#CryptoParser.is_trading_history">source&nbsp;code</a></span>
             
           </td>
         </tr>
@@ -230,11 +228,10 @@ A general wallet, tracking addition, deletions and fees
     </td><td class="summary">
       <table width="100%" cellpadding="0" cellspacing="0" border="0">
         <tr>
-          <td><span class="summary-sig"><a href="pyhodl.exchanges.core.Wallet-class.html#get_amount" class="summary-sig-name">get_amount</a>(<span class="summary-sig-arg">self</span>,
-        <span class="summary-sig-arg">date</span>)</span><br />
-      :param date: datetime...</td>
+          <td><span class="summary-sig"><a href="pyhodl.data.core.CryptoParser-class.html#get_type_file" class="summary-sig-name">get_type_file</a>(<span class="summary-sig-arg">self</span>)</span><br />
+      :return: TransactionType...</td>
           <td align="right" valign="top">
-            <span class="codelink"><a href="pyhodl.exchanges.core-pysrc.html#Wallet.get_amount">source&nbsp;code</a></span>
+            <span class="codelink"><a href="pyhodl.data.core-pysrc.html#CryptoParser.get_type_file">source&nbsp;code</a></span>
             
           </td>
         </tr>
@@ -312,21 +309,18 @@ A general wallet, tracking addition, deletions and fees
   <table width="100%" cellpadding="0" cellspacing="0" border="0">
   <tr valign="top"><td>
   <h3 class="epydoc"><span class="sig"><span class="sig-name">__init__</span>(<span class="sig-arg">self</span>,
-        <span class="sig-arg">create_date</span>,
-        <span class="sig-arg">start_amount</span>=<span class="sig-default">0</span>)</span>
+        <span class="sig-arg">input_file</span>)</span>
     <br /><em class="fname">(Constructor)</em>
   </h3>
   </td><td align="right" valign="top"
-    ><span class="codelink"><a href="pyhodl.exchanges.core-pysrc.html#Wallet.__init__">source&nbsp;code</a></span>&nbsp;
+    ><span class="codelink"><a href="pyhodl.data.core-pysrc.html#CryptoParser.__init__">source&nbsp;code</a></span>&nbsp;
     </td>
   </tr></table>
   
   <pre class="literalblock">
 
-:param create_date: datetime
-    Date of transaction
-::param start_amount: float
-    Amount of currency at start
+:param input_file: str
+    File to parse
 
 </pre>
   <dl class="fields">
@@ -336,186 +330,178 @@ A general wallet, tracking addition, deletions and fees
   </dl>
 </td></tr></table>
 </div>
-<a name="add"></a>
+<a name="get_raw_data"></a>
 <div>
 <table class="details" border="1" cellpadding="3"
        cellspacing="0" width="100%" bgcolor="white">
 <tr><td>
   <table width="100%" cellpadding="0" cellspacing="0" border="0">
   <tr valign="top"><td>
-  <h3 class="epydoc"><span class="sig"><span class="sig-name">add</span>(<span class="sig-arg">self</span>,
-        <span class="sig-arg">amount</span>,
-        <span class="sig-arg">date</span>)</span>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">get_raw_data</span>(<span class="sig-arg">self</span>)</span>
   </h3>
   </td><td align="right" valign="top"
-    ><span class="codelink"><a href="pyhodl.exchanges.core-pysrc.html#Wallet.add">source&nbsp;code</a></span>&nbsp;
+    ><span class="codelink"><a href="pyhodl.data.core-pysrc.html#CryptoParser.get_raw_data">source&nbsp;code</a></span>&nbsp;
     </td>
   </tr></table>
   
   <pre class="literalblock">
 
-:param amount: float
-    Amount to be added to balance
-:param date: datetime
-    Date of transaction
-:return: void
-    Adds amount to balance
+:return: pandas.DataFrame
+    Raw data from file
 
 </pre>
   <dl class="fields">
   </dl>
 </td></tr></table>
 </div>
-<a name="remove"></a>
+<a name="get_raw_list"></a>
 <div>
 <table class="details" border="1" cellpadding="3"
        cellspacing="0" width="100%" bgcolor="white">
 <tr><td>
   <table width="100%" cellpadding="0" cellspacing="0" border="0">
   <tr valign="top"><td>
-  <h3 class="epydoc"><span class="sig"><span class="sig-name">remove</span>(<span class="sig-arg">self</span>,
-        <span class="sig-arg">amount</span>,
-        <span class="sig-arg">date</span>)</span>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">get_raw_list</span>(<span class="sig-arg">self</span>)</span>
   </h3>
   </td><td align="right" valign="top"
-    ><span class="codelink"><a href="pyhodl.exchanges.core-pysrc.html#Wallet.remove">source&nbsp;code</a></span>&nbsp;
-    </td>
-  </tr></table>
-  
-  <pre class="literalblock">
-
-:param amount: float
-    Amount to be removed to balance
-:param date: datetime
-    Date of transaction
-:return: void
-    Removes amount from balance
-
-</pre>
-  <dl class="fields">
-  </dl>
-</td></tr></table>
-</div>
-<a name="get_balance"></a>
-<div>
-<table class="details" border="1" cellpadding="3"
-       cellspacing="0" width="100%" bgcolor="white">
-<tr><td>
-  <table width="100%" cellpadding="0" cellspacing="0" border="0">
-  <tr valign="top"><td>
-  <h3 class="epydoc"><span class="sig"><span class="sig-name">get_balance</span>(<span class="sig-arg">self</span>)</span>
-  </h3>
-  </td><td align="right" valign="top"
-    ><span class="codelink"><a href="pyhodl.exchanges.core-pysrc.html#Wallet.get_balance">source&nbsp;code</a></span>&nbsp;
-    </td>
-  </tr></table>
-  
-  <pre class="literalblock">
-
-:return: float
-    Current balance
-
-</pre>
-  <dl class="fields">
-  </dl>
-</td></tr></table>
-</div>
-<a name="merge"></a>
-<div>
-<table class="details" border="1" cellpadding="3"
-       cellspacing="0" width="100%" bgcolor="white">
-<tr><td>
-  <table width="100%" cellpadding="0" cellspacing="0" border="0">
-  <tr valign="top"><td>
-  <h3 class="epydoc"><span class="sig"><span class="sig-name">merge</span>(<span class="sig-arg">self</span>,
-        <span class="sig-arg">other</span>)</span>
-  </h3>
-  </td><td align="right" valign="top"
-    ><span class="codelink"><a href="pyhodl.exchanges.core-pysrc.html#Wallet.merge">source&nbsp;code</a></span>&nbsp;
-    </td>
-  </tr></table>
-  
-  <pre class="literalblock">
-
-:param other: Wallet
-    Other wallet to merge with
-:return: void
-    Add other's transactions to this wallet
-
-</pre>
-  <dl class="fields">
-  </dl>
-</td></tr></table>
-</div>
-<a name="get_transactions_dict"></a>
-<div>
-<table class="details" border="1" cellpadding="3"
-       cellspacing="0" width="100%" bgcolor="white">
-<tr><td>
-  <table width="100%" cellpadding="0" cellspacing="0" border="0">
-  <tr valign="top"><td>
-  <h3 class="epydoc"><span class="sig"><span class="sig-name">get_transactions_dict</span>(<span class="sig-arg">self</span>)</span>
-  </h3>
-  </td><td align="right" valign="top"
-    ><span class="codelink"><a href="pyhodl.exchanges.core-pysrc.html#Wallet.get_transactions_dict">source&nbsp;code</a></span>&nbsp;
+    ><span class="codelink"><a href="pyhodl.data.core-pysrc.html#CryptoParser.get_raw_list">source&nbsp;code</a></span>&nbsp;
     </td>
   </tr></table>
   
   <pre class="literalblock">
 
 :return: [] of {}
-    List of raw transactions
+    List of transactions. Each transaction is a dict with keys
+    directly from input file
 
 </pre>
   <dl class="fields">
   </dl>
 </td></tr></table>
 </div>
-<a name="dates"></a>
+<a name="get_transactions_list"></a>
 <div>
 <table class="details" border="1" cellpadding="3"
        cellspacing="0" width="100%" bgcolor="white">
 <tr><td>
   <table width="100%" cellpadding="0" cellspacing="0" border="0">
   <tr valign="top"><td>
-  <h3 class="epydoc"><span class="sig"><span class="sig-name">dates</span>(<span class="sig-arg">self</span>)</span>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">get_transactions_list</span>(<span class="sig-arg">self</span>,
+        <span class="sig-arg">date_key</span>,
+        <span class="sig-arg">date_format</span>,
+        <span class="sig-arg">number_keys</span>)</span>
   </h3>
   </td><td align="right" valign="top"
-    ><span class="codelink"><a href="pyhodl.exchanges.core-pysrc.html#Wallet.dates">source&nbsp;code</a></span>&nbsp;
+    ><span class="codelink"><a href="pyhodl.data.core-pysrc.html#CryptoParser.get_transactions_list">source&nbsp;code</a></span>&nbsp;
     </td>
   </tr></table>
   
   <pre class="literalblock">
 
-:return: [] of datetime
-    List of all dates
+:param date_key: str
+    Key containing date values
+:param date_format: str
+    Date parsing format
+:param number_keys: [] of keys
+    List of keys containing numbers to be parsed
+:return: [] of Transaction
+    List of transactions of exchange
 
 </pre>
   <dl class="fields">
   </dl>
 </td></tr></table>
 </div>
-<a name="get_amount"></a>
+<a name="is_deposit_history"></a>
 <div>
 <table class="details" border="1" cellpadding="3"
        cellspacing="0" width="100%" bgcolor="white">
 <tr><td>
   <table width="100%" cellpadding="0" cellspacing="0" border="0">
   <tr valign="top"><td>
-  <h3 class="epydoc"><span class="sig"><span class="sig-name">get_amount</span>(<span class="sig-arg">self</span>,
-        <span class="sig-arg">date</span>)</span>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">is_deposit_history</span>(<span class="sig-arg">self</span>)</span>
   </h3>
   </td><td align="right" valign="top"
-    ><span class="codelink"><a href="pyhodl.exchanges.core-pysrc.html#Wallet.get_amount">source&nbsp;code</a></span>&nbsp;
+    ><span class="codelink"><a href="pyhodl.data.core-pysrc.html#CryptoParser.is_deposit_history">source&nbsp;code</a></span>&nbsp;
     </td>
   </tr></table>
   
   <pre class="literalblock">
 
-:param date: datetime
-    Date of transaction
-:return: float
-    Amount exchanged with transaction in specified date
+:return: bool
+    True iff file contains history of deposits
+
+</pre>
+  <dl class="fields">
+  </dl>
+</td></tr></table>
+</div>
+<a name="is_withdrawal_history"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">is_withdrawal_history</span>(<span class="sig-arg">self</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="pyhodl.data.core-pysrc.html#CryptoParser.is_withdrawal_history">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <pre class="literalblock">
+
+:return: bool
+    True iff file contains history of withdrawals
+
+</pre>
+  <dl class="fields">
+  </dl>
+</td></tr></table>
+</div>
+<a name="is_trading_history"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">is_trading_history</span>(<span class="sig-arg">self</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="pyhodl.data.core-pysrc.html#CryptoParser.is_trading_history">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <pre class="literalblock">
+
+:return: bool
+    True iff file contains history of tradings
+
+</pre>
+  <dl class="fields">
+  </dl>
+</td></tr></table>
+</div>
+<a name="get_type_file"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">get_type_file</span>(<span class="sig-arg">self</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="pyhodl.data.core-pysrc.html#CryptoParser.get_type_file">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <pre class="literalblock">
+
+:return: TransactionType
+    Type of file inferred
 
 </pre>
   <dl class="fields">
@@ -551,7 +537,7 @@ A general wallet, tracking addition, deletions and fees
 <table border="0" cellpadding="0" cellspacing="0" width="100%%">
   <tr>
     <td align="left" class="footer">
-    Generated by Epydoc 3.0.1 on Tue Dec 26 20:20:51 2017
+    Generated by Epydoc 3.0.1 on Tue Dec 26 20:20:50 2017
     </td>
     <td align="right" class="footer">
       <a target="mainFrame" href="http://epydoc.sourceforge.net"

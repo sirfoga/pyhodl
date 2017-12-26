@@ -3,7 +3,7 @@
           "DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
 <head>
-  <title>pyhodl.exchanges.binance.BinanceParser</title>
+  <title>pyhodl.data.core.BalancesParser</title>
   <link rel="stylesheet" href="epydoc.css" type="text/css" />
   <script type="text/javascript" src="epydoc.js"></script>
 </head>
@@ -40,9 +40,9 @@
     <td width="100%">
       <span class="breadcrumbs">
         <a href="pyhodl-module.html">Package&nbsp;pyhodl</a> ::
-        <a href="pyhodl.exchanges-module.html">Package&nbsp;exchanges</a> ::
-        <a href="pyhodl.exchanges.binance-module.html">Module&nbsp;binance</a> ::
-        Class&nbsp;BinanceParser
+        <a href="pyhodl.data-module.html">Package&nbsp;data</a> ::
+        <a href="pyhodl.data.core-module.html">Module&nbsp;core</a> ::
+        Class&nbsp;BalancesParser
       </span>
     </td>
     <td>
@@ -52,33 +52,26 @@
     onclick="toggle_private();">hide&nbsp;private</a>]</span></td></tr>
         <tr><td align="right"><span class="options"
             >[<a href="frames.html" target="_top">frames</a
-            >]&nbsp;|&nbsp;<a href="pyhodl.exchanges.binance.BinanceParser-class.html"
+            >]&nbsp;|&nbsp;<a href="pyhodl.data.core.BalancesParser-class.html"
             target="_top">no&nbsp;frames</a>]</span></td></tr>
       </table>
     </td>
   </tr>
 </table>
 <!-- ==================== CLASS DESCRIPTION ==================== -->
-<h1 class="epydoc">Class BinanceParser</h1><p class="nomargin-top"><span class="codelink"><a href="pyhodl.exchanges.binance-pysrc.html#BinanceParser">source&nbsp;code</a></span></p>
+<h1 class="epydoc">Class BalancesParser</h1><p class="nomargin-top"><span class="codelink"><a href="pyhodl.data.core-pysrc.html#BalancesParser">source&nbsp;code</a></span></p>
 <center>
-<center>  <map id="uml_class_diagram_for_pyhodl_e_2" name="uml_class_diagram_for_pyhodl_e_2">
-<area shape="rect" id="node1_8" href="pyhodl.exchanges.binance.BinanceParser-class.html#get_transactions_list" title=":param date_key: str..." alt="" coords="18,235,233,255"/>
-<area shape="rect" id="node1" href="pyhodl.exchanges.binance.BinanceParser-class.html" title="Parse transactions from Binance exchange" alt="" coords="5,203,244,261"/>
-<area shape="rect" id="node2_9" href="pyhodl.data.core.CryptoParser-class.html#__init__" title=":param input_file: str..." alt="" coords="46,37,206,57"/>
-<area shape="rect" id="node2_10" href="pyhodl.data.core.CryptoParser-class.html#get_raw_data" title=":return: pandas.DataFrame..." alt="" coords="46,57,206,77"/>
-<area shape="rect" id="node2_11" href="pyhodl.data.core.CryptoParser-class.html#get_raw_list" title=":return: [] of {} &#160;&#160;&#160;&#160;List of transactions." alt="" coords="46,77,206,97"/>
-<area shape="rect" id="node2_12" href="pyhodl.data.core.CryptoParser-class.html#is_deposit_history" title=":return: bool..." alt="" coords="46,97,206,117"/>
-<area shape="rect" id="node2_13" href="pyhodl.data.core.CryptoParser-class.html#is_withdrawal_history" title=":return: bool..." alt="" coords="46,117,206,137"/>
-<area shape="rect" id="node2_14" href="pyhodl.data.core.CryptoParser-class.html#is_trading_history" title=":return: bool..." alt="" coords="46,137,206,157"/>
-<area shape="rect" id="node2_15" href="pyhodl.data.core.CryptoParser-class.html#get_type_file" title=":return: TransactionType..." alt="" coords="46,157,206,177"/>
-<area shape="rect" id="node2" href="pyhodl.data.core.CryptoParser-class.html" title="Abstract parser" alt="" coords="34,5,218,184"/>
+<center>  <map id="uml_class_diagram_for_pyhodl_d" name="uml_class_diagram_for_pyhodl_d">
+<area shape="rect" id="node1_2" href="pyhodl.data.core.BalancesParser-class.html#__init__" title=":param input_file: str..." alt="" coords="18,38,203,58"/>
+<area shape="rect" id="node1_3" href="pyhodl.data.core.BalancesParser-class.html#parse_raw_balances" title="pyhodl.data.core.BalancesParser.parse_raw_balances" alt="" coords="18,58,203,78"/>
+<area shape="rect" id="node1" href="pyhodl.data.core.BalancesParser-class.html" title="Parses raw balances data" alt="" coords="5,5,215,84"/>
 </map>
-  <img src="uml_class_diagram_for_pyhodl_e_2.gif" alt='' usemap="#uml_class_diagram_for_pyhodl_e_2" ismap="ismap" class="graph-without-title" />
+  <img src="uml_class_diagram_for_pyhodl_d.gif" alt='' usemap="#uml_class_diagram_for_pyhodl_d" ismap="ismap" class="graph-without-title" />
 </center>
 </center>
 <hr />
 <pre class="literalblock">
-Parse transactions from Binance exchange 
+Parses raw balances data 
 
 </pre>
 
@@ -105,11 +98,11 @@ Parse transactions from Binance exchange
     </td><td class="summary">
       <table width="100%" cellpadding="0" cellspacing="0" border="0">
         <tr>
-          <td><span class="summary-sig"><a href="pyhodl.exchanges.binance.BinanceParser-class.html#get_transactions_list" class="summary-sig-name">get_transactions_list</a>(<span class="summary-sig-arg">self</span>,
-        <span class="summary-sig-arg">**kwargs</span>)</span><br />
-      :param date_key: str...</td>
+          <td><span class="summary-sig"><a href="pyhodl.data.core.BalancesParser-class.html#__init__" class="summary-sig-name">__init__</a>(<span class="summary-sig-arg">self</span>,
+        <span class="summary-sig-arg">input_file</span>)</span><br />
+      :param input_file: str...</td>
           <td align="right" valign="top">
-            <span class="codelink"><a href="pyhodl.exchanges.binance-pysrc.html#BinanceParser.get_transactions_list">source&nbsp;code</a></span>
+            <span class="codelink"><a href="pyhodl.data.core-pysrc.html#BalancesParser.__init__">source&nbsp;code</a></span>
             
           </td>
         </tr>
@@ -117,56 +110,38 @@ Parse transactions from Binance exchange
       
     </td>
   </tr>
-  <tr>
-    <td colspan="2" class="summary">
-    <p class="indent-wrapped-lines"><b>Inherited from <code><a href="pyhodl.data.core.CryptoParser-class.html">data.core.CryptoParser</a></code></b>:
-      <code><a href="pyhodl.data.core.CryptoParser-class.html#__init__">__init__</a></code>,
-      <code><a href="pyhodl.data.core.CryptoParser-class.html#get_raw_data">get_raw_data</a></code>,
-      <code><a href="pyhodl.data.core.CryptoParser-class.html#get_raw_list">get_raw_list</a></code>,
-      <code><a href="pyhodl.data.core.CryptoParser-class.html#get_type_file">get_type_file</a></code>,
-      <code><a href="pyhodl.data.core.CryptoParser-class.html#is_deposit_history">is_deposit_history</a></code>,
-      <code><a href="pyhodl.data.core.CryptoParser-class.html#is_trading_history">is_trading_history</a></code>,
-      <code><a href="pyhodl.data.core.CryptoParser-class.html#is_withdrawal_history">is_withdrawal_history</a></code>
-      </p>
-    <p class="indent-wrapped-lines"><b>Inherited from <code>object</code></b>:
-      <code>__delattr__</code>,
-      <code>__format__</code>,
-      <code>__getattribute__</code>,
-      <code>__hash__</code>,
-      <code>__new__</code>,
-      <code>__reduce__</code>,
-      <code>__reduce_ex__</code>,
-      <code>__repr__</code>,
-      <code>__setattr__</code>,
-      <code>__sizeof__</code>,
-      <code>__str__</code>,
-      <code>__subclasshook__</code>
-      </p>
-    </td>
-  </tr>
 </table>
-<!-- ==================== PROPERTIES ==================== -->
-<a name="section-Properties"></a>
+<!-- ==================== STATIC METHODS ==================== -->
+<a name="section-StaticMethods"></a>
 <table class="summary" border="1" cellpadding="3"
        cellspacing="0" width="100%" bgcolor="white">
 <tr bgcolor="#70b0f0" class="table-header">
   <td colspan="2" class="table-header">
     <table border="0" cellpadding="0" cellspacing="0" width="100%">
       <tr valign="top">
-        <td align="left"><span class="table-header">Properties</span></td>
+        <td align="left"><span class="table-header">Static Methods</span></td>
         <td align="right" valign="top"
-         ><span class="options">[<a href="#section-Properties"
+         ><span class="options">[<a href="#section-StaticMethods"
          class="privatelink" onclick="toggle_private();"
          >hide private</a>]</span></td>
       </tr>
     </table>
   </td>
 </tr>
-  <tr>
-    <td colspan="2" class="summary">
-    <p class="indent-wrapped-lines"><b>Inherited from <code>object</code></b>:
-      <code>__class__</code>
-      </p>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a name="parse_raw_balances"></a><span class="summary-sig-name">parse_raw_balances</span>(<span class="summary-sig-arg">balances</span>)</span></td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="pyhodl.data.core-pysrc.html#BalancesParser.parse_raw_balances">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
     </td>
   </tr>
 </table>
@@ -188,38 +163,29 @@ Parse transactions from Binance exchange
   </td>
 </tr>
 </table>
-<a name="get_transactions_list"></a>
+<a name="__init__"></a>
 <div>
 <table class="details" border="1" cellpadding="3"
        cellspacing="0" width="100%" bgcolor="white">
 <tr><td>
   <table width="100%" cellpadding="0" cellspacing="0" border="0">
   <tr valign="top"><td>
-  <h3 class="epydoc"><span class="sig"><span class="sig-name">get_transactions_list</span>(<span class="sig-arg">self</span>,
-        <span class="sig-arg">**kwargs</span>)</span>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">__init__</span>(<span class="sig-arg">self</span>,
+        <span class="sig-arg">input_file</span>)</span>
+    <br /><em class="fname">(Constructor)</em>
   </h3>
   </td><td align="right" valign="top"
-    ><span class="codelink"><a href="pyhodl.exchanges.binance-pysrc.html#BinanceParser.get_transactions_list">source&nbsp;code</a></span>&nbsp;
+    ><span class="codelink"><a href="pyhodl.data.core-pysrc.html#BalancesParser.__init__">source&nbsp;code</a></span>&nbsp;
     </td>
   </tr></table>
   
   <pre class="literalblock">
 
-:param date_key: str
-    Key containing date values
-:param date_format: str
-    Date parsing format
-:param number_keys: [] of keys
-    List of keys containing numbers to be parsed
-:return: [] of Transaction
-    List of transactions of exchange
+:param input_file: str
+    File to parse
 
 </pre>
   <dl class="fields">
-    <dt>Overrides:
-        <a href="pyhodl.data.core.CryptoParser-class.html#get_transactions_list">data.core.CryptoParser.get_transactions_list</a>
-        <dd><em class="note">(inherited documentation)</em></dd>
-    </dt>
   </dl>
 </td></tr></table>
 </div>
