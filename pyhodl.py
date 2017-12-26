@@ -142,11 +142,13 @@ def parse_exchange_raw_data(exchange, exchange_name, output_file):
 
 
 def main():
-    params = parse_args(create_args())  # TODO: add nice try-catch block
+    params = parse_args(create_args())
     if check_args(params):
         if params["plot"]:
-            plotter = Plotter(params["in"], "GDAX")
-            plotter.plot_amount()
+            plotter = Plotter(params["in"], "Binance")
+            plotter.plot_equiv()
+            plotter.plot_total_equiv()
+            plotter.plot()
         else:
             exchanges = parse_transactions_folder(params["in"])
             for exchange in exchanges:

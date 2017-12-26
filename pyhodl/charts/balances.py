@@ -26,7 +26,7 @@ from ..data.core import BalancesParser
 class Plotter(object):
     """ Plots data """
 
-    def __init__(self, input_file, exchange_name):
+    def __init__(self, input_file, exchange_name, base_currency="USD"):
         """
         :param input_file: str
             File to parse
@@ -48,11 +48,14 @@ class Plotter(object):
             coin for coin in self.coins if coin != "date"
         ]
         self.exchange_name = str(exchange_name)
+        self.currency = base_currency
+
+        plt.grid(True)
 
     def plot_amount(self):
         """
         :return: void
-            Plots coins amount
+            Adds to chart coins amount
         """
 
         coins = [
@@ -60,7 +63,6 @@ class Plotter(object):
             if "value" not in coin
         ]
 
-        plt.grid(True)
         for coin in coins:
             values = [
                 self.data[date][coin] for date in self.dates
@@ -69,40 +71,87 @@ class Plotter(object):
             plt.plot(
                 self.dates,
                 values,
+                "-o",
                 label=coin
             )  # plot data
 
-        plt.xlabel("Time")
-        plt.ylabel("Amount")
-        plt.legend()  # build legend
-        plt.title(self.exchange_name + " amount of each coin")
-        plt.show()
-
-    def plot_equiv(self):
+    def plot_equiv(self, min_to_plot=0.01):
         """
-        :return:
+        :param min_to_plot: float
+            Min percentage of total cap to plot coin equivalent
+        :return: void
+            Plots currency equivalent for each coin
         """
 
-        pass
+        coins = [
+            coin for coin in self.coins
+            if "value" in coin
+        ]
+        total_cap = self.get_last_total()
+
+        for coin in coins:
+            values = [
+                self.data[date][coin] for date in self.dates
+            ]
+
+            if values[-1] > min_to_plot * total_cap:
+                plt.plot(
+                    self.dates,
+                    values,
+                    "-o",
+                    label=coin
+                )  # plot data
 
     def plot_total_equiv(self):
         """
-        :return:
+        :return: void
+            Adds to chart total equiv
         """
 
-        pass
+        coins = [
+            coin for coin in self.coins
+            if "value" in coin
+        ]
+
+        values = [
+            sum([
+                self.data[date][coin] for coin in coins
+                if float(self.data[self.dates[-1]][coin]) > 0
+            ])
+            for date in self.dates
+        ]
+
+        plt.plot(
+            self.dates,
+            values,
+            "--",
+            label=self.currency + " equivalent"
+        )  # plot data
 
     def plot(self):
         """
-        :return:
+        :return: void
+            Shows plot
         """
 
-        pass
+        plt.xlabel("Time")
+        plt.ylabel("Amount")
+        plt.title(self.exchange_name + " balance")
+        plt.legend()  # build legend
+        plt.show()
 
-    def plot_coin(self, coin):
+    def get_last_total(self):
         """
-        :param coin:
-        :return:
+        :return: float
+            Total equivalent (last indexed)
         """
 
-        pass
+        coins = [
+            coin for coin in self.coins
+            if "value" in coin
+        ]
+
+        return sum([
+            self.data[self.dates[-1]][coin] for coin in coins
+            if float(self.data[self.dates[-1]][coin]) > 0
+        ])
