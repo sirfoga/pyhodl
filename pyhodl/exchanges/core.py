@@ -275,6 +275,27 @@ class CryptoExchange(object):
 
         return all_balances
 
+    def get_all_balances_equiv(self, currency):
+        """
+        :param currency: str
+            Currency to get price
+        :return: void
+            Saves all balances to .csv
+        """
+
+        data = self.get_all_balances()
+        for i, balance in enumerate(data):
+            coins = [
+                coin for coin in balance if coin.isupper()
+            ]
+            prices = get_price(coins, currency, balance["date"])
+            print("Getting balance of", balance["date"], "...")
+
+            for coin, price in prices.items():
+                equiv = balance[coin] * price
+                data[i][coin + " (" + currency + " value)"] = equiv
+        return data
+
     def write_all_balances_to_csv(self, out, currency=None):
         """
         :param out: str
@@ -285,18 +306,10 @@ class CryptoExchange(object):
             Saves all balances to .csv
         """
 
-        data = self.get_all_balances()
         if currency is not None:
-            for i, balance in enumerate(data):
-                coins = [
-                    coin for coin in balance if coin.isupper()
-                ]
-                prices = get_price(coins, currency, balance["date"])
-                print("Getting balance of", balance["date"], "...")
-
-                for coin, price in prices.items():
-                    equiv = balance[coin] * price
-                    data[i][coin + " (" + currency + " value)"] = equiv
+            data = self.get_all_balances_equiv(currency)
+        else:
+            data = self.get_all_balances()
 
         self.write_data_to_csv(data, out)
 
