@@ -20,9 +20,16 @@
 
 import time
 
-import matplotlib.pylab as plt
+import matplotlib.dates as mdates
+import matplotlib.pyplot as plt
+import numpy as np
+from scipy.optimize import curve_fit
 
 from ..data.core import BalanceParser
+
+
+def func(x, a1, b1, a2, b2, a3, c):
+    return a1 * np.sin(b1 * x) + a2 * np.cos(b2 * x) + a3 * np.power(x, 4) + c
 
 
 class Plotter(object):
@@ -43,6 +50,7 @@ class Plotter(object):
             for i, date in enumerate(self.data)
         }
         self.dates = sorted(self.data.keys())
+        self.x_dates = mdates.date2num(self.dates)
         self.unix_timestamps = [
             int(time.mktime(date.timetuple())) for date in self.dates
         ]
@@ -51,6 +59,10 @@ class Plotter(object):
             coin for coin in self.coins if coin != "date"
         ]
         self.currency = base_currency
+        self.trend_deg = 8
+        self.trend_dates = np.linspace(
+            self.x_dates.min(), self.x_dates.max(), 200
+        )
 
     def plot_amount(self):
         """
@@ -75,7 +87,7 @@ class Plotter(object):
                 label=coin
             )  # plot data
 
-    def plot_equiv(self, min_to_plot=0.1):
+    def plot_equiv(self, min_to_plot=0.33):
         """
         :param min_to_plot: float
             Min percentage of total cap to plot coin equivalent
@@ -95,12 +107,11 @@ class Plotter(object):
             ]
 
             if max(values) > min_to_plot * total_cap:
+                popt, pcov = curve_fit(func, self.x_dates, values)
                 plt.plot(
-                    self.dates,
-                    values,
-                    "o-",
-                    label=coin
-                )  # plot data
+                    mdates.num2date(self.x_dates),
+                    func(self.x_dates, *popt), "-", label=coin
+                )  # trend
 
     def plot_total_equiv(self):
         """
@@ -116,17 +127,16 @@ class Plotter(object):
         values = [
             sum([
                 self.data[date][coin] for coin in coins
-                if float(self.data[self.dates[-1]][coin]) > 0
+                if float(self.data[date][coin]) > 0
             ])
             for date in self.dates
         ]
 
+        popt, pcov = curve_fit(func, self.x_dates, values)
         plt.plot(
-            self.dates,
-            values,
-            "--",
+            mdates.num2date(self.x_dates), func(self.x_dates, *popt), "--",
             label=self.currency + " equivalent"
-        )  # plot data
+        )  # trend
 
     def plot(self):
         """

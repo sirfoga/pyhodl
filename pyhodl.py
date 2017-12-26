@@ -22,7 +22,7 @@ import argparse
 import os
 from datetime import datetime
 
-from pyhodl.data.core import BalanceParser
+from pyhodl.charts.balances import Plotter
 from pyhodl.data.parsers import parse_transactions_folder
 from pyhodl.utils import get_actual_class_name
 
@@ -145,13 +145,10 @@ def main():
     params = parse_args(create_args())
     if check_args(params):
         if params["plot"]:
-            BalanceParser.parse_folder(params["in"], params["out"])
-            # parsers = list(parse_balances_folder(params["in"]))
-            # for parser in parsers:
-            #     plotter = Plotter(parser.path)
-            #     plotter.plot_equiv()
-            #     plotter.plot_total_equiv()
-            #     plotter.plot()
+            plotter = Plotter(params["in"])
+            plotter.plot_equiv()
+            plotter.plot_total_equiv()
+            plotter.plot()
         else:
             exchanges = parse_transactions_folder(params["in"])
             for exchange in exchanges:
