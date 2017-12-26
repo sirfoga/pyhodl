@@ -451,6 +451,11 @@ class Balance(object):
 
         object.__init__(self)
         self.wallets = wallets
+        nan_keys = [
+            key for key in wallets if str(key) == "nan"
+        ]
+        for key in nan_keys:
+            del self.wallets[key]
 
     def merge(self, other):
         """
