@@ -119,7 +119,7 @@ def main():
                 )
             )  # write transactions
 
-            exchange.write_all_transactions_to_csv(
+            exchange.write_all_balances_to_csv(
                 os.path.join(
                     params["out"],
                     exchange_name + "_balances.csv"
@@ -128,4 +128,7 @@ def main():
 
 
 if __name__ == '__main__':
-    main()
+    from pyhodl.requests import get_price
+
+    data = get_price(["BTC", "MANA", "LTC"], "USD", datetime.today())
+    print(data)
