@@ -146,6 +146,7 @@ class BalancesParser(CSVParser):
         """
 
         CSVParser.__init__(self, input_file, "utf-8")
+        self.filename = os.path.basename(input_file)
         self.balances = list(self.parse_raw_balances(self.get_dicts()))
 
     @staticmethod

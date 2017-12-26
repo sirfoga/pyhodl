@@ -26,18 +26,16 @@ from ..data.core import BalancesParser
 class Plotter(object):
     """ Plots data """
 
-    def __init__(self, input_file, exchange_name, base_currency="USD"):
+    def __init__(self, input_file, base_currency="USD"):
         """
         :param input_file: str
             File to parse
-        :param exchange_name: str
-            Name of exchange
         """
 
-        self.data = sorted(
-            BalancesParser(input_file).balances,
-            key=lambda x: x["date"]
-        )
+        object.__init__(self)
+
+        self.parser = BalancesParser(input_file)
+        self.data = sorted(self.parser.balances, key=lambda x: x["date"])
         self.data = {
             self.data[i]["date"]: self.data[i]
             for i, date in enumerate(self.data)
@@ -47,10 +45,7 @@ class Plotter(object):
         self.coins = [
             coin for coin in self.coins if coin != "date"
         ]
-        self.exchange_name = str(exchange_name)
         self.currency = base_currency
-
-        plt.grid(True)
 
     def plot_amount(self):
         """
@@ -75,7 +70,7 @@ class Plotter(object):
                 label=coin
             )  # plot data
 
-    def plot_equiv(self, min_to_plot=0.01):
+    def plot_equiv(self, min_to_plot=0.05):
         """
         :param min_to_plot: float
             Min percentage of total cap to plot coin equivalent
@@ -94,7 +89,7 @@ class Plotter(object):
                 self.data[date][coin] for date in self.dates
             ]
 
-            if values[-1] > min_to_plot * total_cap:
+            if max(values) > min_to_plot * total_cap:
                 plt.plot(
                     self.dates,
                     values,
@@ -134,9 +129,10 @@ class Plotter(object):
             Shows plot
         """
 
+        plt.grid(True)
         plt.xlabel("Time")
         plt.ylabel("Amount")
-        plt.title(self.exchange_name + " balance")
+        plt.title("Data taken from " + self.parser.filename)
         plt.legend()  # build legend
         plt.show()
 

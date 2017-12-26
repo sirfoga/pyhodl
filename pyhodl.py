@@ -22,8 +22,8 @@ import argparse
 import os
 from datetime import datetime
 
-from pyhodl.charts.balances import Plotter
-from pyhodl.data.parsers import parse_transactions_folder
+from pyhodl.data.parsers import parse_transactions_folder, \
+    parse_balances_folder
 from pyhodl.utils import get_actual_class_name
 
 DATETIME_FORMAT = "%Y-%M-%D_%H:%M:%S"
@@ -145,10 +145,11 @@ def main():
     params = parse_args(create_args())
     if check_args(params):
         if params["plot"]:
-            plotter = Plotter(params["in"], "Binance")
-            plotter.plot_equiv()
-            plotter.plot_total_equiv()
-            plotter.plot()
+            plotters = list(parse_balances_folder(params["in"]))
+            for plotter in plotters:
+                plotter.plot_equiv()
+                plotter.plot_total_equiv()
+                plotter.plot()
         else:
             exchanges = parse_transactions_folder(params["in"])
             for exchange in exchanges:
