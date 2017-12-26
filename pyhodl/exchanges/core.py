@@ -31,7 +31,7 @@ from pyhodl.utils import generate_dates, get_full_lists
 class CryptoExchange(object):
     """ Exchange dealing with crypto-coins """
 
-    balance_intervals = {
+    TIME_INTERVALS = {
         "1h": 1,
         "1d": 24,
         "7d": 24 * 7,
@@ -40,6 +40,7 @@ class CryptoExchange(object):
         "6m": 24 * 30 * 6,
         "1y": 24 * 365
     }  # interval -> hours
+    OUTPUT_DATE_FORMAT = "%Y-%m-%d@%H:%M:%S"
 
     def __init__(self, transactions):
         """
@@ -141,14 +142,14 @@ class CryptoExchange(object):
             List of wallets for each coin for each time-frame
         """
 
-        if interval not in self.balance_intervals:
+        if interval not in self.TIME_INTERVALS:
             raise ValueError("Interval must be one of ",
-                             self.balance_intervals.keys())
+                             self.TIME_INTERVALS.keys())
 
         dates_list = list(
             generate_dates(
                 since, until,
-                self.balance_intervals[interval]
+                self.TIME_INTERVALS[interval]
             )
         )
 
@@ -281,19 +282,34 @@ class CryptoExchange(object):
             Saves all balances to .csv
         """
 
-        all_transactions = self.get_all_balances()
-        write_dicts_to_csv(all_transactions, out)
+        self.write_data_to_csv(self.get_all_balances(), out)
 
     def write_all_transactions_to_csv(self, out):
         """
         :param out: str
             Path to output file
         :return: void
-            Saves all transaction to .csv
+            Saves all transactions to .csv
         """
 
-        all_transactions = self.get_all_transactions()
-        write_dicts_to_csv(all_transactions, out)
+        self.write_data_to_csv(self.get_all_transactions(), out)
+
+    @staticmethod
+    def write_data_to_csv(data, out, date_format=OUTPUT_DATE_FORMAT):
+        """
+        :param data: [] of {}
+            List of dicts
+        :param out: str
+            Path to output file
+        :param date_format: str
+            Format output date
+        :return: void
+            Saves all data to .csv
+        """
+
+        for i, transaction in enumerate(data):
+            data[i]["date"] = transaction["date"].strftime(date_format)
+        write_dicts_to_csv(data, out)
 
 
 class TransactionType(Enum):

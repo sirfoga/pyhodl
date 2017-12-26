@@ -73,10 +73,6 @@ class Bitfinex(CryptoExchange):
                     coin_buy, coin_sell = coin_sell, coin_buy
                     amount_buy, amount_sell = amount_sell, amount_buy
 
-                if coin_buy == "XRP" or coin_sell == "XRP":
-                    print(transaction.date, "buy", amount_buy, coin_buy,
-                          "sell", amount_sell, coin_sell)
-
                 if coin_buy not in wallet:  # update buy side
                     wallet[coin_buy] = Wallet(transaction.date)
                 wallet[coin_buy].add(abs(amount_buy), transaction.date)
