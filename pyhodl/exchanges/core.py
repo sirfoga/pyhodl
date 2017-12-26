@@ -19,9 +19,11 @@
 """ Analyze transactions in exchanges """
 
 import abc
+from datetime import timedelta
 from enum import Enum
 
 import matplotlib.pylab as plt
+from hal.files.save_as import write_dicts_to_csv
 
 from pyhodl.utils import generate_dates, get_full_lists
 
@@ -167,7 +169,7 @@ class CryptoExchange(object):
 
         return wallet_list
 
-    def plot_balance_subtotals(self, since, until, interval):
+    def plot_balance_subtotals(self, since, until, interval, title):
         """
         :param since: datetime
             Get transactions done since this date
@@ -206,8 +208,32 @@ class CryptoExchange(object):
         plt.xlabel("Time")
         plt.ylabel("Amount")
         plt.legend()  # build legend
-        plt.title("Subtotal cap")
+        plt.title(title)
         plt.show()
+
+    def export_transactions_as_csv(self, out, only_successful=True):
+        """
+        :param out: str
+            Path to output file
+        :param only_successful: bool
+            True iff only successful transactions shall be written
+        :return: void
+            Writes .csv file with transactions data
+        """
+
+        transactions = self.get_transactions(
+            since=self.get_first_transaction().date,
+            until=self.get_last_transaction().date + timedelta(seconds=1)
+        )
+        if only_successful:
+            transactions = [
+                transaction for transaction in transactions
+                if transaction.successful
+            ]
+        transactions = [
+            transaction.to_dict() for transaction in transactions
+        ]
+        write_dicts_to_csv(transactions, out)
 
 
 class TransactionType(Enum):
@@ -308,6 +334,14 @@ class Transaction(object):
         """
 
         self.successful = successful
+
+    def to_dict(self):
+        """
+        :return: {}
+            Dict representation of transaction
+        """
+
+        return {}
 
 
 class Wallet(object):

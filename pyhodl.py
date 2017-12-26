@@ -20,9 +20,10 @@
 
 import argparse
 import os
-from datetime import datetime
+from datetime import datetime, timedelta
 
 from pyhodl.data.parsers import parse_transactions_folder
+from pyhodl.utils import get_actual_class_name
 
 DATETIME_FORMAT = "%Y-%M-%D_%H:%M:%S"
 DATETIME_HUMAN = "[YYYY]-[MM]-[DD]_[HH]:[MM]:[SS]"
@@ -109,6 +110,15 @@ def main():
     params = parse_args(create_args())  # TODO: add nice try-catch block
     if check_args(params):
         exchanges = parse_transactions_folder(params["in"])
+        for exchange in exchanges:
+            exchange_name = get_actual_class_name(exchange)
+            exchange.plot_balance_subtotals(
+                since=exchange.get_first_transaction().date,
+                until=exchange.get_last_transaction().date + timedelta(
+                    seconds=1),
+                interval="1d",
+                title=exchange_name + " balance"
+            )
 
 
 if __name__ == '__main__':

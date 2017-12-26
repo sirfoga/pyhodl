@@ -59,3 +59,14 @@ def get_full_lists(big_dict):
             for inner_key, inner_value in big_dict.items()
         } for key in all_keys
     }
+
+
+def get_actual_class_name(class_name):
+    """
+    :param class_name: str
+        Class name of object
+    :return: str
+        Actual class name (without all path)
+    """
+
+    return str(type(class_name)).split("'")[-2].split(".")[-1]
