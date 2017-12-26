@@ -219,7 +219,7 @@ class Transaction(object):
     """ Exchange transaction """
 
     def __init__(self, raw_dict, trans_type=TransactionType.TRADING,
-                 date_key=None):
+                 date_key=None, successful=True):
         """
         :param raw_dict: {}
             Dict containing raw data
@@ -227,6 +227,8 @@ class Transaction(object):
             Type of transactions
         :param date_key: str
             Key to get date info
+        :param successful: bool
+            True iff transaction has actually taken place
         """
 
         object.__init__(self)
@@ -236,6 +238,7 @@ class Transaction(object):
             self.date = self.raw[date_key]
         else:
             self.date = None
+        self.successful = successful
 
     def get_attrs(self):
         """
@@ -290,6 +293,16 @@ class Transaction(object):
         """
 
         return self.transaction_type == TransactionType.TRADING
+
+    def has_been_performed(self, successful):
+        """
+        :param successful: bool
+            True iff transaction has actually taken place
+        :return: void
+            Sets transaction status
+        """
+
+        self.successful = successful
 
 
 class Wallet(object):
