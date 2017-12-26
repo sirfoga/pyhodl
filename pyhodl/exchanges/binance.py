@@ -18,7 +18,7 @@
 
 """ Binance exchange """
 
-from pyhodl.data.core import Parser
+from pyhodl.data.core import CryptoParser
 from .core import CryptoExchange, Wallet, Balance
 
 
@@ -49,7 +49,7 @@ def infer_coins(transaction):
     return coin_buy, coin_sell, coin_fee, buy_amount, sell_amount, fee_amount
 
 
-class BinanceParser(Parser):
+class BinanceParser(CryptoParser):
     """ Parse transactions from Binance exchange """
 
     def get_transactions_list(self, **kwargs):

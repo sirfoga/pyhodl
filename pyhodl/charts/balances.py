@@ -18,6 +18,8 @@
 
 """ Plot balances data with trends and stats """
 
+import matplotlib.pylab as plt
+
 from ..data.core import BalancesParser
 
 
@@ -36,6 +38,15 @@ class Plotter(object):
             BalancesParser(input_file).balances,
             key=lambda x: x["date"]
         )
+        self.data = {
+            self.data[i]["date"]: self.data[i]
+            for i, date in enumerate(self.data)
+        }
+        self.dates = sorted(self.data.keys())
+        self.coins = self.data[list(self.data.keys())[0]].keys()
+        self.coins = [
+            coin for coin in self.coins if coin != "date"
+        ]
         self.exchange_name = str(exchange_name)
 
     def plot_amount(self):
@@ -44,7 +55,28 @@ class Plotter(object):
             Plots coins amount
         """
 
-        pass
+        coins = [
+            coin for coin in self.coins
+            if "value" not in coin
+        ]
+
+        plt.grid(True)
+        for coin in coins:
+            values = [
+                self.data[date][coin] for date in self.dates
+            ]
+
+            plt.plot(
+                self.dates,
+                values,
+                label=coin
+            )  # plot data
+
+        plt.xlabel("Time")
+        plt.ylabel("Amount")
+        plt.legend()  # build legend
+        plt.title(self.exchange_name + " amount of each coin")
+        plt.show()
 
     def plot_equiv(self):
         """

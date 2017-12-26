@@ -18,11 +18,11 @@
 
 """ Coinbase exchange """
 
-from pyhodl.data.core import Parser
+from pyhodl.data.core import CryptoParser
 from .core import CryptoExchange, Wallet, Balance
 
 
-class CoinbaseParser(Parser):
+class CoinbaseParser(CryptoParser):
     """ Parse transactions from Coinbase exchange """
 
     def get_raw_list(self):

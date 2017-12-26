@@ -27,7 +27,7 @@ from hal.files.parsers import CSVParser
 from ..exchanges.core import CryptoExchange, Transaction, TransactionType
 
 
-class Parser(object):
+class CryptoParser(object):
     """ Abstract parser """
 
     def __init__(self, input_file):
@@ -145,7 +145,7 @@ class BalancesParser(CSVParser):
             File to parse
         """
 
-        CSVParser.__init__(input_file, "utf-8")
+        CSVParser.__init__(self, input_file, "utf-8")
         self.balances = list(self.parse_raw_balances(self.get_dicts()))
 
     @staticmethod

@@ -18,11 +18,11 @@
 
 """ GDAX exchange """
 
-from pyhodl.data.core import Parser
+from pyhodl.data.core import CryptoParser
 from .core import CryptoExchange, Wallet, Balance
 
 
-class GdaxParser(Parser):
+class GdaxParser(CryptoParser):
     """ Parse transactions from GDAX exchange """
 
     def get_transactions_list(self, **kwargs):

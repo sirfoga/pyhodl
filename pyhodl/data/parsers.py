@@ -20,7 +20,7 @@
 
 from hal.files.models.system import ls_recurse, is_file
 
-from .core import Parser
+from .core import CryptoParser
 from ..exchanges.binance import BinanceParser, Binance
 from ..exchanges.bitfinex import BitfinexParser, Bitfinex
 from ..exchanges.coinbase import CoinbaseParser, Coinbase
@@ -35,7 +35,7 @@ def parse_transactions(input_file):
             Builds exchange model based on transactions
         """
 
-        parser = Parser(input_file)
+        parser = CryptoParser(input_file)
         transaction_attrs = parser.get_raw_data().keys()
         if "Coinbase" in parser.filename:
             return Coinbase(

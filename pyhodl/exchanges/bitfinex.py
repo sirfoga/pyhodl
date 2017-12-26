@@ -18,11 +18,11 @@
 
 """ Bitfinex exchange """
 
-from pyhodl.data.core import Parser
+from pyhodl.data.core import CryptoParser
 from .core import CryptoExchange, Wallet, Balance
 
 
-class BitfinexParser(Parser):
+class BitfinexParser(CryptoParser):
     """ Parse transactions from Bitfinex exchange """
 
     def get_transactions_list(self, **kwargs):

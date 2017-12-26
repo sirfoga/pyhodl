@@ -73,7 +73,7 @@ def parse_args(parser):
     args = parser.parse_args()
     params = {}
     keys = [
-        "in", "out", "since", "until"
+        "in", "out", "since", "until", "plot"
     ]
 
     for k in keys:
@@ -90,7 +90,7 @@ def parse_args(parser):
         )
 
     if params["plot"]:
-        params["plot"] = bool(params["plot"])
+        params["plot"] = bool(params["plot"]) or params["plot"].startswith("y")
 
     return params
 

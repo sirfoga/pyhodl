@@ -22,11 +22,10 @@ import abc
 from datetime import timedelta
 from enum import Enum
 
-import matplotlib.pylab as plt
 from hal.files.save_as import write_dicts_to_csv
 
 from pyhodl.requests import get_price
-from pyhodl.utils import generate_dates, get_full_lists
+from pyhodl.utils import generate_dates
 
 
 class CryptoExchange(object):
@@ -297,46 +296,6 @@ class CryptoExchange(object):
         for i, transaction in enumerate(data):
             data[i]["date"] = transaction["date"].strftime(date_format)
         write_dicts_to_csv(data, out)
-
-    def plot_all_balances(self, data_dump, title):
-        """
-        :param data_dump: str
-            Input file with data dump
-        :param title: str
-            Title of plot
-        :return: void
-            Shows plot with subtotals
-        """
-
-        subtotals = self.get_balance_subtotals(since, until, interval)
-        data = {
-            date_balance["date"]: date_balance["balance"].get_balance()
-            for date_balance in subtotals
-        }
-        data = get_full_lists(data)
-
-        plt.grid(True)
-        for key, value in data.items():
-            sorted_values = sorted(value.items())
-            dates = [
-                item[0] for item in sorted_values
-            ]
-            values = [
-                float(item[1]) if item[1] else float("nan")
-                for item in sorted_values
-            ]
-
-            plt.plot(
-                dates,
-                values,
-                label=key
-            )  # plot data
-
-        plt.xlabel("Time")
-        plt.ylabel("Amount")
-        plt.legend()  # build legend
-        plt.title(title)
-        plt.show()
 
 
 class TransactionType(Enum):
