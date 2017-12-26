@@ -62,11 +62,15 @@
 <h1 class="epydoc">Class Parser</h1><p class="nomargin-top"><span class="codelink"><a href="pyhodl.data.core-pysrc.html#Parser">source&nbsp;code</a></span></p>
 <center>
 <center>  <map id="uml_class_diagram_for_pyhodl_d" name="uml_class_diagram_for_pyhodl_d">
-<area shape="rect" id="node1_4" href="pyhodl.data.core.Parser-class.html#__init__" title=":param input_file: str..." alt="" coords="17,38,396,58"/>
-<area shape="rect" id="node1_5" href="pyhodl.data.core.Parser-class.html#get_raw_data" title=":return: pandas.DataFrame..." alt="" coords="17,58,396,78"/>
-<area shape="rect" id="node1_6" href="pyhodl.data.core.Parser-class.html#get_raw_list" title=":return: [] of {} &#160;&#160;&#160;&#160;List of transactions." alt="" coords="17,78,396,98"/>
-<area shape="rect" id="node1_7" href="pyhodl.data.core.Parser-class.html#get_transactions_list" title=":param date_key: str..." alt="" coords="17,98,396,118"/>
-<area shape="rect" id="node1" href="pyhodl.data.core.Parser-class.html" title="Abstract parser" alt="" coords="5,5,408,124"/>
+<area shape="rect" id="node1_8" href="pyhodl.data.core.Parser-class.html#__init__" title=":param input_file: str..." alt="" coords="17,38,396,58"/>
+<area shape="rect" id="node1_9" href="pyhodl.data.core.Parser-class.html#get_raw_data" title=":return: pandas.DataFrame..." alt="" coords="17,58,396,78"/>
+<area shape="rect" id="node1_10" href="pyhodl.data.core.Parser-class.html#get_raw_list" title=":return: [] of {} &#160;&#160;&#160;&#160;List of transactions." alt="" coords="17,78,396,98"/>
+<area shape="rect" id="node1_11" href="pyhodl.data.core.Parser-class.html#get_transactions_list" title=":param date_key: str..." alt="" coords="17,98,396,118"/>
+<area shape="rect" id="node1_12" href="pyhodl.data.core.Parser-class.html#is_deposit_history" title=":return: bool..." alt="" coords="17,118,396,138"/>
+<area shape="rect" id="node1_13" href="pyhodl.data.core.Parser-class.html#is_withdrawal_history" title=":return: bool..." alt="" coords="17,138,396,158"/>
+<area shape="rect" id="node1_14" href="pyhodl.data.core.Parser-class.html#is_trading_history" title=":return: bool..." alt="" coords="17,158,396,178"/>
+<area shape="rect" id="node1_15" href="pyhodl.data.core.Parser-class.html#get_type_file" title=":return: TransactionType..." alt="" coords="17,178,396,198"/>
+<area shape="rect" id="node1" href="pyhodl.data.core.Parser-class.html" title="Abstract parser" alt="" coords="5,5,408,204"/>
 </map>
   <img src="uml_class_diagram_for_pyhodl_d.gif" alt='' usemap="#uml_class_diagram_for_pyhodl_d" ismap="ismap" class="graph-without-title" />
 </center>
@@ -160,6 +164,74 @@ Abstract parser
       :param date_key: str...</td>
           <td align="right" valign="top">
             <span class="codelink"><a href="pyhodl.data.core-pysrc.html#Parser.get_transactions_list">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="pyhodl.data.core.Parser-class.html#is_deposit_history" class="summary-sig-name">is_deposit_history</a>(<span class="summary-sig-arg">self</span>)</span><br />
+      :return: bool...</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="pyhodl.data.core-pysrc.html#Parser.is_deposit_history">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="pyhodl.data.core.Parser-class.html#is_withdrawal_history" class="summary-sig-name">is_withdrawal_history</a>(<span class="summary-sig-arg">self</span>)</span><br />
+      :return: bool...</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="pyhodl.data.core-pysrc.html#Parser.is_withdrawal_history">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="pyhodl.data.core.Parser-class.html#is_trading_history" class="summary-sig-name">is_trading_history</a>(<span class="summary-sig-arg">self</span>)</span><br />
+      :return: bool...</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="pyhodl.data.core-pysrc.html#Parser.is_trading_history">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="pyhodl.data.core.Parser-class.html#get_type_file" class="summary-sig-name">get_type_file</a>(<span class="summary-sig-arg">self</span>)</span><br />
+      :return: TransactionType...</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="pyhodl.data.core-pysrc.html#Parser.get_type_file">source&nbsp;code</a></span>
             
           </td>
         </tr>
@@ -340,6 +412,102 @@ Abstract parser
   </dl>
 </td></tr></table>
 </div>
+<a name="is_deposit_history"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">is_deposit_history</span>(<span class="sig-arg">self</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="pyhodl.data.core-pysrc.html#Parser.is_deposit_history">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <pre class="literalblock">
+
+:return: bool
+    True iff file contains history of deposits
+
+</pre>
+  <dl class="fields">
+  </dl>
+</td></tr></table>
+</div>
+<a name="is_withdrawal_history"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">is_withdrawal_history</span>(<span class="sig-arg">self</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="pyhodl.data.core-pysrc.html#Parser.is_withdrawal_history">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <pre class="literalblock">
+
+:return: bool
+    True iff file contains history of withdrawals
+
+</pre>
+  <dl class="fields">
+  </dl>
+</td></tr></table>
+</div>
+<a name="is_trading_history"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">is_trading_history</span>(<span class="sig-arg">self</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="pyhodl.data.core-pysrc.html#Parser.is_trading_history">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <pre class="literalblock">
+
+:return: bool
+    True iff file contains history of tradings
+
+</pre>
+  <dl class="fields">
+  </dl>
+</td></tr></table>
+</div>
+<a name="get_type_file"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">get_type_file</span>(<span class="sig-arg">self</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="pyhodl.data.core-pysrc.html#Parser.get_type_file">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <pre class="literalblock">
+
+:return: TransactionType
+    Type of file inferred
+
+</pre>
+  <dl class="fields">
+  </dl>
+</td></tr></table>
+</div>
 <br />
 <!-- ==================== NAVIGATION BAR ==================== -->
 <table class="navbar" border="0" width="100%" cellpadding="0"
@@ -369,7 +537,7 @@ Abstract parser
 <table border="0" cellpadding="0" cellspacing="0" width="100%%">
   <tr>
     <td align="left" class="footer">
-    Generated by Epydoc 3.0.1 on Thu Dec 21 02:07:33 2017
+    Generated by Epydoc 3.0.1 on Tue Dec 26 15:53:46 2017
     </td>
     <td align="right" class="footer">
       <a target="mainFrame" href="http://epydoc.sourceforge.net"

@@ -62,12 +62,16 @@
 <h1 class="epydoc">Class CoinbaseParser</h1><p class="nomargin-top"><span class="codelink"><a href="pyhodl.exchanges.coinbase-pysrc.html#CoinbaseParser">source&nbsp;code</a></span></p>
 <center>
 <center>  <map id="uml_class_diagram_for_pyhodl_e_6" name="uml_class_diagram_for_pyhodl_e_6">
-<area shape="rect" id="node1_4" href="pyhodl.exchanges.coinbase.CoinbaseParser-class.html#get_transactions_list" title=":param date_key: str..." alt="" coords="18,155,233,175"/>
-<area shape="rect" id="node1" href="pyhodl.exchanges.coinbase.CoinbaseParser-class.html" title="Parse transactions from Coinbase exchange" alt="" coords="5,123,244,181"/>
-<area shape="rect" id="node2_5" href="pyhodl.data.core.Parser-class.html#__init__" title=":param input_file: str..." alt="" coords="55,37,195,57"/>
-<area shape="rect" id="node2_6" href="pyhodl.data.core.Parser-class.html#get_raw_data" title=":return: pandas.DataFrame..." alt="" coords="55,57,195,77"/>
-<area shape="rect" id="node2_7" href="pyhodl.data.core.Parser-class.html#get_raw_list" title=":return: [] of {} &#160;&#160;&#160;&#160;List of transactions." alt="" coords="55,77,195,97"/>
-<area shape="rect" id="node2" href="pyhodl.data.core.Parser-class.html" title="Abstract parser" alt="" coords="43,5,207,104"/>
+<area shape="rect" id="node1_8" href="pyhodl.exchanges.coinbase.CoinbaseParser-class.html#get_raw_list" title=":return: [] of {} &#160;&#160;&#160;&#160;List of transactions." alt="" coords="18,215,233,235"/>
+<area shape="rect" id="node1_9" href="pyhodl.exchanges.coinbase.CoinbaseParser-class.html#get_transactions_list" title=":param date_key: str..." alt="" coords="18,235,233,255"/>
+<area shape="rect" id="node1" href="pyhodl.exchanges.coinbase.CoinbaseParser-class.html" title="Parse transactions from Coinbase exchange" alt="" coords="5,183,244,261"/>
+<area shape="rect" id="node2_10" href="pyhodl.data.core.Parser-class.html#__init__" title=":param input_file: str..." alt="" coords="46,38,206,58"/>
+<area shape="rect" id="node2_11" href="pyhodl.data.core.Parser-class.html#get_raw_data" title=":return: pandas.DataFrame..." alt="" coords="46,58,206,78"/>
+<area shape="rect" id="node2_12" href="pyhodl.data.core.Parser-class.html#is_deposit_history" title=":return: bool..." alt="" coords="46,78,206,98"/>
+<area shape="rect" id="node2_13" href="pyhodl.data.core.Parser-class.html#is_withdrawal_history" title=":return: bool..." alt="" coords="46,98,206,118"/>
+<area shape="rect" id="node2_14" href="pyhodl.data.core.Parser-class.html#is_trading_history" title=":return: bool..." alt="" coords="46,118,206,138"/>
+<area shape="rect" id="node2_15" href="pyhodl.data.core.Parser-class.html#get_type_file" title=":return: TransactionType..." alt="" coords="46,138,206,158"/>
+<area shape="rect" id="node2" href="pyhodl.data.core.Parser-class.html" title="Abstract parser" alt="" coords="34,5,218,164"/>
 </map>
   <img src="uml_class_diagram_for_pyhodl_e_6.gif" alt='' usemap="#uml_class_diagram_for_pyhodl_e_6" ismap="ismap" class="graph-without-title" />
 </center>
@@ -101,6 +105,24 @@ Parse transactions from Coinbase exchange
     </td><td class="summary">
       <table width="100%" cellpadding="0" cellspacing="0" border="0">
         <tr>
+          <td><span class="summary-sig"><a href="pyhodl.exchanges.coinbase.CoinbaseParser-class.html#get_raw_list" class="summary-sig-name">get_raw_list</a>(<span class="summary-sig-arg">self</span>)</span><br />
+      :return: [] of {}
+    List of transactions.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="pyhodl.exchanges.coinbase-pysrc.html#CoinbaseParser.get_raw_list">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
           <td><span class="summary-sig"><a href="pyhodl.exchanges.coinbase.CoinbaseParser-class.html#get_transactions_list" class="summary-sig-name">get_transactions_list</a>(<span class="summary-sig-arg">self</span>,
         <span class="summary-sig-arg">**kwargs</span>)</span><br />
       :param date_key: str...</td>
@@ -118,7 +140,10 @@ Parse transactions from Coinbase exchange
     <p class="indent-wrapped-lines"><b>Inherited from <code><a href="pyhodl.data.core.Parser-class.html">data.core.Parser</a></code></b>:
       <code><a href="pyhodl.data.core.Parser-class.html#__init__">__init__</a></code>,
       <code><a href="pyhodl.data.core.Parser-class.html#get_raw_data">get_raw_data</a></code>,
-      <code><a href="pyhodl.data.core.Parser-class.html#get_raw_list">get_raw_list</a></code>
+      <code><a href="pyhodl.data.core.Parser-class.html#get_type_file">get_type_file</a></code>,
+      <code><a href="pyhodl.data.core.Parser-class.html#is_deposit_history">is_deposit_history</a></code>,
+      <code><a href="pyhodl.data.core.Parser-class.html#is_trading_history">is_trading_history</a></code>,
+      <code><a href="pyhodl.data.core.Parser-class.html#is_withdrawal_history">is_withdrawal_history</a></code>
       </p>
     <p class="indent-wrapped-lines"><b>Inherited from <code>object</code></b>:
       <code>__delattr__</code>,
@@ -180,6 +205,34 @@ Parse transactions from Coinbase exchange
   </td>
 </tr>
 </table>
+<a name="get_raw_list"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">get_raw_list</span>(<span class="sig-arg">self</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="pyhodl.exchanges.coinbase-pysrc.html#CoinbaseParser.get_raw_list">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <pre class="literalblock">
+
+:return: [] of {}
+    List of transactions. Each transaction is a dict with keys
+    directly from input file
+
+</pre>
+  <dl class="fields">
+    <dt>Overrides:
+        <a href="pyhodl.data.core.Parser-class.html#get_raw_list">data.core.Parser.get_raw_list</a>
+    </dt>
+  </dl>
+</td></tr></table>
+</div>
 <a name="get_transactions_list"></a>
 <div>
 <table class="details" border="1" cellpadding="3"
@@ -244,7 +297,7 @@ Parse transactions from Coinbase exchange
 <table border="0" cellpadding="0" cellspacing="0" width="100%%">
   <tr>
     <td align="left" class="footer">
-    Generated by Epydoc 3.0.1 on Thu Dec 21 02:07:33 2017
+    Generated by Epydoc 3.0.1 on Tue Dec 26 15:53:46 2017
     </td>
     <td align="right" class="footer">
       <a target="mainFrame" href="http://epydoc.sourceforge.net"

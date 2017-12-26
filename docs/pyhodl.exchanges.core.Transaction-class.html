@@ -62,12 +62,16 @@
 <h1 class="epydoc">Class Transaction</h1><p class="nomargin-top"><span class="codelink"><a href="pyhodl.exchanges.core-pysrc.html#Transaction">source&nbsp;code</a></span></p>
 <center>
 <center>  <map id="uml_class_diagram_for_pyhodl_e_9" name="uml_class_diagram_for_pyhodl_e_9">
-<area shape="rect" id="node1_5" href="pyhodl.exchanges.core.Transaction-class.html#__init__" title=":param raw_dict: {}..." alt="" coords="17,37,255,57"/>
-<area shape="rect" id="node1_6" href="pyhodl.exchanges.core.Transaction-class.html#get_attrs" title=":return: []..." alt="" coords="17,57,255,77"/>
-<area shape="rect" id="node1_7" href="pyhodl.exchanges.core.Transaction-class.html#has" title=":param item: str..." alt="" coords="17,77,255,97"/>
-<area shape="rect" id="node1_8" href="pyhodl.exchanges.core.Transaction-class.html#__getitem__" title="pyhodl.exchanges.core.Transaction.__getitem__" alt="" coords="17,97,255,117"/>
-<area shape="rect" id="node1_9" href="pyhodl.exchanges.core.Transaction-class.html#__str__" title="str(x)" alt="" coords="17,117,255,137"/>
-<area shape="rect" id="node1" href="pyhodl.exchanges.core.Transaction-class.html" title="Exchange transaction" alt="" coords="5,5,267,144"/>
+<area shape="rect" id="node1_9" href="pyhodl.exchanges.core.Transaction-class.html#__init__" title=":param raw_dict: {}..." alt="" coords="17,37,599,57"/>
+<area shape="rect" id="node1_10" href="pyhodl.exchanges.core.Transaction-class.html#get_attrs" title=":return: []..." alt="" coords="17,57,599,77"/>
+<area shape="rect" id="node1_11" href="pyhodl.exchanges.core.Transaction-class.html#has" title=":param item: str..." alt="" coords="17,77,599,97"/>
+<area shape="rect" id="node1_12" href="pyhodl.exchanges.core.Transaction-class.html#__getitem__" title="pyhodl.exchanges.core.Transaction.__getitem__" alt="" coords="17,97,599,117"/>
+<area shape="rect" id="node1_13" href="pyhodl.exchanges.core.Transaction-class.html#__str__" title="str(x)" alt="" coords="17,117,599,137"/>
+<area shape="rect" id="node1_14" href="pyhodl.exchanges.core.Transaction-class.html#is_deposit" title=":return: bool..." alt="" coords="17,137,599,157"/>
+<area shape="rect" id="node1_15" href="pyhodl.exchanges.core.Transaction-class.html#is_withdrawal" title=":return: bool..." alt="" coords="17,157,599,177"/>
+<area shape="rect" id="node1_16" href="pyhodl.exchanges.core.Transaction-class.html#is_trading" title=":return: bool..." alt="" coords="17,177,599,197"/>
+<area shape="rect" id="node1_17" href="pyhodl.exchanges.core.Transaction-class.html#has_been_performed" title=":param successful: bool..." alt="" coords="17,197,599,217"/>
+<area shape="rect" id="node1" href="pyhodl.exchanges.core.Transaction-class.html" title="Exchange transaction" alt="" coords="5,5,611,224"/>
 </map>
   <img src="uml_class_diagram_for_pyhodl_e_9.gif" alt='' usemap="#uml_class_diagram_for_pyhodl_e_9" ismap="ismap" class="graph-without-title" />
 </center>
@@ -103,7 +107,9 @@ Exchange transaction
         <tr>
           <td><span class="summary-sig"><a href="pyhodl.exchanges.core.Transaction-class.html#__init__" class="summary-sig-name">__init__</a>(<span class="summary-sig-arg">self</span>,
         <span class="summary-sig-arg">raw_dict</span>,
-        <span class="summary-sig-arg">date_key</span>=<span class="summary-sig-default">None</span>)</span><br />
+        <span class="summary-sig-arg">trans_type</span>=<span class="summary-sig-default">TransactionType.TRADING</span>,
+        <span class="summary-sig-arg">date_key</span>=<span class="summary-sig-default">None</span>,
+        <span class="summary-sig-arg">successful</span>=<span class="summary-sig-default">True</span>)</span><br />
       :param raw_dict: {}...</td>
           <td align="right" valign="top">
             <span class="codelink"><a href="pyhodl.exchanges.core-pysrc.html#Transaction.__init__">source&nbsp;code</a></span>
@@ -183,6 +189,75 @@ Exchange transaction
       
     </td>
   </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="pyhodl.exchanges.core.Transaction-class.html#is_deposit" class="summary-sig-name">is_deposit</a>(<span class="summary-sig-arg">self</span>)</span><br />
+      :return: bool...</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="pyhodl.exchanges.core-pysrc.html#Transaction.is_deposit">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="pyhodl.exchanges.core.Transaction-class.html#is_withdrawal" class="summary-sig-name">is_withdrawal</a>(<span class="summary-sig-arg">self</span>)</span><br />
+      :return: bool...</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="pyhodl.exchanges.core-pysrc.html#Transaction.is_withdrawal">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="pyhodl.exchanges.core.Transaction-class.html#is_trading" class="summary-sig-name">is_trading</a>(<span class="summary-sig-arg">self</span>)</span><br />
+      :return: bool...</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="pyhodl.exchanges.core-pysrc.html#Transaction.is_trading">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="pyhodl.exchanges.core.Transaction-class.html#has_been_performed" class="summary-sig-name">has_been_performed</a>(<span class="summary-sig-arg">self</span>,
+        <span class="summary-sig-arg">successful</span>)</span><br />
+      :param successful: bool...</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="pyhodl.exchanges.core-pysrc.html#Transaction.has_been_performed">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
   <tr>
     <td colspan="2" class="summary">
     <p class="indent-wrapped-lines"><b>Inherited from <code>object</code></b>:
@@ -253,7 +328,9 @@ Exchange transaction
   <tr valign="top"><td>
   <h3 class="epydoc"><span class="sig"><span class="sig-name">__init__</span>(<span class="sig-arg">self</span>,
         <span class="sig-arg">raw_dict</span>,
-        <span class="sig-arg">date_key</span>=<span class="sig-default">None</span>)</span>
+        <span class="sig-arg">trans_type</span>=<span class="sig-default">TransactionType.TRADING</span>,
+        <span class="sig-arg">date_key</span>=<span class="sig-default">None</span>,
+        <span class="sig-arg">successful</span>=<span class="sig-default">True</span>)</span>
     <br /><em class="fname">(Constructor)</em>
   </h3>
   </td><td align="right" valign="top"
@@ -265,8 +342,12 @@ Exchange transaction
 
 :param raw_dict: {}
     Dict containing raw data
+:param trans_type: TransactionType
+    Type of transactions
 :param date_key: str
     Key to get date info
+:param successful: bool
+    True iff transaction has actually taken place
 
 </pre>
   <dl class="fields">
@@ -354,6 +435,105 @@ str(x)
   </dl>
 </td></tr></table>
 </div>
+<a name="is_deposit"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">is_deposit</span>(<span class="sig-arg">self</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="pyhodl.exchanges.core-pysrc.html#Transaction.is_deposit">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <pre class="literalblock">
+
+:return: bool
+    True iff transaction is a deposit
+
+</pre>
+  <dl class="fields">
+  </dl>
+</td></tr></table>
+</div>
+<a name="is_withdrawal"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">is_withdrawal</span>(<span class="sig-arg">self</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="pyhodl.exchanges.core-pysrc.html#Transaction.is_withdrawal">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <pre class="literalblock">
+
+:return: bool
+    True iff transaction is a withdrawal
+
+</pre>
+  <dl class="fields">
+  </dl>
+</td></tr></table>
+</div>
+<a name="is_trading"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">is_trading</span>(<span class="sig-arg">self</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="pyhodl.exchanges.core-pysrc.html#Transaction.is_trading">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <pre class="literalblock">
+
+:return: bool
+    True iff transaction is a simple trading
+
+</pre>
+  <dl class="fields">
+  </dl>
+</td></tr></table>
+</div>
+<a name="has_been_performed"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">has_been_performed</span>(<span class="sig-arg">self</span>,
+        <span class="sig-arg">successful</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="pyhodl.exchanges.core-pysrc.html#Transaction.has_been_performed">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <pre class="literalblock">
+
+:param successful: bool
+    True iff transaction has actually taken place
+:return: void
+    Sets transaction status
+
+</pre>
+  <dl class="fields">
+  </dl>
+</td></tr></table>
+</div>
 <br />
 <!-- ==================== NAVIGATION BAR ==================== -->
 <table class="navbar" border="0" width="100%" cellpadding="0"
@@ -383,7 +563,7 @@ str(x)
 <table border="0" cellpadding="0" cellspacing="0" width="100%%">
   <tr>
     <td align="left" class="footer">
-    Generated by Epydoc 3.0.1 on Thu Dec 21 02:07:33 2017
+    Generated by Epydoc 3.0.1 on Tue Dec 26 15:53:46 2017
     </td>
     <td align="right" class="footer">
       <a target="mainFrame" href="http://epydoc.sourceforge.net"

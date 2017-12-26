@@ -23,6 +23,7 @@ from datetime import timedelta
 from enum import Enum
 
 import matplotlib.pylab as plt
+from hal.files.save_as import write_dicts_to_csv
 
 from pyhodl.utils import generate_dates, get_full_lists
 
@@ -271,6 +272,28 @@ class CryptoExchange(object):
             all_balances.append(balance)
 
         return all_balances
+
+    def write_all_balances_to_csv(self, out):
+        """
+        :param out: str
+            Path to output file
+        :return: void
+            Saves all balances to .csv
+        """
+
+        all_transactions = self.get_all_balances()
+        write_dicts_to_csv(all_transactions, out)
+
+    def write_all_transactions_to_csv(self, out):
+        """
+        :param out: str
+            Path to output file
+        :return: void
+            Saves all transaction to .csv
+        """
+
+        all_transactions = self.get_all_transactions()
+        write_dicts_to_csv(all_transactions, out)
 
 
 class TransactionType(Enum):

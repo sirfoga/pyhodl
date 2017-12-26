@@ -62,17 +62,21 @@
 <h1 class="epydoc">Class CryptoExchange</h1><p class="nomargin-top"><span class="codelink"><a href="pyhodl.exchanges.core-pysrc.html#CryptoExchange">source&nbsp;code</a></span></p>
 <center>
 <center>  <map id="uml_class_diagram_for_pyhodl_e_8" name="uml_class_diagram_for_pyhodl_e_8">
-<area shape="rect" id="node1_10" href="pyhodl.exchanges.core.CryptoExchange-class.html#balance_intervals" title="pyhodl.exchanges.core.CryptoExchange.balance_intervals" alt="" coords="18,30,307,50"/>
-<area shape="rect" id="node1_11" href="pyhodl.exchanges.core.CryptoExchange-class.html#__init__" title=":param transactions: [] of Transaction..." alt="" coords="18,53,307,73"/>
-<area shape="rect" id="node1_12" href="pyhodl.exchanges.core.CryptoExchange-class.html#get_transactions_count" title=":return: int..." alt="" coords="18,73,307,93"/>
-<area shape="rect" id="node1_13" href="pyhodl.exchanges.core.CryptoExchange-class.html#get_first_transaction" title=":return: Transaction..." alt="" coords="18,93,307,113"/>
-<area shape="rect" id="node1_14" href="pyhodl.exchanges.core.CryptoExchange-class.html#get_last_transaction" title=":return: Transaction..." alt="" coords="18,113,307,133"/>
-<area shape="rect" id="node1_15" href="pyhodl.exchanges.core.CryptoExchange-class.html#get_transactions" title=":param since: datetime..." alt="" coords="18,133,307,153"/>
-<area shape="rect" id="node1_16" href="pyhodl.exchanges.core.CryptoExchange-class.html#get_transactions_with" title=":param symbol: str &#160;&#160;&#160;&#160;Currency e.g EUR, BTC, LTC ..." alt="" coords="18,153,307,173"/>
-<area shape="rect" id="node1_17" href="pyhodl.exchanges.core.CryptoExchange-class.html#get_balance" title=":param since: datetime..." alt="" coords="18,173,307,193"/>
-<area shape="rect" id="node1_18" href="pyhodl.exchanges.core.CryptoExchange-class.html#get_balance_subtotals" title=":param since: datetime..." alt="" coords="18,193,307,213"/>
-<area shape="rect" id="node1_19" href="pyhodl.exchanges.core.CryptoExchange-class.html#plot_balance_subtotals" title=":param since: datetime..." alt="" coords="18,213,307,233"/>
-<area shape="rect" id="node1" href="pyhodl.exchanges.core.CryptoExchange-class.html" title="Exchange dealing with crypto&#45;coins" alt="" coords="5,5,319,239"/>
+<area shape="rect" id="node1_14" href="pyhodl.exchanges.core.CryptoExchange-class.html#balance_intervals" title="pyhodl.exchanges.core.CryptoExchange.balance_intervals" alt="" coords="18,30,350,50"/>
+<area shape="rect" id="node1_15" href="pyhodl.exchanges.core.CryptoExchange-class.html#__init__" title=":param transactions: [] of Transaction..." alt="" coords="18,53,350,73"/>
+<area shape="rect" id="node1_16" href="pyhodl.exchanges.core.CryptoExchange-class.html#get_transactions_count" title=":return: int..." alt="" coords="18,73,350,93"/>
+<area shape="rect" id="node1_17" href="pyhodl.exchanges.core.CryptoExchange-class.html#get_first_transaction" title=":return: Transaction..." alt="" coords="18,93,350,113"/>
+<area shape="rect" id="node1_18" href="pyhodl.exchanges.core.CryptoExchange-class.html#get_last_transaction" title=":return: Transaction..." alt="" coords="18,113,350,133"/>
+<area shape="rect" id="node1_19" href="pyhodl.exchanges.core.CryptoExchange-class.html#get_transactions" title=":param since: datetime..." alt="" coords="18,133,350,153"/>
+<area shape="rect" id="node1_20" href="pyhodl.exchanges.core.CryptoExchange-class.html#get_transactions_with" title=":param symbol: str &#160;&#160;&#160;&#160;Currency e.g EUR, BTC, LTC ..." alt="" coords="18,153,350,173"/>
+<area shape="rect" id="node1_21" href="pyhodl.exchanges.core.CryptoExchange-class.html#get_balance" title=":param since: datetime..." alt="" coords="18,173,350,193"/>
+<area shape="rect" id="node1_22" href="pyhodl.exchanges.core.CryptoExchange-class.html#get_balance_subtotals" title=":param since: datetime..." alt="" coords="18,193,350,213"/>
+<area shape="rect" id="node1_23" href="pyhodl.exchanges.core.CryptoExchange-class.html#plot_balance_subtotals" title=":param since: datetime..." alt="" coords="18,213,350,233"/>
+<area shape="rect" id="node1_24" href="pyhodl.exchanges.core.CryptoExchange-class.html#get_all_transactions" title=":return: [] of {}..." alt="" coords="18,233,350,253"/>
+<area shape="rect" id="node1_25" href="pyhodl.exchanges.core.CryptoExchange-class.html#get_all_balances" title=":return: [] of {}..." alt="" coords="18,253,350,273"/>
+<area shape="rect" id="node1_26" href="pyhodl.exchanges.core.CryptoExchange-class.html#write_all_balances_to_csv" title=":param out: str..." alt="" coords="18,273,350,293"/>
+<area shape="rect" id="node1_27" href="pyhodl.exchanges.core.CryptoExchange-class.html#write_all_transactions_to_csv" title=":param out: str..." alt="" coords="18,293,350,313"/>
+<area shape="rect" id="node1" href="pyhodl.exchanges.core.CryptoExchange-class.html" title="Exchange dealing with crypto&#45;coins" alt="" coords="5,5,361,319"/>
 </map>
   <img src="uml_class_diagram_for_pyhodl_e_8.gif" alt='' usemap="#uml_class_diagram_for_pyhodl_e_8" ismap="ismap" class="graph-without-title" />
 </center>
@@ -177,7 +181,8 @@ Exchange dealing with crypto-coins
         <tr>
           <td><span class="summary-sig"><a href="pyhodl.exchanges.core.CryptoExchange-class.html#get_transactions" class="summary-sig-name">get_transactions</a>(<span class="summary-sig-arg">self</span>,
         <span class="summary-sig-arg">since</span>,
-        <span class="summary-sig-arg">until</span>)</span><br />
+        <span class="summary-sig-arg">until</span>,
+        <span class="summary-sig-arg">including_until</span>=<span class="summary-sig-default">False</span>)</span><br />
       :param since: datetime...</td>
           <td align="right" valign="top">
             <span class="codelink"><a href="pyhodl.exchanges.core-pysrc.html#CryptoExchange.get_transactions">source&nbsp;code</a></span>
@@ -255,10 +260,81 @@ Exchange dealing with crypto-coins
           <td><span class="summary-sig"><a href="pyhodl.exchanges.core.CryptoExchange-class.html#plot_balance_subtotals" class="summary-sig-name">plot_balance_subtotals</a>(<span class="summary-sig-arg">self</span>,
         <span class="summary-sig-arg">since</span>,
         <span class="summary-sig-arg">until</span>,
-        <span class="summary-sig-arg">interval</span>)</span><br />
+        <span class="summary-sig-arg">interval</span>,
+        <span class="summary-sig-arg">title</span>)</span><br />
       :param since: datetime...</td>
           <td align="right" valign="top">
             <span class="codelink"><a href="pyhodl.exchanges.core-pysrc.html#CryptoExchange.plot_balance_subtotals">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="pyhodl.exchanges.core.CryptoExchange-class.html#get_all_transactions" class="summary-sig-name">get_all_transactions</a>(<span class="summary-sig-arg">self</span>)</span><br />
+      :return: [] of {}...</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="pyhodl.exchanges.core-pysrc.html#CryptoExchange.get_all_transactions">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="pyhodl.exchanges.core.CryptoExchange-class.html#get_all_balances" class="summary-sig-name">get_all_balances</a>(<span class="summary-sig-arg">self</span>)</span><br />
+      :return: [] of {}...</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="pyhodl.exchanges.core-pysrc.html#CryptoExchange.get_all_balances">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="pyhodl.exchanges.core.CryptoExchange-class.html#write_all_balances_to_csv" class="summary-sig-name">write_all_balances_to_csv</a>(<span class="summary-sig-arg">self</span>,
+        <span class="summary-sig-arg">out</span>)</span><br />
+      :param out: str...</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="pyhodl.exchanges.core-pysrc.html#CryptoExchange.write_all_balances_to_csv">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="pyhodl.exchanges.core.CryptoExchange-class.html#write_all_transactions_to_csv" class="summary-sig-name">write_all_transactions_to_csv</a>(<span class="summary-sig-arg">self</span>,
+        <span class="summary-sig-arg">out</span>)</span><br />
+      :param out: str...</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="pyhodl.exchanges.core-pysrc.html#CryptoExchange.write_all_transactions_to_csv">source&nbsp;code</a></span>
             
           </td>
         </tr>
@@ -306,13 +382,8 @@ Exchange dealing with crypto-coins
     <td width="15%" align="right" valign="top" class="summary">
       <span class="summary-type">&nbsp;</span>
     </td><td class="summary">
-        <a href="pyhodl.exchanges.core.CryptoExchange-class.html#balance_intervals" class="summary-name">balance_intervals</a> = <code title="{'1d': 24,
- '1h': 1,
- '1y': 8760,
- '30d': 720,
- '3m': 2160,
- '6m': 4320,
- '7d': 168}"><code class="variable-group">{</code><code class="variable-quote">'</code><code class="variable-string">1d</code><code class="variable-quote">'</code><code class="variable-op">: </code>24<code class="variable-op">, </code><code class="variable-quote">'</code><code class="variable-string">1h</code><code class="variable-quote">'</code><code class="variable-op">: </code>1<code class="variable-op">, </code><code class="variable-quote">'</code><code class="variable-string">1y</code><code class="variable-quote">'</code><code class="variable-op">: </code>8760<code class="variable-op">, </code><code class="variable-quote">'</code><code class="variable-string">30d</code><code class="variable-quote">'</code><code class="variable-op">: </code>720<code class="variable-ellipsis">...</code></code>
+        <a href="pyhodl.exchanges.core.CryptoExchange-class.html#balance_intervals" class="summary-name">balance_intervals</a> = <code title="{&quot;1h&quot;: 1, &quot;1d&quot;: 24, &quot;7d&quot;: 24* 7, &quot;30d&quot;: 24* 30, &quot;3m&quot;: 24* 30* 3, &quot;6m&quot;:\
+ 24* 30* 6, &quot;1y&quot;: 24* 365}">{&quot;1h&quot;: 1, &quot;1d&quot;: 24, &quot;7d&quot;: 24* 7, &quot;30d&quot;: 24<code class="variable-ellipsis">...</code></code>
     </td>
   </tr>
 </table>
@@ -469,7 +540,8 @@ Exchange dealing with crypto-coins
   <tr valign="top"><td>
   <h3 class="epydoc"><span class="sig"><span class="sig-name">get_transactions</span>(<span class="sig-arg">self</span>,
         <span class="sig-arg">since</span>,
-        <span class="sig-arg">until</span>)</span>
+        <span class="sig-arg">until</span>,
+        <span class="sig-arg">including_until</span>=<span class="sig-default">False</span>)</span>
   </h3>
   </td><td align="right" valign="top"
     ><span class="codelink"><a href="pyhodl.exchanges.core-pysrc.html#CryptoExchange.get_transactions">source&nbsp;code</a></span>&nbsp;
@@ -482,6 +554,8 @@ Exchange dealing with crypto-coins
     Get transactions done since this date (included)
 :param until: datetime
     Get transactions done until this date (excluded)
+:param including_until: bool
+    True iff you want to include until date in list
 :return: (generator of) [] of Transaction
     List of transactions done between the dates
 
@@ -594,7 +668,8 @@ Exchange dealing with crypto-coins
   <h3 class="epydoc"><span class="sig"><span class="sig-name">plot_balance_subtotals</span>(<span class="sig-arg">self</span>,
         <span class="sig-arg">since</span>,
         <span class="sig-arg">until</span>,
-        <span class="sig-arg">interval</span>)</span>
+        <span class="sig-arg">interval</span>,
+        <span class="sig-arg">title</span>)</span>
   </h3>
   </td><td align="right" valign="top"
     ><span class="codelink"><a href="pyhodl.exchanges.core-pysrc.html#CryptoExchange.plot_balance_subtotals">source&nbsp;code</a></span>&nbsp;
@@ -611,6 +686,108 @@ Exchange dealing with crypto-coins
     Interval of times (1h, 1d, 7d, 30d, 3m, 6m, 1y)
 :return: void
     Shows plot with subtotals
+
+</pre>
+  <dl class="fields">
+  </dl>
+</td></tr></table>
+</div>
+<a name="get_all_transactions"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">get_all_transactions</span>(<span class="sig-arg">self</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="pyhodl.exchanges.core-pysrc.html#CryptoExchange.get_all_transactions">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <pre class="literalblock">
+
+:return: [] of {}
+    List of all transactions (all coins)
+
+</pre>
+  <dl class="fields">
+  </dl>
+</td></tr></table>
+</div>
+<a name="get_all_balances"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">get_all_balances</span>(<span class="sig-arg">self</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="pyhodl.exchanges.core-pysrc.html#CryptoExchange.get_all_balances">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <pre class="literalblock">
+
+:return: [] of {}
+    List of all transactions (all coins)
+
+</pre>
+  <dl class="fields">
+  </dl>
+</td></tr></table>
+</div>
+<a name="write_all_balances_to_csv"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">write_all_balances_to_csv</span>(<span class="sig-arg">self</span>,
+        <span class="sig-arg">out</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="pyhodl.exchanges.core-pysrc.html#CryptoExchange.write_all_balances_to_csv">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <pre class="literalblock">
+
+:param out: str
+    Path to output file
+:return: void
+    Saves all balances to .csv
+
+</pre>
+  <dl class="fields">
+  </dl>
+</td></tr></table>
+</div>
+<a name="write_all_transactions_to_csv"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">write_all_transactions_to_csv</span>(<span class="sig-arg">self</span>,
+        <span class="sig-arg">out</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="pyhodl.exchanges.core-pysrc.html#CryptoExchange.write_all_transactions_to_csv">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <pre class="literalblock">
+
+:param out: str
+    Path to output file
+:return: void
+    Saves all transaction to .csv
 
 </pre>
   <dl class="fields">
@@ -648,13 +825,8 @@ Exchange dealing with crypto-coins
   <dl class="fields">
     <dt>Value:</dt>
       <dd><table><tr><td><pre class="variable">
-<code class="variable-group">{</code><code class="variable-quote">'</code><code class="variable-string">1d</code><code class="variable-quote">'</code><code class="variable-op">: </code>24<code class="variable-op">,</code>
- <code class="variable-quote">'</code><code class="variable-string">1h</code><code class="variable-quote">'</code><code class="variable-op">: </code>1<code class="variable-op">,</code>
- <code class="variable-quote">'</code><code class="variable-string">1y</code><code class="variable-quote">'</code><code class="variable-op">: </code>8760<code class="variable-op">,</code>
- <code class="variable-quote">'</code><code class="variable-string">30d</code><code class="variable-quote">'</code><code class="variable-op">: </code>720<code class="variable-op">,</code>
- <code class="variable-quote">'</code><code class="variable-string">3m</code><code class="variable-quote">'</code><code class="variable-op">: </code>2160<code class="variable-op">,</code>
- <code class="variable-quote">'</code><code class="variable-string">6m</code><code class="variable-quote">'</code><code class="variable-op">: </code>4320<code class="variable-op">,</code>
- <code class="variable-quote">'</code><code class="variable-string">7d</code><code class="variable-quote">'</code><code class="variable-op">: </code>168<code class="variable-group">}</code>
+{&quot;1h&quot;: 1, &quot;1d&quot;: 24, &quot;7d&quot;: 24* 7, &quot;30d&quot;: 24* 30, &quot;3m&quot;: 24* 30* 3, &quot;6m&quot;:<span class="variable-linewrap"><img src="crarr.png" alt="\" /></span>
+ 24* 30* 6, &quot;1y&quot;: 24* 365}
 </pre></td></tr></table>
 </dd>
   </dl>
@@ -689,7 +861,7 @@ Exchange dealing with crypto-coins
 <table border="0" cellpadding="0" cellspacing="0" width="100%%">
   <tr>
     <td align="left" class="footer">
-    Generated by Epydoc 3.0.1 on Thu Dec 21 02:07:33 2017
+    Generated by Epydoc 3.0.1 on Tue Dec 26 15:53:46 2017
     </td>
     <td align="right" class="footer">
       <a target="mainFrame" href="http://epydoc.sourceforge.net"

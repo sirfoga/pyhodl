@@ -22,8 +22,6 @@ import argparse
 import os
 from datetime import datetime
 
-from hal.files.save_as import write_dicts_to_csv
-
 from pyhodl.data.parsers import parse_transactions_folder
 from pyhodl.utils import get_actual_class_name
 
@@ -114,22 +112,19 @@ def main():
         exchanges = parse_transactions_folder(params["in"])
         for exchange in exchanges:
             exchange_name = get_actual_class_name(exchange)
+            exchange.write_all_transactions_to_csv(
+                os.path.join(
+                    params["out"],
+                    exchange_name + "_transactions.csv"
+                )
+            )  # write transactions
 
-            # transactions
-            output_file = os.path.join(
-                params["out"],
-                exchange_name + "_transactions.csv"
-            )
-            all_transactions = exchange.get_all_transactions()
-            write_dicts_to_csv(all_transactions, output_file)
-
-            # balances
-            output_file = os.path.join(
-                params["out"],
-                exchange_name + "_balances.csv"
-            )
-            all_transactions = exchange.get_all_balances()
-            write_dicts_to_csv(all_transactions, output_file)
+            exchange.write_all_transactions_to_csv(
+                os.path.join(
+                    params["out"],
+                    exchange_name + "_balances.csv"
+                )
+            )  # write balances
 
 
 if __name__ == '__main__':
