@@ -171,48 +171,6 @@ class CryptoExchange(object):
 
         return wallet_list
 
-    def plot_balance_subtotals(self, since, until, interval, title):
-        """
-        :param since: datetime
-            Get transactions done since this date
-        :param until: datetime
-            Get transactions done until this date
-        :param interval: str
-            Interval of times (1h, 1d, 7d, 30d, 3m, 6m, 1y)
-        :return: void
-            Shows plot with subtotals
-        """
-
-        subtotals = self.get_balance_subtotals(since, until, interval)
-        data = {
-            date_balance["date"]: date_balance["balance"].get_balance()
-            for date_balance in subtotals
-        }
-        data = get_full_lists(data)
-
-        plt.grid(True)
-        for key, value in data.items():
-            sorted_values = sorted(value.items())
-            dates = [
-                item[0] for item in sorted_values
-            ]
-            values = [
-                float(item[1]) if item[1] else float("nan")
-                for item in sorted_values
-            ]
-
-            plt.plot(
-                dates,
-                values,
-                label=key
-            )  # plot data
-
-        plt.xlabel("Time")
-        plt.ylabel("Amount")
-        plt.legend()  # build legend
-        plt.title(title)
-        plt.show()
-
     def get_all_transactions(self):
         """
         :return: [] of {}
@@ -339,6 +297,46 @@ class CryptoExchange(object):
         for i, transaction in enumerate(data):
             data[i]["date"] = transaction["date"].strftime(date_format)
         write_dicts_to_csv(data, out)
+
+    def plot_all_balances(self, data_dump, title):
+        """
+        :param data_dump: str
+            Input file with data dump
+        :param title: str
+            Title of plot
+        :return: void
+            Shows plot with subtotals
+        """
+
+        subtotals = self.get_balance_subtotals(since, until, interval)
+        data = {
+            date_balance["date"]: date_balance["balance"].get_balance()
+            for date_balance in subtotals
+        }
+        data = get_full_lists(data)
+
+        plt.grid(True)
+        for key, value in data.items():
+            sorted_values = sorted(value.items())
+            dates = [
+                item[0] for item in sorted_values
+            ]
+            values = [
+                float(item[1]) if item[1] else float("nan")
+                for item in sorted_values
+            ]
+
+            plt.plot(
+                dates,
+                values,
+                label=key
+            )  # plot data
+
+        plt.xlabel("Time")
+        plt.ylabel("Amount")
+        plt.legend()  # build legend
+        plt.title(title)
+        plt.show()
 
 
 class TransactionType(Enum):

@@ -22,8 +22,9 @@ import os
 from datetime import datetime
 
 import pandas as pd
+from hal.files.parsers import CSVParser
 
-from ..exchanges.core import Transaction, TransactionType
+from ..exchanges.core import CryptoExchange, Transaction, TransactionType
 
 
 class Parser(object):
@@ -133,3 +134,29 @@ class Parser(object):
             return TransactionType.TRADING
         else:
             return TransactionType.NULL
+
+
+class BalancesParser(CSVParser):
+    """ Parses raw balances data """
+
+    def __init__(self, input_file):
+        """
+        :param input_file: str
+            File to parse
+        """
+
+        CSVParser.__init__(input_file, "utf-8")
+        self.balances = list(self.parse_raw_balances(self.get_dicts()))
+
+    @staticmethod
+    def parse_raw_balances(balances):
+        for balance in balances:
+            result = {}
+            for key in balance:
+                try:
+                    result[key] = float(balance[key])
+                except:
+                    result[key] = datetime.strptime(
+                        balance[key], CryptoExchange.OUTPUT_DATE_FORMAT
+                    )
+            yield result
