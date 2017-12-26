@@ -292,7 +292,7 @@ class CryptoExchange(object):
                     coin for coin in balance if coin.isupper()
                 ]
                 prices = get_price(coins, currency, balance["date"])
-                print(balance["date"], prices)
+                print("Getting balance of", balance["date"], "...")
 
                 for coin, price in prices.items():
                     equiv = balance[coin] * price

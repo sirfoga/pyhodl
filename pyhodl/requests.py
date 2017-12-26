@@ -25,6 +25,60 @@ import urllib.request
 
 API_URL = "https://min-api.cryptocompare.com/data/pricehistorical"
 MAX_COINS_PER_REQUEST = 6
+API_ENCODING = {
+    "IOTA": "IOT",
+    "WAVES": "WAV"
+}
+API_DECODING = {
+    val: key for key, val in API_ENCODING.items()
+}
+
+
+def replace_items(lst, old, new):
+    """
+    :param lst: []
+        List of items
+    :param old: obj
+        Object to substitute
+    :param new: obj
+        New object to put in place
+    :return: []
+        List of items
+    """
+
+    for i, val in enumerate(lst):
+        if val == old:
+            lst[i] = new
+    return lst
+
+
+def encode_coins(coins):
+    """
+    :param coins: [] of str
+        BTC, ETH ...
+    :return: [] of str
+        Available coins
+    """
+
+    for key, val in API_ENCODING.items():
+        if key in coins:
+            coins = replace_items(coins, key, val)
+    return coins
+
+
+def decode_coins(data):
+    """
+    :param data: {}
+        Result of API calling
+    :return: {}
+        Original formatted data
+    """
+
+    for key, val in API_DECODING.items():
+        if key in data:
+            data[val] = data[key]
+            del data[key]
+    return data
 
 
 def get_api_url(coins, currency, dt):
@@ -46,7 +100,8 @@ def get_api_url(coins, currency, dt):
             "ts": int(time.mktime(dt.timetuple()))
         }
     )
-    return API_URL + "?%s" % params
+    url = API_URL + "?%s" % params
+    return url.replace("%2C", ",")
 
 
 def get_price(coins, currency, dt):
@@ -66,14 +121,21 @@ def get_price(coins, currency, dt):
     else:
         data = {}
 
-    url = get_api_url(coins[:MAX_COINS_PER_REQUEST], currency, dt)
+    url = get_api_url(
+        encode_coins(coins[:MAX_COINS_PER_REQUEST]), currency, dt
+    )
     with urllib.request.urlopen(url) as result:
         raw = json.loads(result.read().decode("utf-8"))
         values = raw[currency]
-        for coin in coins:
+        for coin, price in values.items():
             try:
-                price = float(1 / values[coin])
+                price = float(1 / price)
             except:
                 price = float("nan")
             data[coin] = price
+        data = decode_coins(data)
+
+        for coin in coins:
+            if coin not in data:
+                data[coin] = float("nan")
         return data
