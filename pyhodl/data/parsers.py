@@ -18,6 +18,8 @@
 
 """ Parse raw data """
 
+from hal.files.models.system import ls_recurse, is_file
+
 from .core import Parser
 from ..exchanges.binance import BinanceParser, Binance
 from ..exchanges.bitfinex import BitfinexParser, Bitfinex
@@ -54,3 +56,50 @@ def parse_transactions(input_file):
             )
         else:
             raise ValueError("Cannot infer type of exchange!")
+
+
+def parse_transactions_folder(input_folder):
+    """
+    :param input_folder: str
+        Path to folder where to look for transactions files
+    :return: [] of CryptoExchange
+        Exchanges found (with transactions)
+    """
+
+    exchanges = {}
+    files = [
+        doc for doc in ls_recurse(input_folder) if is_file(doc)
+    ]
+    for input_file in files:
+        try:
+            exchange = parse_transactions(input_file)
+            exchange_name = str(type(exchange))
+            if exchange_name not in exchanges:
+                exchanges[exchange_name] = [
+                    exchange
+                ]
+            else:
+                exchanges[exchange_name].append(exchange)
+        except Exception as e:
+            print("Cannot parse input file", input_file)
+            print(e)
+
+    return {
+        exchange_name: merge_exchanges(exchanges_list)
+        for exchange_name, exchanges_list in exchanges.items()
+    }.values()
+
+
+def merge_exchanges(exchanges_list):
+    """
+    :param exchanges_list: [] of CryptoExchange
+        List of exchanges
+    :return: CryptoExchange
+        Exchange with all transactions from other exchanges
+    """
+
+    all_transactions = []
+    for exchange in exchanges_list:
+        all_transactions += exchange.transactions
+    exchange_class = type(exchanges_list[0])
+    return exchange_class(all_transactions)

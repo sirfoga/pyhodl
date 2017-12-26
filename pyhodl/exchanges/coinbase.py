@@ -34,6 +34,9 @@ class CoinbaseParser(Parser):
 
         epsilon = 1e-15  # max error
         transactions = super().get_raw_list()
+        if not transactions:
+            raise ValueError("Creating exchange with no past transaction!")
+
         last_balance = float(transactions[0]["Balance"])
         for i, transaction in enumerate(transactions):
             if i == 0:  # first transaction assumed always completed
