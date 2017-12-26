@@ -24,17 +24,24 @@ from ..data.core import BalancesParser
 class Plotter(object):
     """ Plots data """
 
-    def __init__(self, input_file):
+    def __init__(self, input_file, exchange_name):
         """
         :param input_file: str
             File to parse
+        :param exchange_name: str
+            Name of exchange
         """
 
-        self.data = BalancesParser(input_file).balances
+        self.data = sorted(
+            BalancesParser(input_file).balances,
+            key=lambda x: x["date"]
+        )
+        self.exchange_name = str(exchange_name)
 
-    def plot_qty(self):
+    def plot_amount(self):
         """
-        :return:
+        :return: void
+            Plots coins amount
         """
 
         pass
@@ -55,6 +62,14 @@ class Plotter(object):
 
     def plot(self):
         """
+        :return:
+        """
+
+        pass
+
+    def plot_coin(self, coin):
+        """
+        :param coin:
         :return:
         """
 

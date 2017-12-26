@@ -22,6 +22,7 @@ import argparse
 import os
 from datetime import datetime
 
+from pyhodl.charts.balances import Plotter
 from pyhodl.data.parsers import parse_transactions_folder
 from pyhodl.utils import get_actual_class_name
 
@@ -54,6 +55,9 @@ def create_args():
                         help="Analyze transactions until this date, format "
                              "should be '" + DATETIME_HUMAN + "'",
                         required=False)
+    parser.add_argument("-plot", dest="plot",
+                        help="Plot values? [y/n]'",
+                        required=False)
 
     return parser
 
@@ -85,6 +89,9 @@ def parse_args(parser):
             params["until"], DATETIME_FORMAT
         )
 
+    if params["plot"]:
+        params["plot"] = bool(params["plot"])
+
     return params
 
 
@@ -106,26 +113,45 @@ def check_args(params):
     return True
 
 
+def parse_exchange_raw_data(exchange, exchange_name, output_file):
+    """
+    :param exchange: CryptoExchange
+        Exchange data to parse
+    :param exchange_name: str
+        Name of exchange
+    :param output_file: str
+        Path to output file
+    :return: void
+        Parses and saves data
+    """
+
+    exchange.write_all_transactions_to_csv(
+        os.path.join(
+            output_file,
+            exchange_name + "_transactions.csv"
+        )
+    )  # write transactions
+
+    exchange.write_all_balances_to_csv(
+        os.path.join(
+            output_file,
+            exchange_name + "_balances.csv"
+        ),
+        currency="USD"
+    )  # write balances
+
+
 def main():
     params = parse_args(create_args())  # TODO: add nice try-catch block
     if check_args(params):
-        exchanges = parse_transactions_folder(params["in"])
-        for exchange in exchanges:
-            exchange_name = get_actual_class_name(exchange)
-            exchange.write_all_transactions_to_csv(
-                os.path.join(
-                    params["out"],
-                    exchange_name + "_transactions.csv"
-                )
-            )  # write transactions
-
-            exchange.write_all_balances_to_csv(
-                os.path.join(
-                    params["out"],
-                    exchange_name + "_balances.csv"
-                ),
-                currency="USD"
-            )  # write balances
+        if params["plot"]:
+            plotter = Plotter(params["in"], "GDAX")
+            plotter.plot_amount()
+        else:
+            exchanges = parse_transactions_folder(params["in"])
+            for exchange in exchanges:
+                exchange_name = get_actual_class_name(exchange)
+                parse_exchange_raw_data(exchange, exchange_name, params["out"])
 
 
 if __name__ == '__main__':
