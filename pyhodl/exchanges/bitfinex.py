@@ -64,22 +64,26 @@ class Bitfinex(CryptoExchange):
                         pass
 
             else:
-                coin_buy, coin_sell = transaction["Pair"].split( \
-                    "/")
+                coin_buy, coin_sell = transaction["Pair"].split("/")
                 coin_fee = transaction["FeeCurrency"]
-                amount = transaction["Amount"]
-                if amount < 0:
+                amount_buy = transaction["Amount"]
+                amount_sell = amount_buy * transaction["Price"]
+
+                if amount_buy < 0:
                     coin_buy, coin_sell = coin_sell, coin_buy
+                    amount_buy, amount_sell = amount_sell, amount_buy
 
-                if coin_sell not in wallet:  # update sell side
-                    wallet[coin_sell] = Wallet(transaction.date)
-
-                sell_amount = amount * transaction["Price"]
-                wallet[coin_sell].remove(sell_amount, transaction.date)
+                if coin_buy == "XRP" or coin_sell == "XRP":
+                    print(transaction.date, "buy", amount_buy, coin_buy,
+                          "sell", amount_sell, coin_sell)
 
                 if coin_buy not in wallet:  # update buy side
                     wallet[coin_buy] = Wallet(transaction.date)
-                wallet[coin_buy].add(amount, transaction.date)
+                wallet[coin_buy].add(abs(amount_buy), transaction.date)
+
+                if coin_sell not in wallet:  # update sell side
+                    wallet[coin_sell] = Wallet(transaction.date)
+                wallet[coin_sell].remove(abs(amount_sell), transaction.date)
 
                 if coin_fee not in wallet:  # update fees
                     wallet[coin_fee] = Wallet(transaction.date)
