@@ -32,7 +32,7 @@ class CoinbaseParser(Parser):
             directly from input file
         """
 
-        epsilon = 1e-15  # max error
+        epsilon = 1e-12  # max error
         transactions = super().get_raw_list()
         if not transactions:
             raise ValueError("Creating exchange with no past transaction!")
@@ -46,9 +46,10 @@ class CoinbaseParser(Parser):
                 amount = float(transaction["Amount"])
                 if abs(last_balance + amount - current_balance) >= epsilon:
                     transactions[i]["successful"] = False
+                    print("Discarding incomplete transaction", transactions[i])
                 else:
-                    last_balance = current_balance
                     transactions[i]["successful"] = True
+                last_balance = current_balance
 
         return transactions
 
@@ -77,21 +78,13 @@ class Coinbase(CryptoExchange):
 
         for transaction in transactions:
             coin_buy = transaction["Currency"]
-            coin_sell = transaction["Transfer Total Currency"]
-            coin_fee = transaction["Transfer Fee Currency"]
 
-            if coin_sell not in wallet:  # update sell side
-                wallet[coin_sell] = Wallet(transaction.date)
-            wallet[coin_sell].remove(transaction["Transfer Total"],
-                                     transaction.date)
-
+            amount = transaction["Amount"]
             if coin_buy not in wallet:  # update buy side
                 wallet[coin_buy] = Wallet(transaction.date)
-            wallet[coin_buy].add(transaction["Amount"], transaction.date)
-
-            if coin_fee not in wallet:  # update fee side
-                wallet[coin_fee] = Wallet(transaction.date)
-            wallet[coin_fee].remove(transaction["Transfer Fee"],
-                                    transaction.date)
+            if amount < 0:
+                wallet[coin_buy].remove(amount, transaction.date)
+            else:
+                wallet[coin_buy].add(amount, transaction.date)
 
         return Balance(wallet)

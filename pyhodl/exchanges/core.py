@@ -23,7 +23,6 @@ from datetime import timedelta
 from enum import Enum
 
 import matplotlib.pylab as plt
-from hal.files.save_as import write_dicts_to_csv
 
 from pyhodl.utils import generate_dates, get_full_lists
 
@@ -211,12 +210,10 @@ class CryptoExchange(object):
         plt.title(title)
         plt.show()
 
-    def export_transactions_as_csv(self, out):
+    def get_all_transactions(self):
         """
-        :param out: str
-            Path to output file
-        :return: void
-            Writes .csv file with transactions data
+        :return: [] of {}
+            List of all transactions (all coins)
         """
 
         wallets = self.get_balance(
@@ -235,7 +232,45 @@ class CryptoExchange(object):
                 transactions[i]["coin"] = str(coin)
             all_transactions += transactions
 
-        write_dicts_to_csv(all_transactions, out)
+        return sorted(all_transactions, key=lambda k: k["date"])
+
+    def get_all_balances(self):
+        """
+        :return: [] of {}
+            List of all transactions (all coins)
+        """
+
+        wallets = self.get_balance(
+            since=self.get_first_transaction().date,
+            until=self.get_last_transaction().date + timedelta(seconds=1)
+        ).wallets
+
+        dates = set()  # dates of all transactions
+        coins = set()  # all coins
+        for coin, wallet in wallets.items():
+            coins.add(coin)
+            for transaction in wallet.transactions:
+                dates.add(transaction["date"])
+        dates = sorted(list(dates))  # sort by date
+        coins = sorted(list(coins))  # sort alphabetically
+
+        first = {
+            coin: wallets[coin].get_amount(dates[0]) for coin in coins
+        }
+        first["date"] = dates[0]  # build first
+        all_balances = [
+            first
+        ]
+
+        for date in dates[1:]:
+            balance = {
+                coin: all_balances[-1][coin] + wallets[coin].get_amount(date)
+                for coin in coins
+            }
+            balance["date"] = date
+            all_balances.append(balance)
+
+        return all_balances
 
 
 class TransactionType(Enum):
@@ -379,7 +414,7 @@ class Wallet(object):
             )
         )
 
-        self.balance += amount
+        self.balance += abs(amount)
 
     def remove(self, amount, date):
         """
@@ -402,7 +437,7 @@ class Wallet(object):
             )
         )
 
-        self.balance -= float(amount)
+        self.balance -= abs(amount)
 
     def get_balance(self):
         """
@@ -422,9 +457,9 @@ class Wallet(object):
 
         for transaction in other.transactions:  # redo same actions
             if transaction["action"] == "add":
-                self.add(transaction["amount"])
+                self.add(transaction["amount"], transaction.date)
             else:
-                self.remove(transaction["amount"])
+                self.remove(transaction["amount"], transaction.date)
 
     def get_transactions_dict(self):
         """
@@ -438,6 +473,32 @@ class Wallet(object):
                 "amount": transaction["amount"],
                 "successful": True
             }
+
+    def dates(self):
+        """
+        :return: [] of datetime
+            List of all dates
+        """
+
+        return [
+            transaction.date for transaction in self.transactions
+        ]
+
+    def get_amount(self, date):
+        """
+        :param date: datetime
+            Date of transaction
+        :return: float
+            Amount exchanged with transaction in specified date
+        """
+
+        amount = float(0.0)
+
+        for transaction in self.transactions:
+            if transaction.date == date:
+                amount += float(transaction["amount"])
+
+        return amount
 
 
 class Balance(object):
