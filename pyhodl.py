@@ -20,7 +20,7 @@
 
 import argparse
 import os
-from datetime import datetime, timedelta
+from datetime import datetime
 
 from pyhodl.data.parsers import parse_transactions_folder
 from pyhodl.utils import get_actual_class_name
@@ -112,13 +112,11 @@ def main():
         exchanges = parse_transactions_folder(params["in"])
         for exchange in exchanges:
             exchange_name = get_actual_class_name(exchange)
-            exchange.plot_balance_subtotals(
-                since=exchange.get_first_transaction().date,
-                until=exchange.get_last_transaction().date + timedelta(
-                    seconds=1),
-                interval="1d",
-                title=exchange_name + " balance"
+            output_file = os.path.join(
+                params["out"],
+                exchange_name + "_transactions.csv"
             )
+            exchange.export_transactions_as_csv(output_file)
 
 
 if __name__ == '__main__':

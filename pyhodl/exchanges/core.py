@@ -211,29 +211,31 @@ class CryptoExchange(object):
         plt.title(title)
         plt.show()
 
-    def export_transactions_as_csv(self, out, only_successful=True):
+    def export_transactions_as_csv(self, out):
         """
         :param out: str
             Path to output file
-        :param only_successful: bool
-            True iff only successful transactions shall be written
         :return: void
             Writes .csv file with transactions data
         """
 
-        transactions = self.get_transactions(
+        wallets = self.get_balance(
             since=self.get_first_transaction().date,
             until=self.get_last_transaction().date + timedelta(seconds=1)
-        )
-        if only_successful:
-            transactions = [
-                transaction for transaction in transactions
-                if transaction.successful
-            ]
-        transactions = [
-            transaction.to_dict() for transaction in transactions
-        ]
-        write_dicts_to_csv(transactions, out)
+        ).wallets
+
+        wallets = {
+            coin: list(wallet.get_transactions_dict())
+            for coin, wallet in wallets.items()
+        }
+
+        all_transactions = []
+        for coin, transactions in wallets.items():
+            for i, transaction in enumerate(transactions):
+                transactions[i]["coin"] = str(coin)
+            all_transactions += transactions
+
+        write_dicts_to_csv(all_transactions, out)
 
 
 class TransactionType(Enum):
@@ -335,21 +337,15 @@ class Transaction(object):
 
         self.successful = successful
 
-    def to_dict(self):
-        """
-        :return: {}
-            Dict representation of transaction
-        """
-
-        return {}
-
 
 class Wallet(object):
     """ A general wallet, tracking addition, deletions and fees """
 
-    def __init__(self, start_amount=0):
+    def __init__(self, create_date, start_amount=0):
         """
-        :param start_amount: float
+        :param create_date: datetime
+            Date of transaction
+        ::param start_amount: float
             Amount of currency at start
         """
 
@@ -358,14 +354,16 @@ class Wallet(object):
         self.transactions = []  # list of operations performed
 
         if start_amount > 0:
-            self.add(start_amount)
+            self.add(start_amount, create_date)
         elif start_amount < 0:
-            self.remove(start_amount)
+            self.remove(start_amount, create_date)
 
-    def add(self, amount):
+    def add(self, amount, date):
         """
         :param amount: float
             Amount to be added to balance
+        :param date: datetime
+            Date of transaction
         :return: void
             Adds amount to balance
         """
@@ -374,17 +372,21 @@ class Wallet(object):
             Transaction(
                 {
                     "action": "add",
-                    "amount": amount
-                }
+                    "amount": abs(amount),
+                    "date": date
+                },
+                date_key="date"
             )
         )
 
         self.balance += amount
 
-    def remove(self, amount):
+    def remove(self, amount, date):
         """
         :param amount: float
             Amount to be removed to balance
+        :param date: datetime
+            Date of transaction
         :return: void
             Removes amount from balance
         """
@@ -393,8 +395,10 @@ class Wallet(object):
             Transaction(
                 {
                     "action": "remove",
-                    "amount": amount
-                }
+                    "amount": -abs(amount),
+                    "date": date
+                },
+                date_key="date"
             )
         )
 
@@ -421,6 +425,19 @@ class Wallet(object):
                 self.add(transaction["amount"])
             else:
                 self.remove(transaction["amount"])
+
+    def get_transactions_dict(self):
+        """
+        :return: [] of {}
+            List of raw transactions
+        """
+
+        for transaction in self.transactions:
+            yield {
+                "date": transaction.date,
+                "amount": transaction["amount"],
+                "successful": True
+            }
 
 
 class Balance(object):

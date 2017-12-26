@@ -80,12 +80,12 @@ class Binance(CryptoExchange):
 
                 if is_successful:
                     if coin not in wallet:
-                        wallet[coin] = Wallet()
+                        wallet[coin] = Wallet(transaction.date)
 
                     if transaction.is_deposit():
-                        wallet[coin].add(amount)
+                        wallet[coin].add(amount, transaction.date)
                     elif transaction.is_withdrawal():
-                        wallet[coin].remove(amount)
+                        wallet[coin].remove(amount, transaction.date)
                     else:
                         pass
             else:
@@ -93,15 +93,15 @@ class Binance(CryptoExchange):
                     = infer_coins(transaction)
 
                 if coin_sell not in wallet:  # update sell side
-                    wallet[coin_sell] = Wallet()
-                wallet[coin_sell].remove(sell_amount)
+                    wallet[coin_sell] = Wallet(transaction.date)
+                wallet[coin_sell].remove(sell_amount, transaction.date)
 
                 if coin_buy not in wallet:  # update buy side
-                    wallet[coin_buy] = Wallet()
-                wallet[coin_buy].add(buy_amount)
+                    wallet[coin_buy] = Wallet(transaction.date)
+                wallet[coin_buy].add(buy_amount, transaction.date)
 
                 if coin_fee not in wallet:  # update fee side
-                    wallet[coin_fee] = Wallet()
-                wallet[coin_fee].remove(fee_amount)
+                    wallet[coin_fee] = Wallet(transaction.date)
+                wallet[coin_fee].remove(fee_amount, transaction.date)
 
         return Balance(wallet)

@@ -43,12 +43,12 @@ class Gdax(CryptoExchange):
             coin = transaction["amount/balance unit"]
 
             if coin not in wallet:  # update sell side
-                wallet[coin] = Wallet()
+                wallet[coin] = Wallet(transaction.date)
 
             amount = transaction["amount"]
             if amount < 0:
-                wallet[coin].remove(abs(amount))
+                wallet[coin].remove(abs(amount), transaction.date)
             else:
-                wallet[coin].add(abs(amount))
+                wallet[coin].add(abs(amount), transaction.date)
 
         return Balance(wallet)

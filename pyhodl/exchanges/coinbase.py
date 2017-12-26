@@ -81,15 +81,17 @@ class Coinbase(CryptoExchange):
             coin_fee = transaction["Transfer Fee Currency"]
 
             if coin_sell not in wallet:  # update sell side
-                wallet[coin_sell] = Wallet()
-            wallet[coin_sell].remove(transaction["Transfer Total"])
+                wallet[coin_sell] = Wallet(transaction.date)
+            wallet[coin_sell].remove(transaction["Transfer Total"],
+                                     transaction.date)
 
             if coin_buy not in wallet:  # update buy side
-                wallet[coin_buy] = Wallet()
-            wallet[coin_buy].add(transaction["Amount"])
+                wallet[coin_buy] = Wallet(transaction.date)
+            wallet[coin_buy].add(transaction["Amount"], transaction.date)
 
             if coin_fee not in wallet:  # update fee side
-                wallet[coin_fee] = Wallet()
-            wallet[coin_fee].remove(transaction["Transfer Fee"])
+                wallet[coin_fee] = Wallet(transaction.date)
+            wallet[coin_fee].remove(transaction["Transfer Fee"],
+                                    transaction.date)
 
         return Balance(wallet)
