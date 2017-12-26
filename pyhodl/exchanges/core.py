@@ -41,7 +41,7 @@ class CryptoExchange(object):
         "6m": 24 * 30 * 6,
         "1y": 24 * 365
     }  # interval -> hours
-    OUTPUT_DATE_FORMAT = "%Y-%m-%d@%H:%M:%S"
+    OUTPUT_DATE_FORMAT = "%Y-%m-%d %H:%M:%S"
 
     def __init__(self, transactions):
         """

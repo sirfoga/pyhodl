@@ -112,21 +112,20 @@ def main():
         exchanges = parse_transactions_folder(params["in"])
         for exchange in exchanges:
             exchange_name = get_actual_class_name(exchange)
-            if "bitfi" in exchange_name.lower():
-                exchange.write_all_transactions_to_csv(
-                    os.path.join(
-                        params["out"],
-                        exchange_name + "_transactions.csv"
-                    )
-                )  # write transactions
+            exchange.write_all_transactions_to_csv(
+                os.path.join(
+                    params["out"],
+                    exchange_name + "_transactions.csv"
+                )
+            )  # write transactions
 
-                exchange.write_all_balances_to_csv(
-                    os.path.join(
-                        params["out"],
-                        exchange_name + "_balances.csv"
-                    ),
-                    currency="USD"
-                )  # write balances
+            exchange.write_all_balances_to_csv(
+                os.path.join(
+                    params["out"],
+                    exchange_name + "_balances.csv"
+                ),
+                currency="USD"
+            )  # write balances
 
 
 if __name__ == '__main__':
