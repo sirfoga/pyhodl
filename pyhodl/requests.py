@@ -24,6 +24,7 @@ import urllib.parse
 import urllib.request
 
 API_URL = "https://min-api.cryptocompare.com/data/pricehistorical"
+MAX_COINS_PER_REQUEST = 6
 
 
 def get_api_url(coins, currency, dt):
@@ -60,16 +61,19 @@ def get_price(coins, currency, dt):
         Dict coin -> price
     """
 
-    url = get_api_url(coins, currency, dt)
-    try:
-        with urllib.request.urlopen(url) as result:
-            raw = json.loads(result.read().decode("utf-8"))
-            values = raw[currency]
-            data = {}
-            for coin, price in values.items():
-                if price > 0:  # avoid error in division
-                    data[coin] = float(1 / price)
-            return data
-    except Exception as e:
-        print(e)
-        return None
+    if len(coins) > MAX_COINS_PER_REQUEST:
+        data = get_price(coins[MAX_COINS_PER_REQUEST:], currency, dt)
+    else:
+        data = {}
+
+    url = get_api_url(coins[:MAX_COINS_PER_REQUEST], currency, dt)
+    with urllib.request.urlopen(url) as result:
+        raw = json.loads(result.read().decode("utf-8"))
+        values = raw[currency]
+        for coin in coins:
+            try:
+                price = float(1 / values[coin])
+            except:
+                price = float("nan")
+            data[coin] = price
+        return data

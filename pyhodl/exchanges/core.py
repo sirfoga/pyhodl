@@ -25,6 +25,7 @@ from enum import Enum
 import matplotlib.pylab as plt
 from hal.files.save_as import write_dicts_to_csv
 
+from pyhodl.requests import get_price
 from pyhodl.utils import generate_dates, get_full_lists
 
 
@@ -274,15 +275,30 @@ class CryptoExchange(object):
 
         return all_balances
 
-    def write_all_balances_to_csv(self, out):
+    def write_all_balances_to_csv(self, out, currency=None):
         """
         :param out: str
             Path to output file
+        :param currency: str
+            Currency to get price
         :return: void
             Saves all balances to .csv
         """
 
-        self.write_data_to_csv(self.get_all_balances(), out)
+        data = self.get_all_balances()
+        if currency is not None:
+            for i, balance in enumerate(data):
+                coins = [
+                    coin for coin in balance if coin.isupper()
+                ]
+                prices = get_price(coins, currency, balance["date"])
+                print(balance["date"], prices)
+
+                for coin, price in prices.items():
+                    equiv = balance[coin] * price
+                    data[i][coin + " (" + currency + " value)"] = equiv
+
+        self.write_data_to_csv(data, out)
 
     def write_all_transactions_to_csv(self, out):
         """

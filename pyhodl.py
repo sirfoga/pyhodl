@@ -112,23 +112,22 @@ def main():
         exchanges = parse_transactions_folder(params["in"])
         for exchange in exchanges:
             exchange_name = get_actual_class_name(exchange)
-            exchange.write_all_transactions_to_csv(
-                os.path.join(
-                    params["out"],
-                    exchange_name + "_transactions.csv"
-                )
-            )  # write transactions
+            if "base" not in exchange_name:
+                exchange.write_all_transactions_to_csv(
+                    os.path.join(
+                        params["out"],
+                        exchange_name + "_transactions.csv"
+                    )
+                )  # write transactions
 
-            exchange.write_all_balances_to_csv(
-                os.path.join(
-                    params["out"],
-                    exchange_name + "_balances.csv"
-                )
-            )  # write balances
+                exchange.write_all_balances_to_csv(
+                    os.path.join(
+                        params["out"],
+                        exchange_name + "_balances.csv"
+                    ),
+                    currency="USD"
+                )  # write balances
 
 
 if __name__ == '__main__':
-    from pyhodl.requests import get_price
-
-    data = get_price(["BTC", "MANA", "LTC"], "USD", datetime.today())
-    print(data)
+    main()
