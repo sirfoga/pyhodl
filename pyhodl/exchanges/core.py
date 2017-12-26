@@ -19,7 +19,6 @@
 """ Analyze transactions in exchanges """
 
 import abc
-from datetime import timedelta
 from enum import Enum
 
 import matplotlib.pylab as plt
@@ -83,19 +82,25 @@ class CryptoExchange(object):
                 last = transaction
         return last
 
-    def get_transactions(self, since, until):
+    def get_transactions(self, since, until, including_until=False):
         """
         :param since: datetime
             Get transactions done since this date (included)
         :param until: datetime
             Get transactions done until this date (excluded)
+        :param including_until: bool
+            True iff you want to include until date in list
         :return: (generator of) [] of Transaction
             List of transactions done between the dates
         """
 
         for transaction in self.transactions:
-            if since <= transaction.date < until:
-                yield transaction
+            if including_until:
+                if since <= transaction.date <= until:
+                    yield transaction
+            else:
+                if since <= transaction.date < until:
+                    yield transaction
 
     def get_transactions_with(self, symbol):
         """
@@ -140,7 +145,7 @@ class CryptoExchange(object):
 
         dates_list = list(
             generate_dates(
-                since, until + timedelta(seconds=1),  # add little margin
+                since, until,
                 self.balance_intervals[interval]
             )
         )

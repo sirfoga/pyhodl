@@ -25,13 +25,40 @@ from .core import CryptoExchange, Wallet, Balance
 class CoinbaseParser(Parser):
     """ Parse transactions from Coinbase exchange """
 
+    def get_raw_list(self):
+        """
+        :return: [] of {}
+            List of transactions. Each transaction is a dict with keys
+            directly from input file
+        """
+
+        epsilon = 1e-15  # max error
+        transactions = super().get_raw_list()
+        last_balance = float(transactions[0]["Balance"])
+        for i, transaction in enumerate(transactions):
+            if i == 0:  # first transaction assumed always completed
+                transactions[0]["successful"] = True
+            else:
+                current_balance = float(transaction["Balance"])
+                amount = float(transaction["Amount"])
+                if abs(last_balance + amount - current_balance) >= epsilon:
+                    transactions[i]["successful"] = False
+                else:
+                    last_balance = current_balance
+                    transactions[i]["successful"] = True
+
+        return transactions
+
     def get_transactions_list(self, **kwargs):
-        return super().get_transactions_list(
+        transactions = super().get_transactions_list(
             "Timestamp",
             "%Y-%m-%d %H:%M:%S %z",
             ["Balance", "Amount", "Transfer Total",
              "Transfer Fee"]
         )
+        for i, transaction in enumerate(transactions):
+            transactions[i].has_been_performed(transaction["successful"])
+        return transactions
 
 
 class Coinbase(CryptoExchange):
@@ -39,7 +66,12 @@ class Coinbase(CryptoExchange):
 
     def get_balance(self, since, until):
         transactions = self.get_transactions(since, until)
+        transactions = [
+            transaction for transaction in transactions if
+            transaction.successful
+        ]  # just successful transactions
         wallet = {}
+
         for transaction in transactions:
             coin_buy = transaction["Currency"]
             coin_sell = transaction["Transfer Total Currency"]
