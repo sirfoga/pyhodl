@@ -32,19 +32,46 @@ def func(x, a1, b1, a2, b2, a3, c):
     return a1 * np.sin(b1 * x) + a2 * np.cos(b2 * x) + a3 * np.power(x, 4) + c
 
 
-class Plotter(object):
-    """ Plots data """
+class CryptoPlotter(object):
+    """ Plots crypto data """
+
+    def __init__(self, base_currency):
+        """
+        :param base_currency: str
+            Base currency
+        """
+
+        self.base_currency = base_currency
+
+    def plot(self, title):
+        """
+        :param title: str
+            Title of plot
+        :return: void
+            Shows plot
+        """
+
+        plt.grid(True)
+        plt.xlabel("Time")
+        plt.ylabel("Amount")
+        plt.title(title)
+        plt.legend()  # build legend
+        plt.show()
+
+
+class Plotter(CryptoPlotter):
+    """ Plots balances data """
 
     FIAT_CURRENCIES = ["EUR", "USD"]
     CURRENCY_EQUIV = "value"
 
-    def __init__(self, input_file, base_currency="USD"):
+    def __init__(self, input_file, base_currency):
         """
         :param input_file: str
             File to parse
         """
 
-        object.__init__(self)
+        CryptoPlotter.__init__(self, base_currency)
 
         self.parser = BalanceParser(input_file)
 
@@ -64,7 +91,6 @@ class Plotter(object):
         self.coins = [
             coin for coin in self.coins if coin != "date"
         ]
-        self.currency = base_currency
         self.crypto_coins = []
         for coin in self.coins:
             is_fiat = False
@@ -74,13 +100,14 @@ class Plotter(object):
             if not is_fiat:
                 self.crypto_coins.append(coin)
         self.crypto_values = [
-            coin + " (" + base_currency + " " + self.CURRENCY_EQUIV + ")"
+            coin + " (" + self.base_currency + " " + self.CURRENCY_EQUIV + ")"
             for coin in self.crypto_coins
         ]
         self.fiat_values = [
-            coin + " (" + base_currency + " " + self.CURRENCY_EQUIV + ")"
+            coin + " (" + self.base_currency + " " + self.CURRENCY_EQUIV + ")"
             for coin in self.FIAT_CURRENCIES
-            if coin + " (" + base_currency + " " + self.CURRENCY_EQUIV + ")"
+            if coin + " (" + self.base_currency + " " + self.CURRENCY_EQUIV
+            + ")"
             in self.coins
         ]
 
@@ -180,19 +207,6 @@ class Plotter(object):
             label="fiat equivalent"
         )  # trend
 
-    def plot(self):
-        """
-        :return: void
-            Shows plot
-        """
-
-        plt.grid(True)
-        plt.xlabel("Time")
-        plt.ylabel("Amount")
-        plt.title("Data taken from " + self.parser.filename)
-        plt.legend()  # build legend
-        plt.show()
-
     def get_last_total(self):
         """
         :return: float
@@ -203,3 +217,6 @@ class Plotter(object):
             self.data[self.dates[-1]][coin] for coin in self.crypto_values
             if float(self.data[self.dates[-1]][coin]) > 0
         ])
+
+    def plot(self, title):
+        super().plot("Data taken from " + self.parser.filename)

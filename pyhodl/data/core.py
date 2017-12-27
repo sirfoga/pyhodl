@@ -215,7 +215,6 @@ class BalanceParser(CSVParser):
 
         write_dicts_to_csv(all_balances, output_file)
 
-
     @staticmethod
     def parse_raw_balances(balances):
         for balance in balances:
