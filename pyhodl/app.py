@@ -39,12 +39,15 @@ DATA_FOLDER = os.path.join(
     APP_FOLDER,
     "data"
 )
+DATE_TIME_FORMAT = "%Y-%m-%d %H:%M:%S"
 
 
 class ConfigManager:
     """ Manages config files for app """
 
     def __init__(self, config_file):
+        create_workplace()
+
         self.config_file = config_file
         self.raw = None
         self.data = {}
@@ -62,7 +65,7 @@ class ConfigManager:
             self.data[key] = value
 
     def _check(self):
-        if not os.path.exists(self.config_file) or not self.data:
+        if not os.path.exists(self.config_file):
             raise ValueError(
                 "Empty config file! Please write your settings "
                 "and store at " + self.config_file
@@ -92,7 +95,7 @@ class ConfigManager:
     def save(self):
         out = {}
         for key, value in self.data.items():
-            out[key] = value.to_dict()
+            out[key] = value
 
         write_dicts_to_json(out, self.config_file)
 
@@ -104,4 +107,5 @@ def create_workplace():
     """
 
     for directory in [APP_FOLDER, API_FOLDER, DATA_FOLDER]:
-        os.makedirs(directory)
+        if not os.path.exists(directory):
+            os.makedirs(directory)

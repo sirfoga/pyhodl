@@ -19,8 +19,11 @@
 """ Updates exchange transactions """
 
 import os
+import threading
+from datetime import datetime, timedelta
 
-from .app import DATA_FOLDER, ConfigManager
+from pyhodl.apis.manage import ApiManager
+from .app import DATA_FOLDER, ConfigManager, DATE_TIME_FORMAT
 
 UPDATE_CONFIG = os.path.join(
     DATA_FOLDER,
@@ -34,12 +37,75 @@ class UpdateManager(ConfigManager):
     def __init__(self):
         ConfigManager.__init__(self, UPDATE_CONFIG)
 
+    def is_time_to_update(self):
+        return datetime.now() > self.time_next_update()
+
+    def time_next_update(self):
+        return self.time_last_update() + self.update_interval()
+
+    def time_last_update(self):
+        try:
+            return datetime.strptime(
+                self.get("last_update"),
+                DATE_TIME_FORMAT
+            )
+        except:
+            return datetime.fromtimestamp(0)  # no record
+
+    def update_interval(self):
+        raw = self.get("interval")
+        tokens = ["s", "m", "h", "d", "w", "m"]
+        time_token = 0.0
+        for tok in tokens:
+            if raw.endswith(tok):
+                time_token = float(raw.split(tok)[0])
+
+        if raw.endswith("s"):
+            return timedelta(seconds=time_token)
+        elif raw.endswith("m"):
+            return timedelta(minutes=time_token)
+        elif raw.endswith("h"):
+            return timedelta(hours=time_token)
+        elif raw.endswith("d"):
+            return timedelta(days=time_token)
+        elif raw.endswith("w"):
+            return timedelta(days=7 * time_token)
+        elif raw.endswith("m"):
+            return timedelta(days=30 * time_token)
+        else:
+            raise ValueError("Cannot parse update interval", raw)
+
+    def save_time_update(self):
+        self.data["last_update"] = datetime.now().strftime(DATE_TIME_FORMAT)
+        self.save()
+
+    def get_data_folder(self):
+        try:
+            folder = self.get("folder")
+            os.stat(folder)
+        except:
+            folder = DATA_FOLDER
+
+        if not os.path.exists(folder):
+            os.makedirs(folder)
+
+        return folder
+
 
 class Updater:
     """ Updates exchanges local data """
 
     def __init__(self):
         self.manager = UpdateManager()
+        self.api_manager = ApiManager()
+        self.api_clients = [
+            api.get_client() for api in self.api_manager.get_all()
+        ]
 
     def run(self):
-        pass
+        interval = self.manager.update_interval().seconds
+        threading.Timer(interval, self.run).start()
+
+        print("Running ...")
+        self.manager.save_time_update()
+        print("Next update:", self.manager.time_next_update())

@@ -41,7 +41,13 @@ class ApiManager(ConfigManager):
         ConfigManager.__init__(self, API_CONFIG)
 
     def get(self, key):
-        return ApiConfig.build_api(super().get(key))
+        out = super().get(key)
+        out["name"] = key
+        return ApiConfig.build_api(out)
+
+    def get_all(self):
+        for key in self.data:
+            yield self.get(key)
 
 
 class ApiConfig:
