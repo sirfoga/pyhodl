@@ -25,7 +25,7 @@ import matplotlib.pyplot as plt
 import numpy as np
 from scipy.optimize import curve_fit
 
-from ..data.core import BalanceParser
+from pyhodl.data.core import BalanceParser
 
 
 def func(x, a1, b1, a2, b2, a3, c):
@@ -34,6 +34,9 @@ def func(x, a1, b1, a2, b2, a3, c):
 
 class Plotter(object):
     """ Plots data """
+
+    FIAT_CURRENCIES = ["EUR", "USD"]
+    CURRENCY_EQUIV = "value"
 
     def __init__(self, input_file, base_currency="USD"):
         """
@@ -44,21 +47,43 @@ class Plotter(object):
         object.__init__(self)
 
         self.parser = BalanceParser(input_file)
+
         self.data = sorted(self.parser.balances, key=lambda x: x["date"])
         self.data = {
             self.data[i]["date"]: self.data[i]
             for i, date in enumerate(self.data)
         }
+
         self.dates = sorted(self.data.keys())
         self.x_dates = mdates.date2num(self.dates)
         self.unix_timestamps = [
             int(time.mktime(date.timetuple())) for date in self.dates
         ]
+
         self.coins = self.data[list(self.data.keys())[0]].keys()
         self.coins = [
             coin for coin in self.coins if coin != "date"
         ]
         self.currency = base_currency
+        self.crypto_coins = []
+        for coin in self.coins:
+            is_fiat = False
+            for fiat in self.FIAT_CURRENCIES:
+                if fiat in coin:
+                    is_fiat = True
+            if not is_fiat:
+                self.crypto_coins.append(coin)
+        self.crypto_values = [
+            coin + " (" + base_currency + " " + self.CURRENCY_EQUIV + ")"
+            for coin in self.crypto_coins
+        ]
+        self.fiat_values = [
+            coin + " (" + base_currency + " " + self.CURRENCY_EQUIV + ")"
+            for coin in self.FIAT_CURRENCIES
+            if coin + " (" + base_currency + " " + self.CURRENCY_EQUIV + ")"
+            in self.coins
+        ]
+
         self.trend_deg = 8
         self.trend_dates = np.linspace(
             self.x_dates.min(), self.x_dates.max(), 200
@@ -70,12 +95,7 @@ class Plotter(object):
             Adds to chart coins amount
         """
 
-        coins = [
-            coin for coin in self.coins
-            if "value" not in coin
-        ]
-
-        for coin in coins:
+        for coin in self.crypto_coins:
             values = [
                 self.data[date][coin] for date in self.dates
             ]
@@ -95,13 +115,9 @@ class Plotter(object):
             Plots currency equivalent for each coin
         """
 
-        coins = [
-            coin for coin in self.coins
-            if "value" in coin
-        ]
         total_cap = self.get_last_total()
 
-        for coin in coins:
+        for coin in self.crypto_values:
             values = [
                 self.data[date][coin] for date in self.dates
             ]
@@ -119,14 +135,9 @@ class Plotter(object):
             Adds to chart total equiv
         """
 
-        coins = [
-            coin for coin in self.coins
-            if "value" in coin
-        ]
-
         values = [
             sum([
-                self.data[date][coin] for coin in coins
+                self.data[date][coin] for coin in self.crypto_values
                 if float(self.data[date][coin]) > 0
             ])
             for date in self.dates
@@ -136,6 +147,37 @@ class Plotter(object):
         plt.plot(
             mdates.num2date(self.x_dates), func(self.x_dates, *popt), "--",
             label=self.currency + " equivalent"
+        )  # trend
+
+    def plot_fiat_crypto(self):
+        """
+        :return: void
+            Adds fiat equivalent and crypto total value
+        """
+
+        crypto_equiv = [
+            sum([
+                self.data[date][coin] for coin in self.crypto_values
+                if float(self.data[date][coin]) > 0
+            ])
+            for date in self.dates
+        ]
+
+        fiat_equiv = [
+            sum([
+                self.data[date][coin] for coin in self.fiat_values
+                if float(self.data[date][coin]) > 0
+            ])
+            for date in self.dates
+        ]
+
+        plt.plot(
+            self.dates, crypto_equiv, "-o",
+            label="crypto equivalent"
+        )
+        plt.plot(
+            self.dates, fiat_equiv, "--",
+            label="fiat equivalent"
         )  # trend
 
     def plot(self):
@@ -157,12 +199,7 @@ class Plotter(object):
             Total equivalent (last indexed)
         """
 
-        coins = [
-            coin for coin in self.coins
-            if "value" in coin
-        ]
-
         return sum([
-            self.data[self.dates[-1]][coin] for coin in coins
+            self.data[self.dates[-1]][coin] for coin in self.crypto_values
             if float(self.data[self.dates[-1]][coin]) > 0
         ])

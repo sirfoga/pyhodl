@@ -3,7 +3,7 @@
           "DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
 <head>
-  <title>pyhodl.data.parsers</title>
+  <title>pyhodl.data.core.BalanceParser</title>
   <link rel="stylesheet" href="epydoc.css" type="text/css" />
   <script type="text/javascript" src="epydoc.js"></script>
 </head>
@@ -41,7 +41,8 @@
       <span class="breadcrumbs">
         <a href="pyhodl-module.html">Package&nbsp;pyhodl</a> ::
         <a href="pyhodl.data-module.html">Package&nbsp;data</a> ::
-        Module&nbsp;parsers
+        <a href="pyhodl.data.core-module.html">Module&nbsp;core</a> ::
+        Class&nbsp;BalanceParser
       </span>
     </td>
     <td>
@@ -51,30 +52,42 @@
     onclick="toggle_private();">hide&nbsp;private</a>]</span></td></tr>
         <tr><td align="right"><span class="options"
             >[<a href="frames.html" target="_top">frames</a
-            >]&nbsp;|&nbsp;<a href="pyhodl.data.parsers-module.html"
+            >]&nbsp;|&nbsp;<a href="pyhodl.data.core.BalanceParser-class.html"
             target="_top">no&nbsp;frames</a>]</span></td></tr>
       </table>
     </td>
   </tr>
 </table>
-<!-- ==================== MODULE DESCRIPTION ==================== -->
-<h1 class="epydoc">Module parsers</h1><p class="nomargin-top"><span class="codelink"><a href="pyhodl.data.parsers-pysrc.html">source&nbsp;code</a></span></p>
+<!-- ==================== CLASS DESCRIPTION ==================== -->
+<h1 class="epydoc">Class BalanceParser</h1><p class="nomargin-top"><span class="codelink"><a href="pyhodl.data.core-pysrc.html#BalanceParser">source&nbsp;code</a></span></p>
+<center>
+<center>  <map id="uml_class_diagram_for_pyhodl_d" name="uml_class_diagram_for_pyhodl_d">
+<area shape="rect" id="node1_4" href="pyhodl.data.core.BalanceParser-class.html#__init__" title=":param input_file: str..." alt="" coords="18,38,238,58"/>
+<area shape="rect" id="node1_5" href="pyhodl.data.core.BalanceParser-class.html#parse_balances_folder" title=":param input_folder: str..." alt="" coords="18,58,238,78"/>
+<area shape="rect" id="node1_6" href="pyhodl.data.core.BalanceParser-class.html#parse_folder" title=":param input_folder: str..." alt="" coords="18,78,238,98"/>
+<area shape="rect" id="node1_7" href="pyhodl.data.core.BalanceParser-class.html#parse_raw_balances" title="pyhodl.data.core.BalanceParser.parse_raw_balances" alt="" coords="18,98,238,118"/>
+<area shape="rect" id="node1" href="pyhodl.data.core.BalanceParser-class.html" title="Parses raw balances data" alt="" coords="5,5,249,124"/>
+</map>
+  <img src="uml_class_diagram_for_pyhodl_d.gif" alt='' usemap="#uml_class_diagram_for_pyhodl_d" ismap="ismap" class="graph-without-title" />
+</center>
+</center>
+<hr />
 <pre class="literalblock">
-Parse raw data 
+Parses raw balances data 
 
 </pre>
 
-<!-- ==================== FUNCTIONS ==================== -->
-<a name="section-Functions"></a>
+<!-- ==================== INSTANCE METHODS ==================== -->
+<a name="section-InstanceMethods"></a>
 <table class="summary" border="1" cellpadding="3"
        cellspacing="0" width="100%" bgcolor="white">
 <tr bgcolor="#70b0f0" class="table-header">
   <td colspan="2" class="table-header">
     <table border="0" cellpadding="0" cellspacing="0" width="100%">
       <tr valign="top">
-        <td align="left"><span class="table-header">Functions</span></td>
+        <td align="left"><span class="table-header">Instance Methods</span></td>
         <td align="right" valign="top"
-         ><span class="options">[<a href="#section-Functions"
+         ><span class="options">[<a href="#section-InstanceMethods"
          class="privatelink" onclick="toggle_private();"
          >hide private</a>]</span></td>
       </tr>
@@ -87,44 +100,11 @@ Parse raw data
     </td><td class="summary">
       <table width="100%" cellpadding="0" cellspacing="0" border="0">
         <tr>
-          <td><span class="summary-sig"><a href="pyhodl.data.parsers-module.html#parse_transactions" class="summary-sig-name">parse_transactions</a>(<span class="summary-sig-arg">input_file</span>)</span><br />
+          <td><span class="summary-sig"><a href="pyhodl.data.core.BalanceParser-class.html#__init__" class="summary-sig-name">__init__</a>(<span class="summary-sig-arg">self</span>,
+        <span class="summary-sig-arg">input_file</span>)</span><br />
       :param input_file: str...</td>
           <td align="right" valign="top">
-            <span class="codelink"><a href="pyhodl.data.parsers-pysrc.html#parse_transactions">source&nbsp;code</a></span>
-            
-          </td>
-        </tr>
-      </table>
-      
-    </td>
-  </tr>
-<tr>
-    <td width="15%" align="right" valign="top" class="summary">
-      <span class="summary-type">&nbsp;</span>
-    </td><td class="summary">
-      <table width="100%" cellpadding="0" cellspacing="0" border="0">
-        <tr>
-          <td><span class="summary-sig"><a href="pyhodl.data.parsers-module.html#parse_transactions_folder" class="summary-sig-name">parse_transactions_folder</a>(<span class="summary-sig-arg">input_folder</span>)</span><br />
-      :param input_folder: str...</td>
-          <td align="right" valign="top">
-            <span class="codelink"><a href="pyhodl.data.parsers-pysrc.html#parse_transactions_folder">source&nbsp;code</a></span>
-            
-          </td>
-        </tr>
-      </table>
-      
-    </td>
-  </tr>
-<tr>
-    <td width="15%" align="right" valign="top" class="summary">
-      <span class="summary-type">&nbsp;</span>
-    </td><td class="summary">
-      <table width="100%" cellpadding="0" cellspacing="0" border="0">
-        <tr>
-          <td><span class="summary-sig"><a href="pyhodl.data.parsers-module.html#merge_exchanges" class="summary-sig-name">merge_exchanges</a>(<span class="summary-sig-arg">exchanges_list</span>)</span><br />
-      :param exchanges_list: [] of CryptoExchange...</td>
-          <td align="right" valign="top">
-            <span class="codelink"><a href="pyhodl.data.parsers-pysrc.html#merge_exchanges">source&nbsp;code</a></span>
+            <span class="codelink"><a href="pyhodl.data.core-pysrc.html#BalanceParser.__init__">source&nbsp;code</a></span>
             
           </td>
         </tr>
@@ -133,30 +113,86 @@ Parse raw data
     </td>
   </tr>
 </table>
-<p class="indent-wrapped-lines"><b>Imports:</b>
-  <span title="hal.files.models.system.ls_recurse">ls_recurse</span>,
-  <span title="hal.files.models.system.is_file">is_file</span>,
-  <a href="pyhodl.data.core.CryptoParser-class.html" title="pyhodl.data.core.CryptoParser">CryptoParser</a>,
-  <a href="pyhodl.exchanges.binance.BinanceParser-class.html" title="pyhodl.exchanges.binance.BinanceParser">BinanceParser</a>,
-  <a href="pyhodl.exchanges.binance.Binance-class.html" title="pyhodl.exchanges.binance.Binance">Binance</a>,
-  <a href="pyhodl.exchanges.bitfinex.BitfinexParser-class.html" title="pyhodl.exchanges.bitfinex.BitfinexParser">BitfinexParser</a>,
-  <a href="pyhodl.exchanges.bitfinex.Bitfinex-class.html" title="pyhodl.exchanges.bitfinex.Bitfinex">Bitfinex</a>,
-  <a href="pyhodl.exchanges.coinbase.CoinbaseParser-class.html" title="pyhodl.exchanges.coinbase.CoinbaseParser">CoinbaseParser</a>,
-  <a href="pyhodl.exchanges.coinbase.Coinbase-class.html" title="pyhodl.exchanges.coinbase.Coinbase">Coinbase</a>,
-  <a href="pyhodl.exchanges.gdax.GdaxParser-class.html" title="pyhodl.exchanges.gdax.GdaxParser">GdaxParser</a>,
-  <a href="pyhodl.exchanges.gdax.Gdax-class.html" title="pyhodl.exchanges.gdax.Gdax">Gdax</a>
-</p><br />
-<!-- ==================== FUNCTION DETAILS ==================== -->
-<a name="section-FunctionDetails"></a>
+<!-- ==================== STATIC METHODS ==================== -->
+<a name="section-StaticMethods"></a>
+<table class="summary" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr bgcolor="#70b0f0" class="table-header">
+  <td colspan="2" class="table-header">
+    <table border="0" cellpadding="0" cellspacing="0" width="100%">
+      <tr valign="top">
+        <td align="left"><span class="table-header">Static Methods</span></td>
+        <td align="right" valign="top"
+         ><span class="options">[<a href="#section-StaticMethods"
+         class="privatelink" onclick="toggle_private();"
+         >hide private</a>]</span></td>
+      </tr>
+    </table>
+  </td>
+</tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="pyhodl.data.core.BalanceParser-class.html#parse_balances_folder" class="summary-sig-name">parse_balances_folder</a>(<span class="summary-sig-arg">input_folder</span>)</span><br />
+      :param input_folder: str...</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="pyhodl.data.core-pysrc.html#BalanceParser.parse_balances_folder">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="pyhodl.data.core.BalanceParser-class.html#parse_folder" class="summary-sig-name">parse_folder</a>(<span class="summary-sig-arg">input_folder</span>,
+        <span class="summary-sig-arg">output_file</span>)</span><br />
+      :param input_folder: str...</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="pyhodl.data.core-pysrc.html#BalanceParser.parse_folder">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a name="parse_raw_balances"></a><span class="summary-sig-name">parse_raw_balances</span>(<span class="summary-sig-arg">balances</span>)</span></td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="pyhodl.data.core-pysrc.html#BalanceParser.parse_raw_balances">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+</table>
+<!-- ==================== METHOD DETAILS ==================== -->
+<a name="section-MethodDetails"></a>
 <table class="details" border="1" cellpadding="3"
        cellspacing="0" width="100%" bgcolor="white">
 <tr bgcolor="#70b0f0" class="table-header">
   <td colspan="2" class="table-header">
     <table border="0" cellpadding="0" cellspacing="0" width="100%">
       <tr valign="top">
-        <td align="left"><span class="table-header">Function Details</span></td>
+        <td align="left"><span class="table-header">Method Details</span></td>
         <td align="right" valign="top"
-         ><span class="options">[<a href="#section-FunctionDetails"
+         ><span class="options">[<a href="#section-MethodDetails"
          class="privatelink" onclick="toggle_private();"
          >hide private</a>]</span></td>
       </tr>
@@ -164,17 +200,19 @@ Parse raw data
   </td>
 </tr>
 </table>
-<a name="parse_transactions"></a>
+<a name="__init__"></a>
 <div>
 <table class="details" border="1" cellpadding="3"
        cellspacing="0" width="100%" bgcolor="white">
 <tr><td>
   <table width="100%" cellpadding="0" cellspacing="0" border="0">
   <tr valign="top"><td>
-  <h3 class="epydoc"><span class="sig"><span class="sig-name">parse_transactions</span>(<span class="sig-arg">input_file</span>)</span>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">__init__</span>(<span class="sig-arg">self</span>,
+        <span class="sig-arg">input_file</span>)</span>
+    <br /><em class="fname">(Constructor)</em>
   </h3>
   </td><td align="right" valign="top"
-    ><span class="codelink"><a href="pyhodl.data.parsers-pysrc.html#parse_transactions">source&nbsp;code</a></span>&nbsp;
+    ><span class="codelink"><a href="pyhodl.data.core-pysrc.html#BalanceParser.__init__">source&nbsp;code</a></span>&nbsp;
     </td>
   </tr></table>
   
@@ -182,25 +220,24 @@ Parse raw data
 
 :param input_file: str
     File to parse
-:return: CryptoExchange
-    Builds exchange model based on transactions
 
 </pre>
   <dl class="fields">
   </dl>
 </td></tr></table>
 </div>
-<a name="parse_transactions_folder"></a>
+<a name="parse_balances_folder"></a>
 <div>
 <table class="details" border="1" cellpadding="3"
        cellspacing="0" width="100%" bgcolor="white">
 <tr><td>
   <table width="100%" cellpadding="0" cellspacing="0" border="0">
   <tr valign="top"><td>
-  <h3 class="epydoc"><span class="sig"><span class="sig-name">parse_transactions_folder</span>(<span class="sig-arg">input_folder</span>)</span>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">parse_balances_folder</span>(<span class="sig-arg">input_folder</span>)</span>
+    <br /><em class="fname">Static Method</em>
   </h3>
   </td><td align="right" valign="top"
-    ><span class="codelink"><a href="pyhodl.data.parsers-pysrc.html#parse_transactions_folder">source&nbsp;code</a></span>&nbsp;
+    ><span class="codelink"><a href="pyhodl.data.core-pysrc.html#BalanceParser.parse_balances_folder">source&nbsp;code</a></span>&nbsp;
     </td>
   </tr></table>
   
@@ -208,34 +245,36 @@ Parse raw data
 
 :param input_folder: str
     Path to folder where to look for transactions files
-:return: [] of CryptoExchange
-    Exchanges found (with transactions)
+:return: [] of Plotter
+    Exchanges found (with balances)
 
 </pre>
   <dl class="fields">
   </dl>
 </td></tr></table>
 </div>
-<a name="merge_exchanges"></a>
+<a name="parse_folder"></a>
 <div>
 <table class="details" border="1" cellpadding="3"
        cellspacing="0" width="100%" bgcolor="white">
 <tr><td>
   <table width="100%" cellpadding="0" cellspacing="0" border="0">
   <tr valign="top"><td>
-  <h3 class="epydoc"><span class="sig"><span class="sig-name">merge_exchanges</span>(<span class="sig-arg">exchanges_list</span>)</span>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">parse_folder</span>(<span class="sig-arg">input_folder</span>,
+        <span class="sig-arg">output_file</span>)</span>
+    <br /><em class="fname">Static Method</em>
   </h3>
   </td><td align="right" valign="top"
-    ><span class="codelink"><a href="pyhodl.data.parsers-pysrc.html#merge_exchanges">source&nbsp;code</a></span>&nbsp;
+    ><span class="codelink"><a href="pyhodl.data.core-pysrc.html#BalanceParser.parse_folder">source&nbsp;code</a></span>&nbsp;
     </td>
   </tr></table>
   
   <pre class="literalblock">
 
-:param exchanges_list: [] of CryptoExchange
-    List of exchanges
-:return: CryptoExchange
-    Exchange with all transactions from other exchanges
+:param input_folder: str
+    Folder to parse
+:param output_file: str
+    Path to output file
 
 </pre>
   <dl class="fields">

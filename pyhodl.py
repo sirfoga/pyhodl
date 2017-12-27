@@ -146,8 +146,8 @@ def main():
     if check_args(params):
         if params["plot"]:
             plotter = Plotter(params["in"])
-            plotter.plot_equiv()
             plotter.plot_total_equiv()
+            plotter.plot_equiv()
             plotter.plot()
         else:
             exchanges = parse_transactions_folder(params["in"])
