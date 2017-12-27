@@ -68,8 +68,42 @@ class ExchangeUpdater:
 class BinanceUpdater(ExchangeUpdater):
     """ Updates Binance data """
 
+    def get_symbols_list(self):
+        symbols = self.client.get_all_tickers()
+        return [
+            symbol["symbol"] for symbol in symbols
+        ]
+
+    def get_deposits(self):
+        return self.client.get_deposit_history()["depositList"]
+
+    def get_withdraw(self):
+        return self.client.get_withdraw_history()["withdrawList"]
+
+    def get_all_transactions(self, symbol, from_id=0, page_size=500):
+        trades = self.client.get_my_trades(symbol=symbol, fromId=from_id)
+        for i, trade in enumerate(trades):
+            trades[i]["symbol"] = symbol
+
+        if trades:  # if page returns some trades, search for others
+            last_id = trades[-1]["id"]
+            next_id = last_id + page_size + 1
+            new_trades = self.get_all_transactions(
+                symbol=symbol, from_id=next_id
+            )
+            if new_trades:
+                trades += new_trades
+
+        return trades
+
     def get_transactions(self):
-        return []
+        transactions = self.get_deposits() + self.get_withdraw()
+        symbols = self.get_symbols_list()
+
+        for symbol in symbols:  # scan all symbols
+            transactions += self.get_all_transactions(symbol)
+
+        return transactions
 
 
 class BitfinexUpdater(ExchangeUpdater):
