@@ -24,6 +24,7 @@ from datetime import datetime, timedelta
 
 from pyhodl.apis.manage import ApiManager
 from pyhodl.app import DATA_FOLDER, ConfigManager, DATE_TIME_FORMAT
+from pyhodl.updater.exchanges import ExchangeUpdater
 
 UPDATE_CONFIG = os.path.join(
     DATA_FOLDER,
@@ -95,17 +96,24 @@ class UpdateManager(ConfigManager):
 class Updater:
     """ Updates exchanges local data """
 
-    def __init__(self):
+    def __init__(self, verbose):
         self.manager = UpdateManager()
         self.api_manager = ApiManager()
-        self.api_clients = [
-            api.get_client() for api in self.api_manager.get_all()
+        self.api_updaters = [
+            ExchangeUpdater.build_updater(api.get_client(), DATA_FOLDER)
+            for api in self.api_manager.get_all()
         ]
+        self.verbose = verbose
 
     def run(self):
         interval = self.manager.update_interval().seconds
         threading.Timer(interval, self.run).start()
 
-        print("Running ...")
+        if self.verbose:
+            print("Updating local data...")
+
+        for updater in self.api_updaters:
+            updater.update(self.verbose)
+
         self.manager.save_time_update()
         print("Next update:", self.manager.time_next_update())

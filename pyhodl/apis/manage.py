@@ -116,8 +116,7 @@ class BitfinexApi(ApiConfig):
     def get_client(self):
         return BitfinexClient({
             "apiKey": self.key,
-            "secret": self.secret,
-            "verbose": False
+            "secret": self.secret
         })
 
 

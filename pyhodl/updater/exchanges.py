@@ -40,7 +40,7 @@ class ExchangeUpdater:
         self.folder = data_folder
         self.output_file = os.path.join(
             self.folder,
-            get_actual_class_name(self)
+            get_actual_class_name(self) + ".json"
         )
         self.transactions = {}
 
@@ -51,20 +51,24 @@ class ExchangeUpdater:
     def save_data(self):
         write_dicts_to_json(self.transactions, self.output_file)
 
-    def update(self):
+    def update(self, verbose):
         self.get_transactions()
         self.save_data()
+        if verbose:
+            print("Transactions written to", self.output_file)
 
     @staticmethod
     def build_updater(api_client, data_folder):
-        if type(api_client) == type(BinanceClient):
+        if isinstance(api_client, BinanceClient):
             return BinanceUpdater(api_client, data_folder)
-        elif type(api_client) == type(BitfinexClient):
+        elif isinstance(api_client, BitfinexClient):
             return BitfinexUpdater(api_client, data_folder)
-        elif type(api_client) == type(CoinbaseClient):
+        elif isinstance(api_client, CoinbaseClient):
             return CoinbaseUpdater(api_client, data_folder)
-        elif type(api_client) == type(GdaxClient):
+        elif isinstance(api_client, GdaxClient):
             return GdaxUpdater(api_client, data_folder)
+        else:
+            raise ValueError("Cannot infer type of API client!")
 
 
 class BinanceUpdater(ExchangeUpdater):
@@ -103,6 +107,7 @@ class BinanceUpdater(ExchangeUpdater):
         symbols = self.get_symbols_list()
 
         for symbol in symbols:  # scan all symbols
+            # TODO debug print("getting", symbol)
             transactions += self.get_all_transactions(symbol)
 
         return transactions
@@ -114,7 +119,7 @@ class BitfinexUpdater(ExchangeUpdater):
     def get_symbols_list(self):
         currencies = self.client.currencies
         symbols = self.client.symbols
-        for i, symbol in enumerate(symbols):
+        for i, symbol in enumerate(symbols):  # TODO debug None
             coins = symbol.split("/")
             symbols[i] = "".join([
                 currencies[coin]["id"] for coin in coins
@@ -162,6 +167,8 @@ class BitfinexUpdater(ExchangeUpdater):
         )
 
     def get_transactions(self):
+        print(self.client.fetch_balance()["total"])  # TODO debug many requests
+
         transactions = self.get_movements()  # deposits and withdrawals
         symbols = self.get_symbols_list()
 

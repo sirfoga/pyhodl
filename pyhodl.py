@@ -25,7 +25,7 @@ from enum import Enum
 
 from hal.streams.user import UserInput
 
-from pyhodl.updater import Updater
+from pyhodl.updater.core import Updater
 
 
 class RunMode(Enum):
@@ -53,6 +53,8 @@ def create_args():
                         help="Creates charts of your data")
     parser.add_argument("-stats", "--stats", action="store_true",
                         help="Computes statistics and trends using local data")
+    parser.add_argument("-verbose", "--verbose", action="store_true",
+                        help="Increase verbosity")
 
     return parser
 
@@ -66,20 +68,23 @@ def parse_args(parser):
     """
 
     args = parser.parse_args()
+
     if args.update:
-        return RunMode.UPDATER
+        run_mode = RunMode.UPDATER
     elif args.plot:
-        return RunMode.PLOTTER
+        run_mode = RunMode.PLOTTER
     elif args.stats:
-        return RunMode.STATS
+        run_mode = RunMode.STATS
     else:
         raise ValueError("Must choose run mode!")
 
+    return run_mode, args.verbose
+
 
 def main():
-    run_mode = parse_args(create_args())
+    run_mode, verbose = parse_args(create_args())
     if run_mode == RunMode.UPDATER:
-        driver = Updater()
+        driver = Updater(verbose)
         driver.run()
     elif run_mode == RunMode.PLOTTER:
         raise ValueError("Not fully implemented!")
