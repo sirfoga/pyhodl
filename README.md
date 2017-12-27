@@ -8,6 +8,7 @@
 
 - [Key Features](#key-features)
 - [Overview](#overview)
+- [Settings](#settings)
 - [Usage](#usage)
 - [Changelog](#changelog)
 - [Contribute](#contribute)
@@ -30,6 +31,10 @@
     - Coinbase
     - GDAX
     
+## Settings
+`pyhodl` needs general settings to run. For more information please refer to [the guide](WRITE_CONFIGS.md).
+
+
 ## Overview
 `pyhodl` consists of 4 submodules:
 - `updater`: syncs local data with the transactions from your exchanges. Can run as daemon and can update every other minute.
