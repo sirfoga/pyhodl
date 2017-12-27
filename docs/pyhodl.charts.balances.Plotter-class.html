@@ -62,23 +62,24 @@
 <h1 class="epydoc">Class Plotter</h1><p class="nomargin-top"><span class="codelink"><a href="pyhodl.charts.balances-pysrc.html#Plotter">source&nbsp;code</a></span></p>
 <center>
 <center>  <map id="uml_class_diagram_for_pyhodl_c" name="uml_class_diagram_for_pyhodl_c">
-<area shape="rect" id="node1_9" href="pyhodl.charts.balances.Plotter-class.html#FIAT_CURRENCIES" title="pyhodl.charts.balances.Plotter.FIAT_CURRENCIES" alt="" coords="17,29,297,49"/>
-<area shape="rect" id="node1_10" href="pyhodl.charts.balances.Plotter-class.html#CURRENCY_EQUIV" title="pyhodl.charts.balances.Plotter.CURRENCY_EQUIV" alt="" coords="17,49,297,69"/>
-<area shape="rect" id="node1_11" href="pyhodl.charts.balances.Plotter-class.html#__init__" title=":param input_file: str..." alt="" coords="17,72,297,92"/>
-<area shape="rect" id="node1_12" href="pyhodl.charts.balances.Plotter-class.html#plot_amount" title=":return: void..." alt="" coords="17,92,297,112"/>
-<area shape="rect" id="node1_13" href="pyhodl.charts.balances.Plotter-class.html#plot_equiv" title=":param min_to_plot: float..." alt="" coords="17,112,297,132"/>
-<area shape="rect" id="node1_14" href="pyhodl.charts.balances.Plotter-class.html#plot_total_equiv" title=":return: void..." alt="" coords="17,132,297,152"/>
-<area shape="rect" id="node1_15" href="pyhodl.charts.balances.Plotter-class.html#plot_fiat_crypto" title=":return: void..." alt="" coords="17,152,297,172"/>
-<area shape="rect" id="node1_16" href="pyhodl.charts.balances.Plotter-class.html#plot" title=":return: void..." alt="" coords="17,172,297,192"/>
-<area shape="rect" id="node1_17" href="pyhodl.charts.balances.Plotter-class.html#get_last_total" title=":return: float..." alt="" coords="17,192,297,212"/>
-<area shape="rect" id="node1" href="pyhodl.charts.balances.Plotter-class.html" title="Plots data" alt="" coords="5,5,309,219"/>
+<area shape="rect" id="node1_9" href="pyhodl.charts.balances.Plotter-class.html#FIAT_CURRENCIES" title="pyhodl.charts.balances.Plotter.FIAT_CURRENCIES" alt="" coords="18,92,251,112"/>
+<area shape="rect" id="node1_10" href="pyhodl.charts.balances.Plotter-class.html#CURRENCY_EQUIV" title="pyhodl.charts.balances.Plotter.CURRENCY_EQUIV" alt="" coords="18,112,251,132"/>
+<area shape="rect" id="node1_11" href="pyhodl.charts.balances.Plotter-class.html#__init__" title=":param input_file: str..." alt="" coords="18,135,251,155"/>
+<area shape="rect" id="node1_12" href="pyhodl.charts.balances.Plotter-class.html#plot_amount" title=":return: void..." alt="" coords="18,155,251,175"/>
+<area shape="rect" id="node1_13" href="pyhodl.charts.balances.Plotter-class.html#plot_equiv" title=":param min_to_plot: float..." alt="" coords="18,175,251,195"/>
+<area shape="rect" id="node1_14" href="pyhodl.charts.balances.Plotter-class.html#plot_total_equiv" title=":return: void..." alt="" coords="18,195,251,215"/>
+<area shape="rect" id="node1_15" href="pyhodl.charts.balances.Plotter-class.html#plot_fiat_crypto" title=":return: void..." alt="" coords="18,215,251,235"/>
+<area shape="rect" id="node1_16" href="pyhodl.charts.balances.Plotter-class.html#get_last_total" title=":return: float..." alt="" coords="18,235,251,255"/>
+<area shape="rect" id="node1_17" href="pyhodl.charts.balances.Plotter-class.html#plot" title=":param title: str..." alt="" coords="18,255,251,275"/>
+<area shape="rect" id="node1" href="pyhodl.charts.balances.Plotter-class.html" title="Plots balances data" alt="" coords="5,68,263,281"/>
+<area shape="rect" id="node2" href="pyhodl.charts.balances.CryptoPlotter-class.html" title="Plots crypto data" alt="" coords="85,5,186,49"/>
 </map>
   <img src="uml_class_diagram_for_pyhodl_c.gif" alt='' usemap="#uml_class_diagram_for_pyhodl_c" ismap="ismap" class="graph-without-title" />
 </center>
 </center>
 <hr />
 <pre class="literalblock">
-Plots data 
+Plots balances data 
 
 </pre>
 
@@ -107,7 +108,7 @@ Plots data
         <tr>
           <td><span class="summary-sig"><a href="pyhodl.charts.balances.Plotter-class.html#__init__" class="summary-sig-name">__init__</a>(<span class="summary-sig-arg">self</span>,
         <span class="summary-sig-arg">input_file</span>,
-        <span class="summary-sig-arg">base_currency</span>=<span class="summary-sig-default">&quot;USD&quot;</span>)</span><br />
+        <span class="summary-sig-arg">base_currency</span>)</span><br />
       :param input_file: str...</td>
           <td align="right" valign="top">
             <span class="codelink"><a href="pyhodl.charts.balances-pysrc.html#Plotter.__init__">source&nbsp;code</a></span>
@@ -193,10 +194,10 @@ Plots data
     </td><td class="summary">
       <table width="100%" cellpadding="0" cellspacing="0" border="0">
         <tr>
-          <td><span class="summary-sig"><a href="pyhodl.charts.balances.Plotter-class.html#plot" class="summary-sig-name">plot</a>(<span class="summary-sig-arg">self</span>)</span><br />
-      :return: void...</td>
+          <td><span class="summary-sig"><a href="pyhodl.charts.balances.Plotter-class.html#get_last_total" class="summary-sig-name">get_last_total</a>(<span class="summary-sig-arg">self</span>)</span><br />
+      :return: float...</td>
           <td align="right" valign="top">
-            <span class="codelink"><a href="pyhodl.charts.balances-pysrc.html#Plotter.plot">source&nbsp;code</a></span>
+            <span class="codelink"><a href="pyhodl.charts.balances-pysrc.html#Plotter.get_last_total">source&nbsp;code</a></span>
             
           </td>
         </tr>
@@ -210,33 +211,16 @@ Plots data
     </td><td class="summary">
       <table width="100%" cellpadding="0" cellspacing="0" border="0">
         <tr>
-          <td><span class="summary-sig"><a href="pyhodl.charts.balances.Plotter-class.html#get_last_total" class="summary-sig-name">get_last_total</a>(<span class="summary-sig-arg">self</span>)</span><br />
-      :return: float...</td>
+          <td><span class="summary-sig"><a href="pyhodl.charts.balances.Plotter-class.html#plot" class="summary-sig-name">plot</a>(<span class="summary-sig-arg">self</span>,
+        <span class="summary-sig-arg">title</span>)</span><br />
+      :param title: str...</td>
           <td align="right" valign="top">
-            <span class="codelink"><a href="pyhodl.charts.balances-pysrc.html#Plotter.get_last_total">source&nbsp;code</a></span>
+            <span class="codelink"><a href="pyhodl.charts.balances-pysrc.html#Plotter.plot">source&nbsp;code</a></span>
             
           </td>
         </tr>
       </table>
       
-    </td>
-  </tr>
-  <tr>
-    <td colspan="2" class="summary">
-    <p class="indent-wrapped-lines"><b>Inherited from <code>object</code></b>:
-      <code>__delattr__</code>,
-      <code>__format__</code>,
-      <code>__getattribute__</code>,
-      <code>__hash__</code>,
-      <code>__new__</code>,
-      <code>__reduce__</code>,
-      <code>__reduce_ex__</code>,
-      <code>__repr__</code>,
-      <code>__setattr__</code>,
-      <code>__sizeof__</code>,
-      <code>__str__</code>,
-      <code>__subclasshook__</code>
-      </p>
     </td>
   </tr>
 </table>
@@ -272,31 +256,6 @@ Plots data
     </td>
   </tr>
 </table>
-<!-- ==================== PROPERTIES ==================== -->
-<a name="section-Properties"></a>
-<table class="summary" border="1" cellpadding="3"
-       cellspacing="0" width="100%" bgcolor="white">
-<tr bgcolor="#70b0f0" class="table-header">
-  <td colspan="2" class="table-header">
-    <table border="0" cellpadding="0" cellspacing="0" width="100%">
-      <tr valign="top">
-        <td align="left"><span class="table-header">Properties</span></td>
-        <td align="right" valign="top"
-         ><span class="options">[<a href="#section-Properties"
-         class="privatelink" onclick="toggle_private();"
-         >hide private</a>]</span></td>
-      </tr>
-    </table>
-  </td>
-</tr>
-  <tr>
-    <td colspan="2" class="summary">
-    <p class="indent-wrapped-lines"><b>Inherited from <code>object</code></b>:
-      <code>__class__</code>
-      </p>
-    </td>
-  </tr>
-</table>
 <!-- ==================== METHOD DETAILS ==================== -->
 <a name="section-MethodDetails"></a>
 <table class="details" border="1" cellpadding="3"
@@ -324,7 +283,7 @@ Plots data
   <tr valign="top"><td>
   <h3 class="epydoc"><span class="sig"><span class="sig-name">__init__</span>(<span class="sig-arg">self</span>,
         <span class="sig-arg">input_file</span>,
-        <span class="sig-arg">base_currency</span>=<span class="sig-default">&quot;USD&quot;</span>)</span>
+        <span class="sig-arg">base_currency</span>)</span>
     <br /><em class="fname">(Constructor)</em>
   </h3>
   </td><td align="right" valign="top"
@@ -340,7 +299,7 @@ Plots data
 </pre>
   <dl class="fields">
     <dt>Overrides:
-        object.__init__
+        <a href="pyhodl.charts.balances.CryptoPlotter-class.html#__init__">CryptoPlotter.__init__</a>
     </dt>
   </dl>
 </td></tr></table>
@@ -444,30 +403,6 @@ Plots data
   </dl>
 </td></tr></table>
 </div>
-<a name="plot"></a>
-<div>
-<table class="details" border="1" cellpadding="3"
-       cellspacing="0" width="100%" bgcolor="white">
-<tr><td>
-  <table width="100%" cellpadding="0" cellspacing="0" border="0">
-  <tr valign="top"><td>
-  <h3 class="epydoc"><span class="sig"><span class="sig-name">plot</span>(<span class="sig-arg">self</span>)</span>
-  </h3>
-  </td><td align="right" valign="top"
-    ><span class="codelink"><a href="pyhodl.charts.balances-pysrc.html#Plotter.plot">source&nbsp;code</a></span>&nbsp;
-    </td>
-  </tr></table>
-  
-  <pre class="literalblock">
-
-:return: void
-    Shows plot
-
-</pre>
-  <dl class="fields">
-  </dl>
-</td></tr></table>
-</div>
 <a name="get_last_total"></a>
 <div>
 <table class="details" border="1" cellpadding="3"
@@ -489,6 +424,37 @@ Plots data
 
 </pre>
   <dl class="fields">
+  </dl>
+</td></tr></table>
+</div>
+<a name="plot"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">plot</span>(<span class="sig-arg">self</span>,
+        <span class="sig-arg">title</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="pyhodl.charts.balances-pysrc.html#Plotter.plot">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <pre class="literalblock">
+
+:param title: str
+    Title of plot
+:return: void
+    Shows plot
+
+</pre>
+  <dl class="fields">
+    <dt>Overrides:
+        <a href="pyhodl.charts.balances.CryptoPlotter-class.html#plot">CryptoPlotter.plot</a>
+        <dd><em class="note">(inherited documentation)</em></dd>
+    </dt>
   </dl>
 </td></tr></table>
 </div>
@@ -521,7 +487,7 @@ Plots data
 <table border="0" cellpadding="0" cellspacing="0" width="100%%">
   <tr>
     <td align="left" class="footer">
-    Generated by Epydoc 3.0.1 on Wed Dec 27 10:14:37 2017
+    Generated by Epydoc 3.0.1 on Wed Dec 27 16:52:36 2017
     </td>
     <td align="right" class="footer">
       <a target="mainFrame" href="http://epydoc.sourceforge.net"
