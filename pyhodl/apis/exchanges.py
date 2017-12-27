@@ -16,33 +16,16 @@
 # limitations under the License.
 
 
-""" Config your app """
-
-import os
-
-APP_NAME = "Pyhodl"
-APP_SHORT_NAME = "pyhodl"
-
-HOME_FOLDER = os.getenv("HOME")
-APP_FOLDER = os.path.join(
-    HOME_FOLDER,
-    "." + APP_SHORT_NAME
-)
-API_FOLDER = os.path.join(
-    APP_FOLDER,
-    "api"
-)
-DATA_FOLDER = os.path.join(
-    APP_FOLDER,
-    "data"
-)
+""" Creates APIs clients """
 
 
-def create_workplace():
-    """
-    :return: void
-        Creates folder
-    """
+class ApiClient:
+    """ Client to use API """
 
-    for directory in [APP_FOLDER, API_FOLDER, DATA_FOLDER]:
-        os.makedirs(directory)
+    def __init__(self, key, secret):
+        self.key = key
+        self.secret = secret
+
+
+class BitfinexClient(ApiClient):
+    """ Binance client """

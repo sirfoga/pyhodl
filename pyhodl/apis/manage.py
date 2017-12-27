@@ -1,28 +1,51 @@
+# !/usr/bin/python3
+# coding: utf_8
+
+# Copyright 2017-2018 Stefano Fogarollo
+#
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+# http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+
+
 """ Manage your APIs: add, edit, remove exchanges API """
 
+import abc
 import os
 
+from binance.client import Client as BinanceClient
+from coinbase.wallet.client import Client as CoinbaseClient
+from gdax.authenticated_client import AuthenticatedClient as GdaxClient
 from hal.files.parsers import JSONParser
 from hal.files.save_as import write_dicts_to_json
 
-API_CONFIG_FILE = os.path.join(
-    os.getenv("HOME"),
-    ".pyhodl",
-    "config",
-    "api"
+from .exchanges import BitfinexClient
+from ..app import API_FOLDER
+
+API_CONFIG = os.path.join(
+    API_FOLDER,
+    "config.json"
 )
 
 
 class ApiManager:
     """ Manages your secrets """
 
-    def __init__(self, config_file=API_CONFIG_FILE):
+    def __init__(self):
         """
         :param config_file: str
             Path to config file
         """
 
-        self.config_file = config_file
+        self.config_file = API_CONFIG
         self.raw = None
         self.data = {}
         self._read_config()
@@ -53,16 +76,10 @@ class ApiManager:
         :param api_name: str
             Api name
         :return: {}
-            Api config
+            ApiConfig
         """
 
         return self.data[api_name]
-
-    def add(self, api_name, key, secret):
-        self.data[api_name] = ApiConfig({
-            "key": key,
-            "secret": secret
-        })
 
     def save(self):
         out = {}
@@ -85,9 +102,84 @@ class ApiConfig:
         self.key = raw["key"]
         self.secret = raw["secret"]
 
-    def edit(self, new_key, new_secret):
-        self.key = new_key
-        self.secret = new_secret
-
     def to_dict(self):
         return self.raw
+
+    @abc.abstractmethod
+    def get_client(self):
+        """
+        :return: ApiClient
+            Api client
+        """
+        return
+
+    @staticmethod
+    def build_config(raw):
+        """
+        :param raw: {}
+            Api config
+        :return: ApiConfig concrete class
+            ApiConfig
+        """
+
+        try:
+            if raw["name"] == "binance":
+                return BinanceApi(raw)
+            elif raw["name"] == "bitfinex":
+                return BitfinexApi(raw)
+            elif raw["name"] == "coinbase":
+                return CoinbaseApi(raw)
+            elif raw["name"] == "gdax":
+                return GdaxApi(raw)
+            else:
+                raise ValueError("Cannot infer type of API")
+        except Exception as e:
+            print(raw)
+            print(e)
+            raise ValueError("Cannot infer type of API")
+
+
+class BinanceApi(ApiConfig):
+    """ Api config for Binance exchange """
+
+    def get_client(self):
+        return BinanceClient(
+            self.key,
+            self.secret
+        )
+
+
+class BitfinexApi(ApiConfig):
+    """ Api config for Bitfinex exchange """
+
+    def get_client(self):
+        return BitfinexClient(
+            self.key,
+            self.secret
+        )
+
+
+class CoinbaseApi(ApiConfig):
+    """ Api config for Coinbase exchange """
+
+    def get_client(self):
+        return CoinbaseClient(
+            self.key,
+            self.secret
+        )
+
+
+class GdaxApi(ApiConfig):
+    """ Api config for GDAX exchange """
+
+    def __init__(self, raw):
+        ApiConfig.__init__(self, raw)
+
+        self.passphrase = self.raw["passphrase"]
+
+    def get_client(self):
+        return GdaxClient(
+            self.key,
+            self.secret,
+            self.passphrase
+        )
