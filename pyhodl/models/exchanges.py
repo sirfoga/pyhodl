@@ -1,4 +1,4 @@
-#!/usr/bin/env bash
+# !/usr/bin/python3
 # coding: utf_8
 
 # Copyright 2017-2018 Stefano Fogarollo
@@ -16,4 +16,4 @@
 # limitations under the License.
 
 
-epydoc --config Epydoc_html.prj  # make docs
+""" Exchanges model """

@@ -19,11 +19,14 @@
 """ Updates exchanges data """
 
 import abc
+import os
 
 from binance.client import Client as BinanceClient
 from coinbase.wallet.client import Client as CoinbaseClient
 from gdax.authenticated_client import AuthenticatedClient as GdaxClient
+from hal.files.save_as import write_dicts_to_json
 
+from pyhodl.utils import get_actual_class_name
 from ..apis.exchanges import BitfinexClient
 
 
@@ -33,10 +36,22 @@ class ExchangeUpdater:
     def __init__(self, api_client, data_folder):
         self.client = api_client
         self.folder = data_folder
+        self.output_file = os.path.join(
+            self.folder,
+            get_actual_class_name(self)
+        )
+        self.transactions = {}
 
     @abc.abstractmethod
     def get_transactions(self):
         return
+
+    def save_data(self):
+        write_dicts_to_json(self.transactions, self.output_file)
+
+    def update(self):
+        self.get_transactions()
+        self.save_data()
 
     @staticmethod
     def build_updater(api_client, data_folder):
@@ -67,8 +82,18 @@ class BitfinexUpdater(ExchangeUpdater):
 class CoinbaseUpdater(ExchangeUpdater):
     """ Updates Coinbase data """
 
+    def __init__(self, api_client, data_folder):
+        ExchangeUpdater.__init__(self, api_client, data_folder)
+
+        self.accounts = self.client.get_accounts()["data"]
+        self.transactions = {
+            account["id"]: [] for account in self.accounts
+        }
+
     def get_transactions(self):
-        return []
+        for account_id in self.transactions:
+            self.transactions[account_id] = \
+                self.client.get_transactions(account_id)["data"]
 
 
 class GdaxUpdater(ExchangeUpdater):
