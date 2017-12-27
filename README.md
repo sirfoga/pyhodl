@@ -10,6 +10,7 @@
 - [Overview](#overview)
 - [Settings](#settings)
 - [Usage](#usage)
+- [Install](#install)
 - [Changelog](#changelog)
 - [Contribute](#contribute)
 - [License](#license)
@@ -69,6 +70,20 @@ would result in a series of plot like this one:
 ![Example bitfinex](extra/bitfinex_balances.jpg)
 
 Note that actual data has been omitted
+
+## Install
+Just run `./install.sh` and test your installation with `pyhodl -h`. Should come out
+```bash
+usage: -[mode] -h/--help for full usage
+
+optional arguments:
+  -h, --help           show this help message and exit
+  -updater, --update   Syncs local data with the transactions from your
+                       exchanges
+  -plotter, --plot     Creates charts of your data
+  -stats, --stats      Computes statistics and trends using local data
+  -verbose, --verbose  Increase verbosity
+```
 
 ## Changelog
 See [CHANGELOG](https://github.com/sirfoga/pyhodl/blob/master/CHANGELOG.md)

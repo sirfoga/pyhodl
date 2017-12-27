@@ -110,8 +110,17 @@ def handle_exception():
     print("Terribly sorry for the inconvenience, see you soon!")
 
 
-if __name__ == '__main__':
+def cli():
+    """
+    :return: void
+        Run this as cmd program
+    """
+
     try:
         main()
     except Exception as e:
         traceback.print_exc()  # debug only handle_exception(e)
+
+
+if __name__ == '__main__':
+    cli()

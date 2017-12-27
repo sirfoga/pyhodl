@@ -54,5 +54,8 @@ setup(
         "python-binance",
         "gdax",
         "ccxt"
-    ]
+    ],
+    entry_points={
+        "console_scripts": ["pyhodl = pyhodl.cli:cli"]
+    }
 )

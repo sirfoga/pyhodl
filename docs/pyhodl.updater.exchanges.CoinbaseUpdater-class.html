@@ -62,11 +62,13 @@
 <h1 class="epydoc">Class CoinbaseUpdater</h1><p class="nomargin-top"><span class="codelink"><a href="pyhodl.updater.exchanges-pysrc.html#CoinbaseUpdater">source&nbsp;code</a></span></p>
 <center>
 <center>  <map id="uml_class_diagram_for_pyhodl_u_4" name="uml_class_diagram_for_pyhodl_u_4">
-<area shape="rect" id="node1_3" href="pyhodl.updater.exchanges.CoinbaseUpdater-class.html#get_transactions" title="pyhodl.updater.exchanges.CoinbaseUpdater.get_transactions" alt="" coords="61,135,192,155"/>
-<area shape="rect" id="node1" href="pyhodl.updater.exchanges.CoinbaseUpdater-class.html" title="Updates Coinbase data" alt="" coords="49,103,204,161"/>
-<area shape="rect" id="node2_4" href="pyhodl.updater.exchanges.ExchangeUpdater-class.html#__init__" title="pyhodl.updater.exchanges.ExchangeUpdater.__init__" alt="" coords="17,38,236,58"/>
-<area shape="rect" id="node2_5" href="pyhodl.updater.exchanges.ExchangeUpdater-class.html#build_updater" title="pyhodl.updater.exchanges.ExchangeUpdater.build_updater" alt="" coords="17,58,236,78"/>
-<area shape="rect" id="node2" href="pyhodl.updater.exchanges.ExchangeUpdater-class.html" title="Abstract exchange updater" alt="" coords="5,5,248,84"/>
+<area shape="rect" id="node1_5" href="pyhodl.updater.exchanges.CoinbaseUpdater-class.html#__init__" title="pyhodl.updater.exchanges.CoinbaseUpdater.__init__" alt="" coords="19,155,233,175"/>
+<area shape="rect" id="node1_6" href="pyhodl.updater.exchanges.CoinbaseUpdater-class.html#get_transactions" title="pyhodl.updater.exchanges.CoinbaseUpdater.get_transactions" alt="" coords="19,175,233,195"/>
+<area shape="rect" id="node1" href="pyhodl.updater.exchanges.CoinbaseUpdater-class.html" title="Updates Coinbase data" alt="" coords="6,123,245,201"/>
+<area shape="rect" id="node2_7" href="pyhodl.updater.exchanges.ExchangeUpdater-class.html#save_data" title="pyhodl.updater.exchanges.ExchangeUpdater.save_data" alt="" coords="17,37,236,57"/>
+<area shape="rect" id="node2_8" href="pyhodl.updater.exchanges.ExchangeUpdater-class.html#update" title="pyhodl.updater.exchanges.ExchangeUpdater.update" alt="" coords="17,57,236,77"/>
+<area shape="rect" id="node2_9" href="pyhodl.updater.exchanges.ExchangeUpdater-class.html#build_updater" title="pyhodl.updater.exchanges.ExchangeUpdater.build_updater" alt="" coords="17,77,236,97"/>
+<area shape="rect" id="node2" href="pyhodl.updater.exchanges.ExchangeUpdater-class.html" title="Abstract exchange updater" alt="" coords="5,5,248,104"/>
 </map>
   <img src="uml_class_diagram_for_pyhodl_u_4.gif" alt='' usemap="#uml_class_diagram_for_pyhodl_u_4" ismap="ismap" class="graph-without-title" />
 </center>
@@ -100,6 +102,24 @@ Updates Coinbase data
     </td><td class="summary">
       <table width="100%" cellpadding="0" cellspacing="0" border="0">
         <tr>
+          <td><span class="summary-sig"><a href="pyhodl.updater.exchanges.CoinbaseUpdater-class.html#__init__" class="summary-sig-name">__init__</a>(<span class="summary-sig-arg">self</span>,
+        <span class="summary-sig-arg">api_client</span>,
+        <span class="summary-sig-arg">data_folder</span>)</span></td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="pyhodl.updater.exchanges-pysrc.html#CoinbaseUpdater.__init__">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
           <td><span class="summary-sig"><a href="pyhodl.updater.exchanges.CoinbaseUpdater-class.html#get_transactions" class="summary-sig-name">get_transactions</a>(<span class="summary-sig-arg">self</span>)</span></td>
           <td align="right" valign="top">
             <span class="codelink"><a href="pyhodl.updater.exchanges-pysrc.html#CoinbaseUpdater.get_transactions">source&nbsp;code</a></span>
@@ -113,7 +133,8 @@ Updates Coinbase data
   <tr>
     <td colspan="2" class="summary">
     <p class="indent-wrapped-lines"><b>Inherited from <code><a href="pyhodl.updater.exchanges.ExchangeUpdater-class.html">ExchangeUpdater</a></code></b>:
-      <code><a href="pyhodl.updater.exchanges.ExchangeUpdater-class.html#__init__">__init__</a></code>
+      <code><a href="pyhodl.updater.exchanges.ExchangeUpdater-class.html#save_data">save_data</a></code>,
+      <code><a href="pyhodl.updater.exchanges.ExchangeUpdater-class.html#update">update</a></code>
       </p>
     </td>
   </tr>
@@ -161,6 +182,31 @@ Updates Coinbase data
   </td>
 </tr>
 </table>
+<a name="__init__"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">__init__</span>(<span class="sig-arg">self</span>,
+        <span class="sig-arg">api_client</span>,
+        <span class="sig-arg">data_folder</span>)</span>
+    <br /><em class="fname">(Constructor)</em>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="pyhodl.updater.exchanges-pysrc.html#CoinbaseUpdater.__init__">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  
+  <dl class="fields">
+    <dt>Overrides:
+        <a href="pyhodl.updater.exchanges.ExchangeUpdater-class.html#__init__">ExchangeUpdater.__init__</a>
+    </dt>
+  </dl>
+</td></tr></table>
+</div>
 <a name="get_transactions"></a>
 <div>
 <table class="details" border="1" cellpadding="3"
@@ -212,7 +258,7 @@ Updates Coinbase data
 <table border="0" cellpadding="0" cellspacing="0" width="100%%">
   <tr>
     <td align="left" class="footer">
-    Generated by Epydoc 3.0.1 on Wed Dec 27 16:52:37 2017
+    Generated by Epydoc 3.0.1 on Wed Dec 27 23:23:41 2017
     </td>
     <td align="right" class="footer">
       <a target="mainFrame" href="http://epydoc.sourceforge.net"
