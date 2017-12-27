@@ -1,7 +1,7 @@
 # How to import your transactions
 
 ## General overview
-APIs are hooks that apps use to interface with other apps. `pyhodl` needs just read access to your exchanges APIs. `pyhodl` does not hold your keys, rather it saves them in your local machine, so be sure to keep it virus-free. `pyhodl` needs a config file to save your data, so just run `pyhodl` once and follow the instructions to setup your workplace.
+APIs are hooks that apps use to interface with other apps. `pyhodl` needs just read access to your exchanges APIs. `pyhodl` does not hold your keys, rather it saves them in your local machine, so be sure to keep it virus-free. `pyhodl` needs a config file to save your data, so just run `pyhodl -updater` once and follow the instructions to setup your workplace.
 
 ## Supported exchanges
 

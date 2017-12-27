@@ -20,6 +20,9 @@
 
 import os
 
+from hal.files.parsers import JSONParser
+from hal.files.save_as import write_dicts_to_json
+
 APP_NAME = "Pyhodl"
 APP_SHORT_NAME = "pyhodl"
 
@@ -36,6 +39,54 @@ DATA_FOLDER = os.path.join(
     APP_FOLDER,
     "data"
 )
+
+
+class ConfigManager:
+    """ Manages config files for app """
+
+    def __init__(self, config_file):
+        self.config_file = config_file
+        self.raw = None
+        self.data = {}
+        self._read_config()
+
+    def _read_config(self):
+        """
+        :return: {}
+            Config data
+        """
+
+        self.raw = JSONParser(self.config_file).get_content()
+        for key, value in self.raw.items():
+            self.data[key] = value
+
+    def create_config(self):
+        """
+        :return: void
+            Creates config file
+        """
+
+        if os.path.exists(self.config_file):
+            raise ValueError("Creating new config will erase previous data!")
+
+        write_dicts_to_json({}, self.config_file)  # empty data
+
+    def get(self, key):
+        """
+        :param key: str
+            What you want
+        :return: {}
+            Item you want
+        """
+
+        return self.data[key]
+
+    def save(self):
+        out = {}
+        for key, value in self.data.items():
+            out[key] = value.to_dict()
+
+        write_dicts_to_json(out, self.config_file)
 
 
 def create_workplace():

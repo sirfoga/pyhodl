@@ -24,11 +24,9 @@ import os
 from binance.client import Client as BinanceClient
 from coinbase.wallet.client import Client as CoinbaseClient
 from gdax.authenticated_client import AuthenticatedClient as GdaxClient
-from hal.files.parsers import JSONParser
-from hal.files.save_as import write_dicts_to_json
 
 from .exchanges import BitfinexClient
-from ..app import API_FOLDER
+from ..app import API_FOLDER, ConfigManager
 
 API_CONFIG = os.path.join(
     API_FOLDER,
@@ -36,57 +34,14 @@ API_CONFIG = os.path.join(
 )
 
 
-class ApiManager:
-    """ Manages your secrets """
+class ApiManager(ConfigManager):
+    """ Manages your API secrets """
 
     def __init__(self):
-        """
-        :param config_file: str
-            Path to config file
-        """
+        ConfigManager.__init__(self, API_CONFIG)
 
-        self.config_file = API_CONFIG
-        self.raw = None
-        self.data = {}
-        self._read_config()
-
-    def _read_config(self):
-        """
-        :return: {}
-            Config data
-        """
-
-        self.raw = JSONParser(self.config_file).get_content()
-        for key, value in self.raw.items():
-            self.data[key] = ApiConfig(value)
-
-    def create_config(self):
-        """
-        :return: void
-            Creates config file
-        """
-
-        if os.path.exists(self.config_file):
-            raise ValueError("Creating new config will erase previous data!")
-
-        write_dicts_to_json({}, self.config_file)  # empty data
-
-    def get(self, api_name):
-        """
-        :param api_name: str
-            Api name
-        :return: {}
-            ApiConfig
-        """
-
-        return self.data[api_name]
-
-    def save(self):
-        out = {}
-        for key, value in self.data.items():
-            out[key] = value.to_dict()
-
-        write_dicts_to_json(out, self.config_file)
+    def get(self, key):
+        return ApiConfig.build_api(super().get(key))
 
 
 class ApiConfig:
@@ -114,7 +69,7 @@ class ApiConfig:
         return
 
     @staticmethod
-    def build_config(raw):
+    def build_api(raw):
         """
         :param raw: {}
             Api config
