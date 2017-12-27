@@ -99,5 +99,19 @@ class CoinbaseUpdater(ExchangeUpdater):
 class GdaxUpdater(ExchangeUpdater):
     """ Updates Gdax data """
 
+    def __init__(self, api_client, data_folder):
+        ExchangeUpdater.__init__(self, api_client, data_folder)
+
+        self.accounts = self.client.get_accounts()
+        self.transactions = {
+            account["id"]: [] for account in self.accounts
+        }
+
     def get_transactions(self):
-        return []
+        for account_id in self.transactions:
+            pages = self.client.get_account_history(account_id)  # paginated
+            transactions = []
+            for page in pages:
+                transactions += page
+
+            self.transactions[account_id] = transactions
