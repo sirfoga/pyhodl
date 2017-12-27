@@ -43,7 +43,7 @@ def create_args():
     )
 
     parser.add_argument("-in", dest="in", help="Transactions file",
-                        required=True)
+                        required=False)
     parser.add_argument("-out", dest="out",
                         help="Output folder",
                         required=False)
