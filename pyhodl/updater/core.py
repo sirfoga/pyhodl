@@ -55,7 +55,7 @@ class UpdateManager(ConfigManager):
 
     def update_interval(self):
         raw = self.get("interval")
-        tokens = ["s", "m", "h", "d", "w", "m"]
+        tokens = ["s", "m", "h", "d", "w"]
         time_token = 0.0
         for tok in tokens:
             if raw.endswith(tok):
@@ -71,8 +71,6 @@ class UpdateManager(ConfigManager):
             return timedelta(days=time_token)
         elif raw.endswith("w"):
             return timedelta(days=7 * time_token)
-        elif raw.endswith("m"):
-            return timedelta(days=30 * time_token)
         else:
             raise ValueError("Cannot parse update interval", raw)
 
