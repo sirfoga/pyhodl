@@ -39,7 +39,7 @@ class Updater:
     """ Updates exchanges local data """
 
     def __init__(self):
-        manager = UpdateManager()
+        self.manager = UpdateManager()
 
     def run(self):
         pass

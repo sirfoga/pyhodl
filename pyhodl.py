@@ -19,9 +19,13 @@
 """ Command-line interface to Pyhodl """
 
 import argparse
+import time
+import traceback
 from enum import Enum
 
-from .pyhodl.updater import Updater
+from hal.streams.user import UserInput
+
+from pyhodl.updater import Updater
 
 
 class RunMode(Enum):
@@ -83,5 +87,26 @@ def main():
         raise ValueError("Not fully implemented!")
 
 
+def handle_exception():
+    """
+    :return: void
+        Tries to handle it
+    """
+
+    print("pyhodl stopped abruptly, but your data is safe, don't worry.")
+    user_input = UserInput()
+    if user_input.get_yes_no("Want to fill a bug report?"):
+        print("Please file a bug report here >> "
+              "https://github.com/sirfoga/pyhodl/issues attaching the "
+              "following content ...")
+        time.sleep(1)
+        traceback.print_exc()
+
+    print("Terribly sorry for the inconvenience, see you soon!")
+
+
 if __name__ == '__main__':
-    main()
+    try:
+        main()
+    except Exception as e:
+        traceback.print_exc()  # debug only handle_exception(e)

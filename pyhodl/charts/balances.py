@@ -32,7 +32,7 @@ def trend_function(x, a1, b1, a2, b2, a3, c):
     return a1 * np.sin(b1 * x) + a2 * np.cos(b2 * x) + a3 * np.power(x, 4) + c
 
 
-class CryptoPlotter(object):
+class CryptoPlotter:
     """ Plots crypto data """
 
     def __init__(self, base_currency):

@@ -29,7 +29,7 @@ from hal.files.save_as import write_dicts_to_csv
 from ..exchanges.core import CryptoExchange, Transaction, TransactionType
 
 
-class CryptoParser(object):
+class CryptoParser:
     """ Abstract parser """
 
     def __init__(self, input_file):
@@ -38,7 +38,6 @@ class CryptoParser(object):
             File to parse
         """
 
-        object.__init__(self)
         self.input_file = os.path.join(input_file)  # reformat file path
         self.filename = os.path.basename(self.input_file)
         self.is_csv = self.input_file.endswith(".csv")

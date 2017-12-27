@@ -48,6 +48,7 @@ class ConfigManager:
         self.config_file = config_file
         self.raw = None
         self.data = {}
+        self._check()
         self._read_config()
 
     def _read_config(self):
@@ -59,6 +60,13 @@ class ConfigManager:
         self.raw = JSONParser(self.config_file).get_content()
         for key, value in self.raw.items():
             self.data[key] = value
+
+    def _check(self):
+        if not os.path.exists(self.config_file) or not self.data:
+            raise ValueError(
+                "Empty config file! Please write your settings "
+                "and store at " + self.config_file
+            )
 
     def create_config(self):
         """

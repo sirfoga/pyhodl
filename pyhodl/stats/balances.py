@@ -21,7 +21,7 @@
 from pyhodl.data.core import BalanceParser
 
 
-class BalanceStats(object):
+class BalanceStats:
     """ Computes balances stats """
 
     FIAT_CURRENCIES = ["EUR", "USD"]
@@ -39,7 +39,6 @@ class BalanceStats(object):
             Base currency (to convert from crypto)
         """
 
-        object.__init__(self)
         self.parser = BalanceParser(input_file)
         self.BASE_CURRENCY = base_currency
         self.FIAT_CURRENCIES = [
