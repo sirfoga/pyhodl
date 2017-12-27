@@ -22,10 +22,10 @@ import abc
 import os
 
 from binance.client import Client as BinanceClient
+from ccxt import bitfinex as BitfinexClient
 from coinbase.wallet.client import Client as CoinbaseClient
 from gdax.authenticated_client import AuthenticatedClient as GdaxClient
 
-from .exchanges import BitfinexClient
 from ..app import API_FOLDER, ConfigManager
 
 API_CONFIG = os.path.join(
@@ -114,10 +114,11 @@ class BitfinexApi(ApiConfig):
     """ Api config for Bitfinex exchange """
 
     def get_client(self):
-        return BitfinexClient(
-            self.key,
-            self.secret
-        )
+        return BitfinexClient({
+            "apiKey": self.key,
+            "secret": self.secret,
+            "verbose": False
+        })
 
 
 class CoinbaseApi(ApiConfig):

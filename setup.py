@@ -52,6 +52,7 @@ setup(
         "pandas",
         "coinbase",
         "python-binance",
-        "gdax"
+        "gdax",
+        "ccxt"
     ]
 )

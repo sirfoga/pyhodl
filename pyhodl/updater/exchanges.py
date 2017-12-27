@@ -22,12 +22,12 @@ import abc
 import os
 
 from binance.client import Client as BinanceClient
+from ccxt import bitfinex as BitfinexClient
 from coinbase.wallet.client import Client as CoinbaseClient
 from gdax.authenticated_client import AuthenticatedClient as GdaxClient
 from hal.files.save_as import write_dicts_to_json
 
 from pyhodl.utils import get_actual_class_name
-from ..apis.exchanges import BitfinexClient
 
 
 class ExchangeUpdater:
