@@ -22,8 +22,8 @@ import argparse
 import os
 from datetime import datetime
 
-from pyhodl.data.core import BalanceParser
 from pyhodl.data.parsers import parse_transactions_folder
+from pyhodl.stats.balances import BalanceStats
 from pyhodl.utils import get_actual_class_name
 
 DATETIME_FORMAT = "%Y-%M-%D_%H:%M:%S"
@@ -145,10 +145,11 @@ def main():
     params = parse_args(create_args())
     if check_args(params):
         if params["plot"]:
-            parser = BalanceParser(params["in"])
-            FIAT_CURRENCIES = ["EUR", "USD"]
-            CURRENCY_EQUIV = "value"
+            driver = BalanceStats(params["in"])
+            crypto_balances = driver.get_crypto_equiv_balance()
 
+            for balance in crypto_balances:
+                print(balance)
         else:
             exchanges = parse_transactions_folder(params["in"])
             for exchange in exchanges:

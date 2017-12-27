@@ -28,7 +28,7 @@ from scipy.optimize import curve_fit
 from pyhodl.data.core import BalanceParser
 
 
-def func(x, a1, b1, a2, b2, a3, c):
+def trend_function(x, a1, b1, a2, b2, a3, c):
     return a1 * np.sin(b1 * x) + a2 * np.cos(b2 * x) + a3 * np.power(x, 4) + c
 
 
@@ -150,10 +150,10 @@ class Plotter(CryptoPlotter):
             ]
 
             if max(values) > min_to_plot * total_cap:
-                popt, pcov = curve_fit(func, self.x_dates, values)
+                popt, pcov = curve_fit(trend_function, self.x_dates, values)
                 plt.plot(
                     mdates.num2date(self.x_dates),
-                    func(self.x_dates, *popt), "-", label=coin
+                    trend_function(self.x_dates, *popt), "-", label=coin
                 )  # trend
 
     def plot_total_equiv(self):
@@ -170,9 +170,10 @@ class Plotter(CryptoPlotter):
             for date in self.dates
         ]
 
-        popt, pcov = curve_fit(func, self.x_dates, values)
+        popt, pcov = curve_fit(trend_function, self.x_dates, values)
         plt.plot(
-            mdates.num2date(self.x_dates), func(self.x_dates, *popt), "--",
+            mdates.num2date(self.x_dates), trend_function(self.x_dates, *popt),
+            "--",
             label=self.currency + " equivalent"
         )  # trend
 
