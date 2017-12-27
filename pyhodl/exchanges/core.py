@@ -28,7 +28,7 @@ from pyhodl.requests import get_price
 from pyhodl.utils import generate_dates
 
 
-class CryptoExchange(object):
+class CryptoExchange:
     """ Exchange dealing with crypto-coins """
 
     TIME_INTERVALS = {
@@ -48,7 +48,6 @@ class CryptoExchange(object):
             List of transactions
         """
 
-        object.__init__(self)
         self.transactions = transactions
         if not self.transactions:
             raise ValueError("Creating exchange with no past transaction!")
@@ -308,7 +307,7 @@ class TransactionType(Enum):
     FUNDING = 4
 
 
-class Transaction(object):
+class Transaction:
     """ Exchange transaction """
 
     def __init__(self, raw_dict, trans_type=TransactionType.TRADING,
@@ -324,7 +323,6 @@ class Transaction(object):
             True iff transaction has actually taken place
         """
 
-        object.__init__(self)
         self.raw = raw_dict
         self.transaction_type = trans_type
         if date_key:
@@ -398,7 +396,7 @@ class Transaction(object):
         self.successful = successful
 
 
-class Wallet(object):
+class Wallet:
     """ A general wallet, tracking addition, deletions and fees """
 
     def __init__(self, create_date, start_amount=0):
@@ -409,7 +407,6 @@ class Wallet(object):
             Amount of currency at start
         """
 
-        object.__init__(self)
         self.balance = float(0)
         self.transactions = []  # list of operations performed
 
@@ -526,7 +523,7 @@ class Wallet(object):
         return amount
 
 
-class Balance(object):
+class Balance:
     """ Balance of something, expressed in many coins """
 
     def __init__(self, wallets):
@@ -535,7 +532,6 @@ class Balance(object):
             List of wallet (and coins)
         """
 
-        object.__init__(self)
         self.wallets = wallets
         nan_keys = [
             key for key in wallets if str(key) == "nan"

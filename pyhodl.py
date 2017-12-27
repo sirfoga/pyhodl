@@ -19,15 +19,21 @@
 """ Command-line interface to Pyhodl """
 
 import argparse
-import os
-from datetime import datetime
+import time
+import traceback
+from enum import Enum
 
-from pyhodl.data.parsers import parse_transactions_folder, \
-    parse_balances_folder
-from pyhodl.utils import get_actual_class_name
+from hal.streams.user import UserInput
 
-DATETIME_FORMAT = "%Y-%M-%D_%H:%M:%S"
-DATETIME_HUMAN = "[YYYY]-[MM]-[DD]_[HH]:[MM]:[SS]"
+from pyhodl.updater.core import Updater
+
+
+class RunMode(Enum):
+    """ Run as ... """
+
+    UPDATER = 0
+    PLOTTER = 1
+    STATS = 2
 
 
 def create_args():
@@ -37,27 +43,18 @@ def create_args():
     """
 
     parser = argparse.ArgumentParser(
-        usage="-in <database file> -out <output foler> -since <" +
-              DATETIME_HUMAN + "> -until <" + DATETIME_HUMAN +
-              "> -h/--help for full usage"
+        usage="-[mode] -h/--help for full usage"
     )
 
-    parser.add_argument("-in", dest="in", help="Transactions file",
-                        required=True)
-    parser.add_argument("-out", dest="out",
-                        help="Output folder",
-                        required=False)
-    parser.add_argument("-since", dest="since",
-                        help="Analyze transactions since this date, format "
-                             "should be '" + DATETIME_HUMAN + "'",
-                        required=False)
-    parser.add_argument("-until", dest="until",
-                        help="Analyze transactions until this date, format "
-                             "should be '" + DATETIME_HUMAN + "'",
-                        required=False)
-    parser.add_argument("-plot", dest="plot",
-                        help="Plot values? [y/n]'",
-                        required=False)
+    parser.add_argument("-updater", "--update", action="store_true",
+                        help="Syncs local data with the transactions from "
+                             "your exchanges")
+    parser.add_argument("-plotter", "--plot", action="store_true",
+                        help="Creates charts of your data")
+    parser.add_argument("-stats", "--stats", action="store_true",
+                        help="Computes statistics and trends using local data")
+    parser.add_argument("-verbose", "--verbose", action="store_true",
+                        help="Increase verbosity")
 
     return parser
 
@@ -71,91 +68,50 @@ def parse_args(parser):
     """
 
     args = parser.parse_args()
-    params = {}
-    keys = [
-        "in", "out", "since", "until", "plot"
-    ]
 
-    for k in keys:
-        params[k] = args.__getattribute__(k)
+    if args.update:
+        run_mode = RunMode.UPDATER
+    elif args.plot:
+        run_mode = RunMode.PLOTTER
+    elif args.stats:
+        run_mode = RunMode.STATS
+    else:
+        raise ValueError("Must choose run mode!")
 
-    if params["since"]:
-        params["since"] = datetime.strptime(
-            params["since"], DATETIME_FORMAT
-        )
-
-    if params["until"]:
-        params["until"] = datetime.strptime(
-            params["until"], DATETIME_FORMAT
-        )
-
-    if params["plot"]:
-        params["plot"] = bool(params["plot"]) or params["plot"].startswith("y")
-
-    return params
-
-
-def check_args(params):
-    """
-    :param params: dict
-        Holds cmd args
-    :return: bool
-        True iff args parser holds valid set of params
-    """
-
-    if not os.path.exists(params["in"]):
-        raise ValueError("Input file does not exist!")
-
-    if params["since"] and params["until"] and \
-                    params["since"] > params["until"]:
-        raise ValueError("<since> date must be before <until> date!")
-
-    return True
-
-
-def parse_exchange_raw_data(exchange, exchange_name, output_file):
-    """
-    :param exchange: CryptoExchange
-        Exchange data to parse
-    :param exchange_name: str
-        Name of exchange
-    :param output_file: str
-        Path to output file
-    :return: void
-        Parses and saves data
-    """
-
-    exchange.write_all_transactions_to_csv(
-        os.path.join(
-            output_file,
-            exchange_name + "_transactions.csv"
-        )
-    )  # write transactions
-
-    exchange.write_all_balances_to_csv(
-        os.path.join(
-            output_file,
-            exchange_name + "_balances.csv"
-        ),
-        currency="USD"
-    )  # write balances
+    return run_mode, args.verbose
 
 
 def main():
-    params = parse_args(create_args())
-    if check_args(params):
-        if params["plot"]:
-            plotters = list(parse_balances_folder(params["in"]))
-            for plotter in plotters:
-                plotter.plot_equiv()
-                plotter.plot_total_equiv()
-                plotter.plot()
-        else:
-            exchanges = parse_transactions_folder(params["in"])
-            for exchange in exchanges:
-                exchange_name = get_actual_class_name(exchange)
-                parse_exchange_raw_data(exchange, exchange_name, params["out"])
+    run_mode, verbose = parse_args(create_args())
+    if run_mode == RunMode.UPDATER:
+        driver = Updater(verbose)
+        driver.run()
+    elif run_mode == RunMode.PLOTTER:
+        raise ValueError("Not fully implemented!")
+    elif run_mode == RunMode.STATS:
+        raise ValueError("Not fully implemented!")
+
+
+def handle_exception():
+    """
+    :return: void
+        Tries to handle it
+    """
+
+    print("pyhodl stopped abruptly, but your data is safe, don't worry.")
+    user_input = UserInput()
+    if user_input.get_yes_no("Want to fill a bug report?"):
+        print("Please file a bug report here >> "
+              "https://github.com/sirfoga/pyhodl/issues attaching the "
+              "following content ...")
+        time.sleep(1)
+        traceback.print_exc()
+
+    print("Terribly sorry for the inconvenience, see you soon!")
 
 
 if __name__ == '__main__':
-    main()
+    try:
+        main()
+    except Exception as e:
+        traceback.print_exc()  # debug only handle_exception(e)

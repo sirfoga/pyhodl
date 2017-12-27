@@ -16,4 +16,4 @@
 # limitations under the License.
 
 
-epydoc --config Epydoc_html  # make docs
+epydoc --config Epydoc_html.prj  # make docs

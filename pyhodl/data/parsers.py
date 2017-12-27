@@ -21,7 +21,6 @@
 from hal.files.models.system import ls_recurse, is_file
 
 from .core import CryptoParser
-from ..charts.balances import Plotter
 from ..exchanges.binance import BinanceParser, Binance
 from ..exchanges.bitfinex import BitfinexParser, Bitfinex
 from ..exchanges.coinbase import CoinbaseParser, Coinbase
@@ -104,19 +103,3 @@ def merge_exchanges(exchanges_list):
         all_transactions += exchange.transactions
     exchange_class = type(exchanges_list[0])
     return exchange_class(all_transactions)
-
-
-def parse_balances_folder(input_folder):
-    """
-    :param input_folder: str
-        Path to folder where to look for transactions files
-    :return: [] of Plotter
-        Exchanges found (with balances)
-    """
-
-    files = [
-        doc for doc in ls_recurse(input_folder)
-        if is_file(doc) and doc.endswith("balances.csv")
-    ]
-    for input_file in files:
-        yield Plotter(input_file)

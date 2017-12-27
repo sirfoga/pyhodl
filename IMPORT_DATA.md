@@ -1,5 +1,8 @@
 # How to import your transactions
 
+## General overview
+APIs are hooks that apps use to interface with other apps. `pyhodl` needs just read access to your exchanges APIs. `pyhodl` does not hold your keys, rather it saves them in your local machine, so be sure to keep it virus-free. `pyhodl` needs a config file to save your data, so just run `pyhodl -updater` once and follow the instructions to setup your workplace.
+
 ## Supported exchanges
 
 - [Binance](#binance)
@@ -9,47 +12,30 @@
 
 ## Binance
 
-0. Go to the [trade page](https://www.binance.com/userCenter/tradeHistory.html).
-0. Click the `Export Complete Trade History` link on the right
-0. Select the dates and click `Export`
-0. Do the same for [your deposit history](https://www.binance.com/user/getMoneyLog.html?action=download&direction=0) and [your withdrawal history](https://www.binance.com/user/getMoneyLog.html?action=download&direction=1)
-![Bitfinex](extra/import-data/binance.png)
+0. Log in into your Binance account and navigate to the [Security Settings page](https://binance.com)
+0. Click on `API Settings` and create a new key
+0. Check only the `Read Info` permission
+0. Save your `key` and your `secret` in your config file
 
 ## Bitfinex
 
-0. Go to the [report page](https://www.bitfinex.com/reports).
-0. Scroll down and click the `Trade History` link
-0. Select the dates and download the file
-0. Do the same for your `Deposits` and `Withdrawals` movements
-![Bitfinex](extra/import-data/bitfinex.png)
+0. Log in into your Bitfinex account and navigate to [Account -> API](https://www.bitfinex.com/api)
+0. Create a new key
+0. Select all Read boxes (should be selected by default) and do not select any Write boxes.
+0. Label the API Key and generate it.
+0. Save your `key` and your `secret` in your config file
 
 ## Coinbase
 
-0. Go to the [report page](https://www.coinbase.com/reports).
-0. Click the `New Report` button
-0. Select `Transaction history`
-0. Select the dates and the account (`BTC`, `LTC` ...)
-0. Click `Create Report`
-0. Soon you'll receive an e-mail from Coinbase with a link to download the report
-![Bitfinex](extra/import-data/coinbase.png)
-0. However Coinbase does not mark the name of the coin, so you have to mark it yourself.
-0. Open the `.csv` file; it should be like
-    ```
-    Transfers
-    User,email@gmail.com,5fdhw3728bdk129bfaae09f
-    
-    Timestamp,Type,BTC,Subtotal,Fees,Total,Currency,Price Per Coin,Payment Method,ID,Share
-    2017-05-14 09:06:58 -0700,Buy,0.00382377,9.0,0.99,9.99,EUR,2353.7,MasterCard ********6728,fnwiibfi829bve9102bf9f,0
-    2017-07-14 09:07:30 -0700,Buy,0.00381793,9.0,0.99,9.99,EUR,2357.3,MasterCard ********6728,5941fnwiibfi829bvebe96,0
-    2017-09-24 02:48:24 -0700,Buy,0.04605967,144.24,5.76,150.0,EUR,3131.59,MasterCard ********6995,59c7fnwiibfi829bvea361,0
-    ```
-0. Change (line 3) `BTC` to the exact name of the coin you just exported. e.g if you exported you `LTC` account transactions, change `BTC` to `LTC`
+0. Log in into your Coinbase account and navigate to [Settings -> API Access](https://www.coinbase.com/settings/api)
+0. Click on `+ New API Key` to create a new key
+0. Enable all accounts you would like to check (we recommend to check all)
+0. Enable all checkboxes with a read permission
+0. Save your `key` and your `secret` in your config file
 
 
 ## GDAX
 
-0. Go to [your accounts page](https://www.gdax.com/accounts).
-0. Click the `Download Receipt/Statement` button
-0. Select the dates and the `CSV` format (not `PDF`)
-0. Soon you'll receive an e-mail from Coinbase with a link to download the report
-![Bitfinex](extra/import-data/gdax.png)
+0. Log in into your GDAX account, hover the navigation icon and click on [API](https://www.gdax.com/settings/api)
+0. Enable only View
+0. Save your `key`, `secret` and `passphrase` in your config file

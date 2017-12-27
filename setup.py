@@ -20,11 +20,12 @@
 
 from setuptools import setup, find_packages
 
+LITTLE_DESCRIPTION = "Framework to download, update, analyze and plot your " \
+                     "crypto-transactions. Completely off-line and " \
+                     "security-oriented."
+
 DESCRIPTION = \
-    "Pyhodl\n\n\
-    Static analysis of your crypto-transactions. Completely off-line and " \
-    "security-oriented.\n\
-    \n\
+    "Pyhodl\n\n" + LITTLE_DESCRIPTION + "\n\
     Install\n\n\
     - $ python3 setup.py install  # from source\n\
     - $ pip3 install pyhodl  # via pip\n\
@@ -35,11 +36,10 @@ DESCRIPTION = \
 
 setup(
     name="pyhodl",
-    version="0.2.1",
+    version="0.2.2",
     author="sirfoga",
     author_email="sirfoga@protonmail.com",
-    description="Static analysis of your crypto-transactions. Completely "
-                "off-line and security-oriented",
+    description=LITTLE_DESCRIPTION,
     long_description=DESCRIPTION,
     license="Apache License, Version 2.0",
     keywords="crypto hodl portfolio",
@@ -49,6 +49,10 @@ setup(
         "matplotlib",
         "numpy",
         "xlrd",
-        "pandas"
+        "pandas",
+        "coinbase",
+        "python-binance",
+        "gdax",
+        "ccxt"
     ]
 )

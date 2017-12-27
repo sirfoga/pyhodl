@@ -1,0 +1,196 @@
+<?xml version="1.0" encoding="ascii"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+          "DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <title>pyhodl.updater.exchanges</title>
+  <link rel="stylesheet" href="epydoc.css" type="text/css" />
+  <script type="text/javascript" src="epydoc.js"></script>
+</head>
+
+<body bgcolor="white" text="black" link="blue" vlink="#204080"
+      alink="#204080">
+<!-- ==================== NAVIGATION BAR ==================== -->
+<table class="navbar" border="0" width="100%" cellpadding="0"
+       bgcolor="#a0c0ff" cellspacing="0">
+  <tr valign="middle">
+
+  <!-- Tree link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="module-tree.html">Trees</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Index link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="identifier-index.html">Indices</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Help link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="help.html">Help</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Project homepage -->
+      <th class="navbar" align="right" width="100%">
+        <table border="0" cellpadding="0" cellspacing="0">
+          <tr><th class="navbar" align="center"
+            ><a href="https://github.com/sirfoga/pyhodl">Github</a></th>
+          </tr></table></th>
+  </tr>
+</table>
+<table width="100%" cellpadding="0" cellspacing="0">
+  <tr valign="top">
+    <td width="100%">
+      <span class="breadcrumbs">
+        <a href="pyhodl-module.html">Package&nbsp;pyhodl</a> ::
+        <a href="pyhodl.updater-module.html">Package&nbsp;updater</a> ::
+        Module&nbsp;exchanges
+      </span>
+    </td>
+    <td>
+      <table cellpadding="0" cellspacing="0">
+        <!-- hide/show private -->
+        <tr><td align="right"><span class="options">[<a href="javascript:void(0);" class="privatelink"
+    onclick="toggle_private();">hide&nbsp;private</a>]</span></td></tr>
+        <tr><td align="right"><span class="options"
+            >[<a href="frames.html" target="_top">frames</a
+            >]&nbsp;|&nbsp;<a href="pyhodl.updater.exchanges-pysrc.html"
+            target="_top">no&nbsp;frames</a>]</span></td></tr>
+      </table>
+    </td>
+  </tr>
+</table>
+<h1 class="epydoc">Source Code for <a href="pyhodl.updater.exchanges-module.html">Module pyhodl.updater.exchanges</a></h1>
+<pre class="py-src">
+<a name="L1"></a><tt class="py-lineno"> 1</tt>  <tt class="py-line"><tt class="py-comment"># !/usr/bin/python3</tt> </tt>
+<a name="L2"></a><tt class="py-lineno"> 2</tt>  <tt class="py-line"><tt class="py-comment"># coding: utf_8</tt> </tt>
+<a name="L3"></a><tt class="py-lineno"> 3</tt>  <tt class="py-line"> </tt>
+<a name="L4"></a><tt class="py-lineno"> 4</tt>  <tt class="py-line"><tt class="py-comment"># Copyright 2017-2018 Stefano Fogarollo</tt> </tt>
+<a name="L5"></a><tt class="py-lineno"> 5</tt>  <tt class="py-line"><tt class="py-comment">#</tt> </tt>
+<a name="L6"></a><tt class="py-lineno"> 6</tt>  <tt class="py-line"><tt class="py-comment"># Licensed under the Apache License, Version 2.0 (the "License");</tt> </tt>
+<a name="L7"></a><tt class="py-lineno"> 7</tt>  <tt class="py-line"><tt class="py-comment"># you may not use this file except in compliance with the License.</tt> </tt>
+<a name="L8"></a><tt class="py-lineno"> 8</tt>  <tt class="py-line"><tt class="py-comment"># You may obtain a copy of the License at</tt> </tt>
+<a name="L9"></a><tt class="py-lineno"> 9</tt>  <tt class="py-line"><tt class="py-comment">#</tt> </tt>
+<a name="L10"></a><tt class="py-lineno">10</tt>  <tt class="py-line"><tt class="py-comment"># http://www.apache.org/licenses/LICENSE-2.0</tt> </tt>
+<a name="L11"></a><tt class="py-lineno">11</tt>  <tt class="py-line"><tt class="py-comment">#</tt> </tt>
+<a name="L12"></a><tt class="py-lineno">12</tt>  <tt class="py-line"><tt class="py-comment"># Unless required by applicable law or agreed to in writing, software</tt> </tt>
+<a name="L13"></a><tt class="py-lineno">13</tt>  <tt class="py-line"><tt class="py-comment"># distributed under the License is distributed on an "AS IS" BASIS,</tt> </tt>
+<a name="L14"></a><tt class="py-lineno">14</tt>  <tt class="py-line"><tt class="py-comment"># WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.</tt> </tt>
+<a name="L15"></a><tt class="py-lineno">15</tt>  <tt class="py-line"><tt class="py-comment"># See the License for the specific language governing permissions and</tt> </tt>
+<a name="L16"></a><tt class="py-lineno">16</tt>  <tt class="py-line"><tt class="py-comment"># limitations under the License.</tt> </tt>
+<a name="L17"></a><tt class="py-lineno">17</tt>  <tt class="py-line"> </tt>
+<a name="L18"></a><tt class="py-lineno">18</tt>  <tt class="py-line"> </tt>
+<a name="L19"></a><tt class="py-lineno">19</tt>  <tt class="py-line"><tt class="py-docstring">""" Updates exchanges data """</tt> </tt>
+<a name="L20"></a><tt class="py-lineno">20</tt>  <tt class="py-line"> </tt>
+<a name="L21"></a><tt class="py-lineno">21</tt>  <tt class="py-line"><tt class="py-keyword">import</tt> <tt class="py-name">abc</tt> </tt>
+<a name="L22"></a><tt class="py-lineno">22</tt>  <tt class="py-line"> </tt>
+<a name="L23"></a><tt class="py-lineno">23</tt>  <tt class="py-line"><tt class="py-keyword">from</tt> <tt id="link-0" class="py-name" targets="Module pyhodl.exchanges.binance=pyhodl.exchanges.binance-module.html"><a title="pyhodl.exchanges.binance" class="py-name" href="#" onclick="return doclink('link-0', 'binance', 'link-0');">binance</a></tt><tt class="py-op">.</tt><tt class="py-name">client</tt> <tt class="py-keyword">import</tt> <tt class="py-name">Client</tt> <tt class="py-keyword">as</tt> <tt class="py-name">BinanceClient</tt> </tt>
+<a name="L24"></a><tt class="py-lineno">24</tt>  <tt class="py-line"><tt class="py-keyword">from</tt> <tt id="link-1" class="py-name" targets="Module pyhodl.exchanges.coinbase=pyhodl.exchanges.coinbase-module.html"><a title="pyhodl.exchanges.coinbase" class="py-name" href="#" onclick="return doclink('link-1', 'coinbase', 'link-1');">coinbase</a></tt><tt class="py-op">.</tt><tt class="py-name">wallet</tt><tt class="py-op">.</tt><tt class="py-name">client</tt> <tt class="py-keyword">import</tt> <tt class="py-name">Client</tt> <tt class="py-keyword">as</tt> <tt class="py-name">CoinbaseClient</tt> </tt>
+<a name="L25"></a><tt class="py-lineno">25</tt>  <tt class="py-line"><tt class="py-keyword">from</tt> <tt id="link-2" class="py-name" targets="Module pyhodl.exchanges.gdax=pyhodl.exchanges.gdax-module.html"><a title="pyhodl.exchanges.gdax" class="py-name" href="#" onclick="return doclink('link-2', 'gdax', 'link-2');">gdax</a></tt><tt class="py-op">.</tt><tt class="py-name">authenticated_client</tt> <tt class="py-keyword">import</tt> <tt class="py-name">AuthenticatedClient</tt> <tt class="py-keyword">as</tt> <tt class="py-name">GdaxClient</tt> </tt>
+<a name="L26"></a><tt class="py-lineno">26</tt>  <tt class="py-line"> </tt>
+<a name="L27"></a><tt class="py-lineno">27</tt>  <tt class="py-line"><tt class="py-keyword">from</tt> <tt class="py-op">.</tt><tt class="py-op">.</tt><tt id="link-3" class="py-name" targets="Package pyhodl.apis=pyhodl.apis-module.html"><a title="pyhodl.apis" class="py-name" href="#" onclick="return doclink('link-3', 'apis', 'link-3');">apis</a></tt><tt class="py-op">.</tt><tt id="link-4" class="py-name" targets="Module pyhodl.apis.exchanges=pyhodl.apis.exchanges-module.html,Package pyhodl.exchanges=pyhodl.exchanges-module.html,Module pyhodl.updater.exchanges=pyhodl.updater.exchanges-module.html"><a title="pyhodl.apis.exchanges
+pyhodl.exchanges
+pyhodl.updater.exchanges" class="py-name" href="#" onclick="return doclink('link-4', 'exchanges', 'link-4');">exchanges</a></tt> <tt class="py-keyword">import</tt> <tt id="link-5" class="py-name" targets="Class pyhodl.apis.exchanges.BitfinexClient=pyhodl.apis.exchanges.BitfinexClient-class.html"><a title="pyhodl.apis.exchanges.BitfinexClient" class="py-name" href="#" onclick="return doclink('link-5', 'BitfinexClient', 'link-5');">BitfinexClient</a></tt> </tt>
+<a name="ExchangeUpdater"></a><div id="ExchangeUpdater-def"><a name="L28"></a><tt class="py-lineno">28</tt>  <tt class="py-line"> </tt>
+<a name="L29"></a><tt class="py-lineno">29</tt>  <tt class="py-line"> </tt>
+<a name="L30"></a><tt class="py-lineno">30</tt> <a class="py-toggle" href="#" id="ExchangeUpdater-toggle" onclick="return toggle('ExchangeUpdater');">-</a><tt class="py-line"><tt class="py-keyword">class</tt> <a class="py-def-name" href="pyhodl.updater.exchanges.ExchangeUpdater-class.html">ExchangeUpdater</a><tt class="py-op">:</tt> </tt>
+</div><div id="ExchangeUpdater-collapsed" style="display:none;" pad="++" indent="++++"></div><div id="ExchangeUpdater-expanded"><a name="L31"></a><tt class="py-lineno">31</tt>  <tt class="py-line">    <tt class="py-docstring">""" Abstract exchange updater """</tt> </tt>
+<a name="L32"></a><tt class="py-lineno">32</tt>  <tt class="py-line"> </tt>
+<a name="ExchangeUpdater.__init__"></a><div id="ExchangeUpdater.__init__-def"><a name="L33"></a><tt class="py-lineno">33</tt> <a class="py-toggle" href="#" id="ExchangeUpdater.__init__-toggle" onclick="return toggle('ExchangeUpdater.__init__');">-</a><tt class="py-line">    <tt class="py-keyword">def</tt> <a class="py-def-name" href="pyhodl.updater.exchanges.ExchangeUpdater-class.html#__init__">__init__</a><tt class="py-op">(</tt><tt class="py-param">self</tt><tt class="py-op">,</tt> <tt class="py-param">api_client</tt><tt class="py-op">,</tt> <tt class="py-param">data_folder</tt><tt class="py-op">)</tt><tt class="py-op">:</tt> </tt>
+</div><div id="ExchangeUpdater.__init__-collapsed" style="display:none;" pad="++" indent="++++++++"></div><div id="ExchangeUpdater.__init__-expanded"><a name="L34"></a><tt class="py-lineno">34</tt>  <tt class="py-line">        <tt class="py-name">self</tt><tt class="py-op">.</tt><tt class="py-name">client</tt> <tt class="py-op">=</tt> <tt class="py-name">api_client</tt> </tt>
+<a name="L35"></a><tt class="py-lineno">35</tt>  <tt class="py-line">        <tt class="py-name">self</tt><tt class="py-op">.</tt><tt class="py-name">folder</tt> <tt class="py-op">=</tt> <tt class="py-name">data_folder</tt> </tt>
+</div><a name="L36"></a><tt class="py-lineno">36</tt>  <tt class="py-line"> </tt>
+<a name="L37"></a><tt class="py-lineno">37</tt>  <tt class="py-line">    <tt class="py-decorator">@</tt><tt class="py-decorator">abc</tt><tt class="py-op">.</tt><tt class="py-name">abstractmethod</tt> </tt>
+<a name="ExchangeUpdater.get_transactions"></a><div id="ExchangeUpdater.get_transactions-def"><a name="L38"></a><tt class="py-lineno">38</tt> <a class="py-toggle" href="#" id="ExchangeUpdater.get_transactions-toggle" onclick="return toggle('ExchangeUpdater.get_transactions');">-</a><tt class="py-line">    <tt class="py-keyword">def</tt> <a class="py-def-name" href="pyhodl.updater.exchanges.ExchangeUpdater-class.html#get_transactions">get_transactions</a><tt class="py-op">(</tt><tt class="py-param">self</tt><tt class="py-op">)</tt><tt class="py-op">:</tt> </tt>
+</div><div id="ExchangeUpdater.get_transactions-collapsed" style="display:none;" pad="++" indent="++++++++"></div><div id="ExchangeUpdater.get_transactions-expanded"><a name="L39"></a><tt class="py-lineno">39</tt>  <tt class="py-line">        <tt class="py-keyword">return</tt> </tt>
+</div><a name="L40"></a><tt class="py-lineno">40</tt>  <tt class="py-line"> </tt>
+<a name="L41"></a><tt class="py-lineno">41</tt>  <tt class="py-line">    <tt class="py-decorator">@</tt><tt class="py-decorator">staticmethod</tt> </tt>
+<a name="ExchangeUpdater.build_updater"></a><div id="ExchangeUpdater.build_updater-def"><a name="L42"></a><tt class="py-lineno">42</tt> <a class="py-toggle" href="#" id="ExchangeUpdater.build_updater-toggle" onclick="return toggle('ExchangeUpdater.build_updater');">-</a><tt class="py-line">    <tt class="py-keyword">def</tt> <a class="py-def-name" href="pyhodl.updater.exchanges.ExchangeUpdater-class.html#build_updater">build_updater</a><tt class="py-op">(</tt><tt class="py-param">api_client</tt><tt class="py-op">,</tt> <tt class="py-param">data_folder</tt><tt class="py-op">)</tt><tt class="py-op">:</tt> </tt>
+</div><div id="ExchangeUpdater.build_updater-collapsed" style="display:none;" pad="++" indent="++++++++"></div><div id="ExchangeUpdater.build_updater-expanded"><a name="L43"></a><tt class="py-lineno">43</tt>  <tt class="py-line">        <tt class="py-keyword">if</tt> <tt class="py-name">type</tt><tt class="py-op">(</tt><tt class="py-name">api_client</tt><tt class="py-op">)</tt> <tt class="py-op">==</tt> <tt class="py-name">type</tt><tt class="py-op">(</tt><tt class="py-name">BinanceClient</tt><tt class="py-op">)</tt><tt class="py-op">:</tt> </tt>
+<a name="L44"></a><tt class="py-lineno">44</tt>  <tt class="py-line">            <tt class="py-keyword">return</tt> <tt id="link-6" class="py-name" targets="Class pyhodl.updater.exchanges.BinanceUpdater=pyhodl.updater.exchanges.BinanceUpdater-class.html"><a title="pyhodl.updater.exchanges.BinanceUpdater" class="py-name" href="#" onclick="return doclink('link-6', 'BinanceUpdater', 'link-6');">BinanceUpdater</a></tt><tt class="py-op">(</tt><tt class="py-name">api_client</tt><tt class="py-op">,</tt> <tt class="py-name">data_folder</tt><tt class="py-op">)</tt> </tt>
+<a name="L45"></a><tt class="py-lineno">45</tt>  <tt class="py-line">        <tt class="py-keyword">elif</tt> <tt class="py-name">type</tt><tt class="py-op">(</tt><tt class="py-name">api_client</tt><tt class="py-op">)</tt> <tt class="py-op">==</tt> <tt class="py-name">type</tt><tt class="py-op">(</tt><tt id="link-7" class="py-name"><a title="pyhodl.apis.exchanges.BitfinexClient" class="py-name" href="#" onclick="return doclink('link-7', 'BitfinexClient', 'link-5');">BitfinexClient</a></tt><tt class="py-op">)</tt><tt class="py-op">:</tt> </tt>
+<a name="L46"></a><tt class="py-lineno">46</tt>  <tt class="py-line">            <tt class="py-keyword">return</tt> <tt id="link-8" class="py-name" targets="Class pyhodl.updater.exchanges.BitfinexUpdater=pyhodl.updater.exchanges.BitfinexUpdater-class.html"><a title="pyhodl.updater.exchanges.BitfinexUpdater" class="py-name" href="#" onclick="return doclink('link-8', 'BitfinexUpdater', 'link-8');">BitfinexUpdater</a></tt><tt class="py-op">(</tt><tt class="py-name">api_client</tt><tt class="py-op">,</tt> <tt class="py-name">data_folder</tt><tt class="py-op">)</tt> </tt>
+<a name="L47"></a><tt class="py-lineno">47</tt>  <tt class="py-line">        <tt class="py-keyword">elif</tt> <tt class="py-name">type</tt><tt class="py-op">(</tt><tt class="py-name">api_client</tt><tt class="py-op">)</tt> <tt class="py-op">==</tt> <tt class="py-name">type</tt><tt class="py-op">(</tt><tt class="py-name">CoinbaseClient</tt><tt class="py-op">)</tt><tt class="py-op">:</tt> </tt>
+<a name="L48"></a><tt class="py-lineno">48</tt>  <tt class="py-line">            <tt class="py-keyword">return</tt> <tt id="link-9" class="py-name" targets="Class pyhodl.updater.exchanges.CoinbaseUpdater=pyhodl.updater.exchanges.CoinbaseUpdater-class.html"><a title="pyhodl.updater.exchanges.CoinbaseUpdater" class="py-name" href="#" onclick="return doclink('link-9', 'CoinbaseUpdater', 'link-9');">CoinbaseUpdater</a></tt><tt class="py-op">(</tt><tt class="py-name">api_client</tt><tt class="py-op">,</tt> <tt class="py-name">data_folder</tt><tt class="py-op">)</tt> </tt>
+<a name="L49"></a><tt class="py-lineno">49</tt>  <tt class="py-line">        <tt class="py-keyword">elif</tt> <tt class="py-name">type</tt><tt class="py-op">(</tt><tt class="py-name">api_client</tt><tt class="py-op">)</tt> <tt class="py-op">==</tt> <tt class="py-name">type</tt><tt class="py-op">(</tt><tt class="py-name">GdaxClient</tt><tt class="py-op">)</tt><tt class="py-op">:</tt> </tt>
+<a name="L50"></a><tt class="py-lineno">50</tt>  <tt class="py-line">            <tt class="py-keyword">return</tt> <tt id="link-10" class="py-name" targets="Class pyhodl.updater.exchanges.GdaxUpdater=pyhodl.updater.exchanges.GdaxUpdater-class.html"><a title="pyhodl.updater.exchanges.GdaxUpdater" class="py-name" href="#" onclick="return doclink('link-10', 'GdaxUpdater', 'link-10');">GdaxUpdater</a></tt><tt class="py-op">(</tt><tt class="py-name">api_client</tt><tt class="py-op">,</tt> <tt class="py-name">data_folder</tt><tt class="py-op">)</tt> </tt>
+</div></div><a name="L51"></a><tt class="py-lineno">51</tt>  <tt class="py-line"> </tt>
+<a name="BinanceUpdater"></a><div id="BinanceUpdater-def"><a name="L52"></a><tt class="py-lineno">52</tt>  <tt class="py-line"> </tt>
+<a name="L53"></a><tt class="py-lineno">53</tt> <a class="py-toggle" href="#" id="BinanceUpdater-toggle" onclick="return toggle('BinanceUpdater');">-</a><tt class="py-line"><tt class="py-keyword">class</tt> <a class="py-def-name" href="pyhodl.updater.exchanges.BinanceUpdater-class.html">BinanceUpdater</a><tt class="py-op">(</tt><tt class="py-base-class">ExchangeUpdater</tt><tt class="py-op">)</tt><tt class="py-op">:</tt> </tt>
+</div><div id="BinanceUpdater-collapsed" style="display:none;" pad="++" indent="++++"></div><div id="BinanceUpdater-expanded"><a name="L54"></a><tt class="py-lineno">54</tt>  <tt class="py-line">    <tt class="py-docstring">""" Updates Binance data """</tt> </tt>
+<a name="L55"></a><tt class="py-lineno">55</tt>  <tt class="py-line"> </tt>
+<a name="BinanceUpdater.get_transactions"></a><div id="BinanceUpdater.get_transactions-def"><a name="L56"></a><tt class="py-lineno">56</tt> <a class="py-toggle" href="#" id="BinanceUpdater.get_transactions-toggle" onclick="return toggle('BinanceUpdater.get_transactions');">-</a><tt class="py-line">    <tt class="py-keyword">def</tt> <a class="py-def-name" href="pyhodl.updater.exchanges.BinanceUpdater-class.html#get_transactions">get_transactions</a><tt class="py-op">(</tt><tt class="py-param">self</tt><tt class="py-op">)</tt><tt class="py-op">:</tt> </tt>
+</div><div id="BinanceUpdater.get_transactions-collapsed" style="display:none;" pad="++" indent="++++++++"></div><div id="BinanceUpdater.get_transactions-expanded"><a name="L57"></a><tt class="py-lineno">57</tt>  <tt class="py-line">        <tt class="py-keyword">return</tt> <tt class="py-op">[</tt><tt class="py-op">]</tt> </tt>
+</div></div><a name="L58"></a><tt class="py-lineno">58</tt>  <tt class="py-line"> </tt>
+<a name="BitfinexUpdater"></a><div id="BitfinexUpdater-def"><a name="L59"></a><tt class="py-lineno">59</tt>  <tt class="py-line"> </tt>
+<a name="L60"></a><tt class="py-lineno">60</tt> <a class="py-toggle" href="#" id="BitfinexUpdater-toggle" onclick="return toggle('BitfinexUpdater');">-</a><tt class="py-line"><tt class="py-keyword">class</tt> <a class="py-def-name" href="pyhodl.updater.exchanges.BitfinexUpdater-class.html">BitfinexUpdater</a><tt class="py-op">(</tt><tt class="py-base-class">ExchangeUpdater</tt><tt class="py-op">)</tt><tt class="py-op">:</tt> </tt>
+</div><div id="BitfinexUpdater-collapsed" style="display:none;" pad="++" indent="++++"></div><div id="BitfinexUpdater-expanded"><a name="L61"></a><tt class="py-lineno">61</tt>  <tt class="py-line">    <tt class="py-docstring">""" Updates Bitfinex data """</tt> </tt>
+<a name="L62"></a><tt class="py-lineno">62</tt>  <tt class="py-line"> </tt>
+<a name="BitfinexUpdater.get_transactions"></a><div id="BitfinexUpdater.get_transactions-def"><a name="L63"></a><tt class="py-lineno">63</tt> <a class="py-toggle" href="#" id="BitfinexUpdater.get_transactions-toggle" onclick="return toggle('BitfinexUpdater.get_transactions');">-</a><tt class="py-line">    <tt class="py-keyword">def</tt> <a class="py-def-name" href="pyhodl.updater.exchanges.BitfinexUpdater-class.html#get_transactions">get_transactions</a><tt class="py-op">(</tt><tt class="py-param">self</tt><tt class="py-op">)</tt><tt class="py-op">:</tt> </tt>
+</div><div id="BitfinexUpdater.get_transactions-collapsed" style="display:none;" pad="++" indent="++++++++"></div><div id="BitfinexUpdater.get_transactions-expanded"><a name="L64"></a><tt class="py-lineno">64</tt>  <tt class="py-line">        <tt class="py-keyword">return</tt> <tt class="py-op">[</tt><tt class="py-op">]</tt> </tt>
+</div></div><a name="L65"></a><tt class="py-lineno">65</tt>  <tt class="py-line"> </tt>
+<a name="CoinbaseUpdater"></a><div id="CoinbaseUpdater-def"><a name="L66"></a><tt class="py-lineno">66</tt>  <tt class="py-line"> </tt>
+<a name="L67"></a><tt class="py-lineno">67</tt> <a class="py-toggle" href="#" id="CoinbaseUpdater-toggle" onclick="return toggle('CoinbaseUpdater');">-</a><tt class="py-line"><tt class="py-keyword">class</tt> <a class="py-def-name" href="pyhodl.updater.exchanges.CoinbaseUpdater-class.html">CoinbaseUpdater</a><tt class="py-op">(</tt><tt class="py-base-class">ExchangeUpdater</tt><tt class="py-op">)</tt><tt class="py-op">:</tt> </tt>
+</div><div id="CoinbaseUpdater-collapsed" style="display:none;" pad="++" indent="++++"></div><div id="CoinbaseUpdater-expanded"><a name="L68"></a><tt class="py-lineno">68</tt>  <tt class="py-line">    <tt class="py-docstring">""" Updates Coinbase data """</tt> </tt>
+<a name="L69"></a><tt class="py-lineno">69</tt>  <tt class="py-line"> </tt>
+<a name="CoinbaseUpdater.get_transactions"></a><div id="CoinbaseUpdater.get_transactions-def"><a name="L70"></a><tt class="py-lineno">70</tt> <a class="py-toggle" href="#" id="CoinbaseUpdater.get_transactions-toggle" onclick="return toggle('CoinbaseUpdater.get_transactions');">-</a><tt class="py-line">    <tt class="py-keyword">def</tt> <a class="py-def-name" href="pyhodl.updater.exchanges.CoinbaseUpdater-class.html#get_transactions">get_transactions</a><tt class="py-op">(</tt><tt class="py-param">self</tt><tt class="py-op">)</tt><tt class="py-op">:</tt> </tt>
+</div><div id="CoinbaseUpdater.get_transactions-collapsed" style="display:none;" pad="++" indent="++++++++"></div><div id="CoinbaseUpdater.get_transactions-expanded"><a name="L71"></a><tt class="py-lineno">71</tt>  <tt class="py-line">        <tt class="py-keyword">return</tt> <tt class="py-op">[</tt><tt class="py-op">]</tt> </tt>
+</div></div><a name="L72"></a><tt class="py-lineno">72</tt>  <tt class="py-line"> </tt>
+<a name="GdaxUpdater"></a><div id="GdaxUpdater-def"><a name="L73"></a><tt class="py-lineno">73</tt>  <tt class="py-line"> </tt>
+<a name="L74"></a><tt class="py-lineno">74</tt> <a class="py-toggle" href="#" id="GdaxUpdater-toggle" onclick="return toggle('GdaxUpdater');">-</a><tt class="py-line"><tt class="py-keyword">class</tt> <a class="py-def-name" href="pyhodl.updater.exchanges.GdaxUpdater-class.html">GdaxUpdater</a><tt class="py-op">(</tt><tt class="py-base-class">ExchangeUpdater</tt><tt class="py-op">)</tt><tt class="py-op">:</tt> </tt>
+</div><div id="GdaxUpdater-collapsed" style="display:none;" pad="++" indent="++++"></div><div id="GdaxUpdater-expanded"><a name="L75"></a><tt class="py-lineno">75</tt>  <tt class="py-line">    <tt class="py-docstring">""" Updates Gdax data """</tt> </tt>
+<a name="L76"></a><tt class="py-lineno">76</tt>  <tt class="py-line"> </tt>
+<a name="GdaxUpdater.get_transactions"></a><div id="GdaxUpdater.get_transactions-def"><a name="L77"></a><tt class="py-lineno">77</tt> <a class="py-toggle" href="#" id="GdaxUpdater.get_transactions-toggle" onclick="return toggle('GdaxUpdater.get_transactions');">-</a><tt class="py-line">    <tt class="py-keyword">def</tt> <a class="py-def-name" href="pyhodl.updater.exchanges.GdaxUpdater-class.html#get_transactions">get_transactions</a><tt class="py-op">(</tt><tt class="py-param">self</tt><tt class="py-op">)</tt><tt class="py-op">:</tt> </tt>
+</div><div id="GdaxUpdater.get_transactions-collapsed" style="display:none;" pad="++" indent="++++++++"></div><div id="GdaxUpdater.get_transactions-expanded"><a name="L78"></a><tt class="py-lineno">78</tt>  <tt class="py-line">        <tt class="py-keyword">return</tt> <tt class="py-op">[</tt><tt class="py-op">]</tt> </tt>
+</div></div><a name="L79"></a><tt class="py-lineno">79</tt>  <tt class="py-line"> </tt><script type="text/javascript">
+<!--
+expandto(location.href);
+// -->
+</script>
+</pre>
+<br />
+<!-- ==================== NAVIGATION BAR ==================== -->
+<table class="navbar" border="0" width="100%" cellpadding="0"
+       bgcolor="#a0c0ff" cellspacing="0">
+  <tr valign="middle">
+
+  <!-- Tree link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="module-tree.html">Trees</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Index link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="identifier-index.html">Indices</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Help link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="help.html">Help</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Project homepage -->
+      <th class="navbar" align="right" width="100%">
+        <table border="0" cellpadding="0" cellspacing="0">
+          <tr><th class="navbar" align="center"
+            ><a href="https://github.com/sirfoga/pyhodl">Github</a></th>
+          </tr></table></th>
+  </tr>
+</table>
+<table border="0" cellpadding="0" cellspacing="0" width="100%%">
+  <tr>
+    <td align="left" class="footer">
+    Generated by Epydoc 3.0.1 on Wed Dec 27 16:52:37 2017
+    </td>
+    <td align="right" class="footer">
+      <a target="mainFrame" href="http://epydoc.sourceforge.net"
+        >http://epydoc.sourceforge.net</a>
+    </td>
+  </tr>
+</table>
+
+<script type="text/javascript">
+  <!--
+  // Private objects are initially displayed (because if
+  // javascript is turned off then we want them to be
+  // visible); but by default, we want to hide them.  So hide
+  // them unless we have a cookie that says to show them.
+  checkCookie();
+  // -->
+</script>
+</body>
+</html>

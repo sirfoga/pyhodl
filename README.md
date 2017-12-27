@@ -2,11 +2,13 @@
 
 [![Open Source Love](https://badges.frapsoft.com/os/v1/open-source.svg?v=103)](https://opensource.org/licenses/Apache-2.0) [![Contributions welcome](https://img.shields.io/badge/contributions-welcome-brightgreen.svg?style=flat)](https://github.com/MY_USERNAME/MY_REPOSITORY/issues) [![License](https://img.shields.io/badge/license-Apache%202.0-blue.svg)](https://www.apache.org/licenses/LICENSE-2.0)
 
-> Static analysis of your crypto-transactions. Completely off-line and security-oriented
+> Framework to download, update, analyze and plot your crypto-transactions
 
 ## Table of content
 
 - [Key Features](#key-features)
+- [Overview](#overview)
+- [Settings](#settings)
 - [Usage](#usage)
 - [Changelog](#changelog)
 - [Contribute](#contribute)
@@ -16,6 +18,9 @@
 
 ## Key Features
 
+* continuous (hourly) updates from your exchanges
+* completely off-line
+* you own your data
 * analyze profit and ROI of transactions
 * plot charts of your capital
 * stats and trends
@@ -25,7 +30,17 @@
     - Bitfinex
     - Coinbase
     - GDAX
-    - maybe other, but not sure
+    
+## Settings
+`pyhodl` needs general settings to run. For more information please refer to [the guide](WRITE_CONFIGS.md).
+
+
+## Overview
+`pyhodl` consists of 4 submodules:
+- `updater`: syncs local data with the transactions from your exchanges. Can run as daemon and can update every other minute.
+- `plotter`: creates charts with local data. Saves `.png` images too.
+- `stats`: Computes statistics and trends using local data. Correlations, future prices, trading analysis and so on-
+- `controller`: Manages your data, parses raw downloads and fix API errors. You cannot invoke this module directly.
 
 ## Usage
 
@@ -39,18 +54,16 @@ To import your transactions, please refer to [the guide](IMPORT_DATA.md).
 
 The following flags are supported:
 
-| Flag | Default | Description |
-| --- | --- | --- |
-| `in` | n/a | Input folder |
-| `out` | n/a | Output folder |
-| `since` | first of your transactions | Analyze since this date |
-| `until` | last of your transactions | Analyze up to this date |
-| `plot` | n/a | shall plot something? |
+| Flag | Description |
+| --- | --- |
+| `-updater` | Activates `updater` mode |
+| `-plotter` | Creates charts of your data |
+| `-stats` | Builds and computes stats and trends |
 
 ### Example
 A simple run with parameters like
 ```bash
-python3 pyhodl.py -in "/home/stefano/Documents/out/" -plot "y"
+python3 pyhodl.py -plotter
 ```
 would result in a series of plot like this one:
 ![Example bitfinex](extra/bitfinex_balances.jpg)
