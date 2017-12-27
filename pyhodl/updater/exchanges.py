@@ -29,6 +29,8 @@ from hal.files.save_as import write_dicts_to_json
 
 from pyhodl.utils import get_actual_class_name
 
+INT_32_MAX = 2 ** 31 - 1
+
 
 class ExchangeUpdater:
     """ Abstract exchange updater """
@@ -97,7 +99,7 @@ class BinanceUpdater(ExchangeUpdater):
         return trades
 
     def get_transactions(self):
-        transactions = self.get_deposits() + self.get_withdraw()
+        transactions = self.get_deposits() + self.get_withdraw()  # deposits
         symbols = self.get_symbols_list()
 
         for symbol in symbols:  # scan all symbols
@@ -109,8 +111,64 @@ class BinanceUpdater(ExchangeUpdater):
 class BitfinexUpdater(ExchangeUpdater):
     """ Updates Bitfinex data """
 
+    def get_symbols_list(self):
+        currencies = self.client.currencies
+        symbols = self.client.symbols
+        for i, symbol in enumerate(symbols):
+            coins = symbol.split("/")
+            symbols[i] = "".join([
+                currencies[coin]["id"] for coin in coins
+            ])
+        return symbols
+
+    def get_currencies_list(self):
+        currencies = self.client.currencies
+        currencies = [
+            value["id"] for key, value in currencies.items()
+        ]
+        return currencies
+
+    def get_all_movements(self, symbol):
+        data = self.client.sign(
+            "history/movements",
+            api="private",
+            params={
+                "currency": symbol,
+                "limit": INT_32_MAX
+            }
+        )
+        return self.client.fetch(
+            data["url"], headers=data["headers"], body=data["body"]
+        )
+
+    def get_movements(self):
+        currencies = self.get_currencies_list()
+        movements = []
+        for currency in currencies:
+            movements += self.get_all_movements(currency)
+        return movements
+
+    def get_all_transactions(self, symbol):
+        data = self.client.sign(
+            "mytrades",
+            api="private",
+            params={
+                "symbol": symbol,
+                "limit_trades": INT_32_MAX
+            }
+        )
+        return self.client.fetch(
+            data["url"], headers=data["headers"], body=data["body"]
+        )
+
     def get_transactions(self):
-        return []
+        transactions = self.get_movements()  # deposits and withdrawals
+        symbols = self.get_symbols_list()
+
+        for symbol in symbols:  # scan all symbols
+            transactions += self.get_all_transactions(symbol)
+
+        return transactions
 
 
 class CoinbaseUpdater(ExchangeUpdater):
