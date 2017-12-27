@@ -23,7 +23,7 @@ import threading
 from datetime import datetime, timedelta
 
 from pyhodl.apis.manage import ApiManager
-from .app import DATA_FOLDER, ConfigManager, DATE_TIME_FORMAT
+from pyhodl.app import DATA_FOLDER, ConfigManager, DATE_TIME_FORMAT
 
 UPDATE_CONFIG = os.path.join(
     DATA_FOLDER,
