@@ -24,7 +24,7 @@ from datetime import datetime, timedelta
 
 from pyhodl.apis.manage import ApiManager
 from pyhodl.app import DATA_FOLDER, ConfigManager, DATE_TIME_FORMAT
-from pyhodl.updater.exchanges import ExchangeUpdater
+from pyhodl.updater.updaters import ExchangeUpdater
 
 UPDATE_CONFIG = os.path.join(
     DATA_FOLDER,

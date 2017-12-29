@@ -78,6 +78,10 @@ def handle_rate_limits(func, time_wait=60, max_attempts=2):
     """
     :param func: callback function
         function to wrap
+    :param time_wait: int
+        Time to wait between consecutive attempts
+    :param max_attempts: int
+        Max number of attempt to do before giving up
     :return: callback function return type
         wraps callback function
     """
@@ -109,7 +113,10 @@ def handle_rate_limits(func, time_wait=60, max_attempts=2):
                         ": rate limit exceeded! Wait time:", time_wait,
                         "seconds before next request"
                     )
-                    time.sleep(time_wait + 2)  # extra seconds to be sure
+
+                    # useless wait if last attempt
+                    if attempt_counter + 1 < max_attempts:
+                        time.sleep(time_wait + 2)  # extra seconds to be sure
                 else:
                     return None  # exception not rate limit related
         print(
