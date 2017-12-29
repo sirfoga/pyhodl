@@ -220,8 +220,9 @@ class BitfinexUpdater(ExchangeUpdater):
         symbols = self.get_symbols_list()
         for symbol in symbols:  # scan all symbols
             try:
-                transactions += self.get_all_transactions(symbol)
-                self.log("Found", len(transactions), symbol, "transactions")
+                result = self.get_all_transactions(symbol)
+                transactions += result
+                self.log("Found", len(result), symbol, "transactions")
                 time.sleep(self.rate)
             except Exception as e:
                 self.log("Cannot get", symbol, "transactions due to", e)
