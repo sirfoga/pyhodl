@@ -19,7 +19,8 @@
 """ Coinbase exchange """
 
 from pyhodl.data.core import CryptoParser
-from .core import CryptoExchange, Wallet, Balance
+from pyhodl.models.core import Wallet, Balance
+from .core import CryptoExchange
 
 
 class CoinbaseParser(CryptoParser):

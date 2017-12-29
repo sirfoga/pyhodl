@@ -88,18 +88,3 @@ def parse_transactions_folder(input_folder):
         exchange_name: merge_exchanges(exchanges_list)
         for exchange_name, exchanges_list in exchanges.items()
     }.values()
-
-
-def merge_exchanges(exchanges_list):
-    """
-    :param exchanges_list: [] of CryptoExchange
-        List of exchanges
-    :return: CryptoExchange
-        Exchange with all transactions from other exchanges
-    """
-
-    all_transactions = []
-    for exchange in exchanges_list:
-        all_transactions += exchange.transactions
-    exchange_class = type(exchanges_list[0])
-    return exchange_class(all_transactions)

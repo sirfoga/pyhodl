@@ -19,7 +19,8 @@
 """ Binance exchange """
 
 from pyhodl.data.core import CryptoParser
-from .core import CryptoExchange, Wallet, Balance
+from pyhodl.models.core import Wallet
+from .core import CryptoExchange, Balance
 
 
 def infer_coins(transaction):
