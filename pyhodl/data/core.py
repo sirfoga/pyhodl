@@ -22,9 +22,10 @@ import abc
 import os
 from datetime import datetime
 
+import ciso8601
 from hal.files.parsers import JSONParser
 
-from pyhodl.models.core import TransactionType, Transaction
+from pyhodl.models.core import TransactionType, Transaction, Commission
 
 
 class CryptoParser:
@@ -255,6 +256,70 @@ class BitfinexParser(CryptoParser):
 
 class CoinbaseParser(CryptoParser):
     """ Parses Binance transactions data """
+
+    def get_coins_amounts(self, raw):
+        if self.is_trade(raw):
+            coin, currency = \
+                raw["amount"]["currency"], raw["native_amount"]["currency"]
+            if coin != currency:  # otherwise just a fiat log to discard
+                if raw["type"] == "sell":
+                    return currency, abs(raw["native_amount"]["amount"]), \
+                           coin, abs(raw["amount"]["amount"])
+                else:
+                    return coin, abs(raw["amount"]["amount"]), \
+                           currency, abs(raw["native_amount"]["amount"])
+
+            return None, 0, None, 0
+        elif self.is_deposit(raw):
+            return raw["amount"]["currency"], float(raw["amount"]["amount"]) \
+                , None, 0
+        elif self.is_withdrawal(raw):
+            return None, 0, \
+                   raw["amount"]["currency"], float(raw["amount"]["amount"])
+
+        return None, 0, None, 0
+
+    def is_trade(self, raw):
+        return raw["type"] == "buy" or raw["type"] == "sell"
+
+    def is_withdrawal(self, raw):
+        amount = float(raw["amount"]["amount"])
+        native_amount = float(raw["native_amount"]["amount"])
+        return amount < 0 and native_amount < 0
+
+    def get_commission(self, raw):
+        try:
+            commission_data = raw["network"]
+            return Commission(
+                commission_data,
+                commission_data["transaction_fee"]["currency"],
+                commission_data["transaction_fee"]["amount"],
+                self.get_date(raw),
+                commission_data["status"] == "confirmed"
+            )
+        except:
+            return None
+
+    def get_date(self, raw):
+        return ciso8601.parse_datetime(raw["updated_at"])
+
+    def is_deposit(self, raw):
+        amount = float(raw["amount"]["amount"])
+        native_amount = float(raw["native_amount"]["amount"])
+        return amount >= 0 and native_amount >= 0
+
+    def is_successful(self, raw):
+        return raw["status"] == "completed"
+
+    def get_transactions_list(self):
+        raw = self.get_raw_data()
+        for account, transactions in raw.items():
+            for transaction in transactions:
+                try:
+                    yield self.parse_transaction(transaction)
+                except Exception as e:
+                    print("Cannot parse transaction", transaction,
+                          "of account", account, "due to", e)
 
 
 class GdaxParser(CryptoParser):
