@@ -20,10 +20,11 @@
 
 import abc
 import os
+from datetime import datetime
 
 from hal.files.parsers import JSONParser
 
-from pyhodl.models.core import TransactionType
+from pyhodl.models.core import TransactionType, Transaction
 
 
 class CryptoParser:
@@ -92,6 +93,41 @@ class CryptoParser:
         return
 
     @abc.abstractmethod
+    def get_coins_amounts(self, raw):
+        """
+        :param raw: {}
+            Raw details of transaction
+        :return: tuple (str, float, str, float)
+            Coin bought, amount bought, coin sold, amount sold
+        """
+
+        return
+
+    @abc.abstractmethod
+    def get_date(self, raw):
+        return
+
+    @abc.abstractmethod
+    def is_successful(self, raw):
+        """
+        :param raw: {}
+            Raw details of transaction
+        :return: bool
+            True iff transaction has completed successfully
+        """
+
+        return
+
+    def get_transaction_type(self, raw):
+        if self.is_trade(raw):
+            return TransactionType.TRADING
+        elif self.is_deposit(raw):
+            return TransactionType.DEPOSIT
+        elif self.is_withdrawal(raw):
+            return TransactionType.WITHDRAWAL
+
+        return TransactionType.NULL
+
     def parse_transaction(self, raw):
         """
         :param raw: {}
@@ -100,9 +136,18 @@ class CryptoParser:
             Parsed Transaction
         """
 
-        return
+        coin_bought, amount_bought, coin_sold, amount_sold = \
+            self.get_coins_amounts(raw)
 
-    @abc.abstractmethod
+        return Transaction(
+            raw,
+            coin_bought, amount_bought, coin_sold, amount_sold,
+            self.get_date(raw),
+            self.get_transaction_type(raw),
+            self.is_successful(raw),
+            self.get_commission(raw)
+        )
+
     def get_transactions_list(self):
         """
         :return: [] of Transaction
@@ -110,36 +155,65 @@ class CryptoParser:
         """
 
         raw = self.get_raw_data()
-
-        if self.is_trade(raw):
-            coin = raw["commissionAsset"]
-        else:
-            coin = raw["asset"]
+        for transaction in raw:
+            try:
+                yield self.parse_transaction(transaction)
+            except Exception as e:
+                print("Cannot parse transaction", transaction, "due to", e)
 
 
 class BinanceParser(CryptoParser):
     """ Parses Binance transactions data """
 
+    def get_coins_amounts(self, raw):
+        if self.is_trade(raw):
+            coin_sell, amount_sell = \
+                raw["commissionAsset"], float(raw["commission"])
+            coin_buy, amount_buy = \
+                raw["symbol"].replace(coin_sell, ""), float(raw["qty"])
+            return coin_buy, amount_buy, coin_sell, amount_sell
+        elif self.is_deposit(raw):
+            return raw["asset"], float(raw["amount"]), None, 0
+        elif self.is_withdrawal(raw):
+            return None, 0, raw["asset"], float(raw["amount"])
+
+        return None, 0, None, 0
+
+    def get_commission(self, raw):
+        return None
+
+    def get_date(self, raw):
+        if self.is_trade(raw):
+            return datetime.fromtimestamp(
+                int(raw["time"]) / 1000  # ms -> s
+            )
+        elif self.is_deposit(raw):
+            return datetime.fromtimestamp(
+                int(raw["insertTime"]) / 1000  # ms -> s
+            )
+        elif self.is_withdrawal(raw):
+            return datetime.fromtimestamp(
+                int(raw["successTime"]) / 1000  # ms -> s
+            )
+
+    def is_successful(self, raw):
+        if self.is_trade(raw):
+            return "commission" in raw
+        elif self.is_deposit(raw):
+            return int(raw["status"]) == 1
+        elif self.is_withdrawal(raw):
+            return int(raw["status"]) == 6
+
+        return False
+
     def is_trade(self, raw):
         return "isBuyer" in raw
 
     def is_deposit(self, raw):
-        return not self.is_trade(raw) and raw["amount"] >= 0
+        return "insertTime" in raw
 
     def is_withdrawal(self, raw):
-        return not self.is_trade(raw) and raw["amount"] < 0
-
-    def get_transactions_list(self):
-
-        amount =
-
-        trade_type = TransactionType.NULL
-        if self.is_trade(raw):
-            trade_type = TransactionType.TRADING
-        elif self.is_deposit(raw):
-            trade_type = TransactionType.DEPOSIT
-        elif self.is_withdrawal(raw):
-            trade_type = TransactionType.WITHDRAWAL
+        return "applyTime" in raw
 
 
 class BitfinexParser(CryptoParser):
