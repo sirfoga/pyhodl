@@ -104,12 +104,15 @@ class BinanceUpdater(ExchangeUpdater):
             symbol["symbol"] for symbol in symbols
         ]
 
+    @handle_rate_limits
     def get_deposits(self):
         return self.client.get_deposit_history()["depositList"]
 
+    @handle_rate_limits
     def get_withdraw(self):
         return self.client.get_withdraw_history()["withdrawList"]
 
+    @handle_rate_limits
     def get_all_transactions(self, symbol, from_id=0, page_size=500):
         trades = self.client.get_my_trades(symbol=symbol, fromId=from_id)
         for i, trade in enumerate(trades):
@@ -132,10 +135,13 @@ class BinanceUpdater(ExchangeUpdater):
         symbols = self.get_symbols_list()
 
         for symbol in symbols:  # scan all symbols
-            # TODO debug print("getting", symbol)
-            transactions += self.get_all_transactions(symbol)
-
-        return transactions
+            try:
+                transactions += self.get_all_transactions(symbol)
+                self.log("Found", len(transactions), symbol, "transactions!")
+                time.sleep(self.rate)
+            except Exception as e:
+                self.log("Cannot get", symbol, "transactions due to", e)
+        self.transactions = transactions
 
 
 class BitfinexUpdater(ExchangeUpdater):
@@ -211,10 +217,13 @@ class BitfinexUpdater(ExchangeUpdater):
         transactions = self.get_movements()  # deposits and withdrawals
         symbols = self.get_symbols_list()
         for symbol in symbols:  # scan all symbols
-            transactions += self.get_all_transactions(symbol)
-            self.log("Found", len(transactions), symbol, "transactions!")
-            time.sleep(self.rate)
-        return transactions
+            try:
+                transactions += self.get_all_transactions(symbol)
+                self.log("Found", len(transactions), symbol, "transactions!")
+                time.sleep(self.rate)
+            except Exception as e:
+                self.log("Cannot get", symbol, "transactions due to", e)
+        self.transactions = transactions
 
 
 class CoinbaseUpdater(ExchangeUpdater):
