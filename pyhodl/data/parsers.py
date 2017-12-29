@@ -20,71 +20,67 @@
 
 from hal.files.models.system import ls_recurse, is_file
 
-from .core import CryptoParser
-from ..exchanges.binance import BinanceParser, Binance
-from ..exchanges.bitfinex import BitfinexParser, Bitfinex
-from ..exchanges.coinbase import CoinbaseParser, Coinbase
-from ..exchanges.gdax import GdaxParser, Gdax
+from .core import CryptoParser, BinanceParser, BitfinexParser, CoinbaseParser, \
+    GdaxParser
 
 
-def parse_transactions(input_file):
-        """
-        :param input_file: str
-            File to parse
-        :return: CryptoExchange
-            Builds exchange model based on transactions
-        """
+def build_parser(input_file):
+    """
+    :param input_file: str
+        File to parse
+    :return: CryptoExchange
+        Builds exchange model based on transactions
+    """
 
-        parser = CryptoParser(input_file)
-        transaction_attrs = parser.get_raw_data().keys()
-        if "Coinbase" in parser.filename:
-            return Coinbase(
-                CoinbaseParser(input_file).get_transactions_list()
-            )
-        elif "amount/balance unit" in transaction_attrs:
-            return Gdax(
-                GdaxParser(input_file).get_transactions_list()
-            )
-        elif ("Created" in transaction_attrs and "Updated" in
-            transaction_attrs) or ("FeeCurrency" in transaction_attrs):
-            return Bitfinex(
-                BitfinexParser(input_file).get_transactions_list()
-            )
-        elif parser.is_excel or ("Fee Coin" and "Market" in transaction_attrs):
-            return Binance(
-                BinanceParser(input_file).get_transactions_list()
-            )
-        else:
-            raise ValueError("Cannot infer type of exchange!")
+    parser = CryptoParser(input_file)
+    raw_data = parser.get_raw_data()
+
+    if isinstance(raw_data, dict):  # dict
+        keys = list(raw_data.keys())[0]
+        raw_dict = raw_data[keys[0]][0]
+        if "instant_exchange" in raw_dict:
+            return CoinbaseParser(input_file)
+        elif "currency" in raw_dict:
+            return GdaxParser(input_file)
+    else:  # list
+        raw_item = raw_data[0]
+        if "timestamp" in raw_item:
+            return BitfinexParser(input_file)
+        elif "txId" in raw_item or "isBuyer" in raw_item:
+            return BinanceParser(input_file)
+
+    raise ValueError("Cannot identify parser for file", input_file)
 
 
-def parse_transactions_folder(input_folder):
+def build_parsers(input_folder):
     """
     :param input_folder: str
         Path to folder where to look for transactions files
-    :return: [] of CryptoExchange
+    :return: [] of Parsers
         Exchanges found (with transactions)
     """
 
-    exchanges = {}
     files = [
         doc for doc in ls_recurse(input_folder) if is_file(doc)
     ]
+
     for input_file in files:
         try:
-            exchange = parse_transactions(input_file)
-            exchange_name = str(type(exchange))
-            if exchange_name not in exchanges:
-                exchanges[exchange_name] = [
-                    exchange
-                ]
-            else:
-                exchanges[exchange_name].append(exchange)
+            yield build_parser(input_file)
         except Exception as e:
-            print("Cannot parse input file", input_file)
-            print(e)
+            print("Cannot parse", input_file, "due to", e)
 
-    return {
-        exchange_name: merge_exchanges(exchanges_list)
-        for exchange_name, exchanges_list in exchanges.items()
-    }.values()
+
+def get_transactions(input_folder):
+    """
+    :param input_folder: str
+        Path to folder where to look for transactions files
+    :return: [] of Transaction
+        Transactions found in all files from folder
+    """
+
+    parsers = build_parser(input_folder)
+    transactions = []
+    for parser in parsers:
+        transactions += list(parser.get_transactions_list())
+    return transactions
