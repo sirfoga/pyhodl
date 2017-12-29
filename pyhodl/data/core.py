@@ -313,7 +313,7 @@ class BitfinexParser(CryptoParser):
 
 
 class CoinbaseParser(CryptoParser):
-    """ Parses Binance transactions data """
+    """ Parses Coinbase transactions data """
 
     def get_coins_amounts(self, raw):
         if self.is_trade(raw):
@@ -321,19 +321,21 @@ class CoinbaseParser(CryptoParser):
                 raw["amount"]["currency"], raw["native_amount"]["currency"]
             if coin != currency:  # otherwise just a fiat log to discard
                 if raw["type"] == "sell":
-                    return currency, abs(raw["native_amount"]["amount"]), \
-                           coin, abs(raw["amount"]["amount"])
+                    return currency, \
+                           abs(float(raw["native_amount"]["amount"])), \
+                           coin, abs(float(raw["amount"]["amount"]))
                 else:
-                    return coin, abs(raw["amount"]["amount"]), \
-                           currency, abs(raw["native_amount"]["amount"])
+                    return coin, abs(float(raw["amount"]["amount"])), \
+                           currency, abs(float(raw["native_amount"]["amount"]))
 
             return None, 0, None, 0
         elif self.is_deposit(raw):
-            return raw["amount"]["currency"], float(raw["amount"]["amount"]) \
-                , None, 0
+            return raw["amount"]["currency"], \
+                   abs(float(raw["amount"]["amount"])), None, 0
         elif self.is_withdrawal(raw):
             return None, 0, \
-                   raw["amount"]["currency"], float(raw["amount"]["amount"])
+                   raw["amount"]["currency"], \
+                   abs(float(raw["amount"]["amount"]))
 
         return None, 0, None, 0
 
