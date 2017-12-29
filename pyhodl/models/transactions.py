@@ -93,9 +93,17 @@ class Transaction:
 
     def __str__(self):
         out = "Transaction on " + str(self.date)
-        out += "\nBUY " + str(self.buy_amount) + " " + str(self.coin_buy)
-        out += "\nSELL " + str(self.sell_amount) + " " + str(self.coin_sell)
+        if self.buy_amount > 0:
+            out += "\n+" + str(self.buy_amount) + " " + str(self.coin_buy)
+
+        if self.sell_amount > 0:
+            out += "\n-" + str(self.sell_amount) + " " + str(self.coin_sell)
+
+        if self.commission:
+            out += "\nPaying " + str(self.commission.amount) + " " + \
+                   str(self.commission.coin) + " as fee"
         out += "\nSuccessful? " + str(self.successful)
+
         return out
 
 
@@ -190,13 +198,27 @@ class Wallet:
 
         amount = 0.0
         for transaction in self.transactions:
-            if transaction.coin_buy == self.currency:
-                amount += transaction.buy_amount
+            if transaction.transaction_type == TransactionType.TRADING:
+                if transaction.coin_buy == self.currency:
+                    amount += transaction.buy_amount
 
-            if transaction.coin_sell == self.currency:
-                amount -= transaction.sell_amount
+                if transaction.coin_sell == self.currency:
+                    amount -= transaction.sell_amount
 
-            if transaction.commission and transaction.commission.coin == \
-                    self.currency:
-                amount -= transaction.commission.amount
+                if transaction.commission and transaction.commission.coin \
+                        == self.currency:
+                    amount -= transaction.commission.amount
+
+            if transaction.transaction_type == TransactionType.COMMISSION:
+                if transaction.commission.coin == self.currency:
+                    amount -= transaction.commission.amount
+
+            if transaction.transaction_type == TransactionType.DEPOSIT:
+                if transaction.coin_buy == self.currency:
+                    amount += transaction.buy_amount
+
+            if transaction.transaction_type == TransactionType.WITHDRAWAL:
+                if transaction.coin_sell == self.currency:
+                    amount -= transaction.sell_amount
+
         return amount

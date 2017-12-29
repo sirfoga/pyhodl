@@ -106,8 +106,8 @@ class CryptoExchange:
                     transaction.commission.coin if transaction.commission else None
 
                 # update wallets
-                for coin in [coin_buy, coin_sell, coin_fee]:
-                    if coin:
+                for coin in {coin_buy, coin_sell, coin_fee}:
+                    if coin and str(coin) != "None":
                         if coin not in wallets:
                             wallets[coin] = Wallet(coin)
 

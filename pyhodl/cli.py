@@ -88,15 +88,22 @@ def main():
         parser = build_parser(inp_file)
         exchange = parser.build_exchange()
         wallets = exchange.build_wallets()
-        # balances = {
-        #     coin: wallet.balance() for coin, wallet in wallets.items()
-        # }
-        # print(balances)
+        balances = {
+            coin: wallet.balance() for coin, wallet in wallets.items()
+        }
+        balances = sorted(balances.items(), key=lambda x: x[1], reverse=True)
 
-        sample_transactions = wallets["TRX"].transactions
+        print(
+            "\n".join([
+                coin + " " + str(balance)
+                for coin, balance in balances
+            ])
+        )
+
+        sample_transactions = wallets["LTC"].transactions
         sample_transactions = sorted(sample_transactions, key=lambda x: x.date)
         sample_transactions = [str(x) for x in sample_transactions]
-        print("\n\n- ".join(sample_transactions))
+        # print("\n\n\t".join(sample_transactions))
 
     elif run_mode == RunMode.PLOTTER:
         raise ValueError("Not fully implemented!")
