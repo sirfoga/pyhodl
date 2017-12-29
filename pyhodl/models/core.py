@@ -37,8 +37,8 @@ class Transaction:
     """ Exchange transaction """
 
     def __init__(self, raw_dict,
-                 coin_bought, amount_bought,
-                 coin_sold, amount_sold, date,
+                 coin_bought, buy_amount,
+                 coin_sold, sell_amount, date,
                  trans_type=TransactionType.TRADING,
                  successful=True, commission=None):
         """
@@ -56,9 +56,9 @@ class Transaction:
 
         self.raw = raw_dict
         self.coin_buy = str(coin_bought)
-        self.amount_buy = float(amount_bought) if amount_bought else 0
+        self.buy_amount = float(buy_amount) if buy_amount else 0
         self.coin_sell = str(coin_sold)
-        self.amount_sell = float(amount_sold) if amount_sold else 0
+        self.sell_amount = float(sell_amount) if sell_amount else 0
         self.transaction_type = trans_type
         self.date = date
         self.successful = bool(successful)
@@ -112,9 +112,9 @@ class Commission(Transaction):
             self,
             raw_dict,
             coin_bought=None,
-            amount_bought=None,
+            buy_amount=None,
             coin_sold=coin,
-            amount_sold=amount,
+            sell_amount=amount,
             date=date,
             trans_type=TransactionType.COMMISSION,
             successful=successful

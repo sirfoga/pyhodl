@@ -19,10 +19,10 @@
 """ Parse raw data """
 
 import abc
+import ciso8601
 import os
 from datetime import datetime
 
-import ciso8601
 from hal.files.parsers import JSONParser
 
 from pyhodl.models.core import TransactionType, Transaction, Commission
@@ -222,7 +222,13 @@ class BitfinexParser(CryptoParser):
 
     def get_coins_amounts(self, raw):
         if self.is_trade(raw):
-            pass  # TODO implement
+            coin_buy, coin_sell = raw["symbol"][:3], raw["symbol"][3:]
+            buy_amount = raw["amount"]
+            sell_amount = buy_amount * raw["price"]
+            if raw["type"] == "Buy":
+                return coin_buy, buy_amount, coin_sell, sell_amount
+            else:
+                return coin_sell, sell_amount, coin_buy, buy_amount
         elif self.is_deposit(raw):
             return raw["currency"], float(raw["amount"]), None, 0
         elif self.is_withdrawal(raw):
@@ -237,7 +243,24 @@ class BitfinexParser(CryptoParser):
         return raw["type"] == "WITHDRAWAL"
 
     def get_commission(self, raw):
-        pass  # TODO implement
+        if self.is_trade(raw):
+            return Commission(
+                raw,
+                raw["fee_currency"],
+                abs(raw["fee_amount"]),
+                self.get_date(raw),
+                self.is_successful(raw)
+            )
+        elif self.is_deposit(raw) or self.is_trade(raw):
+            return Commission(
+                raw,
+                raw["currency"],
+                abs(raw["fee"]),
+                self.get_date(raw),
+                self.is_successful(raw)
+            )
+
+        return None
 
     def get_date(self, raw):
         return datetime.fromtimestamp(int(raw["timestamp"]))

@@ -151,7 +151,7 @@ class BitfinexUpdater(ExchangeUpdater):
     def get_symbols_list(self):
         currencies = self.client.currencies
         symbols = self.client.symbols
-        for i, symbol in enumerate(symbols):  # TODO debug None
+        for i, symbol in enumerate(symbols):
             coins = symbol.split("/")
             symbols[i] = "".join([
                 currencies[coin]["id"] for coin in coins
