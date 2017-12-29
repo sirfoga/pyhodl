@@ -92,7 +92,11 @@ class Transaction:
         return self.raw[key]
 
     def __str__(self):
-        return str(self.raw)
+        out = "Transaction on " + str(self.date)
+        out += "\nBUY " + str(self.buy_amount) + " " + str(self.coin_buy)
+        out += "\nSELL " + str(self.sell_amount) + " " + str(self.coin_sell)
+        out += "\nSuccessful? " + str(self.successful)
+        return out
 
 
 class Commission(Transaction):
@@ -120,11 +124,14 @@ class Commission(Transaction):
             successful=successful
         )
 
+        self.coin = self.coin_sell
+        self.amount = self.sell_amount
+
 
 class Wallet:
     """ A general wallet, tracking addition, deletions and fees """
 
-    def __init__(self, create_date, start_amount=0):
+    def __init__(self, base_currency):
         """
         :param create_date: datetime
             Date of transaction
@@ -132,36 +139,18 @@ class Wallet:
             Amount of currency at start
         """
 
-        self.balance = float(0)
+        self.currency = base_currency
         self.transactions = []  # list of operations performed
 
-        if start_amount > 0:
-            self.add(start_amount, create_date)
-        elif start_amount < 0:
-            self.remove(start_amount, create_date)
-
-    def add(self, amount, date):
+    def add_transaction(self, transaction):
         """
-        :param amount: float
-            Amount to be added to balance
-        :param date: datetime
-            Date of transaction
+        :param transaction: Transaction
+            Transaction
         :return: void
             Adds amount to balance
         """
 
-        self.transactions.append(
-            Transaction(
-                {
-                    "action": "add",
-                    "amount": abs(amount),
-                    "date": date
-                },
-                date_key="date"
-            )
-        )
-
-        self.balance += abs(amount)
+        self.transactions.append(transaction)
 
     def remove(self, amount, date):
         """
@@ -174,52 +163,14 @@ class Wallet:
         """
 
         self.transactions.append(
-            Transaction(
-                {
-                    "action": "remove",
-                    "amount": -abs(amount),
-                    "date": date
-                },
-                date_key="date"
-            )
+            {
+                "action": "out",
+                "amount": abs(amount),
+                "date": date
+            }
         )
 
         self.balance -= abs(amount)
-
-    def get_balance(self):
-        """
-        :return: float
-            Current balance
-        """
-
-        return self.balance
-
-    def merge(self, other):
-        """
-        :param other: Wallet
-            Other wallet to merge with
-        :return: void
-            Add other's transactions to this wallet
-        """
-
-        for transaction in other.transactions:  # redo same actions
-            if transaction["action"] == "add":
-                self.add(transaction["amount"], transaction.date)
-            else:
-                self.remove(transaction["amount"], transaction.date)
-
-    def get_transactions_dict(self):
-        """
-        :return: [] of {}
-            List of raw transactions
-        """
-
-        for transaction in self.transactions:
-            yield {
-                "date": transaction.date,
-                "amount": transaction["amount"],
-                "successful": True
-            }
 
     def dates(self):
         """
@@ -231,59 +182,21 @@ class Wallet:
             transaction.date for transaction in self.transactions
         ]
 
-    def get_amount(self, date):
+    def balance(self):
         """
-        :param date: datetime
-            Date of transaction
         :return: float
-            Amount exchanged with transaction in specified date
+            Balance up to date with last transaction
         """
 
-        amount = float(0.0)
-
+        amount = 0.0
         for transaction in self.transactions:
-            if transaction.date == date:
-                amount += float(transaction["amount"])
+            if transaction.coin_buy == self.currency:
+                amount += transaction.buy_amount
 
+            if transaction.coin_sell == self.currency:
+                amount -= transaction.sell_amount
+
+            if transaction.commission and transaction.commission.coin == \
+                    self.currency:
+                amount -= transaction.commission.amount
         return amount
-
-
-class Balance:
-    """ Balance of something, expressed in many coins """
-
-    def __init__(self, wallets):
-        """
-        :param wallets: {} of Wallet
-            List of wallet (and coins)
-        """
-
-        self.wallets = wallets
-        nan_keys = [
-            key for key in wallets if str(key) == "nan"
-        ]
-        for key in nan_keys:
-            del self.wallets[key]
-
-    def merge(self, other):
-        """
-        :param other: Balance
-            Other balance to merge with
-        :return: void
-            Merges other's wallets
-        """
-
-        for coin, wallet in other.wallets.items():
-            if coin not in self.wallets:  # new coin
-                self.wallets[coin] = wallet
-            else:  # coin wallet has to be merged
-                self.wallets[coin].merge(wallet)
-
-    def get_balance(self):
-        """
-        :return: {} str -> float
-            For each coin, evaluate balance
-        """
-
-        return {
-            coin: wallet.get_balance() for coin, wallet in self.wallets.items()
-        }

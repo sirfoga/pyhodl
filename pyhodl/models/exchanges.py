@@ -18,13 +18,7 @@
 
 """ Analyze transactions in exchanges """
 
-import abc
-from datetime import timedelta
-
-from hal.files.save_as import write_dicts_to_csv
-
-from pyhodl.apis.prices import get_price
-from pyhodl.utils import generate_dates
+from pyhodl.models.transactions import Wallet
 
 
 class CryptoExchange:
@@ -84,214 +78,39 @@ class CryptoExchange:
                 last = transaction
         return last
 
-    def get_transactions(self, since, until, including_until=False):
+    def get_transactions(self, rule):
         """
-        :param since: datetime
-            Get transactions done since this date (included)
-        :param until: datetime
-            Get transactions done until this date (excluded)
-        :param including_until: bool
-            True iff you want to include until date in list
+        :param rule: func
+            Evaluate this function on each transaction as a filter
         :return: (generator of) [] of Transaction
             List of transactions done between the dates
         """
 
         for transaction in self.transactions:
-            if including_until:
-                if since <= transaction.date <= until:
-                    yield transaction
-            else:
-                if since <= transaction.date < until:
-                    yield transaction
-
-    def get_transactions_with(self, symbol):
-        """
-        :param symbol: str
-            Currency e.g EUR, BTC, LTC ...
-        :return: (generator of) [] of Transaction
-            List of transactions done with this currency
-        """
-
-        for transaction in self.transactions:
-            if transaction.has(symbol):
+            if rule(transaction):
                 yield transaction
 
-    @abc.abstractmethod
-    def get_balance(self, since, until):
+    def build_wallets(self):
         """
-        :param since: datetime
-            Get transactions done since this date
-        :param until: datetime
-            Get transactions done until this date
-        :return: Balance
-            List of wallets for each coin
+        :return: {} of str -> Wallet
+            Build a wallet for each currency traded and put trading history
+            there
         """
 
-        return
+        wallets = {}
+        for transaction in self.transactions:
+            if transaction.successful:
+                # get coins involved
+                coin_buy, coin_sell, coin_fee = \
+                    transaction.coin_buy, transaction.coin_sell, \
+                    transaction.commission.coin if transaction.commission else None
 
-    def get_balance_subtotals(self, since, until, interval):
-        """
-        :param since: datetime
-            Get transactions done since this date
-        :param until: datetime
-            Get transactions done until this date
-        :param interval: str
-            Interval of times (1h, 1d, 7d, 30d, 3m, 6m, 1y)
-        :return: [] of {}
-            List of wallets for each coin for each time-frame
-        """
+                # update wallets
+                for coin in [coin_buy, coin_sell, coin_fee]:
+                    if coin:
+                        if coin not in wallets:
+                            wallets[coin] = Wallet(coin)
 
-        if interval not in self.TIME_INTERVALS:
-            raise ValueError("Interval must be one of ",
-                             self.TIME_INTERVALS.keys())
+                        wallets[coin].add_transaction(transaction)
 
-        dates_list = list(
-            generate_dates(
-                since, until,
-                self.TIME_INTERVALS[interval]
-            )
-        )
-
-        wallet_list = []
-        for i, date in enumerate(dates_list[:-1]):
-            date_min = date
-            date_max = dates_list[i + 1]
-            date_balances = self.get_balance(date_min, date_max)
-            if wallet_list:  # merge with last
-                date_balances.merge(wallet_list[-1]["balance"])
-
-            wallet_list.append(
-                {
-                    "date": date_max,
-                    "balance": date_balances
-                }
-            )
-
-        return wallet_list
-
-    def get_all_transactions(self):
-        """
-        :return: [] of {}
-            List of all transactions (all coins)
-        """
-
-        wallets = self.get_balance(
-            since=self.get_first_transaction().date,
-            until=self.get_last_transaction().date + timedelta(seconds=1)
-        ).wallets
-
-        wallets = {
-            coin: list(wallet.get_transactions_dict())
-            for coin, wallet in wallets.items()
-        }
-
-        all_transactions = []
-        for coin, transactions in wallets.items():
-            for i, transaction in enumerate(transactions):
-                transactions[i]["coin"] = str(coin)
-            all_transactions += transactions
-
-        return sorted(all_transactions, key=lambda k: k["date"])
-
-    def get_all_balances(self):
-        """
-        :return: [] of {}
-            List of all transactions (all coins)
-        """
-
-        wallets = self.get_balance(
-            since=self.get_first_transaction().date,
-            until=self.get_last_transaction().date + timedelta(seconds=1)
-        ).wallets
-
-        dates = set()  # dates of all transactions
-        coins = set()  # all coins
-        for coin, wallet in wallets.items():
-            coins.add(coin)
-            for transaction in wallet.transactions:
-                dates.add(transaction["date"])
-        dates = sorted(list(dates))  # sort by date
-        coins = sorted(list(coins))  # sort alphabetically
-
-        first = {
-            coin: wallets[coin].get_amount(dates[0]) for coin in coins
-        }
-        first["date"] = dates[0]  # build first
-        all_balances = [
-            first
-        ]
-
-        for date in dates[1:]:
-            balance = {
-                coin: all_balances[-1][coin] + wallets[coin].get_amount(date)
-                for coin in coins
-            }
-            balance["date"] = date
-            all_balances.append(balance)
-
-        return all_balances
-
-    def get_all_balances_equiv(self, currency):
-        """
-        :param currency: str
-            Currency to get price
-        :return: void
-            Saves all balances to .csv
-        """
-
-        data = self.get_all_balances()
-        for i, balance in enumerate(data):
-            coins = [
-                coin for coin in balance if coin.isupper()
-            ]
-            prices = get_price(coins, currency, balance["date"])
-            print("Getting balance of", balance["date"], "...")
-
-            for coin, price in prices.items():
-                equiv = balance[coin] * price
-                data[i][coin + " (" + currency + " value)"] = equiv
-        return data
-
-    def write_all_balances_to_csv(self, out, currency=None):
-        """
-        :param out: str
-            Path to output file
-        :param currency: str
-            Currency to get price
-        :return: void
-            Saves all balances to .csv
-        """
-
-        if currency is not None:
-            data = self.get_all_balances_equiv(currency)
-        else:
-            data = self.get_all_balances()
-
-        self.write_data_to_csv(data, out)
-
-    def write_all_transactions_to_csv(self, out):
-        """
-        :param out: str
-            Path to output file
-        :return: void
-            Saves all transactions to .csv
-        """
-
-        self.write_data_to_csv(self.get_all_transactions(), out)
-
-    @staticmethod
-    def write_data_to_csv(data, out, date_format=OUTPUT_DATE_FORMAT):
-        """
-        :param data: [] of {}
-            List of dicts
-        :param out: str
-            Path to output file
-        :param date_format: str
-            Format output date
-        :return: void
-            Saves all data to .csv
-        """
-
-        for i, transaction in enumerate(data):
-            data[i]["date"] = transaction["date"].strftime(date_format)
-        write_dicts_to_csv(data, out)
+        return wallets

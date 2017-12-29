@@ -81,7 +81,7 @@ def build_exchanges(input_folder):
 
     parsers = build_parser(input_folder)
     for parser in parsers:
-        yield parser.get_exchange()
+        yield parser.build_exchange()
 
 
 def get_transactions(input_folder):

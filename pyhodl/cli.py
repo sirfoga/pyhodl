@@ -25,7 +25,7 @@ from enum import Enum
 
 from hal.streams.user import UserInput
 
-from pyhodl.updater.core import Updater
+from pyhodl.data.parsers import build_parser
 
 
 class RunMode(Enum):
@@ -84,12 +84,20 @@ def parse_args(parser):
 def main():
     run_mode, verbose = parse_args(create_args())
     if run_mode == RunMode.UPDATER:
-        # inp_file = "/home/stefano/.pyhodl/data/BinanceUpdater.json"
-        # parser = BinanceParser(inp_file)
-        # transactions = list(parser.get_transactions_list())
-        # print(transactions)
-        driver = Updater(verbose)
-        driver.run()
+        inp_file = "/home/stefano/.pyhodl/data/BinanceUpdater.json"
+        parser = build_parser(inp_file)
+        exchange = parser.build_exchange()
+        wallets = exchange.build_wallets()
+        # balances = {
+        #     coin: wallet.balance() for coin, wallet in wallets.items()
+        # }
+        # print(balances)
+
+        sample_transactions = wallets["TRX"].transactions
+        sample_transactions = sorted(sample_transactions, key=lambda x: x.date)
+        sample_transactions = [str(x) for x in sample_transactions]
+        print("\n\n- ".join(sample_transactions))
+
     elif run_mode == RunMode.PLOTTER:
         raise ValueError("Not fully implemented!")
     elif run_mode == RunMode.STATS:
