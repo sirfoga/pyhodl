@@ -57,7 +57,7 @@ def build_parsers(input_folder):
     :param input_folder: str
         Path to folder where to look for transactions files
     :return: [] of Parsers
-        Exchanges found (with transactions)
+        Parsers found for each file
     """
 
     files = [
@@ -69,6 +69,19 @@ def build_parsers(input_folder):
             yield build_parser(input_file)
         except Exception as e:
             print("Cannot parse", input_file, "due to", e)
+
+
+def build_exchanges(input_folder):
+    """
+    :param input_folder: str
+        Path to folder where to look for transactions files
+    :return: [] of CryptoExchange
+        Exchanges found (with transactions)
+    """
+
+    parsers = build_parser(input_folder)
+    for parser in parsers:
+        yield parser.get_exchange()
 
 
 def get_transactions(input_folder):

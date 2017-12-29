@@ -41,7 +41,7 @@ class CryptoExchange:
     }  # interval -> hours
     OUTPUT_DATE_FORMAT = "%Y-%m-%d %H:%M:%S"
 
-    def __init__(self, transactions):
+    def __init__(self, transactions, exchange_name):
         """
         :param transactions: [] of Transaction
             List of transactions
@@ -50,6 +50,7 @@ class CryptoExchange:
         self.transactions = transactions
         if not self.transactions:
             raise ValueError("Creating exchange with no past transaction!")
+        self.exchange_name = str(exchange_name)
 
     def get_transactions_count(self):
         """

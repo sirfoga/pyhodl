@@ -25,6 +25,7 @@ from datetime import datetime
 
 from hal.files.parsers import JSONParser
 
+from pyhodl.exchanges.core import CryptoExchange
 from pyhodl.models.core import TransactionType, Transaction, Commission
 
 
@@ -162,6 +163,19 @@ class CryptoParser:
             except Exception as e:
                 print("Cannot parse transaction", transaction, "due to", e)
 
+    def get_exchange(self, exchange_name):
+        """
+        :param exchange_name: str
+            Name of exchange
+        :return: CryptoExchange
+            List of transactions listed in a exchange
+        """
+
+        return CryptoExchange(
+            self.get_transactions_list(),
+            exchange_name
+        )
+
 
 class BinanceParser(CryptoParser):
     """ Parses Binance transactions data """
@@ -215,6 +229,9 @@ class BinanceParser(CryptoParser):
 
     def is_withdrawal(self, raw):
         return "applyTime" in raw
+
+    def get_exchange(self, exchange_name="binance"):
+        super().get_exchange(exchange_name)
 
 
 class BitfinexParser(CryptoParser):
@@ -275,6 +292,9 @@ class BitfinexParser(CryptoParser):
             return raw["status"] == "COMPLETED"
 
         return False
+
+    def get_exchange(self, exchange_name="bitfinex"):
+        super().get_exchange(exchange_name)
 
 
 class CoinbaseParser(CryptoParser):
@@ -344,6 +364,9 @@ class CoinbaseParser(CryptoParser):
                     print("Cannot parse transaction", transaction,
                           "of account", account, "due to", e)
 
+    def get_exchange(self, exchange_name="coinbase"):
+        super().get_exchange(exchange_name)
+
 
 class GdaxParser(CryptoParser):
     """ Parses Binance transactions data """
@@ -376,3 +399,6 @@ class GdaxParser(CryptoParser):
 
     def is_successful(self, raw):
         return True  # always
+
+    def get_exchange(self, exchange_name="gdax"):
+        super().get_exchange(exchange_name)
