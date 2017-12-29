@@ -18,27 +18,8 @@
 
 """ Bitfinex exchange """
 
-from pyhodl.data.core import CryptoParser
 from pyhodl.models.core import Wallet, Balance
 from .core import CryptoExchange
-
-
-class BitfinexParser(CryptoParser):
-    """ Parse transactions from Bitfinex exchange """
-
-    def get_transactions_list(self, **kwargs):
-        if self.is_deposit_history() or self.is_withdrawal_history():
-            date_key = "Updated"
-            number_keys = ["Amount"]
-        else:
-            date_key = "Date"
-            number_keys = ["Price", "Amount", "Fee"]
-
-        return super().get_transactions_list(
-            date_key,
-            "%Y-%m-%d %H:%M:%S",
-            number_keys
-        )
 
 
 class Bitfinex(CryptoExchange):

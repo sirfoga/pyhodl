@@ -18,20 +18,8 @@
 
 """ GDAX exchange """
 
-from pyhodl.data.core import CryptoParser
 from pyhodl.models.core import Wallet, Balance
 from .core import CryptoExchange
-
-
-class GdaxParser(CryptoParser):
-    """ Parse transactions from GDAX exchange """
-
-    def get_transactions_list(self, **kwargs):
-        return super().get_transactions_list(
-            "time",
-            "%Y-%m-%dT%H:%M:%S.%fZ",
-            ["amount", "balance"]
-        )
 
 
 class Gdax(CryptoExchange):

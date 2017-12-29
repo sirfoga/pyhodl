@@ -202,9 +202,12 @@ class BitfinexUpdater(ExchangeUpdater):
                 "limit_trades": INT_32_MAX
             }
         )
-        return self.client.fetch(
+        trades = self.client.fetch(
             data["url"], headers=data["headers"], body=data["body"]
         )
+        for i, trade in enumerate(trades):
+            trades[i]["symbol"] = symbol
+        return trades
 
     def get_transactions(self):
         super().get_transactions()

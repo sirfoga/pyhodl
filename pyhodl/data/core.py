@@ -219,6 +219,39 @@ class BinanceParser(CryptoParser):
 class BitfinexParser(CryptoParser):
     """ Parses Binance transactions data """
 
+    def get_coins_amounts(self, raw):
+        if self.is_trade(raw):
+            pass  # TODO implement
+        elif self.is_deposit(raw):
+            return raw["currency"], float(raw["amount"]), None, 0
+        elif self.is_withdrawal(raw):
+            return None, 0, raw["currency"], float(raw["amount"])
+
+        return None, 0, None, 0
+
+    def is_trade(self, raw):
+        return raw["type"] == "Sell" or raw["type"] == "Buy"
+
+    def is_withdrawal(self, raw):
+        return raw["type"] == "WITHDRAWAL"
+
+    def get_commission(self, raw):
+        pass  # TODO implement
+
+    def get_date(self, raw):
+        return datetime.fromtimestamp(int(raw["timestamp"]))
+
+    def is_deposit(self, raw):
+        return raw["type"] == "DEPOSIT"
+
+    def is_successful(self, raw):
+        if self.is_trade(raw):
+            return float(raw["fee_amount"]) <= 0
+        elif self.is_deposit(raw) or self.is_withdrawal(raw):
+            return raw["status"] == "COMPLETED"
+
+        return False
+
 
 class CoinbaseParser(CryptoParser):
     """ Parses Binance transactions data """

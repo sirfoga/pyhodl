@@ -25,7 +25,7 @@ from enum import Enum
 
 from hal.streams.user import UserInput
 
-from pyhodl.data.core import BinanceParser
+from pyhodl.updater.core import Updater
 
 
 class RunMode(Enum):
@@ -46,10 +46,10 @@ def create_args():
         usage="-[mode] -h/--help for full usage"
     )
 
-    parser.add_argument("-updater", "--update", action="store_true",
+    parser.add_argument("-update", "--update", action="store_true",
                         help="Syncs local data with the transactions from "
                              "your exchanges")
-    parser.add_argument("-plotter", "--plot", action="store_true",
+    parser.add_argument("-plotte", "--plot", action="store_true",
                         help="Creates charts of your data")
     parser.add_argument("-stats", "--stats", action="store_true",
                         help="Computes statistics and trends using local data")
@@ -84,12 +84,12 @@ def parse_args(parser):
 def main():
     run_mode, verbose = parse_args(create_args())
     if run_mode == RunMode.UPDATER:
-        inp_file = "/home/stefano/.pyhodl/data/BinanceUpdater.json"
-        parser = BinanceParser(inp_file)
-        transactions = list(parser.get_transactions_list())
-        print(transactions)
-        # driver = Updater(verbose)
-        # driver.run()
+        # inp_file = "/home/stefano/.pyhodl/data/BinanceUpdater.json"
+        # parser = BinanceParser(inp_file)
+        # transactions = list(parser.get_transactions_list())
+        # print(transactions)
+        driver = Updater(verbose)
+        driver.run()
     elif run_mode == RunMode.PLOTTER:
         raise ValueError("Not fully implemented!")
     elif run_mode == RunMode.STATS:

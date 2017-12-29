@@ -18,52 +18,8 @@
 
 """ Binance exchange """
 
-from pyhodl.data.core import CryptoParser
 from pyhodl.models.core import Wallet
 from .core import CryptoExchange, Balance
-
-
-def infer_coins(transaction):
-    """
-    :param transaction: Transaction
-        Transaction
-    :return: tuple (str, str, str, float, float, float)
-        Buy coin, sell coin, fee coin, buy amount, sell amount, fee amount
-    """
-
-    market = transaction["Market"]
-    coin_fee = transaction["Fee Coin"]
-    is_sell = transaction["Type"] == "SELL"
-    buy_amount = transaction["Total"] if is_sell else transaction["Amount"]
-    sell_amount = transaction["Amount"] if is_sell else transaction["Total"]
-    fee_amount = transaction["Fee"]
-
-    if market.endswith("USDT"):
-        coin_sell = "USDT"
-        coin_buy = market.replace(coin_sell, "")
-    else:
-        coin_buy, coin_sell = market[:3], market[3:]
-
-    if is_sell:  # other way around
-        coin_buy, coin_sell = coin_sell, coin_buy
-
-    return coin_buy, coin_sell, coin_fee, buy_amount, sell_amount, fee_amount
-
-
-class BinanceParser(CryptoParser):
-    """ Parse transactions from Binance exchange """
-
-    def get_transactions_list(self, **kwargs):
-        if self.is_deposit_history() or self.is_withdrawal_history():
-            number_keys = ["Amount"]
-        else:
-            number_keys = ["Price", "Amount", "Fee", "Total"]
-
-        return super().get_transactions_list(
-            "Date",
-            "%Y-%m-%d %H:%M:%S",
-            number_keys
-        )
 
 
 class Binance(CryptoExchange):
