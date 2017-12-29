@@ -64,7 +64,7 @@ The following flags are supported:
 ### Example
 A simple run with parameters like
 ```bash
-python3 pyhodl.py -plotter
+pyhodl.py -plotter
 ```
 would result in a series of plot like this one:
 ![Example bitfinex](extra/bitfinex_balances.jpg)

@@ -24,7 +24,7 @@ from enum import Enum
 
 from hal.files.save_as import write_dicts_to_csv
 
-from pyhodl.requests import get_price
+from pyhodl.apis.prices import get_price
 from pyhodl.utils import generate_dates
 
 

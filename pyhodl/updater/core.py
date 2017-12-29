@@ -104,7 +104,7 @@ class Updater:
         self.verbose = verbose
 
     def run(self):
-        interval = self.manager.update_interval().seconds
+        interval = self.manager.update_interval().total_seconds()
         threading.Timer(interval, self.run).start()
 
         if self.verbose:

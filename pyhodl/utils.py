@@ -18,6 +18,8 @@
 
 """ Tools """
 
+import functools
+import time
 from collections import Counter
 from datetime import timedelta
 
@@ -70,3 +72,50 @@ def get_actual_class_name(class_name):
     """
 
     return str(type(class_name)).split("'")[-2].split(".")[-1]
+
+
+def handle_rate_limits(func, time_wait=60, max_attempts=2):
+    """
+    :param func: callback function
+        function to wrap
+    :return: callback function return type
+        wraps callback function
+    """
+
+    @functools.wraps(func)
+    def _handle_rate_limits(*args, **kwargs):
+        """
+        :param args: *
+            args for callback function
+        :param kwargs: **
+            kwargs for callback function
+        :return: callback function return type
+            handle rate limit of callback function
+        """
+
+        function_name = str(func.__name__) + "(" + str(args) + "," + str(
+            kwargs) + ")"
+        attempt_counter = 0
+
+        while attempt_counter < max_attempts:
+            try:
+                attempt_counter += 1
+                return func(*args, **kwargs)
+            except Exception as e:
+                if "429" in str(e):  # rate limit exceeded
+                    print(
+                        function_name,
+                        ">>> Attempt #", attempt_counter,
+                        ": rate limit exceeded! Wait time:", time_wait,
+                        "seconds before next request"
+                    )
+                    time.sleep(time_wait + 2)  # extra seconds to be sure
+                else:
+                    return None  # exception not rate limit related
+        print(
+            function_name,
+            "max number of attempts:", max_attempts, " reached!"
+        )
+        return None
+
+    return _handle_rate_limits

@@ -20,6 +20,8 @@
 
 import abc
 import os
+import time
+from datetime import datetime
 
 from binance.client import Client as BinanceClient
 from ccxt import bitfinex as BitfinexClient
@@ -27,15 +29,28 @@ from coinbase.wallet.client import Client as CoinbaseClient
 from gdax.authenticated_client import AuthenticatedClient as GdaxClient
 from hal.files.save_as import write_dicts_to_json
 
-from pyhodl.utils import get_actual_class_name
+from pyhodl.utils import get_actual_class_name, handle_rate_limits
 
 INT_32_MAX = 2 ** 31 - 1
+LOG_DATETIME_FORMAT = "%H:%M:%S"
 
 
 class ExchangeUpdater:
     """ Abstract exchange updater """
 
-    def __init__(self, api_client, data_folder):
+    def __init__(self, api_client, data_folder, rate_limit=1,
+                 rate_limit_wait=60):
+        """
+        :param api_client: ApiClient
+            Client with which to perform requests
+        :param data_folder: str
+            Folder where to save data
+        :param rate_limit: int
+            Number of seconds between 2 consecutive requests
+        :param rate_limit_wait: int
+            Number of seconds to wait if rate limit exceeded
+        """
+        
         self.client = api_client
         self.folder = data_folder
         self.output_file = os.path.join(
@@ -43,19 +58,28 @@ class ExchangeUpdater:
             get_actual_class_name(self) + ".json"
         )
         self.transactions = {}
+        self.rate = float(rate_limit)
+        self.rate_wait = float(rate_limit_wait)
+        self.class_name = get_actual_class_name(self)
 
     @abc.abstractmethod
     def get_transactions(self):
-        return
+        self.log("getting transactions")
 
     def save_data(self):
+        self.log("saving data")
         write_dicts_to_json(self.transactions, self.output_file)
 
     def update(self, verbose):
+        self.log("updating local data")
         self.get_transactions()
         self.save_data()
         if verbose:
-            print("Transactions written to", self.output_file)
+            print(self.class_name, "Transactions written to", self.output_file)
+
+    def log(self, *content):
+        print(datetime.now().strftime(LOG_DATETIME_FORMAT), self.class_name,
+              ">>>", " ".join([str(x) for x in content]))
 
     @staticmethod
     def build_updater(api_client, data_folder):
@@ -103,6 +127,7 @@ class BinanceUpdater(ExchangeUpdater):
         return trades
 
     def get_transactions(self):
+        super().get_transactions()
         transactions = self.get_deposits() + self.get_withdraw()  # deposits
         symbols = self.get_symbols_list()
 
@@ -133,6 +158,7 @@ class BitfinexUpdater(ExchangeUpdater):
         ]
         return currencies
 
+    @handle_rate_limits
     def get_all_movements(self, symbol):
         data = self.client.sign(
             "history/movements",
@@ -150,9 +176,15 @@ class BitfinexUpdater(ExchangeUpdater):
         currencies = self.get_currencies_list()
         movements = []
         for currency in currencies:
-            movements += self.get_all_movements(currency)
+            try:
+                movements += self.get_all_movements(currency)
+                self.log("Found", len(movements), currency, "movements!")
+                time.sleep(self.rate)
+            except Exception as e:
+                self.log("Cannot get", currency, "movements due to", e)
         return movements
 
+    @handle_rate_limits
     def get_all_transactions(self, symbol):
         data = self.client.sign(
             "mytrades",
@@ -167,14 +199,21 @@ class BitfinexUpdater(ExchangeUpdater):
         )
 
     def get_transactions(self):
-        print(self.client.fetch_balance()["total"])  # TODO debug many requests
+        super().get_transactions()
+        self.log(
+            "Total current balance:",
+            [
+                (key, val) for key, val
+                in self.client.fetch_balance()["total"].items()
+            ]
+        )
 
         transactions = self.get_movements()  # deposits and withdrawals
         symbols = self.get_symbols_list()
-
         for symbol in symbols:  # scan all symbols
             transactions += self.get_all_transactions(symbol)
-
+            self.log("Found", len(transactions), symbol, "transactions!")
+            time.sleep(self.rate)
         return transactions
 
 
@@ -190,6 +229,7 @@ class CoinbaseUpdater(ExchangeUpdater):
         }
 
     def get_transactions(self):
+        super().get_transactions()
         for account_id in self.transactions:
             self.transactions[account_id] = \
                 self.client.get_transactions(account_id)["data"]
@@ -207,6 +247,7 @@ class GdaxUpdater(ExchangeUpdater):
         }
 
     def get_transactions(self):
+        super().get_transactions()
         for account_id in self.transactions:
             pages = self.client.get_account_history(account_id)  # paginated
             transactions = []
