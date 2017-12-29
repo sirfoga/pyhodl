@@ -84,7 +84,7 @@ def parse_args(parser):
 def main():
     run_mode, verbose = parse_args(create_args())
     if run_mode == RunMode.UPDATER:
-        inp_file = "/home/stefano/.pyhodl/data/BinanceUpdater.json"
+        inp_file = "/home/stefano/.pyhodl/data/GdaxUpdater.json"
         parser = build_parser(inp_file)
         exchange = parser.build_exchange()
         wallets = exchange.build_wallets()
@@ -100,11 +100,10 @@ def main():
             ])
         )
 
-        sample_transactions = wallets["LTC"].transactions
+        sample_transactions = wallets["XRP"].transactions
         sample_transactions = sorted(sample_transactions, key=lambda x: x.date)
         sample_transactions = [str(x) for x in sample_transactions]
-        # print("\n\n\t".join(sample_transactions))
-
+        print("\n\n\t".join(sample_transactions))
     elif run_mode == RunMode.PLOTTER:
         raise ValueError("Not fully implemented!")
     elif run_mode == RunMode.STATS:

@@ -255,8 +255,8 @@ class BitfinexParser(CryptoParser):
     def get_coins_amounts(self, raw):
         if self.is_trade(raw):
             coin_buy, coin_sell = raw["symbol"][:3], raw["symbol"][3:]
-            buy_amount = raw["amount"]
-            sell_amount = buy_amount * raw["price"]
+            buy_amount = float(raw["amount"])
+            sell_amount = buy_amount * float(raw["price"])
             if raw["type"] == "Buy":
                 return coin_buy, buy_amount, coin_sell, sell_amount
             else:
@@ -279,7 +279,7 @@ class BitfinexParser(CryptoParser):
             return Commission(
                 raw,
                 raw["fee_currency"],
-                abs(raw["fee_amount"]),
+                abs(float(raw["fee_amount"])),
                 self.get_date(raw),
                 self.is_successful(raw)
             )
@@ -287,7 +287,7 @@ class BitfinexParser(CryptoParser):
             return Commission(
                 raw,
                 raw["currency"],
-                abs(raw["fee"]),
+                abs(float(raw["fee"])),
                 self.get_date(raw),
                 self.is_successful(raw)
             )
@@ -295,7 +295,7 @@ class BitfinexParser(CryptoParser):
         return None
 
     def get_date(self, raw):
-        return datetime.fromtimestamp(int(raw["timestamp"]))
+        return datetime.fromtimestamp(int(float(raw["timestamp"])))
 
     def is_deposit(self, raw):
         return raw["type"] == "DEPOSIT"
@@ -387,7 +387,7 @@ class GdaxParser(CryptoParser):
     """ Parses Binance transactions data """
 
     def get_coins_amounts(self, raw):
-        amount = raw["amount"]
+        amount = float(raw["amount"])
         coin = raw["currency"]
 
         if amount >= 0:  # buy
@@ -414,6 +414,16 @@ class GdaxParser(CryptoParser):
 
     def is_successful(self, raw):
         return True  # always
+
+    def get_transactions_list(self):
+        raw = self.get_raw_data()
+        for account, transactions in raw.items():
+            for transaction in transactions:
+                try:
+                    yield self.parse_transaction(transaction)
+                except Exception as e:
+                    print("Cannot parse transaction", transaction,
+                          "of account", account, "due to", e)
 
     def build_exchange(self, exchange_name="gdax"):
         return super(GdaxParser, self).build_exchange(exchange_name)
