@@ -350,12 +350,12 @@ class GdaxParser(CryptoParser):
 
     def get_coins_amounts(self, raw):
         amount = raw["amount"]
-        coin_buy, coin_sell = raw["details"]["product-id"].split("-")
+        coin = raw["currency"]
 
         if amount >= 0:  # buy
-            return abs(amount), amount, None, 0
+            return coin, abs(amount), None, 0
         else:  # sell
-            return None, 0, coin_sell, abs(amount)
+            return None, 0, coin, abs(amount)
 
     def is_trade(self, raw):
         return "product_id" in raw["details"]
