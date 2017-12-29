@@ -92,7 +92,7 @@ class ExchangeUpdater:
         elif isinstance(api_client, GdaxClient):
             return GdaxUpdater(api_client, data_folder)
         else:
-            raise ValueError("Cannot infer type of API client!")
+            raise ValueError("Cannot infer type of API client")
 
 
 class BinanceUpdater(ExchangeUpdater):
@@ -136,8 +136,9 @@ class BinanceUpdater(ExchangeUpdater):
 
         for symbol in symbols:  # scan all symbols
             try:
-                transactions += self.get_all_transactions(symbol)
-                self.log("Found", len(transactions), symbol, "transactions!")
+                result = self.get_all_transactions(symbol)
+                transactions += result
+                self.log("Found", len(result), symbol, "transactions")
                 time.sleep(self.rate)
             except Exception as e:
                 self.log("Cannot get", symbol, "transactions due to", e)
@@ -183,8 +184,9 @@ class BitfinexUpdater(ExchangeUpdater):
         movements = []
         for currency in currencies:
             try:
-                movements += self.get_all_movements(currency)
-                self.log("Found", len(movements), currency, "movements!")
+                result = self.get_all_movements(currency)
+                movements += result
+                self.log("Found", len(result), currency, "movements")
                 time.sleep(self.rate)
             except Exception as e:
                 self.log("Cannot get", currency, "movements due to", e)
@@ -219,7 +221,7 @@ class BitfinexUpdater(ExchangeUpdater):
         for symbol in symbols:  # scan all symbols
             try:
                 transactions += self.get_all_transactions(symbol)
-                self.log("Found", len(transactions), symbol, "transactions!")
+                self.log("Found", len(transactions), symbol, "transactions")
                 time.sleep(self.rate)
             except Exception as e:
                 self.log("Cannot get", symbol, "transactions due to", e)
