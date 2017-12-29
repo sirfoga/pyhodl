@@ -257,16 +257,23 @@ class GdaxUpdater(ExchangeUpdater):
         ExchangeUpdater.__init__(self, api_client, data_folder)
 
         self.accounts = self.client.get_accounts()
+        self.accounts = {
+            account["id"]: account for account in self.accounts
+        }  # list -> dict
         self.transactions = {
-            account["id"]: [] for account in self.accounts
+            account_id: [] for account_id in self.accounts
         }
 
     def get_transactions(self):
         super().get_transactions()
-        for account_id in self.transactions:
+        for account_id, account in self.accounts.items():
             pages = self.client.get_account_history(account_id)  # paginated
             transactions = []
             for page in pages:
                 transactions += page
+
+            if transactions:  # add currency symbol
+                for i, transaction in enumerate(transactions):
+                    transactions[i]["currency"] = account["currency"]
 
             self.transactions[account_id] = transactions

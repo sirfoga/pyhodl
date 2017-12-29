@@ -347,3 +347,32 @@ class CoinbaseParser(CryptoParser):
 
 class GdaxParser(CryptoParser):
     """ Parses Binance transactions data """
+
+    def get_coins_amounts(self, raw):
+        amount = raw["amount"]
+        coin_buy, coin_sell = raw["details"]["product-id"].split("-")
+
+        if amount >= 0:  # buy
+            return abs(amount), amount, None, 0
+        else:  # sell
+            return None, 0, coin_sell, abs(amount)
+
+    def is_trade(self, raw):
+        return "product_id" in raw["details"]
+
+    def is_withdrawal(self, raw):
+        return raw["type"] == "transfer" \
+               and raw["details"]["transfer_type"] == "withdraw"
+
+    def get_commission(self, raw):
+        return None  # by default no way to check if transaction has fee or not
+
+    def get_date(self, raw):
+        return ciso8601.parse_datetime(raw["created_at"])
+
+    def is_deposit(self, raw):
+        return raw["type"] == "transfer" \
+               and raw["details"]["transfer_type"] == "deposit"
+
+    def is_successful(self, raw):
+        return True  # always
