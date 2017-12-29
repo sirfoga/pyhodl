@@ -107,7 +107,10 @@ See [CHANGELOG](https://github.com/sirfoga/pyhodl/blob/master/CHANGELOG.md)
 
 ## Links
 
-* [Documentation](https://sirfoga.github.io/pyhodl)
+* [Documentation](https://sirfoga.github.io/pyhodl) (last docs script run unsuccessfully (`"/usr/local/lib/python2.7/dist-packages/epydoc/docwriter/dotgraph.py", line 470, in __init__
+    for var in class_doc.sorted_variables:
+TypeError: iteration over non-sequence
+`). You can find the lastest docs [here](https://github.com/sirfoga/pyhodl/commit/8471b6cffdce7c2b2ac78928c550fa6cb9bf74c8))
 * [Issue tracker](https://github.com/sirfoga/pyhodl/issues)
 * [Source code](https://github.com/sirfoga/pyhodl)
 
