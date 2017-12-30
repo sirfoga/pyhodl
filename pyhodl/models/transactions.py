@@ -198,27 +198,34 @@ class Wallet:
 
         amount = 0.0
         for transaction in self.transactions:
+            print(transaction.date, transaction.transaction_type, amount)
             if transaction.transaction_type == TransactionType.TRADING:
                 if transaction.coin_buy == self.currency:
                     amount += transaction.buy_amount
+                    print("+", transaction.buy_amount)
 
                 if transaction.coin_sell == self.currency:
                     amount -= transaction.sell_amount
+                    print("-", transaction.sell_amount)
 
                 if transaction.commission and transaction.commission.coin \
                         == self.currency:
                     amount -= transaction.commission.amount
+                    print("-", transaction.commission.amount)
 
             if transaction.transaction_type == TransactionType.COMMISSION:
                 if transaction.commission.coin == self.currency:
                     amount -= transaction.commission.amount
+                    print("-", transaction.commission.amount)
 
             if transaction.transaction_type == TransactionType.DEPOSIT:
                 if transaction.coin_buy == self.currency:
                     amount += transaction.buy_amount
+                    print("+", transaction.buy_amount)
 
             if transaction.transaction_type == TransactionType.WITHDRAWAL:
                 if transaction.coin_sell == self.currency:
                     amount -= transaction.sell_amount
+                    print("-", transaction.sell_amount)
 
         return amount

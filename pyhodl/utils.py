@@ -116,7 +116,7 @@ def handle_rate_limits(func, time_wait=60, max_attempts=2):
 
                     # useless wait if last attempt
                     if attempt_counter + 1 <= max_attempts:
-                        time.sleep(time_wait + 2)  # extra seconds to be sure
+                        time.sleep(time_wait * 1.1)  # extra seconds to be sure
                 else:
                     return None  # exception not rate limit related
         print(

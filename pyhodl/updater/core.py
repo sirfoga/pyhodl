@@ -25,6 +25,7 @@ from datetime import datetime, timedelta
 from pyhodl.apis.manage import ApiManager
 from pyhodl.app import DATA_FOLDER, ConfigManager, DATE_TIME_FORMAT
 from pyhodl.updater.updaters import ExchangeUpdater
+from pyhodl.utils import get_actual_class_name
 
 UPDATE_CONFIG = os.path.join(
     DATA_FOLDER,
@@ -97,11 +98,10 @@ class Updater:
     def __init__(self, verbose):
         self.manager = UpdateManager()
         self.api_manager = ApiManager()
-        self.api_updaters = [
-            ExchangeUpdater.build_updater(api.get_client(), DATA_FOLDER)
-            for api in self.api_manager.get_all()
-        ]
+        self.api_updaters = []
         self.verbose = verbose
+
+        self._build_updaters()
 
     def run(self):
         interval = self.manager.update_interval().total_seconds()
@@ -115,3 +115,16 @@ class Updater:
 
         self.manager.save_time_update()
         print("Next update:", self.manager.time_next_update())
+
+    def _build_updaters(self):
+        for api in self.api_manager.get_all():
+            try:
+                updater = ExchangeUpdater.build_updater(
+                    api.get_client(), DATA_FOLDER
+                )
+                self.api_updaters.append(updater)
+                print("Successfully authenticated client with",
+                      get_actual_class_name(api))
+            except Exception as e:
+                print("Cannot authenticate client with",
+                      get_actual_class_name(api), "due to", e)
