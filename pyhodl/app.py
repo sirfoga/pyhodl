@@ -39,6 +39,10 @@ DATA_FOLDER = os.path.join(
     APP_FOLDER,
     "data"
 )
+HISTORICAL_DATA_FOLDER = os.path.join(
+    APP_FOLDER,
+    "historical"
+)
 DATE_TIME_FORMAT = "%Y-%m-%d %H:%M:%S %z"
 DATE_TIME_KEY = "datetime"
 

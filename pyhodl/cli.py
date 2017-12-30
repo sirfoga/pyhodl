@@ -28,12 +28,12 @@ from hal.files.save_as import write_dicts_to_json
 from hal.streams.user import UserInput
 
 from pyhodl.apis.prices import CryptocompareClient, CoinmarketCapClient
-from pyhodl.charts.balances import BalancePlotter
 from pyhodl.data.parsers import build_parser
+from pyhodl.models.tables import MarketDataTable
 from pyhodl.stats.transactions import get_transactions_dates, \
     get_all_exchanges, get_all_coins
 from pyhodl.updater.core import Updater
-from pyhodl.utils import get_dates
+from pyhodl.utils import get_dates, parse_datetime
 
 
 class RunMode(Enum):
@@ -108,11 +108,18 @@ def plot(input_file, verbose):
     if verbose:
         print("Getting balances from", input_file)
 
-    parser = build_parser(input_file)
-    exchange = parser.build_exchange()
-    plotter = BalancePlotter(exchange)
-    plotter.plot_balances()
-    plotter.show("Balances from " + input_file)
+    # parser = build_parser(input_file)
+    # exchange = parser.build_exchange()
+    # plotter = BalancePlotter(exchange)
+    # plotter.plot_balances()
+    # plotter.show("Balances from " + input_file)
+
+    table = MarketDataTable()
+    result = list(table.get_values_between(
+        parse_datetime("2017-06-15 8:17:00 +0000"),
+        parse_datetime("2017-06-15 21:17:00 +0000")
+    ))
+    print(result)
 
 
 def compute_stats(input_file, verbose):
@@ -177,9 +184,9 @@ def main():
             coins, first_transaction, last_transaction, args[0], args[1],
             tor=args[2]
         )
-        # download_market_cap(
-        #     first_transaction, last_transaction, args[0], args[1]
-        # )
+        download_market_cap(
+            first_transaction, last_transaction, args[0], args[1]
+        )
 
 
 def handle_exception():

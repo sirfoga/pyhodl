@@ -18,10 +18,12 @@
 
 """ Parser prices, market cap data and values downloaded with this app """
 
+import os
 from bisect import bisect
 
 from hal.files.parsers import JSONParser
 
+from pyhodl.app import HISTORICAL_DATA_FOLDER
 from pyhodl.utils import parse_datetime
 
 
@@ -40,11 +42,9 @@ class DatetimeTable(JSONParser):
         JSONParser.__init__(self, input_file)
 
         self.content = {
-            item["date"]: item for item in self.get_content()
+            parse_datetime(item["date"]): item for item in self.get_content()
         }  # date -> raw dict
-        self.dates = sorted([
-            parse_datetime(date) for date in self.content
-        ])  # sorted list of all dates in database
+        self.dates = sorted(self.content.keys())  # sorted list of all dates
 
         self.max_error = float(max_error_search)  # seconds
 
@@ -83,3 +83,14 @@ class DatetimeTable(JSONParser):
         for date in self.dates:
             if since <= date <= until:
                 yield self.content[date]
+
+
+class MarketDataTable(DatetimeTable):
+    """ Parse market data files """
+
+    def __init__(self):
+        DatetimeTable.__init__(
+            self,
+            os.path.join(HISTORICAL_DATA_FOLDER, "market_cap.json"),
+            3 * 60 * 60  # 3 hours
+        )
