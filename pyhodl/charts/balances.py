@@ -75,4 +75,17 @@ class BalancePlotter(CryptoPlotter):
             Plots balances for transaction of coin
         """
 
-        pass
+        balances = wallet.get_balances_by_transaction()
+        dates = [
+            balance["transaction"].date for balance in balances
+        ]
+        subtotals = [
+            float(balance["balance"]) for balance in balances
+        ]
+
+        plt.plot(
+            dates,
+            subtotals,
+            "-x",
+            label=wallet.currency
+        )

@@ -28,6 +28,7 @@ from hal.files.save_as import write_dicts_to_json
 from hal.streams.user import UserInput
 
 from pyhodl.apis.prices import get_prices
+from pyhodl.charts.balances import BalancePlotter
 from pyhodl.data.parsers import build_exchanges, build_parser
 from pyhodl.updater.core import Updater, UpdateManager
 from pyhodl.utils import get_dates
@@ -58,8 +59,9 @@ def create_args():
     parser.add_argument("-hist", dest="hist",
                         help="Downloads historical prices of your coins",
                         required=False)
-    parser.add_argument("-plot", "--plot", action="store_true",
-                        help="Creates charts of your data")
+    parser.add_argument("-plot", dest="plot",
+                        help="Creates charts of your data",
+                        required=False)
     parser.add_argument("-stats", dest="stats",
                         help="Computes statistics and trends using local data",
                         required=False)
@@ -82,7 +84,7 @@ def parse_args(parser):
     if args.update:
         return RunMode.UPDATER, args.verbose
     elif args.plot:
-        return RunMode.PLOTTER, args.verbose
+        return RunMode.PLOTTER, os.path.join(args.plot), args.verbose
     elif args.stats:
         return RunMode.STATS, os.path.join(args.stats), args.verbose
     elif args.hist:
@@ -97,11 +99,21 @@ def update(verbose):
     driver.run()
 
 
-def plot(verbose):
-    raise ValueError("Not fully implemented!")
+def plot(input_file, verbose):
+    if verbose:
+        print("Getting balances from", input_file)
+
+    parser = build_parser(input_file)
+    exchange = parser.build_exchange()
+    plotter = BalancePlotter(exchange)
+    plotter.plot_balances()
+    plotter.show("Balances from " + input_file)
 
 
 def compute_stats(input_file, verbose):
+    if verbose:
+        print("Getting balances from", input_file)
+
     parser = build_parser(input_file)
     exchange = parser.build_exchange()
     wallets = exchange.build_wallets()
@@ -145,7 +157,7 @@ def main():
     if run_mode == RunMode.UPDATER:
         update(args[0])
     elif run_mode == RunMode.PLOTTER:
-        plot(args[0])
+        plot(args[0], args[1])
     elif run_mode == RunMode.STATS:
         compute_stats(args[0], args[1])
     elif run_mode == RunMode.DOWNLOAD_HISTORICAL:
