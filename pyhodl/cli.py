@@ -26,7 +26,8 @@ from enum import Enum
 
 from hal.streams.user import UserInput
 
-from pyhodl.updater.core import Updater
+from pyhodl.data.parsers import build_exchanges
+from pyhodl.updater.core import Updater, UpdateManager
 
 
 class RunMode(Enum):
@@ -101,7 +102,20 @@ def compute_stats(verbose):
 
 
 def download_historical(where_to, verbose):
-    print("Downloading historical data to", where_to)
+    folder_in = UpdateManager().get_data_folder()
+    exchanges = list(build_exchanges(folder_in))
+
+    first_transaction = min([
+        exchange.get_first_transaction() for exchange in exchanges
+    ], key=lambda x: x.date)
+    last_transaction = max([
+        exchange.get_last_transaction() for exchange in exchanges
+    ], key=lambda x: x.date)
+
+    coins = [
+        coin for exchange in exchanges
+        for coin in exchange.build_wallets().keys()
+    ]  # list of dict (str -> Wallet)
 
 
 def main():

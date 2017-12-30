@@ -80,7 +80,7 @@ def build_exchanges(input_folder):
         Exchanges found (with transactions)
     """
 
-    parsers = build_parser(input_folder)
+    parsers = build_parsers(input_folder)
     for parser in parsers:
         yield parser.build_exchange()
 

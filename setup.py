@@ -53,7 +53,8 @@ setup(
         "coinbase",
         "python-binance",
         "gdax",
-        "ccxt"
+        "ccxt",
+        "pytz"
     ],
     entry_points={
         "console_scripts": ["pyhodl = pyhodl.cli:cli"]

@@ -20,6 +20,8 @@
 
 from enum import Enum
 
+import pytz
+
 
 class TransactionType(Enum):
     """ Deposit, withdrawal ... """
@@ -60,7 +62,7 @@ class Transaction:
         self.coin_sell = str(coin_sold)
         self.sell_amount = float(sell_amount) if sell_amount else 0
         self.transaction_type = trans_type
-        self.date = date
+        self.date = pytz.utc.localize(date) if not date.tzinfo else date
         self.successful = bool(successful)
         self.commission = commission
 
