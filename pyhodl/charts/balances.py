@@ -89,3 +89,7 @@ class BalancePlotter(CryptoPlotter):
             "-x",
             label=wallet.currency
         )
+
+
+class FiatPlotter(CryptoPlotter):
+    """ Plots fiat equivalent of your wallet """

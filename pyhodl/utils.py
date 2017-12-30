@@ -146,3 +146,21 @@ def get_dates(first, last, sec_interval):
         first + timedelta(seconds=i * sec_interval)
         for i in range(intervals)
     ]
+
+
+def replace_items(lst, old, new):
+    """
+    :param lst: []
+        List of items
+    :param old: obj
+        Object to substitute
+    :param new: obj
+        New object to put in place
+    :return: []
+        List of items
+    """
+
+    for i, val in enumerate(lst):
+        if val == old:
+            lst[i] = new
+    return lst

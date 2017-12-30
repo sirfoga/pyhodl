@@ -5,6 +5,7 @@ All notable changes to this project will be documented in this file.
 
 ### Added
 - price downloader
+- subtotal balances plotter
 
 ## 0.2.3 - 2017-12-29
 
