@@ -206,4 +206,4 @@ class CoinmarketCapClient(AbstractApiClient):
         """
 
         raw_data = self.get_raw_data(self._create_url(since, until))
-        print(raw_data)
+        return raw_data

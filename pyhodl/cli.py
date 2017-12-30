@@ -27,10 +27,12 @@ from enum import Enum
 from hal.files.save_as import write_dicts_to_json
 from hal.streams.user import UserInput
 
-from pyhodl.apis.prices import CryptocompareClient
+from pyhodl.apis.prices import CryptocompareClient, CoinmarketCapClient
 from pyhodl.charts.balances import BalancePlotter
-from pyhodl.data.parsers import build_exchanges, build_parser
-from pyhodl.updater.core import Updater, UpdateManager
+from pyhodl.data.parsers import build_parser
+from pyhodl.stats.transactions import get_transactions_dates, \
+    get_all_exchanges, get_all_coins
+from pyhodl.updater.core import Updater
 from pyhodl.utils import get_dates
 
 
@@ -121,24 +123,25 @@ def compute_stats(input_file, verbose):
         print(coin, wallets[coin].balance())
 
 
-def download_historical(where_to, verbose, sec_interval=12 * 60 * 60,
-                        fiat="USD"):
-    folder_in = UpdateManager().get_data_folder()
-    exchanges = list(build_exchanges(folder_in))
+def download_market_cap(since, until, where_to, verbose):
+    if verbose:
+        print("Getting market cap since", since, "until", until)
+
+    client = CoinmarketCapClient()
+    output_file = os.path.join(where_to, "market_cap.json")
+    write_dicts_to_json(
+        client.get_total_market_cap(since, until),
+        output_file
+    )
+
+    if verbose:
+        print("Saved market cap to", output_file)
+
+
+def download_prices(coins, since, until, where_to, verbose,
+                    sec_interval=12 * 60 * 60, fiat="USD"):
     client = CryptocompareClient()
-
-    first_transaction = min([
-        exchange.get_first_transaction() for exchange in exchanges
-    ], key=lambda x: x.date).date
-    last_transaction = max([
-        exchange.get_last_transaction() for exchange in exchanges
-    ], key=lambda x: x.date).date
-    dates = get_dates(first_transaction, last_transaction, sec_interval)
-
-    coins = [
-        coin for exchange in exchanges
-        for coin in exchange.build_wallets().keys()
-    ]
+    dates = get_dates(since, until, sec_interval)
 
     if verbose:
         print("Getting historical prices for", len(coins), "coins")
@@ -162,7 +165,12 @@ def main():
     elif run_mode == RunMode.STATS:
         compute_stats(args[0], args[1])
     elif run_mode == RunMode.DOWNLOAD_HISTORICAL:
-        download_historical(args[0], args[1])
+        exchanges = get_all_exchanges()
+        dates = get_transactions_dates(exchanges)
+        coins = get_all_coins(exchanges)
+
+        download_prices(coins, dates[0], dates[-1], args[0], args[1])
+        download_market_cap(dates[0], dates[-1], args[0], args[1])
 
 
 def handle_exception():
