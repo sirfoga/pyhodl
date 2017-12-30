@@ -192,15 +192,21 @@ class Wallet:
         """
 
         subtotals = sorted(
-            self.get_balance_by_transaction(),
+            self.get_balances_by_transaction(),
             key=lambda x: x["transaction"].date
         )
         return subtotals[-1]["balance"]
 
-    def get_balance_by_transaction(self):
+    def get_balances_by_transaction(self):
         current_balance = 0.0
+        subtotals = []
+        self.transactions = sorted(
+            self.transactions, key=lambda x: x.date
+        )  # sort by date
 
         for transaction in self.transactions:
+            last_balance = current_balance  # just to find if changed
+
             if transaction.transaction_type == TransactionType.TRADING:
                 if transaction.coin_buy == self.currency:
                     current_balance += transaction.buy_amount
@@ -224,7 +230,9 @@ class Wallet:
                 if transaction.coin_sell == self.currency:
                     current_balance -= transaction.sell_amount
 
-            yield {
-                "transaction": transaction,
-                "balance": current_balance
-            }
+            if last_balance != current_balance:  # balance has changed
+                subtotals.append({
+                    "transaction": transaction,
+                    "balance": current_balance
+                })
+        return subtotals

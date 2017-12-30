@@ -28,7 +28,7 @@ from hal.files.save_as import write_dicts_to_json
 from hal.streams.user import UserInput
 
 from pyhodl.apis.prices import get_prices
-from pyhodl.data.parsers import build_exchanges
+from pyhodl.data.parsers import build_exchanges, build_parser
 from pyhodl.updater.core import Updater, UpdateManager
 from pyhodl.utils import get_dates
 
@@ -102,7 +102,11 @@ def plot(verbose):
 
 
 def compute_stats(input_file, verbose):
-    print("Computing stats with file", input_file, verbose)
+    parser = build_parser(input_file)
+    exchange = parser.build_exchange()
+    wallets = exchange.build_wallets()
+    for coin in wallets:
+        print(coin, wallets[coin].balance())
 
 
 def download_historical(where_to, verbose, sec_interval=12 * 60 * 60,
