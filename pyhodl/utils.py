@@ -25,6 +25,8 @@ from datetime import datetime
 from datetime import timedelta
 
 import pytz
+import requests
+from hal.internet.web import get_tor_session, renew_connection
 
 
 def generate_dates(since, until, interval):
@@ -176,3 +178,23 @@ def datetime_to_unix_timestamp_ms(dt):
 def unix_timestamp_ms_to_datetime(ms):
     dt = datetime.fromtimestamp(ms / 1e3)
     return pytz.utc.localize(dt)  # utc as default time zone
+
+
+def download(url):
+    return requests.get(url)
+
+
+def download_with_tor(url, tor_password, max_attempts):
+    try:
+        session = get_tor_session()
+        return session.get(
+            url
+        )
+    except Exception as e:
+        if max_attempts > 0:
+            print("Cannot download", url, "via tor due to", e,
+                  ". Trying to renew session.")
+            renew_connection(tor_password)
+            return download_with_tor(url, tor_password, max_attempts - 1)
+
+        return None

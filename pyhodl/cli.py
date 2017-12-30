@@ -16,7 +16,7 @@
 # limitations under the License.
 
 
-""" Command-line interface to Pyhodl """
+""" Command-line interface to pyhodl """
 
 import argparse
 import os
@@ -69,6 +69,9 @@ def create_args():
                         required=False)
     parser.add_argument("-verbose", "--verbose", action="store_true",
                         help="Increase verbosity")
+    parser.add_argument("-tor", dest="tor",
+                        help="Connect to tor via this password (advanced)",
+                        required=False)
 
     return parser
 
@@ -91,7 +94,7 @@ def parse_args(parser):
         return RunMode.STATS, os.path.join(args.stats), args.verbose
     elif args.hist:
         return RunMode.DOWNLOAD_HISTORICAL, \
-               os.path.join(args.hist), args.verbose
+               os.path.join(args.hist), args.verbose, args.tor
 
     raise ValueError("Invalid run mode!")
 
@@ -139,8 +142,8 @@ def download_market_cap(since, until, where_to, verbose):
 
 
 def download_prices(coins, since, until, where_to, verbose,
-                    sec_interval=12 * 60 * 60, fiat="USD"):
-    client = CryptocompareClient()
+                    sec_interval=12 * 60 * 60, fiat="USD", tor=False):
+    client = CryptocompareClient(tor=tor)
     dates = get_dates(since, until, sec_interval)
 
     if verbose:
@@ -171,11 +174,12 @@ def main():
         coins = get_all_coins(exchanges)
 
         download_prices(
-            coins, first_transaction, last_transaction, args[0], args[1]
+            coins, first_transaction, last_transaction, args[0], args[1],
+            tor=args[2]
         )
-        download_market_cap(
-            first_transaction, last_transaction, args[0], args[1]
-        )
+        # download_market_cap(
+        #     first_transaction, last_transaction, args[0], args[1]
+        # )
 
 
 def handle_exception():

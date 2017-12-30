@@ -26,6 +26,11 @@ from hal.files.parsers import JSONParser
 class AbstractDatetimeTable(JSONParser):
     """ Get content from file and load a datetime-based database """
 
+    def __init__(self, input_file):
+        JSONParser.__init__(self, input_file)
+
+        self.content = self.get_content()
+
     @abc.abstractmethod
     def get_values_on(self, dt):
         """
@@ -38,7 +43,7 @@ class AbstractDatetimeTable(JSONParser):
         return
 
     @abc.abstractmethod
-    def get_values(self, since, until):
+    def get_values_between(self, since, until):
         """
         :param since: datetime
             Get values since this date

@@ -26,8 +26,9 @@ import urllib.request
 import requests
 
 from pyhodl.app import DATE_TIME_FORMAT, DATE_TIME_KEY
-from pyhodl.utils import handle_rate_limits, replace_items, \
-    datetime_to_unix_timestamp_ms, unix_timestamp_ms_to_datetime
+from pyhodl.utils import replace_items, \
+    datetime_to_unix_timestamp_ms, unix_timestamp_ms_to_datetime, download, \
+    download_with_tor
 
 
 class AbstractApiClient:
@@ -55,8 +56,10 @@ class CryptocompareClient(AbstractApiClient):
         val: key for key, val in API_ENCODING.items()
     }
 
-    def __init__(self, base_url=BASE_URL):
+    def __init__(self, base_url=BASE_URL, tor=False):
         AbstractApiClient.__init__(self, base_url)
+
+        self.tor = str(tor) if tor else None  # tor password
 
     def _encode_coins(self, coins):
         """
@@ -107,7 +110,6 @@ class CryptocompareClient(AbstractApiClient):
         url = self.base_url + "?%s" % params
         return url.replace("%2C", ",")
 
-    @handle_rate_limits
     def get_price(self, coins, currency, dt):
         """
         :param coins: [] of str
@@ -131,21 +133,30 @@ class CryptocompareClient(AbstractApiClient):
             self._encode_coins(coins[:self.MAX_COINS_PER_REQUEST]),
             currency, dt
         )
-        with requests.get(url) as result:
-            raw = result.json()
-            values = raw[currency]
-            for coin, price in values.items():
-                try:
-                    price = float(1 / price)
-                except:
-                    price = float("nan")
-                data[coin] = price
-            data = self._decode_coins(data)
 
-            for coin in coins:
-                if coin not in data:
-                    data[coin] = float("nan")
-            return data
+        if self.tor:
+            result = download_with_tor(
+                url,
+                self.tor,
+                3
+            )
+        else:
+            result = download(url)
+
+        result = result.json()  # parse as json
+        values = result[currency]
+        for coin, price in values.items():
+            try:
+                price = float(1 / price)
+            except:
+                price = float("nan")
+            data[coin] = price
+        data = self._decode_coins(data)
+
+        for coin in coins:
+            if coin not in data:
+                data[coin] = float("nan")
+        return data
 
     def get_prices(self, coins, currency, dates):
         """
@@ -165,7 +176,6 @@ class CryptocompareClient(AbstractApiClient):
                 new_prices[DATE_TIME_KEY] = date.strftime(DATE_TIME_FORMAT)
                 yield new_prices
                 print("Got prices up to", date)
-                time.sleep(10)
             except Exception as e:
                 print("Failed getting prices for", date, "due to", e)
 

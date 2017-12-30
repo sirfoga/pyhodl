@@ -11,6 +11,7 @@ All improvements and features planned for the future
 - [Current portfolio value](#current-portfolio-value)
 - [Trade analysis](#trade-analysis)
 - [Web platform](#web-platform)
+- [Examples](#examples)
 
 
 ## Buy/sell chart
@@ -47,3 +48,7 @@ Very useful, needed economist or day-trader suggestions
 
 ## Web platform
 Local web server to display real-time data and charts
+
+
+## Examples
+Add examples of usage for each run mode (and some output and nice charts too)
