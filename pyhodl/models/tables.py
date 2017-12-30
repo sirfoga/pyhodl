@@ -94,3 +94,14 @@ class MarketDataTable(DatetimeTable):
             os.path.join(HISTORICAL_DATA_FOLDER, "market_cap.json"),
             3 * 60 * 60  # 3 hours
         )
+
+
+class CoinPricesTable(DatetimeTable):
+    """ Parse market data files """
+
+    def __init__(self):
+        DatetimeTable.__init__(
+            self,
+            os.path.join(HISTORICAL_DATA_FOLDER, "prices.json"),
+            6 * 60 * 60  # 6 hours
+        )
