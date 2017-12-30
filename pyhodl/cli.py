@@ -22,10 +22,13 @@ import argparse
 import os
 import time
 import traceback
+from datetime import timedelta
 from enum import Enum
 
+from hal.files.save_as import write_dicts_to_json
 from hal.streams.user import UserInput
 
+from pyhodl.apis.prices import get_price
 from pyhodl.data.parsers import build_exchanges
 from pyhodl.updater.core import Updater, UpdateManager
 
@@ -101,7 +104,8 @@ def compute_stats(verbose):
     raise ValueError("Not fully implemented!")
 
 
-def download_historical(where_to, verbose):
+def download_historical(where_to, verbose, sec_interval=12 * 60 * 60,
+                        fiat="USD"):
     folder_in = UpdateManager().get_data_folder()
     exchanges = list(build_exchanges(folder_in))
 
@@ -111,11 +115,32 @@ def download_historical(where_to, verbose):
     last_transaction = max([
         exchange.get_last_transaction() for exchange in exchanges
     ], key=lambda x: x.date)
+    intervals = last_transaction.date - first_transaction.date
+    intervals = int(intervals.total_seconds() / sec_interval) + 1
 
     coins = [
         coin for exchange in exchanges
         for coin in exchange.build_wallets().keys()
     ]  # list of dict (str -> Wallet)
+
+    dates = [
+        first_transaction.date + timedelta(seconds=i * sec_interval)
+        for i in range(intervals)
+    ]
+
+    prices = []
+    for date in dates:
+        try:
+            new_prices = get_price(coins, fiat, date)
+            new_prices["date"] = date.strftime(
+                "%Y-%m-%d %H:%M:%S %z"
+            )
+            prices.append(new_prices)
+            print("Got prices up to", date)
+            time.sleep(10)
+        except Exception as e:
+            print("Failed getting prices for", date, "due to", e)
+    write_dicts_to_json(prices, "out.json")
 
 
 def main():
