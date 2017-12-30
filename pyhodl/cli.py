@@ -148,7 +148,7 @@ def download_prices(coins, since, until, where_to, verbose,
 
     output_file = os.path.join(where_to, "prices.json")
     write_dicts_to_json(
-        client.get_prices(coins, fiat, dates),
+        list(client.get_prices(coins, fiat, dates)),
         output_file
     )
 

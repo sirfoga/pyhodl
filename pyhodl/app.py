@@ -40,6 +40,7 @@ DATA_FOLDER = os.path.join(
     "data"
 )
 DATE_TIME_FORMAT = "%Y-%m-%d %H:%M:%S %z"
+DATE_TIME_KEY = "datetime"
 
 
 class ConfigManager:

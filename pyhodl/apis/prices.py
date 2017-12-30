@@ -18,7 +18,6 @@
 
 """ API requests for historical info """
 
-import json
 import os
 import time
 import urllib.parse
@@ -26,7 +25,7 @@ import urllib.request
 
 import requests
 
-from pyhodl.app import DATE_TIME_FORMAT
+from pyhodl.app import DATE_TIME_FORMAT, DATE_TIME_KEY
 from pyhodl.utils import handle_rate_limits, replace_items, \
     datetime_to_unix_timestamp_ms, unix_timestamp_ms_to_datetime
 
@@ -132,8 +131,8 @@ class CryptocompareClient(AbstractApiClient):
             self._encode_coins(coins[:self.MAX_COINS_PER_REQUEST]),
             currency, dt
         )
-        with urllib.request.urlopen(url) as result:
-            raw = json.loads(result.read().decode("utf-8"))
+        with requests.get(url) as result:
+            raw = result.json()
             values = raw[currency]
             for coin, price in values.items():
                 try:
@@ -163,7 +162,7 @@ class CryptocompareClient(AbstractApiClient):
         for date in dates:
             try:
                 new_prices = self.get_price(coins, currency, date)
-                new_prices["date"] = date.strftime(DATE_TIME_FORMAT)
+                new_prices[DATE_TIME_KEY] = date.strftime(DATE_TIME_FORMAT)
                 yield new_prices
                 print("Got prices up to", date)
                 time.sleep(10)
@@ -206,10 +205,11 @@ class CoinmarketCapClient(AbstractApiClient):
 
         raw_data = self.get_raw_data(self._create_url(since, until))
         data = raw_data["market_cap_by_available_supply"]
-        data = {
-            unix_timestamp_ms_to_datetime(
-                item[0]
-            ).strftime(DATE_TIME_FORMAT): float(item[1])
-            for item in data
-        }
+        data = [
+            {
+                DATE_TIME_KEY: unix_timestamp_ms_to_datetime(item[0])
+                    .strftime(DATE_TIME_FORMAT),
+                "value": float(item[1])
+            } for item in data
+        ]
         return data
