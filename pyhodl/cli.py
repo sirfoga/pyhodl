@@ -19,6 +19,7 @@
 """ Command-line interface to Pyhodl """
 
 import argparse
+import os
 import time
 import traceback
 from enum import Enum
@@ -34,6 +35,7 @@ class RunMode(Enum):
     UPDATER = 0
     PLOTTER = 1
     STATS = 2
+    DOWNLOAD_HISTORICAL = 3
 
 
 def create_args():
@@ -49,7 +51,10 @@ def create_args():
     parser.add_argument("-update", "--update", action="store_true",
                         help="Syncs local data with the transactions from "
                              "your exchanges")
-    parser.add_argument("-plotte", "--plot", action="store_true",
+    parser.add_argument("-hist", dest="hist",
+                        help="Downloads historical prices of your coins",
+                        required=False)
+    parser.add_argument("-plot", "--plot", action="store_true",
                         help="Creates charts of your data")
     parser.add_argument("-stats", "--stats", action="store_true",
                         help="Computes statistics and trends using local data")
@@ -70,53 +75,45 @@ def parse_args(parser):
     args = parser.parse_args()
 
     if args.update:
-        run_mode = RunMode.UPDATER
+        return RunMode.UPDATER, args.verbose
     elif args.plot:
-        run_mode = RunMode.PLOTTER
+        return RunMode.PLOTTER, args.verbose
     elif args.stats:
-        run_mode = RunMode.STATS
-    else:
-        raise ValueError("Must choose run mode!")
+        return RunMode.STATS, args.verbose
+    elif args.hist:
+        return RunMode.DOWNLOAD_HISTORICAL, \
+               os.path.join(args.hist), args.verbose
 
-    return run_mode, args.verbose
+    raise ValueError("Invalid run mode!")
+
+
+def update(verbose):
+    driver = Updater(verbose)
+    driver.run()
+
+
+def plot(verbose):
+    raise ValueError("Not fully implemented!")
+
+
+def compute_stats(verbose):
+    raise ValueError("Not fully implemented!")
+
+
+def download_historical(where_to, verbose):
+    print("Downloading historical data to", where_to)
 
 
 def main():
-    run_mode, verbose = parse_args(create_args())
+    run_mode, *args = parse_args(create_args())
     if run_mode == RunMode.UPDATER:
-        inp_file = None  # "/home/stefano/.pyhodl/data/CoinbaseUpdater.json"
-        if inp_file:
-            from pyhodl.data.parsers import build_parser
-            parser = build_parser(inp_file)
-            exchange = parser.build_exchange()
-            wallets = exchange.build_wallets()
-            balances = {
-                coin: wallet.balance() for coin, wallet in wallets.items()
-            }
-            balances = sorted(balances.items(), key=lambda x: x[1],
-                              reverse=True)
-
-            print(
-                "\n".join([
-                    coin + " " + str(balance)
-                    for coin, balance in balances
-                ])
-            )
-
-            sample_transactions = wallets["ETH"].transactions
-            sample_transactions = sorted(
-                sample_transactions, key=lambda x: x.date, reverse=True
-            )
-            sample_transactions = [str(x) for x in sample_transactions]
-            print("\n\n\t".join(sample_transactions))
-            print("\nListed", len(sample_transactions), "transactions")
-        else:
-            driver = Updater(verbose)
-            driver.run()
+        update(args[0])
     elif run_mode == RunMode.PLOTTER:
-        raise ValueError("Not fully implemented!")
+        plot(args[0])
     elif run_mode == RunMode.STATS:
-        raise ValueError("Not fully implemented!")
+        compute_stats(args[0])
+    elif run_mode == RunMode.DOWNLOAD_HISTORICAL:
+        download_historical(args[0], args[1])
 
 
 def handle_exception():
