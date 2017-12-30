@@ -84,28 +84,35 @@ def parse_args(parser):
 def main():
     run_mode, verbose = parse_args(create_args())
     if run_mode == RunMode.UPDATER:
-        # inp_file = "/home/stefano/.pyhodl/data/CoinbaseUpdater.json"
-        # parser = build_parser(inp_file)
-        # exchange = parser.build_exchange()
-        # wallets = exchange.build_wallets()
-        # balances = {
-        #     coin: wallet.balance() for coin, wallet in wallets.items()
-        # }
-        # balances = sorted(balances.items(), key=lambda x: x[1], reverse=True)
-        #
-        # print(
-        #     "\n".join([
-        #         coin + " " + str(balance)
-        #         for coin, balance in balances
-        #     ])
-        # )
-        #
-        # sample_transactions = wallets["ETH"].transactions
-        # sample_transactions = sorted(sample_transactions, key=lambda x: x.date)
-        # sample_transactions = [str(x) for x in sample_transactions]
-        # print("\n\n\t".join(sample_transactions))
-        driver = Updater(verbose)
-        driver.run()
+        inp_file = None  # "/home/stefano/.pyhodl/data/CoinbaseUpdater.json"
+        if inp_file:
+            from pyhodl.data.parsers import build_parser
+            parser = build_parser(inp_file)
+            exchange = parser.build_exchange()
+            wallets = exchange.build_wallets()
+            balances = {
+                coin: wallet.balance() for coin, wallet in wallets.items()
+            }
+            balances = sorted(balances.items(), key=lambda x: x[1],
+                              reverse=True)
+
+            print(
+                "\n".join([
+                    coin + " " + str(balance)
+                    for coin, balance in balances
+                ])
+            )
+
+            sample_transactions = wallets["ETH"].transactions
+            sample_transactions = sorted(
+                sample_transactions, key=lambda x: x.date, reverse=True
+            )
+            sample_transactions = [str(x) for x in sample_transactions]
+            print("\n\n\t".join(sample_transactions))
+            print("\nListed", len(sample_transactions), "transactions")
+        else:
+            driver = Updater(verbose)
+            driver.run()
     elif run_mode == RunMode.PLOTTER:
         raise ValueError("Not fully implemented!")
     elif run_mode == RunMode.STATS:

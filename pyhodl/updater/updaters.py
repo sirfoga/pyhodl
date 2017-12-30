@@ -39,7 +39,7 @@ class ExchangeUpdater:
     """ Abstract exchange updater """
 
     def __init__(self, api_client, data_folder, rate_limit=1,
-                 rate_limit_wait=60):
+                 rate_limit_wait=60, page_limit=INT_32_MAX):
         """
         :param api_client: ApiClient
             Client with which to perform requests
@@ -49,6 +49,8 @@ class ExchangeUpdater:
             Number of seconds between 2 consecutive requests
         :param rate_limit_wait: int
             Number of seconds to wait if rate limit exceeded
+        :param page_limit: int
+            Limit of requests per page
         """
         
         self.client = api_client
@@ -61,6 +63,7 @@ class ExchangeUpdater:
         self.rate = float(rate_limit)
         self.rate_wait = float(rate_limit_wait)
         self.class_name = get_actual_class_name(self)
+        self.page_limit = int(page_limit)
 
     @abc.abstractmethod
     def get_transactions(self):
@@ -236,18 +239,32 @@ class CoinbaseUpdater(ExchangeUpdater):
     """ Updates Coinbase data """
 
     def __init__(self, api_client, data_folder):
-        ExchangeUpdater.__init__(self, api_client, data_folder)
+        ExchangeUpdater.__init__(self, api_client, data_folder, page_limit=100)
 
         self.accounts = self.client.get_accounts()["data"]
+        self.accounts = {
+            account["id"]: account for account in self.accounts
+        }  # list -> dict
         self.transactions = {
-            account["id"]: [] for account in self.accounts
+            account_id: [] for account_id in self.accounts
         }
 
     def get_transactions(self):
         super().get_transactions()
-        for account_id in self.transactions:
-            self.transactions[account_id] = \
-                self.client.get_transactions(account_id)["data"]
+        for account_id, account in self.accounts.items():
+            self.log("Getting transaction history of account",
+                     account["id"], "(" + account["balance"]["currency"] + ")")
+            raw_data = self.client.get_transactions(
+                account_id,
+                limit=self.page_limit
+            )
+            self.transactions[account_id] += raw_data["data"]
+
+            while "pagination" in raw_data:  # other transactions
+                raw_data = self.client.get_transaction(
+                    raw_data["pagination"]["previous_uri"]
+                )
+                self.transactions[account_id] += raw_data["data"]
 
 
 class GdaxUpdater(ExchangeUpdater):
@@ -267,7 +284,9 @@ class GdaxUpdater(ExchangeUpdater):
     def get_transactions(self):
         super().get_transactions()
         for account_id, account in self.accounts.items():
-            pages = self.client.get_account_history(account_id)  # paginated
+            self.log("Getting transaction history of account",
+                     account["id"], "(" + account["currency"] + ")")
+            pages = self.client.get_account_history(account_id)
             transactions = []
             for page in pages:
                 transactions += page

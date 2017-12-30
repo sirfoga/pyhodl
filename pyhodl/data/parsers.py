@@ -36,12 +36,13 @@ def build_parser(input_file):
     raw_data = parser.get_raw_data()
 
     if isinstance(raw_data, dict):  # dict
-        keys = list(raw_data.keys())
-        raw_dict = raw_data[keys[0]][0]
-        if "instant_exchange" in raw_dict:
-            return CoinbaseParser(input_file)
-        elif "currency" in raw_dict:
-            return GdaxParser(input_file)
+        for key, raw_lst in raw_data.items():
+            if raw_lst:
+                raw_dict = raw_lst[0]
+                if "instant_exchange" in raw_dict:
+                    return CoinbaseParser(input_file)
+                elif "currency" in raw_dict:
+                    return GdaxParser(input_file)
     else:  # list
         raw_item = raw_data[0]
         if "timestamp" in raw_item:

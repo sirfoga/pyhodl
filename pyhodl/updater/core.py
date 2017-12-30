@@ -111,7 +111,11 @@ class Updater:
             print("Updating local data...")
 
         for updater in self.api_updaters:
-            updater.update(self.verbose)
+            try:
+                updater.update(self.verbose)
+            except Exception as e:
+                print("Cannot update", get_actual_class_name(updater),
+                      "due to", e)
 
         self.manager.save_time_update()
         print("Next update:", self.manager.time_next_update())
@@ -123,8 +127,8 @@ class Updater:
                     api.get_client(), DATA_FOLDER
                 )
                 self.api_updaters.append(updater)
-                print("Successfully authenticated client with",
+                print("Successfully authenticated client",
                       get_actual_class_name(api))
             except Exception as e:
-                print("Cannot authenticate client with",
+                print("Cannot authenticate client",
                       get_actual_class_name(api), "due to", e)
