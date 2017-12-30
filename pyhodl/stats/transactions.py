@@ -17,14 +17,17 @@
 
 
 """ Get transactions stats """
+
 from pyhodl.data.parsers import build_exchanges
 from pyhodl.updater.core import UpdateManager
 
 
 def get_transactions_dates(exchanges):
-    dates = [
-        exchange.get_first_transaction().date for exchange in exchanges
-    ]
+    dates = []
+    for exchange in exchanges:
+        dates += [
+            transaction.date for transaction in exchange.transactions
+        ]
     return sorted(dates)
 
 

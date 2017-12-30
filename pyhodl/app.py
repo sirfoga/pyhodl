@@ -39,7 +39,7 @@ DATA_FOLDER = os.path.join(
     APP_FOLDER,
     "data"
 )
-DATE_TIME_FORMAT = "%Y-%m-%d %H:%M:%S"
+DATE_TIME_FORMAT = "%Y-%m-%d %H:%M:%S %z"
 
 
 class ConfigManager:

@@ -26,8 +26,9 @@ import urllib.request
 
 import requests
 
+from pyhodl.app import DATE_TIME_FORMAT
 from pyhodl.utils import handle_rate_limits, replace_items, \
-    datetime_to_unix_timestamp_ms
+    datetime_to_unix_timestamp_ms, unix_timestamp_ms_to_datetime
 
 
 class AbstractApiClient:
@@ -162,9 +163,7 @@ class CryptocompareClient(AbstractApiClient):
         for date in dates:
             try:
                 new_prices = self.get_price(coins, currency, date)
-                new_prices["date"] = date.strftime(
-                    "%Y-%m-%d %H:%M:%S %z"
-                )
+                new_prices["date"] = date.strftime(DATE_TIME_FORMAT)
                 yield new_prices
                 print("Got prices up to", date)
                 time.sleep(10)
@@ -206,4 +205,11 @@ class CoinmarketCapClient(AbstractApiClient):
         """
 
         raw_data = self.get_raw_data(self._create_url(since, until))
-        return raw_data
+        data = raw_data["market_cap_by_available_supply"]
+        data = {
+            unix_timestamp_ms_to_datetime(
+                item[0]
+            ).strftime(DATE_TIME_FORMAT): float(item[1])
+            for item in data
+        }
+        return data

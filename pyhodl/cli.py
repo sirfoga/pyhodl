@@ -167,10 +167,15 @@ def main():
     elif run_mode == RunMode.DOWNLOAD_HISTORICAL:
         exchanges = get_all_exchanges()
         dates = get_transactions_dates(exchanges)
+        first_transaction, last_transaction = min(dates), max(dates)
         coins = get_all_coins(exchanges)
 
-        download_prices(coins, dates[0], dates[-1], args[0], args[1])
-        download_market_cap(dates[0], dates[-1], args[0], args[1])
+        download_prices(
+            coins, first_transaction, last_transaction, args[0], args[1]
+        )
+        download_market_cap(
+            first_transaction, last_transaction, args[0], args[1]
+        )
 
 
 def handle_exception():

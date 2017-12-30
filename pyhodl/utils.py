@@ -21,7 +21,10 @@
 import functools
 import time
 from collections import Counter
+from datetime import datetime
 from datetime import timedelta
+
+import pytz
 
 
 def generate_dates(since, until, interval):
@@ -168,3 +171,8 @@ def replace_items(lst, old, new):
 
 def datetime_to_unix_timestamp_ms(dt):
     return int(time.mktime(dt.timetuple()) * 1e3 + dt.microsecond / 1e3)
+
+
+def unix_timestamp_ms_to_datetime(ms):
+    dt = datetime.fromtimestamp(ms / 1e3)
+    return pytz.utc.localize(dt)  # utc as default time zone
