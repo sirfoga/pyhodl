@@ -60,8 +60,9 @@ def create_args():
                         required=False)
     parser.add_argument("-plot", "--plot", action="store_true",
                         help="Creates charts of your data")
-    parser.add_argument("-stats", "--stats", action="store_true",
-                        help="Computes statistics and trends using local data")
+    parser.add_argument("-stats", dest="stats",
+                        help="Computes statistics and trends using local data",
+                        required=False)
     parser.add_argument("-verbose", "--verbose", action="store_true",
                         help="Increase verbosity")
 
@@ -83,7 +84,7 @@ def parse_args(parser):
     elif args.plot:
         return RunMode.PLOTTER, args.verbose
     elif args.stats:
-        return RunMode.STATS, args.verbose
+        return RunMode.STATS, os.path.join(args.stats), args.verbose
     elif args.hist:
         return RunMode.DOWNLOAD_HISTORICAL, \
                os.path.join(args.hist), args.verbose
@@ -100,8 +101,8 @@ def plot(verbose):
     raise ValueError("Not fully implemented!")
 
 
-def compute_stats(verbose):
-    raise ValueError("Not fully implemented!")
+def compute_stats(input_file, verbose):
+    print("Computing stats with file", input_file, verbose)
 
 
 def download_historical(where_to, verbose, sec_interval=12 * 60 * 60,
@@ -125,7 +126,7 @@ def download_historical(where_to, verbose, sec_interval=12 * 60 * 60,
     if verbose:
         print("Getting historical prices for", len(coins), "coins")
 
-    output_file = os.path.join(where_to, "historical.json")
+    output_file = os.path.join(where_to, "prices.json")
     write_dicts_to_json(
         get_prices(coins, fiat, dates),
         output_file
@@ -142,7 +143,7 @@ def main():
     elif run_mode == RunMode.PLOTTER:
         plot(args[0])
     elif run_mode == RunMode.STATS:
-        compute_stats(args[0])
+        compute_stats(args[0], args[1])
     elif run_mode == RunMode.DOWNLOAD_HISTORICAL:
         download_historical(args[0], args[1])
 

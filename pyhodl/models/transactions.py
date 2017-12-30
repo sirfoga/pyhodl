@@ -142,13 +142,6 @@ class Wallet:
     """ A general wallet, tracking addition, deletions and fees """
 
     def __init__(self, base_currency):
-        """
-        :param create_date: datetime
-            Date of transaction
-        ::param start_amount: float
-            Amount of currency at start
-        """
-
         self.currency = base_currency
         self.transactions = []  # list of operations performed
 
@@ -198,36 +191,40 @@ class Wallet:
             Balance up to date with last transaction
         """
 
-        amount = 0.0
+        subtotals = sorted(
+            self.get_balance_by_transaction(),
+            key=lambda x: x["transaction"].date
+        )
+        return subtotals[-1]["balance"]
+
+    def get_balance_by_transaction(self):
+        current_balance = 0.0
+
         for transaction in self.transactions:
-            print(transaction.date, transaction.transaction_type, amount)
             if transaction.transaction_type == TransactionType.TRADING:
                 if transaction.coin_buy == self.currency:
-                    amount += transaction.buy_amount
-                    print("+", transaction.buy_amount)
+                    current_balance += transaction.buy_amount
 
                 if transaction.coin_sell == self.currency:
-                    amount -= transaction.sell_amount
-                    print("-", transaction.sell_amount)
+                    current_balance -= transaction.sell_amount
 
                 if transaction.commission and transaction.commission.coin \
                         == self.currency:
-                    amount -= transaction.commission.amount
-                    print("-", transaction.commission.amount)
+                    current_balance -= transaction.commission.amount
 
             if transaction.transaction_type == TransactionType.COMMISSION:
                 if transaction.commission.coin == self.currency:
-                    amount -= transaction.commission.amount
-                    print("-", transaction.commission.amount)
+                    current_balance -= transaction.commission.amount
 
             if transaction.transaction_type == TransactionType.DEPOSIT:
                 if transaction.coin_buy == self.currency:
-                    amount += transaction.buy_amount
-                    print("+", transaction.buy_amount)
+                    current_balance += transaction.buy_amount
 
             if transaction.transaction_type == TransactionType.WITHDRAWAL:
                 if transaction.coin_sell == self.currency:
-                    amount -= transaction.sell_amount
-                    print("-", transaction.sell_amount)
+                    current_balance -= transaction.sell_amount
 
-        return amount
+            yield {
+                "transaction": transaction,
+                "balance": current_balance
+            }
