@@ -25,10 +25,10 @@ import urllib.request
 
 import requests
 
-from pyhodl.app import DATE_TIME_FORMAT, DATE_TIME_KEY
+from pyhodl.app import DATE_TIME_KEY
 from pyhodl.utils import replace_items, \
     datetime_to_unix_timestamp_ms, unix_timestamp_ms_to_datetime, download, \
-    download_with_tor
+    download_with_tor, datetime_to_str
 
 
 class AbstractApiClient:
@@ -166,14 +166,14 @@ class CryptocompareClient(AbstractApiClient):
             USD, EUR ...
         :param dates: [] of datetime
             Dates to fetch
-        :return: (generator of) {}
+        :return: generator of {}
             Each dict contains a date and for each coin, its price
         """
 
         for date in dates:
             try:
                 new_prices = self.get_price(coins, currency, date)
-                new_prices[DATE_TIME_KEY] = date.strftime(DATE_TIME_FORMAT)
+                new_prices[DATE_TIME_KEY] = datetime_to_str(date)
                 yield new_prices
                 print("Got prices up to", date)
             except Exception as e:
@@ -217,8 +217,9 @@ class CoinmarketCapClient(AbstractApiClient):
         data = raw_data["market_cap_by_available_supply"]
         data = [
             {
-                DATE_TIME_KEY: unix_timestamp_ms_to_datetime(item[0])
-                    .strftime(DATE_TIME_FORMAT),
+                DATE_TIME_KEY: datetime_to_str(
+                    unix_timestamp_ms_to_datetime(item[0])
+                ),
                 "value": float(item[1])
             } for item in data
         ]

@@ -82,7 +82,7 @@ class CryptoExchange:
         """
         :param rule: func
             Evaluate this function on each transaction as a filter
-        :return: (generator of) [] of Transaction
+        :return: generator of [] of Transaction
             List of transactions done between the dates
         """
 

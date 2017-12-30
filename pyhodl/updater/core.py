@@ -23,9 +23,9 @@ import threading
 from datetime import datetime, timedelta
 
 from pyhodl.apis.exchanges import ApiManager
-from pyhodl.app import DATA_FOLDER, ConfigManager, DATE_TIME_FORMAT
+from pyhodl.app import DATA_FOLDER, ConfigManager
 from pyhodl.updater.updaters import ExchangeUpdater
-from pyhodl.utils import get_actual_class_name
+from pyhodl.utils import get_actual_class_name, parse_datetime, datetime_to_str
 
 UPDATE_CONFIG = os.path.join(
     DATA_FOLDER,
@@ -47,10 +47,8 @@ class UpdateManager(ConfigManager):
 
     def time_last_update(self):
         try:
-            return datetime.strptime(
-                self.get("last_update"),
-                DATE_TIME_FORMAT
-            )
+            return parse_datetime(self.get("last_update")
+                                  )
         except:
             return datetime.fromtimestamp(0)  # no record
 
@@ -76,7 +74,7 @@ class UpdateManager(ConfigManager):
             raise ValueError("Cannot parse update interval", raw)
 
     def save_time_update(self):
-        self.data["last_update"] = datetime.now().strftime(DATE_TIME_FORMAT)
+        self.data["last_update"] = datetime_to_str(datetime.now())
         self.save()
 
     def get_data_folder(self):

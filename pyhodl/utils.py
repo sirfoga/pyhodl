@@ -28,6 +28,8 @@ import pytz
 import requests
 from hal.internet.web import get_tor_session, renew_connection
 
+from pyhodl.app import DATE_TIME_FORMAT
+
 
 def generate_dates(since, until, interval):
     """
@@ -37,7 +39,7 @@ def generate_dates(since, until, interval):
         Generate dates until this date
     :param interval: float
         Number of hours between 2 consecutive dates
-    :return: (generator of) datetime
+    :return: generator of datetime
         Dates in between boundaries and separated by exact interval
     """
 
@@ -198,3 +200,11 @@ def download_with_tor(url, tor_password, max_attempts):
             return download_with_tor(url, tor_password, max_attempts - 1)
 
         return None
+
+
+def parse_datetime(raw):
+    return datetime.strptime(raw, DATE_TIME_FORMAT)
+
+
+def datetime_to_str(dt):
+    return dt.strftime(DATE_TIME_FORMAT)
