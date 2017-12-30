@@ -106,7 +106,7 @@ def handle_rate_limits(func, time_wait=60, max_attempts=2):
                 attempt_counter += 1
                 return func(*args, **kwargs)
             except Exception as e:
-                if "429" in str(e):  # rate limit exceeded
+                if "429" in str(e) or "Connection refused" in str(e):
                     print(
                         function_name,
                         ">>> Attempt #", attempt_counter,
@@ -126,3 +126,23 @@ def handle_rate_limits(func, time_wait=60, max_attempts=2):
         return None
 
     return _handle_rate_limits
+
+
+def get_dates(first, last, sec_interval):
+    """
+    :param first: datetime
+        Start generating dates since this time
+    :param last: datetime
+        End generating dates until this time
+    :param sec_interval: int
+        Number of seconds between 2 consecutive dates
+    :return: [] of datetime
+        Range of datetimes
+    """
+
+    intervals = last - first
+    intervals = int(intervals.total_seconds() / sec_interval) + 1
+    return [
+        first + timedelta(seconds=i * sec_interval)
+        for i in range(intervals)
+    ]

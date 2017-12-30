@@ -12,6 +12,7 @@
 - [Usage](#usage)
 - [Install](#install)
 - [Changelog](#changelog)
+- [Todo](TODO.md)
 - [Contribute](#contribute)
 - [License](#license)
 - [Links](#links)

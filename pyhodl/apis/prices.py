@@ -23,6 +23,8 @@ import time
 import urllib.parse
 import urllib.request
 
+from pyhodl.utils import handle_rate_limits
+
 API_URL = "https://min-api.cryptocompare.com/data/pricehistorical"
 MAX_COINS_PER_REQUEST = 6
 API_ENCODING = {
@@ -104,6 +106,7 @@ def get_api_url(coins, currency, dt):
     return url.replace("%2C", ",")
 
 
+@handle_rate_limits
 def get_price(coins, currency, dt):
     """
     :param coins: [] of str
@@ -139,3 +142,28 @@ def get_price(coins, currency, dt):
             if coin not in data:
                 data[coin] = float("nan")
         return data
+
+
+def get_prices(coins, currency, dates):
+    """
+    :param coins: [] of str
+        BTC, ETH ...
+    :param currency: str
+        USD, EUR ...
+    :param dates: [] of datetime
+        Dates to fetch
+    :return: (generator of) {}
+        Each dict contains a date and for each coin, its price
+    """
+
+    for date in dates:
+        try:
+            new_prices = get_price(coins, currency, date)
+            new_prices["date"] = date.strftime(
+                "%Y-%m-%d %H:%M:%S %z"
+            )
+            yield new_prices
+            print("Got prices up to", date)
+            time.sleep(10)
+        except Exception as e:
+            print("Failed getting prices for", date, "due to", e)

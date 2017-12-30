@@ -1,6 +1,11 @@
 # Change Log
 All notable changes to this project will be documented in this file.
 
+## 0.2.4 - 2017-12-30
+
+### Added
+- price downloader
+
 ## 0.2.3 - 2017-12-29
 
 ### Added

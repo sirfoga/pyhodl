@@ -22,15 +22,15 @@ import argparse
 import os
 import time
 import traceback
-from datetime import timedelta
 from enum import Enum
 
 from hal.files.save_as import write_dicts_to_json
 from hal.streams.user import UserInput
 
-from pyhodl.apis.prices import get_price
+from pyhodl.apis.prices import get_prices
 from pyhodl.data.parsers import build_exchanges
 from pyhodl.updater.core import Updater, UpdateManager
+from pyhodl.utils import get_dates
 
 
 class RunMode(Enum):
@@ -111,36 +111,28 @@ def download_historical(where_to, verbose, sec_interval=12 * 60 * 60,
 
     first_transaction = min([
         exchange.get_first_transaction() for exchange in exchanges
-    ], key=lambda x: x.date)
+    ], key=lambda x: x.date).date
     last_transaction = max([
         exchange.get_last_transaction() for exchange in exchanges
-    ], key=lambda x: x.date)
-    intervals = last_transaction.date - first_transaction.date
-    intervals = int(intervals.total_seconds() / sec_interval) + 1
+    ], key=lambda x: x.date).date
+    dates = get_dates(first_transaction, last_transaction, sec_interval)
 
     coins = [
         coin for exchange in exchanges
         for coin in exchange.build_wallets().keys()
-    ]  # list of dict (str -> Wallet)
-
-    dates = [
-        first_transaction.date + timedelta(seconds=i * sec_interval)
-        for i in range(intervals)
     ]
 
-    prices = []
-    for date in dates:
-        try:
-            new_prices = get_price(coins, fiat, date)
-            new_prices["date"] = date.strftime(
-                "%Y-%m-%d %H:%M:%S %z"
-            )
-            prices.append(new_prices)
-            print("Got prices up to", date)
-            time.sleep(10)
-        except Exception as e:
-            print("Failed getting prices for", date, "due to", e)
-    write_dicts_to_json(prices, "out.json")
+    if verbose:
+        print("Getting historical prices for", len(coins), "coins")
+
+    output_file = os.path.join(where_to, "historical.json")
+    write_dicts_to_json(
+        get_prices(coins, fiat, dates),
+        output_file
+    )
+
+    if verbose:
+        print("Saved historical prices to", output_file)
 
 
 def main():
