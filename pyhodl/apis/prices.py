@@ -19,14 +19,30 @@
 """ API requests for historical info """
 
 import json
+import os
 import time
 import urllib.parse
 import urllib.request
 
-from pyhodl.utils import handle_rate_limits, replace_items
+import requests
+
+from pyhodl.utils import handle_rate_limits, replace_items, \
+    datetime_to_unix_timestamp_ms
 
 
-class CryptocompareClient:
+class AbstractApiClient:
+    """ Simple bare api client """
+
+    def __init__(self, base_url):
+        """
+        :param base_url: str
+            Base url for API calls
+        """
+
+        self.base_url = base_url
+
+
+class CryptocompareClient(AbstractApiClient):
     """ API interface for official cryptocompare.com APIs """
 
     BASE_URL = "https://min-api.cryptocompare.com/data/pricehistorical"
@@ -40,12 +56,7 @@ class CryptocompareClient:
     }
 
     def __init__(self, base_url=BASE_URL):
-        """
-        :param base_url: str
-            Base url for API calls
-        """
-
-        self.base_url = base_url
+        AbstractApiClient.__init__(self, base_url)
 
     def _encode_coins(self, coins):
         """
@@ -159,3 +170,40 @@ class CryptocompareClient:
                 time.sleep(10)
             except Exception as e:
                 print("Failed getting prices for", date, "due to", e)
+
+
+class CoinmarketCapClient(AbstractApiClient):
+    """ Get coinmarketcap data """
+
+    BASE_URL = "https://graphs.coinmarketcap.com/"
+
+    def __init__(self, base_url=BASE_URL):
+        AbstractApiClient.__init__(self, base_url)
+
+    def _create_url(self, since, until):
+        since = datetime_to_unix_timestamp_ms(since)  # to ms unix
+        until = datetime_to_unix_timestamp_ms(until)
+        return os.path.join(
+            self.base_url,
+            "global/marketcap-total",
+            str(since),
+            str(until)
+        )
+
+    @staticmethod
+    def get_raw_data(url):
+        r = requests.get(url)
+        return r.json()
+
+    def get_total_market_cap(self, since, until):
+        """
+        :param since: datetime
+            Get data since this date
+        :param until: datetime
+            Get data until this date
+        :return: {} <datetime -> float>
+            Each dict key is date and its value is the market cap at the date
+        """
+
+        raw_data = self.get_raw_data(self._create_url(since, until))
+        print(raw_data)

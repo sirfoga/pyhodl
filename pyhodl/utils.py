@@ -164,3 +164,7 @@ def replace_items(lst, old, new):
         if val == old:
             lst[i] = new
     return lst
+
+
+def datetime_to_unix_timestamp_ms(dt):
+    return int(time.mktime(dt.timetuple()) * 1e3 + dt.microsecond / 1e3)

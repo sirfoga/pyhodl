@@ -27,7 +27,7 @@ from enum import Enum
 from hal.files.save_as import write_dicts_to_json
 from hal.streams.user import UserInput
 
-from pyhodl.apis.prices import get_prices
+from pyhodl.apis.prices import CryptocompareClient
 from pyhodl.charts.balances import BalancePlotter
 from pyhodl.data.parsers import build_exchanges, build_parser
 from pyhodl.updater.core import Updater, UpdateManager
@@ -125,6 +125,7 @@ def download_historical(where_to, verbose, sec_interval=12 * 60 * 60,
                         fiat="USD"):
     folder_in = UpdateManager().get_data_folder()
     exchanges = list(build_exchanges(folder_in))
+    client = CryptocompareClient()
 
     first_transaction = min([
         exchange.get_first_transaction() for exchange in exchanges
@@ -144,7 +145,7 @@ def download_historical(where_to, verbose, sec_interval=12 * 60 * 60,
 
     output_file = os.path.join(where_to, "prices.json")
     write_dicts_to_json(
-        get_prices(coins, fiat, dates),
+        client.get_prices(coins, fiat, dates),
         output_file
     )
 
