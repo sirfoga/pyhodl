@@ -23,7 +23,7 @@ from bisect import bisect
 
 from hal.files.parsers import JSONParser
 
-from pyhodl.app import HISTORICAL_DATA_FOLDER
+from pyhodl.app import HISTORICAL_DATA_FOLDER, DATE_TIME_KEY
 from pyhodl.utils import parse_datetime
 
 
@@ -42,7 +42,8 @@ class DatetimeTable(JSONParser):
         JSONParser.__init__(self, input_file)
 
         self.content = {
-            parse_datetime(item["date"]): item for item in self.get_content()
+            parse_datetime(item[DATE_TIME_KEY]): item
+            for item in self.get_content()
         }  # date -> raw dict
         self.dates = sorted(self.content.keys())  # sorted list of all dates
 

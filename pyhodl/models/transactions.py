@@ -192,17 +192,19 @@ class Wallet:
         """
 
         subtotals = sorted(
-            self.get_balances_by_transaction(),
+            list(self.get_balances_by_transaction()),
             key=lambda x: x["transaction"].date
         )
         return subtotals[-1]["balance"]
 
-    def get_balances_by_transaction(self):
-        current_balance = 0.0
-        subtotals = []
+    def sort_transactions(self):
         self.transactions = sorted(
             self.transactions, key=lambda x: x.date
         )  # sort by date
+
+    def get_balances_by_transaction(self):
+        current_balance = 0.0
+        self.sort_transactions()
 
         for transaction in self.transactions:
             last_balance = current_balance  # just to find if changed
@@ -231,8 +233,48 @@ class Wallet:
                     current_balance -= transaction.sell_amount
 
             if last_balance != current_balance:  # balance has changed
-                subtotals.append({
+                yield {
                     "transaction": transaction,
                     "balance": current_balance
-                })
-        return subtotals
+                }
+
+    def get_delta_balance_by_transaction(self):
+        self.sort_transactions()
+        for transaction in self.transactions:
+            delta_balance = 0.0
+            has_edited_balance = False  # True iff coin was traded
+
+            if transaction.transaction_type == TransactionType.TRADING:
+                if transaction.coin_buy == self.currency:
+                    delta_balance += transaction.buy_amount
+                    has_edited_balance = True
+
+                if transaction.coin_sell == self.currency:
+                    delta_balance -= transaction.sell_amount
+                    has_edited_balance = True
+
+                if transaction.commission and transaction.commission.coin \
+                        == self.currency:
+                    delta_balance -= transaction.commission.amount
+                    has_edited_balance = True
+
+            if transaction.transaction_type == TransactionType.COMMISSION:
+                if transaction.commission.coin == self.currency:
+                    delta_balance -= transaction.commission.amount
+                    has_edited_balance = True
+
+            if transaction.transaction_type == TransactionType.DEPOSIT:
+                if transaction.coin_buy == self.currency:
+                    delta_balance += transaction.buy_amount
+                    has_edited_balance = True
+
+            if transaction.transaction_type == TransactionType.WITHDRAWAL:
+                if transaction.coin_sell == self.currency:
+                    delta_balance -= transaction.sell_amount
+                    has_edited_balance = True
+
+            if has_edited_balance:  # balance has changed
+                yield {
+                    "transaction": transaction,
+                    "delta": delta_balance
+                }

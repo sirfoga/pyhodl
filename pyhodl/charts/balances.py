@@ -62,12 +62,25 @@ class BalancePlotter(CryptoPlotter):
 
         for coin, wallet in self.wallets.items():
             try:
-                self.plot_balance(wallet)
+                self._plot_balance(wallet)
             except Exception as e:
                 print("Cannot plot balances of", coin, "with wallet",
                       wallet, "due to", e)
 
-    def plot_balance(self, wallet):
+    def plot_delta_balances(self):
+        """
+        :return: void
+            Plots balances for each date for each coin
+        """
+
+        for coin, wallet in self.wallets.items():
+            try:
+                self._plot_delta_balance(wallet)
+            except Exception as e:
+                print("Cannot plot delta balances of", coin, "with wallet",
+                      wallet, "due to", e)
+
+    def _plot_balance(self, wallet):
         """
         :param wallet: Wallet
             Coin wallet with transactions
@@ -75,7 +88,7 @@ class BalancePlotter(CryptoPlotter):
             Plots balances for transaction of coin
         """
 
-        balances = wallet.get_balances_by_transaction()
+        balances = list(wallet.get_balances_by_transaction())
         dates = [
             balance["transaction"].date for balance in balances
         ]
@@ -88,6 +101,29 @@ class BalancePlotter(CryptoPlotter):
             subtotals,
             "-x",
             label=wallet.currency
+        )
+
+    def _plot_delta_balance(self, wallet):
+        """
+        :param wallet: Wallet
+            Coin wallet with transactions
+        :return: void
+            Plots balances for transaction of coin
+        """
+
+        deltas = list(wallet.get_delta_balance_by_transaction())
+        dates = [
+            balance["transaction"].date for balance in deltas
+        ]
+        subtotals = [
+            float(balance["delta"]) for balance in deltas
+        ]
+
+        plt.plot(
+            dates,
+            subtotals,
+            "-o",
+            label=wallet.currency + "delta since last transaction"
         )
 
 
