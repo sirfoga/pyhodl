@@ -15,14 +15,14 @@ All improvements and features planned for the future
 
 
 ## Buy/sell chart
-Like [cointracking.info](cointracking.info)
+- [x] Like [cointracking.info](cointracking.info)
 
 ![Buy/sell chart](extra/todo/buysell-chart.png)
 
 
 ## More charts
 - [x] subtotal balances by transaction date
-- USD equivalent (or any other fiat currency) by transaction date
+- [x] USD equivalent (or any other fiat currency) by transaction date
 - crypto VS fiat balance
 - account value (earned - spent) VS crypto market cap
 

@@ -58,17 +58,19 @@ The following flags are supported:
 
 | Flag | Description |
 | --- | --- |
-| `-updater` | Activates `updater` mode |
-| `-plotter` | Creates charts of your data |
-| `-stats` | Builds and computes stats and trends |
+| `-hist HIST` | Downloads historical prices of your coins |
+| `-plot PLOT` | Creates charts of your data |
+| `-stats STATS` | Computes statistics and trends using local data |
+| `-verbose, --verbose` | Increase verbosity |
+| `-tor` | Connect to tor via this password (advanced) |
 
 ### Example
 A simple run with parameters like
 ```bash
-pyhodl.py -plotter
+pyhodl -plot "~/.pyhodl/data/BitfinexUpdater.json" -verbose
 ```
 would result in a series of plot like this one:
-![Example bitfinex](extra/bitfinex_balances.jpg)
+![Example bitfinex](extra/buy_sells.jpg)
 
 Note that actual data has been omitted
 
@@ -79,11 +81,13 @@ usage: -[mode] -h/--help for full usage
 
 optional arguments:
   -h, --help           show this help message and exit
-  -updater, --update   Syncs local data with the transactions from your
+  -update, --update    Syncs local data with the transactions from your
                        exchanges
-  -plotter, --plot     Creates charts of your data
-  -stats, --stats      Computes statistics and trends using local data
+  -hist HIST           Downloads historical prices of your coins
+  -plot PLOT           Creates charts of your data
+  -stats STATS         Computes statistics and trends using local data
   -verbose, --verbose  Increase verbosity
+  -tor TOR             Connect to tor via this password (advanced)
 ```
 
 ## Changelog
