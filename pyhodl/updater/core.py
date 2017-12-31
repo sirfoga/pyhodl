@@ -39,6 +39,8 @@ class UpdateManager(ConfigManager):
     def __init__(self):
         ConfigManager.__init__(self, UPDATE_CONFIG)
 
+        self.last_update = None
+
     def is_time_to_update(self):
         return datetime.now() > self.time_next_update()
 
@@ -46,9 +48,11 @@ class UpdateManager(ConfigManager):
         return self.time_last_update() + self.update_interval()
 
     def time_last_update(self):
+        if self.last_update:
+            return self.last_update
+
         try:
-            return parse_datetime(self.get("last_update")
-                                  )
+            return parse_datetime(self.get("last_update"))
         except:
             return datetime.fromtimestamp(0)  # no record
 
@@ -74,7 +78,8 @@ class UpdateManager(ConfigManager):
             raise ValueError("Cannot parse update interval", raw)
 
     def save_time_update(self):
-        self.data["last_update"] = datetime_to_str(datetime.now())
+        self.last_update = datetime_to_str(datetime.now())
+        self.data["last_update"] = self.last_update
         self.save()
 
     def get_data_folder(self):

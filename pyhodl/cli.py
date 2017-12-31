@@ -112,7 +112,7 @@ def plot(input_file, verbose):
     exchange = parser.build_exchange()
     wallets = exchange.build_wallets()
     plotter = OtherCurrencyPlotter(list(wallets.values()))
-    plotter.plot_buy_sells("XRP")
+    plotter.plot_buy_sells("ETH")
     plotter.show("Balances from " + input_file)
 
 
@@ -143,7 +143,7 @@ def download_market_cap(since, until, where_to, verbose):
 
 
 def download_prices(coins, since, until, where_to, verbose,
-                    sec_interval=12 * 60 * 60, currency="USD", tor=False):
+                    sec_interval=60 * 60, currency="USD", tor=False):
     client = CryptocompareClient(tor=tor)
     dates = get_dates(since, until, sec_interval)
 

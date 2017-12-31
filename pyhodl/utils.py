@@ -189,9 +189,7 @@ def download(url):
 def download_with_tor(url, tor_password, max_attempts):
     try:
         session = get_tor_session()
-        return session.get(
-            url
-        )
+        return session.get(url)
     except Exception as e:
         if max_attempts > 0:
             print("Cannot download", url, "via tor due to", e,
@@ -208,3 +206,14 @@ def parse_datetime(raw):
 
 def datetime_to_str(dt):
     return dt.strftime(DATE_TIME_FORMAT)
+
+
+def normalize(val, min_val, max_val, min_range=-1.0, max_range=1.0):
+    if val >= max_val:
+        return max_range
+
+    if val <= min_range:
+        return min_range
+
+    ratio = (val - min_val) / (max_val - min_val)
+    return min_range + ratio * (max_range - min_range)

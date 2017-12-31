@@ -21,7 +21,7 @@
 import matplotlib.pyplot as plt
 
 from pyhodl.app import VALUE_KEY
-from pyhodl.utils import generate_dates
+from pyhodl.utils import generate_dates, normalize
 
 
 class CryptoPlotter:
@@ -226,7 +226,7 @@ class OtherCurrencyPlotter(BalancePlotter):
                 color = "g"
 
             # the bigger the radius the more you bought/sold
-            radius = 30 * abs(val) / max_delta
+            radius = normalize(abs(val), 0, max_delta, 5, 15)
             date = delta["transaction"].date
             plt.plot(
                 [date],

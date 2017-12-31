@@ -60,6 +60,8 @@ class CryptocompareClient(AbstractApiClient):
         AbstractApiClient.__init__(self, base_url)
 
         self.tor = str(tor) if tor else None  # tor password
+        if self.tor:
+            print("Handling tor sessions with password:", self.tor)
 
     def _encode_coins(self, coins):
         """
@@ -135,11 +137,7 @@ class CryptocompareClient(AbstractApiClient):
         )
 
         if self.tor:
-            result = download_with_tor(
-                url,
-                self.tor,
-                3
-            )
+            result = download_with_tor(url, self.tor, 3)
         else:
             result = download(url)
 
