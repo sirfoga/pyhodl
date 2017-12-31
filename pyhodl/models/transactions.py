@@ -22,7 +22,7 @@ from enum import Enum
 
 import pytz
 
-from pyhodl.app import VALUE_KEY
+from pyhodl.app import VALUE_KEY, NAN
 
 
 class TransactionType(Enum):
@@ -144,7 +144,7 @@ class Wallet:
     """ A general wallet, tracking addition, deletions and fees """
 
     def __init__(self, base_currency):
-        self.currency = base_currency
+        self.base_currency = base_currency
         self.transactions = []  # list of operations performed
 
     def add_transaction(self, transaction):
@@ -225,31 +225,31 @@ class Wallet:
             has_edited_balance = False  # True iff coin was traded
 
             if transaction.transaction_type == TransactionType.TRADING:
-                if transaction.coin_buy == self.currency:
+                if transaction.coin_buy == self.base_currency:
                     delta_balance += transaction.buy_amount
                     has_edited_balance = True
 
-                if transaction.coin_sell == self.currency:
+                if transaction.coin_sell == self.base_currency:
                     delta_balance -= transaction.sell_amount
                     has_edited_balance = True
 
                 if transaction.commission and transaction.commission.coin \
-                        == self.currency:
+                        == self.base_currency:
                     delta_balance -= transaction.commission.amount
                     has_edited_balance = True
 
             if transaction.transaction_type == TransactionType.COMMISSION:
-                if transaction.commission.coin == self.currency:
+                if transaction.commission.coin == self.base_currency:
                     delta_balance -= transaction.commission.amount
                     has_edited_balance = True
 
             if transaction.transaction_type == TransactionType.DEPOSIT:
-                if transaction.coin_buy == self.currency:
+                if transaction.coin_buy == self.base_currency:
                     delta_balance += transaction.buy_amount
                     has_edited_balance = True
 
             if transaction.transaction_type == TransactionType.WITHDRAWAL:
-                if transaction.coin_sell == self.currency:
+                if transaction.coin_sell == self.base_currency:
                     delta_balance -= transaction.sell_amount
                     has_edited_balance = True
 
@@ -258,3 +258,23 @@ class Wallet:
                     "transaction": transaction,
                     VALUE_KEY: delta_balance
                 }
+
+    def get_equivalent(self, amount, dt, currency, prices_table):
+        """
+        :param amount: float
+            Amount to convert
+        :param dt: datetime
+            Date and time of conversion
+        :param currency: str
+            Currency to convert to
+        :param prices_table: DatetimeTable
+            Table with prices data about coin
+        :return: float
+            Amount of wallet base currency converted to currency
+        """
+
+        try:
+            val = prices_table.get_value_on(self.base_currency, currency, dt)
+            return float(val) * amount
+        except:
+            return NAN

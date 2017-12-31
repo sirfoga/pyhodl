@@ -47,6 +47,7 @@ DATE_TIME_FORMAT = "%Y-%m-%d %H:%M:%S %z"
 DATE_TIME_KEY = "datetime"
 VALUE_KEY = "val"
 INFINITY = float("inf")
+NAN = float("inf")
 
 
 class ConfigManager:

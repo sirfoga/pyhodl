@@ -25,7 +25,7 @@ import urllib.request
 
 import requests
 
-from pyhodl.app import DATE_TIME_KEY
+from pyhodl.app import DATE_TIME_KEY, NAN
 from pyhodl.utils import replace_items, \
     datetime_to_unix_timestamp_ms, unix_timestamp_ms_to_datetime, download, \
     download_with_tor, datetime_to_str
@@ -149,13 +149,13 @@ class CryptocompareClient(AbstractApiClient):
             try:
                 price = float(1 / price)
             except:
-                price = float("nan")
+                price = NAN
             data[coin] = price
         data = self._decode_coins(data)
 
         for coin in coins:
             if coin not in data:
-                data[coin] = float("nan")
+                data[coin] = NAN
         return data
 
     def get_prices(self, coins, currency, dates):

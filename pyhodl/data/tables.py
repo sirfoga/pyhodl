@@ -106,3 +106,24 @@ class CoinPricesTable(DatetimeTable):
             os.path.join(HISTORICAL_DATA_FOLDER, currency.lower() + ".json"),
             6 * 60 * 60  # 6 hours
         )
+
+        self.base_currency = currency
+
+    def get_value_on(self, coin, currency, dt):
+        """
+        :param coin: str
+            Coin to convert
+        :param currency: str
+            Coin to convert to
+        :param dt: datetime
+            Date and time of conversion
+        :return: float
+            Currency value of coin at specified date
+        """
+
+        if currency.lower() == self.base_currency.lower():
+            raw_data = self.get_values_on(dt)
+            try:
+                return raw_data[coin.upper()]
+            except:
+                return raw_data[coin.lower()]
