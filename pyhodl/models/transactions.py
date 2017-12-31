@@ -22,6 +22,8 @@ from enum import Enum
 
 import pytz
 
+from pyhodl.app import VALUE_KEY
+
 
 class TransactionType(Enum):
     """ Deposit, withdrawal ... """
@@ -195,7 +197,7 @@ class Wallet:
             list(self.get_balances_by_transaction()),
             key=lambda x: x["transaction"].date
         )
-        return subtotals[-1]["balance"]
+        return subtotals[-1][VALUE_KEY]
 
     def sort_transactions(self):
         self.transactions = sorted(
@@ -204,39 +206,17 @@ class Wallet:
 
     def get_balances_by_transaction(self):
         current_balance = 0.0
-        self.sort_transactions()
+        deltas = sorted(
+            list(self.get_delta_balance_by_transaction()),
+            key=lambda x: x["transaction"].date
+        )
 
-        for transaction in self.transactions:
-            last_balance = current_balance  # just to find if changed
-
-            if transaction.transaction_type == TransactionType.TRADING:
-                if transaction.coin_buy == self.currency:
-                    current_balance += transaction.buy_amount
-
-                if transaction.coin_sell == self.currency:
-                    current_balance -= transaction.sell_amount
-
-                if transaction.commission and transaction.commission.coin \
-                        == self.currency:
-                    current_balance -= transaction.commission.amount
-
-            if transaction.transaction_type == TransactionType.COMMISSION:
-                if transaction.commission.coin == self.currency:
-                    current_balance -= transaction.commission.amount
-
-            if transaction.transaction_type == TransactionType.DEPOSIT:
-                if transaction.coin_buy == self.currency:
-                    current_balance += transaction.buy_amount
-
-            if transaction.transaction_type == TransactionType.WITHDRAWAL:
-                if transaction.coin_sell == self.currency:
-                    current_balance -= transaction.sell_amount
-
-            if last_balance != current_balance:  # balance has changed
-                yield {
-                    "transaction": transaction,
-                    "balance": current_balance
-                }
+        for delta in deltas:
+            current_balance += delta[VALUE_KEY]
+            yield {
+                "transaction": delta["transaction"],
+                VALUE_KEY: current_balance
+            }
 
     def get_delta_balance_by_transaction(self):
         self.sort_transactions()
@@ -276,5 +256,5 @@ class Wallet:
             if has_edited_balance:  # balance has changed
                 yield {
                     "transaction": transaction,
-                    "delta": delta_balance
+                    VALUE_KEY: delta_balance
                 }

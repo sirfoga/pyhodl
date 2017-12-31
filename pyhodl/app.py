@@ -45,6 +45,8 @@ HISTORICAL_DATA_FOLDER = os.path.join(
 )
 DATE_TIME_FORMAT = "%Y-%m-%d %H:%M:%S %z"
 DATE_TIME_KEY = "datetime"
+VALUE_KEY = "val"
+INFINITY = float("inf")
 
 
 class ConfigManager:

@@ -20,6 +20,8 @@
 
 import matplotlib.pyplot as plt
 
+from pyhodl.app import VALUE_KEY
+
 
 class CryptoPlotter:
     """ Plots crypto data """
@@ -93,7 +95,7 @@ class BalancePlotter(CryptoPlotter):
             balance["transaction"].date for balance in balances
         ]
         subtotals = [
-            float(balance["balance"]) for balance in balances
+            float(balance[VALUE_KEY]) for balance in balances
         ]
 
         plt.plot(
@@ -116,7 +118,7 @@ class BalancePlotter(CryptoPlotter):
             balance["transaction"].date for balance in deltas
         ]
         subtotals = [
-            float(balance["delta"]) for balance in deltas
+            float(balance[VALUE_KEY]) for balance in deltas
         ]
 
         plt.plot(

@@ -23,7 +23,7 @@ from bisect import bisect
 
 from hal.files.parsers import JSONParser
 
-from pyhodl.app import HISTORICAL_DATA_FOLDER, DATE_TIME_KEY
+from pyhodl.app import HISTORICAL_DATA_FOLDER, DATE_TIME_KEY, INFINITY
 from pyhodl.utils import parse_datetime
 
 
@@ -61,8 +61,8 @@ class DatetimeTable(JSONParser):
         low, high = bisect_insert - 1, bisect_insert  # 2 nearest dates
         low = self.dates[low] if low > 0 else None
         high = self.dates[high] if high < len(self.dates) else None
-        err_low = (dt - low).total_seconds() if low else float("inf")
-        err_high = (high - dt).total_seconds() if low else float("inf")
+        err_low = (dt - low).total_seconds() if low else INFINITY
+        err_high = (high - dt).total_seconds() if low else INFINITY
 
         if err_low <= err_high and err_low < self.max_error:
             return self.content[low]
