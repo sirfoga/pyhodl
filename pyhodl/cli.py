@@ -28,7 +28,7 @@ from hal.files.save_as import write_dicts_to_json
 from hal.streams.user import UserInput
 
 from pyhodl.apis.prices import CryptocompareClient, CoinmarketCapClient
-from pyhodl.charts.balances import BalancePlotter
+from pyhodl.charts.balances import OtherCurrencyPlotter
 from pyhodl.data.parsers import build_parser
 from pyhodl.stats.transactions import get_transactions_dates, \
     get_all_exchanges, get_all_coins
@@ -110,7 +110,8 @@ def plot(input_file, verbose):
 
     parser = build_parser(input_file)
     exchange = parser.build_exchange()
-    plotter = BalancePlotter(exchange)
+    wallets = exchange.build_wallets()
+    plotter = OtherCurrencyPlotter(list(wallets.values()))
     plotter.plot_balances()
     plotter.show("Balances from " + input_file)
 

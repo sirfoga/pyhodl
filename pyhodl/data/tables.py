@@ -107,9 +107,9 @@ class CoinPricesTable(DatetimeTable):
             6 * 60 * 60  # 6 hours
         )
 
-        self.base_currency = currency
+        self.base_currency = currency.upper()
 
-    def get_value_on(self, coin, currency, dt):
+    def get_value_on(self, coin, dt):
         """
         :param coin: str
             Coin to convert
@@ -121,9 +121,8 @@ class CoinPricesTable(DatetimeTable):
             Currency value of coin at specified date
         """
 
-        if currency.lower() == self.base_currency.lower():
-            raw_data = self.get_values_on(dt)
-            try:
-                return raw_data[coin.upper()]
-            except:
-                return raw_data[coin.lower()]
+        if coin.upper() == self.base_currency:
+            return 1.0
+
+        raw_data = self.get_values_on(dt)
+        return raw_data[coin.upper()]

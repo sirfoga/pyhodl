@@ -22,7 +22,8 @@ from enum import Enum
 
 import pytz
 
-from pyhodl.app import VALUE_KEY, NAN
+from pyhodl.app import VALUE_KEY
+from pyhodl.data.tables import CoinPricesTable
 
 
 class TransactionType(Enum):
@@ -199,7 +200,15 @@ class Wallet:
         )
         return subtotals[-1][VALUE_KEY]
 
-    def sort_transactions(self):
+    def get_balance_equivalent(self, currency):
+        self._sort_transactions()
+        return self.get_equivalent(
+            self.transactions[-1].date,
+            currency,
+            amount=self.balance()
+        )
+
+    def _sort_transactions(self):
         self.transactions = sorted(
             self.transactions, key=lambda x: x.date
         )  # sort by date
@@ -219,7 +228,7 @@ class Wallet:
             }
 
     def get_delta_balance_by_transaction(self):
-        self.sort_transactions()
+        self._sort_transactions()
         for transaction in self.transactions:
             delta_balance = 0.0
             has_edited_balance = False  # True iff coin was traded
@@ -259,22 +268,25 @@ class Wallet:
                     VALUE_KEY: delta_balance
                 }
 
-    def get_equivalent(self, amount, dt, currency, prices_table):
+    def get_equivalent(self, dt, currency, amount=1.0):
         """
-        :param amount: float
-            Amount to convert
         :param dt: datetime
             Date and time of conversion
         :param currency: str
             Currency to convert to
-        :param prices_table: DatetimeTable
-            Table with prices data about coin
+        :param amount: float
+            Amount to convert
         :return: float
             Amount of wallet base currency converted to currency
         """
 
         try:
-            val = prices_table.get_value_on(self.base_currency, currency, dt)
-            return float(val) * amount
-        except:
-            return NAN
+            prices_table = CoinPricesTable(currency=currency)
+            val = prices_table.get_value_on(self.base_currency, dt)
+            if val > 0.0:
+                return float(val) * amount
+            raise ValueError("Cannot convert", amount, self.base_currency,
+                             "to", currency, "on", dt)
+        except Exception as e:
+            print(e)
+            return 0.0

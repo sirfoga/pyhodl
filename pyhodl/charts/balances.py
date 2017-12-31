@@ -45,28 +45,23 @@ class CryptoPlotter:
 class BalancePlotter(CryptoPlotter):
     """ Plots balance data of each coin for each date available """
 
-    def __init__(self, exchange):
-        """
-        :param exchange: CryptoExchange
-            Exchange with transactions
-        """
-
+    def __init__(self, wallets):
         CryptoPlotter.__init__(self)
-
-        self.exchange = exchange
-        self.wallets = self.exchange.build_wallets()  # dict <str: Wallet>
+        self.wallets = wallets
 
     def plot_balances(self):
         """
         :return: void
             Plots balances for each date for each coin
+        :return min_perc: float in [0, 1]
+            Hide small asset that are below this percentage of the wallet value
         """
 
-        for coin, wallet in self.wallets.items():
+        for wallet in self.wallets:
             try:
                 self._plot_balance(wallet)
             except Exception as e:
-                print("Cannot plot balances of", coin, "with wallet",
+                print("Cannot plot balances of wallet",
                       wallet, "due to", e)
 
     def plot_delta_balances(self):
@@ -75,11 +70,11 @@ class BalancePlotter(CryptoPlotter):
             Plots balances for each date for each coin
         """
 
-        for coin, wallet in self.wallets.items():
+        for wallet in self.wallets:
             try:
                 self._plot_delta_balance(wallet)
             except Exception as e:
-                print("Cannot plot delta balances of", coin, "with wallet",
+                print("Cannot plot delta balances wallet",
                       wallet, "due to", e)
 
     def _plot_balance(self, wallet):
@@ -102,7 +97,7 @@ class BalancePlotter(CryptoPlotter):
             dates,
             subtotals,
             "-x",
-            label=wallet.currency
+            label=wallet.base_currency
         )
 
     def _plot_delta_balance(self, wallet):
@@ -125,9 +120,67 @@ class BalancePlotter(CryptoPlotter):
             dates,
             subtotals,
             "-o",
-            label=wallet.currency + "delta since last transaction"
+            label=wallet.base_currency + "delta since last transaction"
         )
 
 
-class FiatPlotter(CryptoPlotter):
+class OtherCurrencyPlotter(BalancePlotter):
     """ Plots fiat equivalent of your wallet """
+
+    def __init__(self, wallets, base_currency="USD"):
+        BalancePlotter.__init__(self, wallets)
+
+        self.base_currency = base_currency
+        self.wallets_value = {
+            wallet.base_currency:
+                wallet.get_balance_equivalent(self.base_currency)
+            for wallet in self.wallets
+        }
+
+    def plot_balances(self, min_value=0.01):
+        """
+        :return: void
+            Plots balances for each date for each coin
+        :return min_value: float in [0, 1]
+            Hide small asset that are below this percentage of the wallet value
+        """
+
+        min_to_plot = min_value * sum(self.wallets_value.values())
+        for wallet in self.wallets:
+            try:
+                wallet_balance = self.wallets_value[wallet.base_currency]
+                if wallet_balance > min_to_plot:
+                    self._plot_balance(wallet)
+            except Exception as e:
+                print("Cannot plot balances equivalent of wallet",
+                      wallet, "due to", e)
+
+    def _plot_balance(self, wallet):
+        """
+        :param wallet: Wallet
+            Coin wallet with transactions
+        :return: void
+            Plots balances for transaction of coin
+        """
+
+        balances = list(wallet.get_balances_by_transaction())
+        dates = [
+            balance["transaction"].date for balance in balances
+        ]
+        subtotals = [
+            wallet.get_equivalent(
+                balance["transaction"].date,
+                self.base_currency,
+                float(balance[VALUE_KEY])
+            ) for balance in balances
+        ]
+        amounts = [
+            float(balance[VALUE_KEY]) for balance in balances
+        ]
+
+        plt.plot(
+            dates,
+            subtotals,
+            "-x",
+            label=wallet.base_currency + " - " + self.base_currency + " value"
+        )
