@@ -99,9 +99,9 @@ class MarketDataTable(DatetimeTable):
 class CoinPricesTable(DatetimeTable):
     """ Parse market data files """
 
-    def __init__(self):
+    def __init__(self, currency="USD"):
         DatetimeTable.__init__(
             self,
-            os.path.join(HISTORICAL_DATA_FOLDER, "prices.json"),
+            os.path.join(HISTORICAL_DATA_FOLDER, currency.lower() + ".json"),
             6 * 60 * 60  # 6 hours
         )

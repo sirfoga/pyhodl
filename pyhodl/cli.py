@@ -142,16 +142,16 @@ def download_market_cap(since, until, where_to, verbose):
 
 
 def download_prices(coins, since, until, where_to, verbose,
-                    sec_interval=12 * 60 * 60, fiat="USD", tor=False):
+                    sec_interval=12 * 60 * 60, currency="USD", tor=False):
     client = CryptocompareClient(tor=tor)
     dates = get_dates(since, until, sec_interval)
 
     if verbose:
         print("Getting historical prices for", len(coins), "coins")
 
-    output_file = os.path.join(where_to, "prices.json")
+    output_file = os.path.join(where_to, currency.lower() + ".json")
     write_dicts_to_json(
-        list(client.get_prices(coins, fiat, dates)),
+        list(client.get_prices(coins, currency, dates)),
         output_file
     )
 

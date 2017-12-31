@@ -28,11 +28,11 @@ Like [cointracking.info](cointracking.info)
 
 
 ## Crypto market cap
-- download data
+- [x] download data
 
 
 ## More parsers
-- parse historical data + nice models/object
+- [x] parse historical data + nice models/object
 - merge single exchange data into one big database
 
 
