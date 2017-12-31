@@ -112,7 +112,7 @@ def plot(input_file, verbose):
     exchange = parser.build_exchange()
     wallets = exchange.build_wallets()
     plotter = OtherCurrencyPlotter(list(wallets.values()))
-    plotter.plot_balances()
+    plotter.plot_buy_sells("XRP")
     plotter.show("Balances from " + input_file)
 
 

@@ -21,10 +21,14 @@
 import matplotlib.pyplot as plt
 
 from pyhodl.app import VALUE_KEY
+from pyhodl.utils import generate_dates
 
 
 class CryptoPlotter:
     """ Plots crypto data """
+
+    def __init__(self):
+        self.fig, self.ax = plt.subplots()
 
     def show(self, title):
         """
@@ -120,12 +124,12 @@ class BalancePlotter(CryptoPlotter):
             dates,
             subtotals,
             "-o",
-            label=wallet.base_currency + "delta since last transaction"
+            label=wallet.base_currency + " delta"
         )
 
 
 class OtherCurrencyPlotter(BalancePlotter):
-    """ Plots fiat equivalent of your wallet """
+    """ Plots coins-equivalent of your wallet """
 
     def __init__(self, wallets, base_currency="USD"):
         BalancePlotter.__init__(self, wallets)
@@ -137,7 +141,7 @@ class OtherCurrencyPlotter(BalancePlotter):
             for wallet in self.wallets
         }
 
-    def plot_balances(self, min_value=0.01):
+    def plot_balances(self, min_value=0.05):
         """
         :return: void
             Plots balances for each date for each coin
@@ -174,9 +178,6 @@ class OtherCurrencyPlotter(BalancePlotter):
                 float(balance[VALUE_KEY])
             ) for balance in balances
         ]
-        amounts = [
-            float(balance[VALUE_KEY]) for balance in balances
-        ]
 
         plt.plot(
             dates,
@@ -184,3 +185,53 @@ class OtherCurrencyPlotter(BalancePlotter):
             "-x",
             label=wallet.base_currency + " - " + self.base_currency + " value"
         )
+
+    def plot_buy_sells(self, coin):
+        """
+        :param coin: str
+            Coin to plot
+        :return: void
+            Plots buy/sells points of coin against coin price
+        """
+
+        wallet = [
+            wallet
+            for wallet in self.wallets if wallet.base_currency.upper() == coin
+        ][0]  # look for wallet
+
+        deltas = list(wallet.get_delta_balance_by_transaction())
+        dates = list(generate_dates(
+            deltas[0]["transaction"].date,
+            deltas[-1]["transaction"].date,
+            interval=4
+        ))
+        equivalents = [
+            wallet.get_equivalent(
+                date,
+                self.base_currency
+            ) for date in dates
+        ]
+        plt.plot(
+            dates,
+            equivalents,
+            label=wallet.base_currency + " " + self.base_currency + " price"
+        )  # plot price
+
+        max_delta = max(abs(delta[VALUE_KEY]) for delta in deltas)
+        for delta in deltas:  # plot buys/sells points
+            val = delta[VALUE_KEY]
+            if val < 0:
+                color = "r"
+            else:
+                color = "g"
+
+            # the bigger the radius the more you bought/sold
+            radius = 30 * abs(val) / max_delta
+            date = delta["transaction"].date
+            plt.plot(
+                [date],
+                [wallet.get_equivalent(date, self.base_currency)],
+                marker="o",
+                markersize=int(radius),
+                color=color
+            )

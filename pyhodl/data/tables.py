@@ -23,7 +23,8 @@ from bisect import bisect
 
 from hal.files.parsers import JSONParser
 
-from pyhodl.app import HISTORICAL_DATA_FOLDER, DATE_TIME_KEY, INFINITY
+from pyhodl.app import HISTORICAL_DATA_FOLDER, DATE_TIME_KEY, INFINITY, \
+    FIAT_COINS
 from pyhodl.utils import parse_datetime
 
 
@@ -126,3 +127,14 @@ class CoinPricesTable(DatetimeTable):
 
         raw_data = self.get_values_on(dt)
         return raw_data[coin.upper()]
+
+
+def is_crypto(coin):
+    """
+    :param coin: str
+        Check if coin is a crypto-coin
+    :return: bool
+        True iff coin is a crypto-coin
+    """
+
+    return coin.upper() not in FIAT_COINS
