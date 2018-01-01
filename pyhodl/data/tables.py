@@ -25,7 +25,6 @@ from hal.files.parsers import JSONParser
 
 from pyhodl.app import HISTORICAL_DATA_FOLDER, DATE_TIME_KEY, INFINITY, \
     VALUE_KEY
-from pyhodl.data.coins import CryptoCoin
 from pyhodl.utils import parse_datetime
 
 
@@ -132,18 +131,3 @@ class CoinPricesTable(DatetimeTable):
 
         raw_data = self.get_values_on(dt)
         return raw_data[coin.upper()]
-
-
-class CoinsNamesTable(JSONParser):
-    """ Loads coins database """
-
-    def __init__(self, input_file="coins.json"):
-        JSONParser.__init__(self, input_file)
-
-        self.content = self.get_content()
-        self.coins = [
-            CryptoCoin(
-                raw["codename"],
-                name=raw["name"]
-            ) for raw in self.content
-        ]

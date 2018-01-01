@@ -23,11 +23,12 @@ import os
 from hal.files.parsers import JSONParser
 from hal.files.save_as import write_dicts_to_json
 
-from pyhodl.data.coins import FiatCoins
+from pyhodl.data.coins import FiatCoins, CoinsNamesTable
 
 APP_NAME = "Pyhodl"
 APP_SHORT_NAME = "pyhodl"
 
+THIS_FOLDER = os.path.dirname(os.path.realpath(__file__))
 HOME_FOLDER = os.getenv("HOME")
 APP_FOLDER = os.path.join(
     HOME_FOLDER,
@@ -49,8 +50,18 @@ DATE_TIME_FORMAT = "%Y-%m-%d %H:%M:%S %z"
 DATE_TIME_KEY = "datetime"
 VALUE_KEY = "val"
 INFINITY = float("inf")
-NAN = float("inf")
+NAN = float("nan")
+RAW_DATA_FOLDER = os.path.join(
+    THIS_FOLDER,
+    "data",
+    "raw"
+)
+COINS_DATABASE = os.path.join(
+    RAW_DATA_FOLDER,
+    "coins.json"
+)
 FIAT_COINS = [FiatCoins.USD]  # supported fiat coins
+CRYPTO_COINS = CoinsNamesTable(COINS_DATABASE).get_coins()
 
 
 class ConfigManager:

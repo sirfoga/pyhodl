@@ -21,7 +21,6 @@
 import matplotlib.pyplot as plt
 
 from pyhodl.app import VALUE_KEY
-from pyhodl.stats.transactions import get_transactions_dates
 from pyhodl.utils import generate_dates, normalize
 
 
@@ -31,8 +30,12 @@ class CryptoPlotter:
     def __init__(self):
         self.fig, self.ax = plt.subplots()
 
-    def show(self, title):
+    def show(self, title, x_label="Time", y_label="Amount"):
         """
+        :param y_label: str
+            Label of Y-axis
+        :param x_label: str
+            Label of X-axis
         :param title: str
             Title of plot
         :return: void
@@ -40,8 +43,8 @@ class CryptoPlotter:
         """
 
         plt.grid(True)
-        plt.xlabel("Time")
-        plt.ylabel("Amount")
+        plt.xlabel(x_label)
+        plt.ylabel(y_label)
         plt.title(title)
         plt.legend()  # build legend
         plt.show()
@@ -128,6 +131,9 @@ class BalancePlotter(CryptoPlotter):
             label=wallet.base_currency + " delta"
         )
 
+    def show(self, title, x_label="Time", y_label="Balances"):
+        super().show(title, x_label, y_label)
+
 
 class OtherCurrencyPlotter(BalancePlotter):
     """ Plots coins-equivalent of your wallet """
@@ -141,24 +147,6 @@ class OtherCurrencyPlotter(BalancePlotter):
                 wallet.get_balance_equivalent(self.base_currency)
             for wallet in self.wallets
         }
-
-    def plot_balances(self, min_value=0.05):
-        """
-        :return: void
-            Plots balances for each date for each coin
-        :return min_value: float in [0, 1]
-            Hide small asset that are below this percentage of the wallet value
-        """
-
-        min_to_plot = min_value * sum(self.wallets_value.values())
-        for wallet in self.wallets:
-            try:
-                wallet_balance = self.wallets_value[wallet.base_currency]
-                if wallet_balance > min_to_plot:
-                    self._plot_balance(wallet)
-            except Exception as e:
-                print("Cannot plot balances equivalent of wallet",
-                      wallet, "due to", e)
 
     def _plot_balance(self, wallet):
         """
@@ -187,30 +175,22 @@ class OtherCurrencyPlotter(BalancePlotter):
             label=wallet.base_currency + " - " + self.base_currency + " value"
         )
 
-    def plot_buy_sells(self, coin):
+    def plot_buy_sells(self, wallet):
         """
-        :param coin: str
-            Coin to plot
+        :param wallet: Wallet
+            Coin wallet to plot
         :return: void
             Plots buy/sells points of coin against coin price
         """
-
-        wallet = [
-            wallet
-            for wallet in self.wallets if wallet.base_currency.upper() == coin
-        ][0]  # look for wallet
 
         deltas = list(wallet.get_delta_balance_by_transaction())
         dates = list(generate_dates(
             deltas[0]["transaction"].date,
             deltas[-1]["transaction"].date,
-            interval=4
+            hours=4
         ))
         equivalents = [
-            wallet.get_equivalent(
-                date,
-                self.base_currency
-            ) for date in dates
+            wallet.get_equivalent(date, self.base_currency) for date in dates
         ]
         plt.plot(
             dates,
@@ -237,8 +217,5 @@ class OtherCurrencyPlotter(BalancePlotter):
                 color=color
             )
 
-
-class FiatPlotter(OtherCurrencyPlotter):
-    def plot_market_cap(self):
-        dates = get_transactions_dates(self.wallets)
-        first, last = dates[0], dates[-1]
+    def show(self, title, x_label="Time", y_label="value"):
+        super().show(title, x_label, self.base_currency + " " + y_label)

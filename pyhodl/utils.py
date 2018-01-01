@@ -31,13 +31,13 @@ from hal.internet.web import get_tor_session, renew_connection
 from pyhodl.app import DATE_TIME_FORMAT
 
 
-def generate_dates(since, until, interval):
+def generate_dates(since, until, hours):
     """
     :param since: datetime
         Generate dates since this date
     :param until: datetime
         Generate dates until this date
-    :param interval: float
+    :param hours: float
         Number of hours between 2 consecutive dates
     :return: generator of datetime
         Dates in between boundaries and separated by exact interval
@@ -46,7 +46,7 @@ def generate_dates(since, until, interval):
     date = since
     while date <= until:
         yield date
-        date += timedelta(hours=interval)
+        date += timedelta(hours=hours)
     yield until
 
 

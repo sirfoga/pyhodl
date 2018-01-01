@@ -20,14 +20,12 @@
 
 from enum import Enum
 
+from hal.files.parsers import JSONParser
+
 
 class FiatCoins(Enum):
     USD = "USD"
     EUR = "EUR"
-
-
-class CryptoCoins(Enum):
-    BTC = "BTC"
 
 
 class CryptoCoin:
@@ -54,3 +52,21 @@ class CryptoCoin:
             return other.get_name() == other.get_name()
 
         return False
+
+
+class CoinsNamesTable(JSONParser):
+    """ Loads coins database """
+
+    def __init__(self, input_file):
+        JSONParser.__init__(self, input_file)
+
+        self.content = self.get_content()
+
+    def get_coins(self):
+        return [
+            CryptoCoin(
+                raw["codename"],
+                name=raw["name"],
+                other_names=raw["other_names"]
+            ) for raw in self.content
+        ]
