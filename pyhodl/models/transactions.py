@@ -23,7 +23,7 @@ from enum import Enum
 import pytz
 
 from pyhodl.app import VALUE_KEY
-from pyhodl.data.tables import CoinPricesTable
+from pyhodl.data.tables import get_coin_prices_table
 
 
 class TransactionType(Enum):
@@ -281,12 +281,9 @@ class Wallet:
         """
 
         try:
-            prices_table = CoinPricesTable(currency=currency)
+            prices_table = get_coin_prices_table(currency)
             val = prices_table.get_value_on(self.base_currency, dt)
-            if val > 0.0:
-                return float(val) * amount
-            raise ValueError("Cannot convert", amount, self.base_currency,
-                             "to", currency, "on", dt)
-        except Exception as e:
-            print(e)
+            return float(val) * amount
+        except:
+            print(dt)
             return 0.0

@@ -22,6 +22,7 @@ import argparse
 import os
 import time
 import traceback
+from datetime import timedelta
 from enum import Enum
 
 from hal.files.save_as import write_dicts_to_json
@@ -33,7 +34,6 @@ from pyhodl.data.parsers import build_parser
 from pyhodl.stats.transactions import get_transactions_dates, \
     get_all_exchanges, get_all_coins
 from pyhodl.updater.core import Updater
-from pyhodl.utils import generate_dates, parse_datetime
 
 
 class RunMode(Enum):
@@ -145,24 +145,11 @@ def download_prices(coins, since, until, where_to, verbose, currency="USD",
         print("Getting historical prices for", len(coins), "coins")
 
     output_file = os.path.join(where_to, currency.lower() + ".json")
+    extra_time = timedelta(hours=6)
     data = get_prices(
-        ["BTC", "BLOCK"], currency, since, until, tor
+        coins, currency, since - extra_time, until + extra_time, tor
     )
-
-    hours = 6
-    intervals = list(generate_dates(since, until, hours))
-    print("Just got data from", since, "until", until, "(", hours,
-          "-hours intervals)")
-    print("Expecting", len(intervals), "intervals")
-
-    n_intervals = len(data)
-    print("Got", n_intervals)
-    first, last = data[0]["datetime"], data[-1]["datetime"]
-    time_interval = last - first
-    time_interval = (time_interval.total_seconds() / n_intervals) / 60.0
-    print("\t", first, "->", last)
-    print("\t", n_intervals, " intervals of", time_interval, "minutes")
-    # write_dicts_to_json(data, output_file)
+    write_dicts_to_json(data, output_file)
 
     if verbose:
         print("Saved historical prices to", output_file)
@@ -179,20 +166,16 @@ def main():
     elif run_mode == RunMode.DOWNLOAD_HISTORICAL:
         exchanges = get_all_exchanges()
         dates = get_transactions_dates(exchanges)
-        # todo debug starts
-        dates = ["2017-06-15 07:17:00 +0000", "2017-06-25 19:17:00 +0000"]
-        dates = [parse_datetime(d) for d in dates]
-        # todo debug ends
         first_transaction, last_transaction = min(dates), max(dates)
         coins = get_all_coins(exchanges)
         download_prices(
             coins, first_transaction, last_transaction, args[0], args[1],
             tor=args[2]
         )
-        # todo debug starts
-        # download_market_cap(
-        #     first_transaction, last_transaction, args[0], args[1]
-        # )
+
+        download_market_cap(
+            first_transaction, last_transaction, args[0], args[1]
+        )
 
 
 def handle_exception():

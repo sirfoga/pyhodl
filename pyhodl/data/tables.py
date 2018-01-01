@@ -60,14 +60,14 @@ class DatetimeTable(JSONParser):
 
         bisect_insert = bisect(self.dates, dt)
         low, high = bisect_insert - 1, bisect_insert  # 2 nearest dates
-        low = self.dates[low] if low > 0 else None
+        low = self.dates[low] if low >= 0 else None
         high = self.dates[high] if high < len(self.dates) else None
         err_low = (dt - low).total_seconds() if low else INFINITY
         err_high = (high - dt).total_seconds() if low else INFINITY
 
-        if err_low <= err_high and err_low < self.max_error:
+        if err_low <= err_high and err_low <= self.max_error:
             return self.content[low]
-        elif err_high <= err_low and err_high < self.max_error:
+        elif err_high <= err_low and err_high <= self.max_error:
             return self.content[high]
 
         return None
@@ -118,8 +118,6 @@ class CoinPricesTable(DatetimeTable):
         """
         :param coin: str
             Coin to convert
-        :param currency: str
-            Coin to convert to
         :param dt: datetime
             Date and time of conversion
         :return: float
@@ -130,4 +128,17 @@ class CoinPricesTable(DatetimeTable):
             return 1.0
 
         raw_data = self.get_values_on(dt)
-        return raw_data[coin.upper()]
+        if raw_data:
+            return raw_data[coin.upper()]
+
+        return None
+
+
+COINS_PRICES_TABLE = CoinPricesTable()
+
+
+def get_coin_prices_table(currency="USD"):
+    if currency == "USD":
+        return COINS_PRICES_TABLE
+
+    return CoinPricesTable(currency)
