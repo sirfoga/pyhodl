@@ -18,40 +18,37 @@
 
 """ List of crypto-coins supported """
 
-from enum import Enum
-
 from hal.files.parsers import JSONParser
 
 
-class FiatCoins(Enum):
-    USD = "USD"
-    EUR = "EUR"
+class Coin:
+    """ Model of a coin traded """
+
+    def __init__(self, codename, name=None):
+        self.codename = str(codename).upper()
+        self.name = str(name).lower() if name else None
+
+    def get_codename(self):
+        return self.codename
+
+    def __eq__(self, other):
+        if isinstance(other, Coin):
+            return other.get_codename() == other.get_codename()
+
+        return False
 
 
-class CryptoCoin:
+class CryptoCoin(Coin):
     """ Crypto currency model """
 
     def __init__(self, codename, name=None, other_names=None):
-        self.codename = str(codename).upper()
-        self.name = str(name).lower()
+        Coin.__init__(self, codename, name)
         self.other_names = [
             str(other).upper() for other in other_names
         ]
 
-    def get_name(self):
-        return self.name
-
     def get_other_names(self):
         return self.other_names
-
-    def get_code(self):
-        return self.codename
-
-    def __eq__(self, other):
-        if isinstance(other, CryptoCoin):
-            return other.get_name() == other.get_name()
-
-        return False
 
 
 class CoinsNamesTable(JSONParser):

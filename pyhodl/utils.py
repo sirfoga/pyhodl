@@ -135,26 +135,6 @@ def handle_rate_limits(func, time_wait=60, max_attempts=2):
     return _handle_rate_limits
 
 
-def get_dates(first, last, sec_interval):
-    """
-    :param first: datetime
-        Start generating dates since this time
-    :param last: datetime
-        End generating dates until this time
-    :param sec_interval: int
-        Number of seconds between 2 consecutive dates
-    :return: [] of datetime
-        Range of datetimes
-    """
-
-    intervals = last - first
-    intervals = int(intervals.total_seconds() / sec_interval) + 1
-    return [
-        first + timedelta(seconds=i * sec_interval)
-        for i in range(intervals)
-    ]
-
-
 def replace_items(lst, old, new):
     """
     :param lst: []
@@ -175,6 +155,10 @@ def replace_items(lst, old, new):
 
 def datetime_to_unix_timestamp_ms(dt):
     return int(time.mktime(dt.timetuple()) * 1e3 + dt.microsecond / 1e3)
+
+
+def datetime_to_unix_timestamp_s(dt):
+    return int(time.mktime(dt.timetuple()) * 1e3)
 
 
 def unix_timestamp_ms_to_datetime(ms):
@@ -217,3 +201,8 @@ def normalize(val, min_val, max_val, min_range=-1.0, max_range=1.0):
 
     ratio = (val - min_val) / (max_val - min_val)
     return min_range + ratio * (max_range - min_range)
+
+
+def middle(lst):
+    middle_point = len(lst) / 2
+    return lst[middle_point]

@@ -21,7 +21,6 @@
 import abc
 import os
 import time
-from datetime import datetime
 
 from binance.client import Client as BinanceClient
 from ccxt import bitfinex as BitfinexClient
@@ -29,13 +28,13 @@ from coinbase.wallet.client import Client as CoinbaseClient
 from gdax.authenticated_client import AuthenticatedClient as GdaxClient
 from hal.files.save_as import write_dicts_to_json
 
-from pyhodl.utils import get_actual_class_name, handle_rate_limits
+from pyhodl.logging import Logger
+from pyhodl.utils import handle_rate_limits
 
 INT_32_MAX = 2 ** 31 - 1
-LOG_DATETIME_FORMAT = "%H:%M:%S"
 
 
-class ExchangeUpdater:
+class ExchangeUpdater(Logger):
     """ Abstract exchange updater """
 
     def __init__(self, api_client, data_folder, rate_limit=1,
@@ -52,17 +51,18 @@ class ExchangeUpdater:
         :param page_limit: int
             Limit of requests per page
         """
+
+        Logger.__init__(self)
         
         self.client = api_client
         self.folder = data_folder
         self.output_file = os.path.join(
             self.folder,
-            get_actual_class_name(self) + ".json"
+            self.class_name + ".json"
         )
         self.transactions = {}
         self.rate = float(rate_limit)
         self.rate_wait = float(rate_limit_wait)
-        self.class_name = get_actual_class_name(self)
         self.page_limit = int(page_limit)
 
     @abc.abstractmethod
@@ -79,10 +79,6 @@ class ExchangeUpdater:
         self.save_data()
         if verbose:
             print(self.class_name, "Transactions written to", self.output_file)
-
-    def log(self, *content):
-        print(datetime.now().strftime(LOG_DATETIME_FORMAT), self.class_name,
-              ">>>", " ".join([str(x) for x in content]))
 
     @staticmethod
     def build_updater(api_client, data_folder):

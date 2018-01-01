@@ -33,7 +33,6 @@ from pyhodl.data.parsers import build_parser
 from pyhodl.stats.transactions import get_transactions_dates, \
     get_all_exchanges, get_all_coins
 from pyhodl.updater.core import Updater
-from pyhodl.utils import get_dates
 
 
 class RunMode(Enum):
@@ -132,27 +131,23 @@ def download_market_cap(since, until, where_to, verbose):
         print("Getting market cap since", since, "until", until)
 
     output_file = os.path.join(where_to, "market_cap.json")
-    write_dicts_to_json(
-        get_market_cap(since, until),
-        output_file
-    )
+    data = get_market_cap(since, until)
+    write_dicts_to_json(data, output_file)
 
     if verbose:
-        print("Saved market cap to", output_file)
+        print("Saved market cap data to", output_file)
 
 
-def download_prices(coins, since, until, where_to, verbose,
-                    sec_interval=60 * 60, currency="USD", tor=False):
-    dates = get_dates(since, until, sec_interval)
-
+def download_prices(coins, since, until, where_to, verbose, hours=4,
+                    currency="USD", tor=False):
     if verbose:
         print("Getting historical prices for", len(coins), "coins")
 
     output_file = os.path.join(where_to, currency.lower() + ".json")
-    write_dicts_to_json(
-        get_prices(coins, since, until, tor),
-        output_file
+    data = get_prices(
+        coins, currency, since, until, hours, tor
     )
+    write_dicts_to_json(data, output_file)
 
     if verbose:
         print("Saved historical prices to", output_file)

@@ -23,7 +23,7 @@ import os
 from hal.files.parsers import JSONParser
 from hal.files.save_as import write_dicts_to_json
 
-from pyhodl.data.coins import FiatCoins, CoinsNamesTable
+from pyhodl.data.coins import CoinsNamesTable, Coin
 
 APP_NAME = "Pyhodl"
 APP_SHORT_NAME = "pyhodl"
@@ -60,7 +60,7 @@ COINS_DATABASE = os.path.join(
     RAW_DATA_FOLDER,
     "coins.json"
 )
-FIAT_COINS = [FiatCoins.USD]  # supported fiat coins
+FIAT_COINS = [Coin("USD"), Coin("EUR")]  # supported fiat coins
 CRYPTO_COINS = CoinsNamesTable(COINS_DATABASE).get_coins()
 
 
