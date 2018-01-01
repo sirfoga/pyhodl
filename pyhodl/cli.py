@@ -134,7 +134,7 @@ def download_market_cap(since, until, where_to, verbose):
     client = CoinmarketCapClient()
     output_file = os.path.join(where_to, "market_cap.json")
     write_dicts_to_json(
-        client.get_total_market_cap(since, until),
+        client.get_market_cap(since, until),
         output_file
     )
 

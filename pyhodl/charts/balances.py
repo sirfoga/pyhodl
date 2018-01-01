@@ -21,6 +21,7 @@
 import matplotlib.pyplot as plt
 
 from pyhodl.app import VALUE_KEY
+from pyhodl.stats.transactions import get_transactions_dates
 from pyhodl.utils import generate_dates, normalize
 
 
@@ -235,3 +236,9 @@ class OtherCurrencyPlotter(BalancePlotter):
                 markersize=int(radius),
                 color=color
             )
+
+
+class FiatPlotter(OtherCurrencyPlotter):
+    def plot_market_cap(self):
+        dates = get_transactions_dates(self.wallets)
+        first, last = dates[0], dates[-1]

@@ -22,11 +22,11 @@ from pyhodl.data.parsers import build_exchanges
 from pyhodl.updater.core import UpdateManager
 
 
-def get_transactions_dates(exchanges):
+def get_transactions_dates(items):
     dates = []
-    for exchange in exchanges:
+    for item in items:
         dates += [
-            transaction.date for transaction in exchange.transactions
+            transaction.date for transaction in item.transactions
         ]
     return sorted(dates)
 

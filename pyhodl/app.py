@@ -23,6 +23,8 @@ import os
 from hal.files.parsers import JSONParser
 from hal.files.save_as import write_dicts_to_json
 
+from pyhodl.data.coins import FiatCoins
+
 APP_NAME = "Pyhodl"
 APP_SHORT_NAME = "pyhodl"
 
@@ -48,7 +50,7 @@ DATE_TIME_KEY = "datetime"
 VALUE_KEY = "val"
 INFINITY = float("inf")
 NAN = float("inf")
-FIAT_COINS = ["USD"]  # supported fiat coins
+FIAT_COINS = [FiatCoins.USD]  # supported fiat coins
 
 
 class ConfigManager:

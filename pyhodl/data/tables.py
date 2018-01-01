@@ -24,7 +24,8 @@ from bisect import bisect
 from hal.files.parsers import JSONParser
 
 from pyhodl.app import HISTORICAL_DATA_FOLDER, DATE_TIME_KEY, INFINITY, \
-    FIAT_COINS
+    VALUE_KEY
+from pyhodl.data.coins import CryptoCoin
 from pyhodl.utils import parse_datetime
 
 
@@ -97,6 +98,10 @@ class MarketDataTable(DatetimeTable):
             3 * 60 * 60  # 3 hours
         )
 
+    def get_value_on(self, dt):
+        raw_data = self.get_values_on(dt)
+        return raw_data[VALUE_KEY]
+
 
 class CoinPricesTable(DatetimeTable):
     """ Parse market data files """
@@ -129,12 +134,16 @@ class CoinPricesTable(DatetimeTable):
         return raw_data[coin.upper()]
 
 
-def is_crypto(coin):
-    """
-    :param coin: str
-        Check if coin is a crypto-coin
-    :return: bool
-        True iff coin is a crypto-coin
-    """
+class CoinsNamesTable(JSONParser):
+    """ Loads coins database """
 
-    return coin.upper() not in FIAT_COINS
+    def __init__(self, input_file="coins.json"):
+        JSONParser.__init__(self, input_file)
+
+        self.content = self.get_content()
+        self.coins = [
+            CryptoCoin(
+                raw["codename"],
+                name=raw["name"]
+            ) for raw in self.content
+        ]

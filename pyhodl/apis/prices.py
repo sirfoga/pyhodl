@@ -25,7 +25,7 @@ import urllib.request
 
 import requests
 
-from pyhodl.app import DATE_TIME_KEY, NAN
+from pyhodl.app import DATE_TIME_KEY, NAN, VALUE_KEY
 from pyhodl.utils import replace_items, \
     datetime_to_unix_timestamp_ms, unix_timestamp_ms_to_datetime, download, \
     download_with_tor, datetime_to_str
@@ -186,12 +186,16 @@ class CoinmarketCapClient(AbstractApiClient):
     def __init__(self, base_url=BASE_URL):
         AbstractApiClient.__init__(self, base_url)
 
-    def _create_url(self, since, until):
+    def _create_path(self, action):
+        if action == "marketcap":
+            return os.path.join("global", "marketcap-total")
+
+    def _create_url(self, action, since, until):
         since = datetime_to_unix_timestamp_ms(since)  # to ms unix
         until = datetime_to_unix_timestamp_ms(until)
         return os.path.join(
             self.base_url,
-            "global/marketcap-total",
+            self._create_path(action),
             str(since),
             str(until)
         )
@@ -201,7 +205,7 @@ class CoinmarketCapClient(AbstractApiClient):
         r = requests.get(url)
         return r.json()
 
-    def get_total_market_cap(self, since, until):
+    def get_market_cap(self, since, until):
         """
         :param since: datetime
             Get data since this date
@@ -211,14 +215,31 @@ class CoinmarketCapClient(AbstractApiClient):
             Each dict key is date and its value is the market cap at the date
         """
 
-        raw_data = self.get_raw_data(self._create_url(since, until))
+        raw_data = self.get_raw_data(
+            self._create_url("marketcap", since, until)
+        )
         data = raw_data["market_cap_by_available_supply"]
         data = [
             {
                 DATE_TIME_KEY: datetime_to_str(
                     unix_timestamp_ms_to_datetime(item[0])
                 ),
-                "value": float(item[1])
+                VALUE_KEY: float(item[1])
+            } for item in data
+        ]
+        return data
+
+    def get_coin_stats(self, coin, since, until):
+        raw_data = self.get_raw_data(
+            self._create_url(coin, since, until)
+        )
+        data = raw_data["market_cap_by_available_supply"]
+        data = [
+            {
+                DATE_TIME_KEY: datetime_to_str(
+                    unix_timestamp_ms_to_datetime(item[0])
+                ),
+                VALUE_KEY: float(item[1])
             } for item in data
         ]
         return data
