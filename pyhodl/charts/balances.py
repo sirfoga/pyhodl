@@ -21,7 +21,7 @@
 import matplotlib.pyplot as plt
 
 from pyhodl.app import VALUE_KEY, DATE_TIME_KEY
-from pyhodl.stats.transactions import get_total_equivalent_balances
+from pyhodl.stats.wallets import get_total_equivalent_balances
 from pyhodl.utils import generate_dates, normalize
 
 

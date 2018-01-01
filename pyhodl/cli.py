@@ -22,18 +22,20 @@ import argparse
 import os
 import time
 import traceback
-from datetime import timedelta, datetime
+from datetime import timedelta
 from enum import Enum
 
 from hal.files.save_as import write_dicts_to_json
-from hal.streams.pretty_table import pretty_format_table
 from hal.streams.user import UserInput
 
 from pyhodl.apis.prices import get_market_cap, get_prices
+from pyhodl.app import DATA_FOLDER
 from pyhodl.charts.balances import OtherCurrencyPlotter
-from pyhodl.data.parsers import build_parser, build_exchanges
+from pyhodl.data.parsers import build_parser
 from pyhodl.stats.transactions import get_transactions_dates, \
     get_all_exchanges, get_all_coins
+from pyhodl.stats.wallets import show_balance_of_exchange, \
+    show_balance_of_folder
 from pyhodl.updater.core import Updater
 
 
@@ -118,45 +120,11 @@ def plot(input_file, verbose):
 
 
 def compute_stats(exchange, verbose):
-    if verbose:
-        print("\n\nPrinting balances of", exchange.exchange_name)
-
-    wallets = exchange.build_wallets()
-    balances = [
-        {
-            "symbol": coin,
-            "balance": wallet.balance(),
-            "value": wallet.get_balance_equivalent_now()
-        }
-        for coin, wallet in wallets.items()
-    ]
-    balances = sorted([
-        balance for balance in balances if float(balance["balance"]) > 0.0
-    ], key=lambda x: x["value"], reverse=True)
-    table = [
-        [
-            str(balance["symbol"]),
-            str(balance["balance"]),
-            str(balance["value"]) + " $",
-            str(float(balance["value"] / float(balance["balance"]))) + " $"
-        ]
-        for balance in balances
-    ]
-    pretty_table = pretty_format_table(
-        ["symbol", "balance", "$ value", "$ price per coin"],
-        table
-    )
-
-    print("As of", datetime.now(), "you got")
-    print(pretty_table)
-    tot_balance = sum([balance["value"] for balance in balances])
-    print("Total value: ~", tot_balance, "$")
+    show_balance_of_exchange(exchange, verbose)
 
 
 def compute_stats_of_folder(input_folder):
-    exchanges = build_exchanges(input_folder)
-    for exchange in exchanges:
-        compute_stats(exchange, True)
+    show_balance_of_folder(input_folder)
 
 
 def download_market_cap(since, until, where_to, verbose):
@@ -196,8 +164,10 @@ def main():
     elif run_mode == RunMode.STATS:
         if os.path.isfile(args[0]):
             compute_stats(args[0], args[1])
-        else:
+        elif os.path.isdir(args[0]):
             compute_stats_of_folder(args[0])
+        else:
+            compute_stats_of_folder(DATA_FOLDER)
     elif run_mode == RunMode.DOWNLOAD_HISTORICAL:
         exchanges = get_all_exchanges()
         dates = get_transactions_dates(exchanges)
