@@ -121,7 +121,7 @@ class Updater:
                       "due to", e)
 
         self.manager.save_time_update()
-        print("Next update:", self.manager.time_next_update())
+        print("Next update:", datetime_to_str(self.manager.time_next_update()))
 
     def _build_updaters(self):
         for api in self.api_manager.get_all():

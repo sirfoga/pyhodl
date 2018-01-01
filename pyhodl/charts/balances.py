@@ -20,7 +20,8 @@
 
 import matplotlib.pyplot as plt
 
-from pyhodl.app import VALUE_KEY
+from pyhodl.app import VALUE_KEY, DATE_TIME_KEY
+from pyhodl.stats.transactions import get_total_equivalent_balances
 from pyhodl.utils import generate_dates, normalize
 
 
@@ -216,6 +217,16 @@ class OtherCurrencyPlotter(BalancePlotter):
                 markersize=int(radius),
                 color=color
             )
+
+    def plot_total_balances(self):
+        balances = get_total_equivalent_balances(
+            self.wallets, self.base_currency
+        )
+        plt.plot(
+            [balance[DATE_TIME_KEY] for balance in balances],
+            [balance[VALUE_KEY] for balance in balances],
+            label="Total " + self.base_currency + " value of wallets"
+        )  # plot price
 
     def show(self, title, x_label="Time", y_label="value"):
         super().show(title, x_label, self.base_currency + " " + y_label)

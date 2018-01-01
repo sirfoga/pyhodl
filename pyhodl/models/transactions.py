@@ -285,5 +285,4 @@ class Wallet:
             val = prices_table.get_value_on(self.base_currency, dt)
             return float(val) * amount
         except:
-            print(dt)
             return 0.0
