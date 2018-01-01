@@ -27,7 +27,7 @@ from enum import Enum
 from hal.files.save_as import write_dicts_to_json
 from hal.streams.user import UserInput
 
-from pyhodl.apis.prices import CryptocompareClient, CoinmarketCapClient
+from pyhodl.apis.prices import get_market_cap, get_prices
 from pyhodl.charts.balances import OtherCurrencyPlotter
 from pyhodl.data.parsers import build_parser
 from pyhodl.stats.transactions import get_transactions_dates, \
@@ -131,10 +131,9 @@ def download_market_cap(since, until, where_to, verbose):
     if verbose:
         print("Getting market cap since", since, "until", until)
 
-    client = CoinmarketCapClient()
     output_file = os.path.join(where_to, "market_cap.json")
     write_dicts_to_json(
-        client.get_market_cap(since, until),
+        get_market_cap(since, until),
         output_file
     )
 
@@ -144,7 +143,6 @@ def download_market_cap(since, until, where_to, verbose):
 
 def download_prices(coins, since, until, where_to, verbose,
                     sec_interval=60 * 60, currency="USD", tor=False):
-    client = CryptocompareClient(tor=tor)
     dates = get_dates(since, until, sec_interval)
 
     if verbose:
@@ -152,7 +150,7 @@ def download_prices(coins, since, until, where_to, verbose,
 
     output_file = os.path.join(where_to, currency.lower() + ".json")
     write_dicts_to_json(
-        list(client.get_prices(coins, currency, dates)),
+        get_prices(coins, since, until, tor),
         output_file
     )
 

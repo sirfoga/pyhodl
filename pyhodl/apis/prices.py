@@ -243,3 +243,13 @@ class CoinmarketCapClient(AbstractApiClient):
             } for item in data
         ]
         return data
+
+
+def get_market_cap(since, until):
+    client = CoinmarketCapClient()
+    return client.get_market_cap(since, until)
+
+
+def get_prices(coins, currency, dates, tor):
+    client = CryptocompareClient(tor=tor)
+    return list(client.get_prices(coins, currency, dates))
