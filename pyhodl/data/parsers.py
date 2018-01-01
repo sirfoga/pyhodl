@@ -68,8 +68,8 @@ def build_parsers(input_folder):
     for input_file in files:
         try:
             yield build_parser(input_file)
-        except Exception as e:
-            print("Cannot parse", input_file, "due to", e)
+        except:
+            pass
 
 
 def build_exchanges(input_folder):

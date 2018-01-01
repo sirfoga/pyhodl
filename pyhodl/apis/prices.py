@@ -100,8 +100,7 @@ class CryptocompareClient(PricesApiClient, TorApiClient):
     BASE_URL = "https://min-api.cryptocompare.com/data/pricehistorical"
     MAX_COINS_PER_REQUEST = 6
     API_ENCODING = {
-        "IOTA": "IOT",
-        "WAVES": "WAV"
+        "IOTA": "IOT"
     }
     API_DECODING = {
         val: key for key, val in API_ENCODING.items()
@@ -222,8 +221,7 @@ class CoinmarketCapClient(PricesApiClient, TorApiClient):
         )
 
     def download(self, url):
-        d = super().download(url)
-        return d.json()  # parse as json
+        return super().download(url).json()  # parse as json
 
     def get_market_cap(self, since, until):
         """
@@ -274,7 +272,7 @@ class CoinmarketCapClient(PricesApiClient, TorApiClient):
                 data[coin] = NAN
         return data
 
-    def _get_raw_prices(self, coins, **kwargs):
+    def get_raw_prices(self, coins, **kwargs):
         """
         :param coins: [] of str
             Coins to fetch
@@ -307,7 +305,7 @@ class CoinmarketCapClient(PricesApiClient, TorApiClient):
             coin: [] for coin in coins
         }  # get raw prices with 5 minutes interval time
         for i, date in enumerate(dates[1:]):
-            new_prices = self._get_raw_prices(
+            new_prices = self.get_raw_prices(
                 coins, since=dates[i - 1], until=date
             )
             for coin in new_prices:  # same keys

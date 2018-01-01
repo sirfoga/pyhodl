@@ -18,11 +18,13 @@
 
 """ Core models """
 
+from datetime import datetime
 from enum import Enum
 
 import pytz
 
-from pyhodl.app import VALUE_KEY
+from pyhodl.apis.prices import CryptocompareClient
+from pyhodl.app import VALUE_KEY, NAN
 from pyhodl.data.tables import get_coin_prices_table
 
 
@@ -147,6 +149,8 @@ class Wallet:
     def __init__(self, base_currency):
         self.base_currency = base_currency
         self.transactions = []  # list of operations performed
+        self.is_sorted = False
+        self.price_client = CryptocompareClient()
 
     def add_transaction(self, transaction):
         """
@@ -208,10 +212,30 @@ class Wallet:
             amount=self.balance()
         )
 
+    def get_balance_equivalent_now(self, time_range=30, max_attempts=3):
+        self._sort_transactions()
+        now = datetime.now()
+        if max_attempts <= 0:
+            return NAN
+
+        try:
+            price = self.price_client.get_price(
+                [self.base_currency],
+                now,
+                currency="USD"
+            )
+            price = price[self.base_currency]
+            return float(price) * self.balance()
+        except:
+            return self.get_balance_equivalent_now(
+                time_range=time_range + 30, max_attempts=max_attempts - 1
+            )
+
     def _sort_transactions(self):
-        self.transactions = sorted(
-            self.transactions, key=lambda x: x.date
-        )  # sort by date
+        if not self.is_sorted:
+            self.transactions = sorted(
+                self.transactions, key=lambda x: x.date
+            )  # sort by date
 
     def get_balances_by_transaction(self):
         current_balance = 0.0
