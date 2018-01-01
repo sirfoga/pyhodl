@@ -133,7 +133,8 @@ def download_market_cap(since, until, where_to, verbose):
 
     output_file = os.path.join(where_to, "market_cap.json")
     data = get_market_cap(since, until)
-    write_dicts_to_json(data, output_file)
+    if data:
+        write_dicts_to_json(data, output_file)
 
     if verbose:
         print("Saved market cap data to", output_file)
@@ -149,7 +150,8 @@ def download_prices(coins, since, until, where_to, verbose, currency="USD",
     data = get_prices(
         coins, currency, since - extra_time, until + extra_time, tor
     )
-    write_dicts_to_json(data, output_file)
+    if data:
+        write_dicts_to_json(data, output_file)
 
     if verbose:
         print("Saved historical prices to", output_file)

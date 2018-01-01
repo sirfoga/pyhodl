@@ -78,8 +78,8 @@ class UpdateManager(ConfigManager):
             raise ValueError("Cannot parse update interval", raw)
 
     def save_time_update(self):
-        self.last_update = datetime_to_str(datetime.now())
-        self.data["last_update"] = self.last_update
+        self.last_update = datetime.now()
+        self.data["last_update"] = datetime_to_str(self.last_update)
         self.save()
 
     def get_data_folder(self):

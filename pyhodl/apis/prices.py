@@ -20,9 +20,12 @@
 
 import abc
 import os
+import time
 import urllib.parse
 import urllib.request
 from datetime import timedelta
+
+from hal.time.profile import get_time_eta, print_time_eta
 
 from pyhodl.app import DATE_TIME_KEY, NAN, VALUE_KEY, FIAT_COINS, \
     get_coin_by_symbol
@@ -55,12 +58,16 @@ class PricesApiClient(AbstractApiClient):
         return
 
     def get_prices_by_date(self, coins, dates, **kwargs):
-        for date in dates:
+        start_time = time.time()
+        dates = list(dates)
+        for i, date in enumerate(dates):
             try:
-                new_prices = self.get_price(coins, date, kwargs)
+                new_prices = self.get_price(coins, date, **kwargs)
                 new_prices[DATE_TIME_KEY] = datetime_to_str(date)
                 yield new_prices
-                print("Got prices up to", date)
+
+                self.log("got prices up to", date)
+                print_time_eta(get_time_eta(i + 1, len(dates), start_time))
             except Exception as e:
                 print("Failed getting prices for", date, "due to", e)
 
@@ -335,10 +342,10 @@ def get_market_cap(since, until):
 
 
 def get_prices(coins, currency, since, until, tor):
-    if Coin(currency) in CoinmarketCapClient.AVAILABLE_FIAT:
-        client = CoinmarketCapClient(tor=tor)  # better client (use as default)
+    if Coin(currency) in CryptocompareClient.AVAILABLE_FIAT:
+        client = CryptocompareClient(tor=tor)  # better client (use as default)
     else:
-        client = CryptocompareClient(tor=tor)
+        client = CoinmarketCapClient(tor=tor)
 
     return client.get_prices(
         coins, since=since, until=until, hours=6, currency=currency
