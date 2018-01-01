@@ -173,6 +173,11 @@ def download(url):
 def download_with_tor(url, tor_password, max_attempts):
     try:
         session = get_tor_session()
+        session.headers = {
+            "User-Agent": "Mozilla/5.0 (Windows NT 6.1; rv:52.0) "
+                          "Gecko/20100101 Firefox/52.0",
+            "Cookie": "__cfduid=d87e2b033d4ee407a1c3303b532c32dec1514830829"
+        }
         return session.get(url)
     except Exception as e:
         if max_attempts > 0:

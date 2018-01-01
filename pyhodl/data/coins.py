@@ -24,16 +24,16 @@ from hal.files.parsers import JSONParser
 class Coin:
     """ Model of a coin traded """
 
-    def __init__(self, codename, name=None):
-        self.codename = str(codename).upper()
+    def __init__(self, symbol, name=None):
+        self.symbol = str(symbol).upper()
         self.name = str(name).lower() if name else None
 
-    def get_codename(self):
-        return self.codename
+    def get_symbol(self):
+        return self.symbol
 
     def __eq__(self, other):
         if isinstance(other, Coin):
-            return other.get_codename() == other.get_codename()
+            return other.get_symbol() == other.get_symbol()
 
         return False
 
@@ -41,8 +41,8 @@ class Coin:
 class CryptoCoin(Coin):
     """ Crypto currency model """
 
-    def __init__(self, codename, name=None, other_names=None):
-        Coin.__init__(self, codename, name)
+    def __init__(self, symbol, name=None, other_names=None):
+        Coin.__init__(self, symbol, name)
         self.other_names = [
             str(other).upper() for other in other_names
         ]
@@ -62,7 +62,7 @@ class CoinsNamesTable(JSONParser):
     def get_coins(self):
         return [
             CryptoCoin(
-                raw["codename"],
+                raw["symbol"],
                 name=raw["name"],
                 other_names=raw["other_names"]
             ) for raw in self.content

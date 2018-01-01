@@ -25,7 +25,7 @@ import urllib.request
 from datetime import timedelta
 
 from pyhodl.app import DATE_TIME_KEY, NAN, VALUE_KEY, FIAT_COINS, \
-    get_coin_by_codename
+    get_coin_by_symbol
 from pyhodl.data.coins import Coin
 from pyhodl.logs import Logger
 from pyhodl.utils import replace_items, \
@@ -79,7 +79,22 @@ class PricesApiClient(AbstractApiClient):
         )
 
 
-class CryptocompareClient(PricesApiClient):
+class TorApiClient:
+    """ Access API methods via tor """
+
+    def __init__(self, tor=False):
+        self.tor = str(tor) if tor else None  # tor password
+        if self.tor:
+            print("Handling tor sessions with password:", self.tor)
+
+    def download(self, url):
+        if self.tor:
+            return download_with_tor(url, self.tor, 3)
+
+        return download(url)
+
+
+class CryptocompareClient(PricesApiClient, TorApiClient):
     """ API interface for official cryptocompare.com APIs """
 
     BASE_URL = "https://min-api.cryptocompare.com/data/pricehistorical"
@@ -95,10 +110,7 @@ class CryptocompareClient(PricesApiClient):
 
     def __init__(self, base_url=BASE_URL, tor=False):
         AbstractApiClient.__init__(self, base_url)
-
-        self.tor = str(tor) if tor else None  # tor password
-        if self.tor:
-            print("Handling tor sessions with password:", self.tor)
+        TorApiClient.__init__(self, tor)
 
     def _encode_coins(self, coins):
         """
@@ -126,6 +138,9 @@ class CryptocompareClient(PricesApiClient):
                 data[val] = data[key]
                 del data[key]
         return data
+
+    def download(self, url):
+        return super().download(url).json()  # parse as json
 
     def get_api_url(self, coins, dt, **kwargs):
         """
@@ -160,13 +175,7 @@ class CryptocompareClient(PricesApiClient):
             self._encode_coins(coins[:self.MAX_COINS_PER_REQUEST]),
             dt, currency=currency
         )
-
-        if self.tor:
-            result = download_with_tor(url, self.tor, 3)
-        else:
-            result = download(url)
-
-        result = result.json()  # parse as json
+        result = self.download(url)
         values = result[currency]
         for coin, price in values.items():
             try:
@@ -182,23 +191,25 @@ class CryptocompareClient(PricesApiClient):
         return data
 
 
-class CoinmarketCapClient(PricesApiClient):
+class CoinmarketCapClient(PricesApiClient, TorApiClient):
     """ Get coinmarketcap.com APIs data """
 
     BASE_URL = "https://graphs.coinmarketcap.com/"
     AVAILABLE_FIAT = [Coin("USD")]
     TIME_FRAME = timedelta(minutes=5)  # API does not provide exact timing
 
-    def __init__(self, base_url=BASE_URL):
+    def __init__(self, base_url=BASE_URL, tor=False):
         AbstractApiClient.__init__(self, base_url)
+        TorApiClient.__init__(self, tor)
 
     def _create_path(self, action):
         if action == "marketcap":
             return os.path.join("global", "marketcap-total")
-        else:  # action is a coin
-            return os.path.join(
-                "currencies", get_coin_by_codename(action).name
-            )
+
+        # action is a coin
+        return os.path.join(
+            "currencies", get_coin_by_symbol(action).name
+        )
 
     def _create_url(self, action, since, until):
         since = datetime_to_unix_timestamp_ms(since)  # to ms unix
@@ -210,6 +221,10 @@ class CoinmarketCapClient(PricesApiClient):
             str(until)
         )
 
+    def download(self, url):
+        d = super().download(url)
+        return d.json()  # parse as json
+
     def get_market_cap(self, since, until):
         """
         :param since: datetime
@@ -220,9 +235,7 @@ class CoinmarketCapClient(PricesApiClient):
             Each dict key is date and its value is the market cap at the date
         """
 
-        raw_data = download(
-            self._create_url("marketcap", since, until)
-        ).json()
+        raw_data = self.download(self._create_url("marketcap", since, until))
         data = raw_data["market_cap_by_available_supply"]
         data = [
             {
@@ -235,16 +248,12 @@ class CoinmarketCapClient(PricesApiClient):
         return data
 
     def get_coin_stats(self, coin, since, until):
-        raw_data = download(
-            self._create_url(coin, since, until)
-        ).json()
+        raw_data = self.download(self._create_url(coin, since, until))
         data = {}
         for category, values in raw_data.items():
             data[category] = [
                 {
-                    DATE_TIME_KEY: datetime_to_str(
-                        unix_timestamp_ms_to_datetime(item[0])
-                    ),
+                    DATE_TIME_KEY: unix_timestamp_ms_to_datetime(item[0]),
                     VALUE_KEY: float(item[1])
                 } for item in values
             ]
@@ -265,20 +274,61 @@ class CoinmarketCapClient(PricesApiClient):
                 data[coin] = NAN
         return data
 
+    def _get_raw_prices(self, coins, **kwargs):
+        """
+        :param coins: [] of str
+            Coins to fetch
+        :param kwargs: **
+            Additional args
+        :return: {}
+            Each key is a coin; each value is a list of dict with date and
+            coin price.
+        """
+
+        since = kwargs["since"]
+        until = kwargs["until"]
+        prices = {}  # dict <str coin -> [ dict <date -> price> ]>
+        for coin in coins:  # get all prices for each coin
+            try:
+                raw = self.get_coin_stats(
+                    coin, since, until
+                )["price_usd"]
+                raw = sorted(raw, key=lambda x: x[DATE_TIME_KEY])  # sort
+                prices[coin] = raw
+            except Exception as e:
+                self.log("Failed getting", coin, "prices due to", e)
+        return prices
+
     def get_prices(self, coins, **kwargs):
         since = kwargs["since"] - self.TIME_FRAME
         until = kwargs["until"] + self.TIME_FRAME
-        prices = {}  # dict <str coin -> [] prices>
-        for coin in coins:  # get all prices for each coin
-            try:
-                d = self.get_coin_stats(
-                    coin, since, until
-                )["price_usd"]
-                prices[coin] = d
-            except Exception as e:
-                self.log("Failed getting", coin, "prices due to", e)
+        dates = list(generate_dates(since, until, hours=23))  # day intervals
+        prices = {
+            coin: [] for coin in coins
+        }  # get raw prices with 5 minutes interval time
+        for i, date in enumerate(dates[1:]):
+            new_prices = self._get_raw_prices(
+                coins, since=dates[i - 1], until=date
+            )
+            for coin in new_prices:  # same keys
+                prices[coin] += new_prices[coin]
+                print("Found new datetime interval",
+                      new_prices[coin][0][DATE_TIME_KEY], "->",
+                      new_prices[coin][-1][DATE_TIME_KEY])
 
-        return prices
+        dates = [
+            data[DATE_TIME_KEY]
+            for data in prices[coins[0]]  # take dates from first coin
+        ]
+        data = []  # prices to list of dicts
+        for i, date in enumerate(dates):
+            if not data or date > data[-1][DATE_TIME_KEY]:  # sorted
+                price = {
+                    coin: prices[coin][i][VALUE_KEY] for coin in coins
+                }
+                price[DATE_TIME_KEY] = date
+                data.append(price)
+        return data
 
 
 def get_market_cap(since, until):
@@ -288,7 +338,7 @@ def get_market_cap(since, until):
 
 def get_prices(coins, currency, since, until, tor):
     if Coin(currency) in CoinmarketCapClient.AVAILABLE_FIAT:
-        client = CoinmarketCapClient()  # better client (use as default)
+        client = CoinmarketCapClient(tor=tor)  # better client (use as default)
     else:
         client = CryptocompareClient(tor=tor)
 

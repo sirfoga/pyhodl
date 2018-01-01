@@ -139,7 +139,7 @@ def get_coin_by_name(coin_name):
             return coin
 
 
-def get_coin_by_codename(codename):
+def get_coin_by_symbol(symbol):
     for coin in CRYPTO_COINS:
-        if coin.codename == codename:
+        if coin.symbol == symbol:
             return coin

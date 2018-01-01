@@ -1,86 +1,86 @@
 [
     {
-        "codename": "BTC",
+      "symbol": "BTC",
         "name": "bitcoin",
         "other_names": [
             "bitcoin"
         ]
     },
     {
-        "codename": "XRP",
+      "symbol": "XRP",
         "name": "ripple",
         "other_names": [
             "ripple"
         ]
     },
     {
-        "codename": "ETH",
+      "symbol": "ETH",
         "name": "ether",
         "other_names": [
             "ethereum"
         ]
     },
     {
-        "codename": "BCH",
+      "symbol": "BCH",
         "name": "bitcoin-cash",
         "other_names": [
             "bitcoin-cash"
         ]
     },
     {
-        "codename": "XOT",
+      "symbol": "XOT",
         "name": "iot",
         "other_names": [
             "internet-of-things"
         ]
     },
     {
-        "codename": "ADA",
+      "symbol": "ADA",
         "name": "cardano",
         "other_names": [
             "cardano"
         ]
     },
     {
-        "codename": "IGNIS",
+      "symbol": "IGNIS",
         "name": "ignis",
         "other_names": [
             "ignis"
         ]
     },
     {
-        "codename": "BCC",
+      "symbol": "BCC",
         "name": "bitcash",
         "other_names": [
             "bitconnect"
         ]
     },
     {
-        "codename": "LTC",
+      "symbol": "LTC",
         "name": "litecoin",
         "other_names": [
             "litecoin"
         ]
     },
     {
-        "codename": "YBC",
+      "symbol": "YBC",
         "name": "ybcoin",
         "other_names": []
     },
     {
-        "codename": "DSH",
+      "symbol": "DSH",
         "name": "dashcoin",
         "other_names": [
             "dashcoin"
         ]
     },
     {
-        "codename": "SPOTS",
+      "symbol": "SPOTS",
         "name": "spots",
         "other_names": []
     },
     {
-        "codename": "MIOTA",
+      "symbol": "MIOTA",
         "name": "iota",
         "other_names": [
             "iota",
@@ -89,21 +89,21 @@
         ]
     },
     {
-        "codename": "XEM",
+      "symbol": "XEM",
         "name": "nem",
         "other_names": [
             "nem"
         ]
     },
     {
-        "codename": "DASH",
+      "symbol": "DASH",
         "name": "digitalcash",
         "other_names": [
             "dash"
         ]
     },
     {
-        "codename": "XLM",
+      "symbol": "XLM",
         "name": "stellar lumens",
         "other_names": [
             "stellar",
@@ -111,104 +111,104 @@
         ]
     },
     {
-        "codename": "ALP",
+      "symbol": "ALP",
         "name": "alpcoin",
         "other_names": []
     },
     {
-        "codename": "XMR",
+      "symbol": "XMR",
         "name": "monero",
         "other_names": [
             "monero"
         ]
     },
     {
-        "codename": "NEO",
+      "symbol": "NEO",
         "name": "neo",
         "other_names": [
             "neo"
         ]
     },
     {
-        "codename": "EOS",
+      "symbol": "EOS",
         "name": "eos",
         "other_names": [
             "eos"
         ]
     },
     {
-        "codename": "BCD",
+      "symbol": "BCD",
         "name": "bitcoin diamond",
         "other_names": [
             "bitcoin-diamond"
         ]
     },
     {
-        "codename": "QTUM",
+      "symbol": "QTUM",
         "name": "qtum",
         "other_names": [
             "qtum"
         ]
     },
     {
-        "codename": "DRK",
+      "symbol": "DRK",
         "name": "darkcoin",
         "other_names": []
     },
     {
-        "codename": "ETC",
+      "symbol": "ETC",
         "name": "ethereum classic",
         "other_names": [
             "ethereum-classic"
         ]
     },
     {
-        "codename": "TRX",
+      "symbol": "TRX",
         "name": "tron",
         "other_names": [
             "tron"
         ]
     },
     {
-        "codename": "XVG",
+      "symbol": "XVG",
         "name": "verge",
         "other_names": [
             "verge"
         ]
     },
     {
-        "codename": "XUSD",
+      "symbol": "XUSD",
         "name": "coinousd",
         "other_names": []
     },
     {
-        "codename": "LSK",
+      "symbol": "LSK",
         "name": "lisk",
         "other_names": [
             "lisk"
         ]
     },
     {
-        "codename": "BITCNY",
+      "symbol": "BITCNY",
         "name": "bitcny",
         "other_names": [
             "bitcny"
         ]
     },
     {
-        "codename": "OMG",
+      "symbol": "OMG",
         "name": "omisego",
         "other_names": [
             "omisego"
         ]
     },
     {
-        "codename": "STR",
+      "symbol": "STR",
         "name": "stellar",
         "other_names": []
     },
     {
-        "codename": "ICX",
+      "symbol": "ICX",
         "name": "icon",
         "other_names": [
             "icon-futures",
@@ -216,49 +216,49 @@
         ]
     },
     {
-        "codename": "BTS",
+      "symbol": "BTS",
         "name": "bitshares",
         "other_names": [
             "bitshares"
         ]
     },
     {
-        "codename": "ARDR",
+      "symbol": "ARDR",
         "name": "ardor",
         "other_names": [
             "ardor"
         ]
     },
     {
-        "codename": "STRAT",
+      "symbol": "STRAT",
         "name": "stratis",
         "other_names": [
             "stratis"
         ]
     },
     {
-        "codename": "PPT",
+      "symbol": "PPT",
         "name": "populous",
         "other_names": [
             "populous"
         ]
     },
     {
-        "codename": "ZEC",
+      "symbol": "ZEC",
         "name": "zcash",
         "other_names": [
             "zcash"
         ]
     },
     {
-        "codename": "EPY",
+      "symbol": "EPY",
         "name": "epy",
         "other_names": [
             "emphy"
         ]
     },
     {
-        "codename": "WAVES",
+      "symbol": "WAVES",
         "name": "waves",
         "other_names": [
             "WAV",
@@ -266,63 +266,63 @@
         ]
     },
     {
-        "codename": "HSR",
+      "symbol": "HSR",
         "name": "hshare",
         "other_names": [
             "hshare"
         ]
     },
     {
-        "codename": "MED",
+      "symbol": "MED",
         "name": "mediterraneancoin",
         "other_names": [
             "medibloc"
         ]
     },
     {
-        "codename": "USDT",
+      "symbol": "USDT",
         "name": "tether",
         "other_names": [
             "tether"
         ]
     },
     {
-        "codename": "BCN",
+      "symbol": "BCN",
         "name": "bytecoin",
         "other_names": [
             "bytecoin-bcn"
         ]
     },
     {
-        "codename": "KMD",
+      "symbol": "KMD",
         "name": "komodo",
         "other_names": [
             "komodo"
         ]
     },
     {
-        "codename": "DOGE",
+      "symbol": "DOGE",
         "name": "dogecoin",
         "other_names": [
             "dogecoin"
         ]
     },
     {
-        "codename": "SC",
+      "symbol": "SC",
         "name": "siacoin",
         "other_names": [
             "siacoin"
         ]
     },
     {
-        "codename": "SNT",
+      "symbol": "SNT",
         "name": "status",
         "other_names": [
             "status"
         ]
     },
     {
-        "codename": "BITUSD",
+      "symbol": "BITUSD",
         "name": "bitshares x",
         "other_names": [
             "bitusd",
@@ -330,213 +330,213 @@
         ]
     },
     {
-        "codename": "BNB",
+      "symbol": "BNB",
         "name": "binance coin",
         "other_names": [
             "binance-coin"
         ]
     },
     {
-        "codename": "REP",
+      "symbol": "REP",
         "name": "augur",
         "other_names": [
             "augur"
         ]
     },
     {
-        "codename": "STEEM",
+      "symbol": "STEEM",
         "name": "steem",
         "other_names": [
             "steem"
         ]
     },
     {
-        "codename": "VERI",
+      "symbol": "VERI",
         "name": "veritaseum",
         "other_names": [
             "veritaseum"
         ]
     },
     {
-        "codename": "GNT",
+      "symbol": "GNT",
         "name": "golem",
         "other_names": [
             "golem-network-tokens"
         ]
     },
     {
-        "codename": "ARK",
+      "symbol": "ARK",
         "name": "ark",
         "other_names": [
             "ark"
         ]
     },
     {
-        "codename": "SALT",
+      "symbol": "SALT",
         "name": "salt",
         "other_names": [
             "salt"
         ]
     },
     {
-        "codename": "DGB",
+      "symbol": "DGB",
         "name": "digibyte",
         "other_names": [
             "digibyte"
         ]
     },
     {
-        "codename": "VEN",
+      "symbol": "VEN",
         "name": "vechain",
         "other_names": [
             "vechain"
         ]
     },
     {
-        "codename": "NXT",
+      "symbol": "NXT",
         "name": "nxt",
         "other_names": [
             "nxt"
         ]
     },
     {
-        "codename": "DCR",
+      "symbol": "DCR",
         "name": "decred",
         "other_names": [
             "decred"
         ]
     },
     {
-        "codename": "PIVX",
+      "symbol": "PIVX",
         "name": "pivx",
         "other_names": [
             "pivx"
         ]
     },
     {
-        "codename": "BC",
+      "symbol": "BC",
         "name": "blackcoin",
         "other_names": []
     },
     {
-        "codename": "MONA",
+      "symbol": "MONA",
         "name": "monacoin",
         "other_names": [
             "monacoin"
         ]
     },
     {
-        "codename": "MAID",
+      "symbol": "MAID",
         "name": "maidsafecoin",
         "other_names": [
             "maidsafecoin"
         ]
     },
     {
-        "codename": "NAS",
+      "symbol": "NAS",
         "name": "nebulas",
         "other_names": [
             "nebulas-token"
         ]
     },
     {
-        "codename": "ANS",
+      "symbol": "ANS",
         "name": "antshares",
         "other_names": []
     },
     {
-        "codename": "FCT",
+      "symbol": "FCT",
         "name": "factom",
         "other_names": [
             "factom"
         ]
     },
     {
-        "codename": "ZRX",
+      "symbol": "ZRX",
         "name": "0x",
         "other_names": [
             "0x"
         ]
     },
     {
-        "codename": "GBYTE",
+      "symbol": "GBYTE",
         "name": "byteball",
         "other_names": [
             "byteball"
         ]
     },
     {
-        "codename": "REQ",
+      "symbol": "REQ",
         "name": "request network",
         "other_names": [
             "request-network"
         ]
     },
     {
-        "codename": "ETN",
+      "symbol": "ETN",
         "name": "electroneum",
         "other_names": [
             "electroneum"
         ]
     },
     {
-        "codename": "BAT",
+      "symbol": "BAT",
         "name": "basic attention token",
         "other_names": [
             "basic-attention-token"
         ]
     },
     {
-        "codename": "XZC",
+      "symbol": "XZC",
         "name": "zcoin",
         "other_names": [
             "zcoin"
         ]
     },
     {
-        "codename": "PAY",
+      "symbol": "PAY",
         "name": "tenx",
         "other_names": [
             "tenx"
         ]
     },
     {
-        "codename": "BTCD",
+      "symbol": "BTCD",
         "name": "bitcoindark",
         "other_names": [
             "bitcoindark"
         ]
     },
     {
-        "codename": "SYS",
+      "symbol": "SYS",
         "name": "syscoin",
         "other_names": [
             "syscoin"
         ]
     },
     {
-        "codename": "FUN",
+      "symbol": "FUN",
         "name": "funfair",
         "other_names": [
             "funfair"
         ]
     },
     {
-        "codename": "POWR",
+      "symbol": "POWR",
         "name": "power ledger",
         "other_names": [
             "power-ledger"
         ]
     },
     {
-        "codename": "AION",
+      "symbol": "AION",
         "name": "aion",
         "other_names": [
             "aion"
         ]
     },
     {
-        "codename": "SAN",
+      "symbol": "SAN",
         "name": "santiment network token",
         "other_names": [
             "santiment",
@@ -544,222 +544,222 @@
         ]
     },
     {
-        "codename": "RDD",
+      "symbol": "RDD",
         "name": "reddcoin",
         "other_names": [
             "reddcoin"
         ]
     },
     {
-        "codename": "QASH",
+      "symbol": "QASH",
         "name": "qash",
         "other_names": [
             "qash"
         ]
     },
     {
-        "codename": "STORJ",
+      "symbol": "STORJ",
         "name": "storjcoins",
         "other_names": [
             "storj"
         ]
     },
     {
-        "codename": "DGD",
+      "symbol": "DGD",
         "name": "digixdao",
         "other_names": [
             "digixdao"
         ]
     },
     {
-        "codename": "KCS",
+      "symbol": "KCS",
         "name": "kucoin shares",
         "other_names": [
             "kucoin-shares"
         ]
     },
     {
-        "codename": "AE",
+      "symbol": "AE",
         "name": "aeternity",
         "other_names": [
             "aeternity"
         ]
     },
     {
-        "codename": "CVC",
+      "symbol": "CVC",
         "name": "civic",
         "other_names": [
             "civic"
         ]
     },
     {
-        "codename": "SKY",
+      "symbol": "SKY",
         "name": "sky",
         "other_names": [
             "skycoin"
         ]
     },
     {
-        "codename": "WTC",
+      "symbol": "WTC",
         "name": "walton",
         "other_names": [
             "walton"
         ]
     },
     {
-        "codename": "VTC",
+      "symbol": "VTC",
         "name": "vertcoin",
         "other_names": [
             "vertcoin"
         ]
     },
     {
-        "codename": "GAS",
+      "symbol": "GAS",
         "name": "gascoin",
         "other_names": [
             "gas"
         ]
     },
     {
-        "codename": "ELF",
+      "symbol": "ELF",
         "name": "aelf",
         "other_names": [
             "aelf"
         ]
     },
     {
-        "codename": "GAME",
+      "symbol": "GAME",
         "name": "gamecredits",
         "other_names": [
             "gamecredits"
         ]
     },
     {
-        "codename": "SPRTS",
+      "symbol": "SPRTS",
         "name": "sprts",
         "other_names": [
             "sprouts"
         ]
     },
     {
-        "codename": "GNO",
+      "symbol": "GNO",
         "name": "gnosis",
         "other_names": [
             "gnosis-gno"
         ]
     },
     {
-        "codename": "LINK",
+      "symbol": "LINK",
         "name": "chainlink",
         "other_names": [
             "chainlink"
         ]
     },
     {
-        "codename": "MANA",
+      "symbol": "MANA",
         "name": "decentraland",
         "other_names": [
             "decentraland"
         ]
     },
     {
-        "codename": "RDN",
+      "symbol": "RDN",
         "name": "rdn",
         "other_names": [
             "raiden-network-token"
         ]
     },
     {
-        "codename": "TRIG",
+      "symbol": "TRIG",
         "name": "trig",
         "other_names": [
             "triggers"
         ]
     },
     {
-        "codename": "DCN",
+      "symbol": "DCN",
         "name": "deepcoin",
         "other_names": [
             "dentacoin"
         ]
     },
     {
-        "codename": "UBQ",
+      "symbol": "UBQ",
         "name": "ubiq",
         "other_names": [
             "ubiq"
         ]
     },
     {
-        "codename": "BLOCK",
+      "symbol": "BLOCK",
         "name": "blocknet",
         "other_names": [
             "blocknet"
         ]
     },
     {
-        "codename": "EMC2",
+      "symbol": "EMC2",
         "name": "einsteinium",
         "other_names": [
             "einsteinium"
         ]
     },
     {
-        "codename": "MCO",
+      "symbol": "MCO",
         "name": "monaco",
         "other_names": [
             "monaco"
         ]
     },
     {
-        "codename": "ZCL",
+      "symbol": "ZCL",
         "name": "zclassic",
         "other_names": [
             "zclassic"
         ]
     },
     {
-        "codename": "BQX",
+      "symbol": "BQX",
         "name": "bitquence",
         "other_names": []
     },
     {
-        "codename": "DENT",
+      "symbol": "DENT",
         "name": "dent",
         "other_names": [
             "dent"
         ]
     },
     {
-        "codename": "NAV",
+      "symbol": "NAV",
         "name": "navajocoin",
         "other_names": [
             "nav-coin"
         ]
     },
     {
-        "codename": "GXS",
+      "symbol": "GXS",
         "name": "gxshares",
         "other_names": [
             "gxshares"
         ]
     },
     {
-        "codename": "EDG",
+      "symbol": "EDG",
         "name": "edgeless",
         "other_names": [
             "edgeless"
         ]
     },
     {
-        "codename": "ENG",
+      "symbol": "ENG",
         "name": "enigma",
         "other_names": [
             "enigma-project"
         ]
     },
     {
-        "codename": "RCN",
+      "symbol": "RCN",
         "name": "rcn",
         "other_names": [
             "ripio-credit-network",
@@ -767,98 +767,98 @@
         ]
     },
     {
-        "codename": "ZEN",
+      "symbol": "ZEN",
         "name": "zen",
         "other_names": [
             "zencash"
         ]
     },
     {
-        "codename": "LEND",
+      "symbol": "LEND",
         "name": "ethlend",
         "other_names": [
             "ethlend"
         ]
     },
     {
-        "codename": "BAY",
+      "symbol": "BAY",
         "name": "bitbay",
         "other_names": [
             "bitbay"
         ]
     },
     {
-        "codename": "NXS",
+      "symbol": "NXS",
         "name": "nexus",
         "other_names": [
             "nexus"
         ]
     },
     {
-        "codename": "ADX",
+      "symbol": "ADX",
         "name": "adex",
         "other_names": [
             "adx-net"
         ]
     },
     {
-        "codename": "XBY",
+      "symbol": "XBY",
         "name": "xby",
         "other_names": [
             "xtrabytes"
         ]
     },
     {
-        "codename": "MTL",
+      "symbol": "MTL",
         "name": "metal",
         "other_names": [
             "metal"
         ]
     },
     {
-        "codename": "PART",
+      "symbol": "PART",
         "name": "particl",
         "other_names": [
             "particl"
         ]
     },
     {
-        "codename": "SNGLS",
+      "symbol": "SNGLS",
         "name": "singulardtv",
         "other_names": [
             "singulardtv"
         ]
     },
     {
-        "codename": "THC",
+      "symbol": "THC",
         "name": "hempcoin",
         "other_names": [
             "hempcoin"
         ]
     },
     {
-        "codename": "DATA",
+      "symbol": "DATA",
         "name": "streamr datacoin",
         "other_names": [
             "streamr-datacoin"
         ]
     },
     {
-        "codename": "SNM",
+      "symbol": "SNM",
         "name": "sonm",
         "other_names": [
             "sonm"
         ]
     },
     {
-        "codename": "XDN",
+      "symbol": "XDN",
         "name": "digitalnote",
         "other_names": [
             "digitalnote"
         ]
     },
     {
-        "codename": "RLC",
+      "symbol": "RLC",
         "name": "iexec rlc",
         "other_names": [
             "iexec-rlc",
@@ -866,150 +866,150 @@
         ]
     },
     {
-        "codename": "RISE",
+      "symbol": "RISE",
         "name": "rise",
         "other_names": [
             "rise"
         ]
     },
     {
-        "codename": "CTR",
+      "symbol": "CTR",
         "name": "centra",
         "other_names": [
             "centra"
         ]
     },
     {
-        "codename": "CLOAK",
+      "symbol": "CLOAK",
         "name": "cloakcoin",
         "other_names": [
             "cloakcoin"
         ]
     },
     {
-        "codename": "ENJ",
+      "symbol": "ENJ",
         "name": "enjin coin",
         "other_names": [
             "enjin-coin"
         ]
     },
     {
-        "codename": "CND",
+      "symbol": "CND",
         "name": "cannabisdark",
         "other_names": [
             "cindicator"
         ]
     },
     {
-        "codename": "LRC",
+      "symbol": "LRC",
         "name": "loopring",
         "other_names": [
             "loopring"
         ]
     },
     {
-        "codename": "GRANT",
+      "symbol": "GRANT",
         "name": "grant",
         "other_names": []
     },
     {
-        "codename": "VIRAL",
+      "symbol": "VIRAL",
         "name": "viral",
         "other_names": []
     },
     {
-        "codename": "VOX",
+      "symbol": "VOX",
         "name": "voxels",
         "other_names": [
             "voxels"
         ]
     },
     {
-        "codename": "MGO",
+      "symbol": "MGO",
         "name": "mobilego",
         "other_names": [
             "mobilego"
         ]
     },
     {
-        "codename": "QRL",
+      "symbol": "QRL",
         "name": "quantum resistant ledger",
         "other_names": [
             "quantum-resistant-ledger"
         ]
     },
     {
-        "codename": "EMC",
+      "symbol": "EMC",
         "name": "emercoin",
         "other_names": [
             "emercoin"
         ]
     },
     {
-        "codename": "DCT",
+      "symbol": "DCT",
         "name": "decent",
         "other_names": [
             "decent"
         ]
     },
     {
-        "codename": "MOON",
+      "symbol": "MOON",
         "name": "mooncoin",
         "other_names": [
             "mooncoin"
         ]
     },
     {
-        "codename": "AGRS",
+      "symbol": "AGRS",
         "name": "agrs",
         "other_names": [
             "agoras-tokens"
         ]
     },
     {
-        "codename": "VIA",
+      "symbol": "VIA",
         "name": "viacoin",
         "other_names": [
             "viacoin"
         ]
     },
     {
-        "codename": "MOD",
+      "symbol": "MOD",
         "name": "modum",
         "other_names": [
             "modum"
         ]
     },
     {
-        "codename": "GRS",
+      "symbol": "GRS",
         "name": "groestlcoin",
         "other_names": [
             "groestlcoin"
         ]
     },
     {
-        "codename": "PPC",
+      "symbol": "PPC",
         "name": "peercoin",
         "other_names": [
             "peercoin"
         ]
     },
     {
-        "codename": "WINGS",
+      "symbol": "WINGS",
         "name": "wings",
         "other_names": [
             "wings"
         ]
     },
     {
-        "codename": "SHIFT",
+      "symbol": "SHIFT",
         "name": "shift",
         "other_names": [
             "shift"
         ]
     },
     {
-        "codename": "ETP",
+      "symbol": "ETP",
         "name": "metaverse entropy",
         "other_names": [
             "metaverse",
@@ -1017,14 +1017,14 @@
         ]
     },
     {
-        "codename": "DNT",
+      "symbol": "DNT",
         "name": "district0x",
         "other_names": [
             "district0x"
         ]
     },
     {
-        "codename": "LBC",
+      "symbol": "LBC",
         "name": "lbry credits",
         "other_names": [
             "library-credit",
@@ -1032,49 +1032,49 @@
         ]
     },
     {
-        "codename": "NLG",
+      "symbol": "NLG",
         "name": "guldencoin",
         "other_names": [
             "gulden"
         ]
     },
     {
-        "codename": "XRL",
+      "symbol": "XRL",
         "name": "rialto",
         "other_names": [
             "rialto"
         ]
     },
     {
-        "codename": "TNT",
+      "symbol": "TNT",
         "name": "tierion",
         "other_names": [
             "tierion"
         ]
     },
     {
-        "codename": "POT",
+      "symbol": "POT",
         "name": "potcoin",
         "other_names": [
             "potcoin"
         ]
     },
     {
-        "codename": "TGT",
+      "symbol": "TGT",
         "name": "target coin",
         "other_names": [
             "target-coin"
         ]
     },
     {
-        "codename": "CREDO",
+      "symbol": "CREDO",
         "name": "credo",
         "other_names": [
             "credo"
         ]
     },
     {
-        "codename": "CDT",
+      "symbol": "CDT",
         "name": "cassubian detk",
         "other_names": [
             "cassubian-detk",
@@ -1082,124 +1082,124 @@
         ]
     },
     {
-        "codename": "BURST",
+      "symbol": "BURST",
         "name": "burst",
         "other_names": [
             "burst"
         ]
     },
     {
-        "codename": "DRACO",
+      "symbol": "DRACO",
         "name": "dttoken",
         "other_names": []
     },
     {
-        "codename": "AMP",
+      "symbol": "AMP",
         "name": "synereo",
         "other_names": [
             "synereo"
         ]
     },
     {
-        "codename": "ATM",
+      "symbol": "ATM",
         "name": "atm",
         "other_names": [
             "attention-token-of-media"
         ]
     },
     {
-        "codename": "PURA",
+      "symbol": "PURA",
         "name": "pura",
         "other_names": [
             "pura"
         ]
     },
     {
-        "codename": "AMB",
+      "symbol": "AMB",
         "name": "ambrosus",
         "other_names": [
             "amber"
         ]
     },
     {
-        "codename": "EDO",
+      "symbol": "EDO",
         "name": "eidoo",
         "other_names": [
             "eidoo"
         ]
     },
     {
-        "codename": "XCP",
+      "symbol": "XCP",
         "name": "counterparty",
         "other_names": [
             "counterparty"
         ]
     },
     {
-        "codename": "CFI",
+      "symbol": "CFI",
         "name": "cofound.it",
         "other_names": [
             "cofound-it"
         ]
     },
     {
-        "codename": "AEON",
+      "symbol": "AEON",
         "name": "aeon",
         "other_names": [
             "aeon"
         ]
     },
     {
-        "codename": "AST",
+      "symbol": "AST",
         "name": "airswap",
         "other_names": [
             "airswap"
         ]
     },
     {
-        "codename": "XSPEC",
+      "symbol": "XSPEC",
         "name": "xspec",
         "other_names": [
             "spectrecoin"
         ]
     },
     {
-        "codename": "SLS",
+      "symbol": "SLS",
         "name": "sls",
         "other_names": [
             "salus"
         ]
     },
     {
-        "codename": "EAC",
+      "symbol": "EAC",
         "name": "earthcoin",
         "other_names": [
             "earthcoin"
         ]
     },
     {
-        "codename": "MLN",
+      "symbol": "MLN",
         "name": "melon",
         "other_names": [
             "melon"
         ]
     },
     {
-        "codename": "HMQ",
+      "symbol": "HMQ",
         "name": "humaniq",
         "other_names": [
             "humaniq"
         ]
     },
     {
-        "codename": "1ST",
+      "symbol": "1ST",
         "name": "firstblood",
         "other_names": [
             "firstblood"
         ]
     },
     {
-        "codename": "ICN",
+      "symbol": "ICN",
         "name": "iconomi",
         "other_names": [
             "iconomi",
@@ -1207,187 +1207,187 @@
         ]
     },
     {
-        "codename": "KICK",
+      "symbol": "KICK",
         "name": "kickcoin",
         "other_names": [
             "kickico"
         ]
     },
     {
-        "codename": "MER",
+      "symbol": "MER",
         "name": "mer",
         "other_names": [
             "mercury"
         ]
     },
     {
-        "codename": "PLR",
+      "symbol": "PLR",
         "name": "plr",
         "other_names": [
             "pillar"
         ]
     },
     {
-        "codename": "FTC",
+      "symbol": "FTC",
         "name": "feathercoin",
         "other_names": [
             "feathercoin"
         ]
     },
     {
-        "codename": "POE",
+      "symbol": "POE",
         "name": "po.et",
         "other_names": [
             "poet"
         ]
     },
     {
-        "codename": "GUP",
+      "symbol": "GUP",
         "name": "matchpool",
         "other_names": [
             "guppy"
         ]
     },
     {
-        "codename": "SIB",
+      "symbol": "SIB",
         "name": "sib",
         "other_names": [
             "sibcoin"
         ]
     },
     {
-        "codename": "VIB",
+      "symbol": "VIB",
         "name": "viberate",
         "other_names": [
             "viberate"
         ]
     },
     {
-        "codename": "PPY",
+      "symbol": "PPY",
         "name": "ppy",
         "other_names": [
             "peerplays-ppy"
         ]
     },
     {
-        "codename": "BLK",
+      "symbol": "BLK",
         "name": "blackcoin",
         "other_names": [
             "blackcoin"
         ]
     },
     {
-        "codename": "EB3",
+      "symbol": "EB3",
         "name": "eb3 coin",
         "other_names": [
             "eb3-coin"
         ]
     },
     {
-        "codename": "MTH",
+      "symbol": "MTH",
         "name": "monetha",
         "other_names": [
             "monetha"
         ]
     },
     {
-        "codename": "ION",
+      "symbol": "ION",
         "name": "ion",
         "other_names": [
             "ion"
         ]
     },
     {
-        "codename": "TRST",
+      "symbol": "TRST",
         "name": "wetrust",
         "other_names": [
             "trust"
         ]
     },
     {
-        "codename": "NMC",
+      "symbol": "NMC",
         "name": "namecoin",
         "other_names": [
             "namecoin"
         ]
     },
     {
-        "codename": "XEL",
+      "symbol": "XEL",
         "name": "elastic",
         "other_names": [
             "elastic"
         ]
     },
     {
-        "codename": "BTX",
+      "symbol": "BTX",
         "name": "btx",
         "other_names": [
             "bitcore"
         ]
     },
     {
-        "codename": "LUN",
+      "symbol": "LUN",
         "name": "lunyr",
         "other_names": [
             "lunyr"
         ]
     },
     {
-        "codename": "GRC",
+      "symbol": "GRC",
         "name": "gridcoin",
         "other_names": [
             "gridcoin"
         ]
     },
     {
-        "codename": "OMNI",
+      "symbol": "OMNI",
         "name": "omni",
         "other_names": [
             "omni"
         ]
     },
     {
-        "codename": "FAIR",
+      "symbol": "FAIR",
         "name": "faircoin",
         "other_names": [
             "faircoin"
         ]
     },
     {
-        "codename": "LOG",
+      "symbol": "LOG",
         "name": "woodcoin",
         "other_names": [
             "woodcoin"
         ]
     },
     {
-        "codename": "XWC",
+      "symbol": "XWC",
         "name": "whitecoin",
         "other_names": [
             "whitecoin"
         ]
     },
     {
-        "codename": "NEOS",
+      "symbol": "NEOS",
         "name": "neoscoin",
         "other_names": [
             "neoscoin"
         ]
     },
     {
-        "codename": "LUCKY",
+      "symbol": "LUCKY",
         "name": "lucky",
         "other_names": []
     },
     {
-        "codename": "RVT",
+      "symbol": "RVT",
         "name": "rivetz",
         "other_names": [
             "rivetz"
         ]
     },
     {
-        "codename": "IOC",
+      "symbol": "IOC",
         "name": "i/o coin",
         "other_names": [
             "iocoin",
@@ -1395,84 +1395,84 @@
         ]
     },
     {
-        "codename": "PAC",
+      "symbol": "PAC",
         "name": "paccoin",
         "other_names": [
             "paccoin"
         ]
     },
     {
-        "codename": "DMD",
+      "symbol": "DMD",
         "name": "diamond",
         "other_names": [
             "diamond"
         ]
     },
     {
-        "codename": "XPA",
+      "symbol": "XPA",
         "name": "xplay",
         "other_names": [
             "xplay"
         ]
     },
     {
-        "codename": "TAAS",
+      "symbol": "TAAS",
         "name": "taas",
         "other_names": [
             "taas"
         ]
     },
     {
-        "codename": "TIX",
+      "symbol": "TIX",
         "name": "blocktix",
         "other_names": [
             "blocktix"
         ]
     },
     {
-        "codename": "CRW",
+      "symbol": "CRW",
         "name": "crowncoin",
         "other_names": [
             "crown"
         ]
     },
     {
-        "codename": "DLT",
+      "symbol": "DLT",
         "name": "agrello",
         "other_names": [
             "agrello-delta"
         ]
     },
     {
-        "codename": "PASC",
+      "symbol": "PASC",
         "name": "pasc",
         "other_names": [
             "pascal-coin"
         ]
     },
     {
-        "codename": "RADS",
+      "symbol": "RADS",
         "name": "radium",
         "other_names": [
             "radium"
         ]
     },
     {
-        "codename": "EXP",
+      "symbol": "EXP",
         "name": "expanse",
         "other_names": [
             "expanse"
         ]
     },
     {
-        "codename": "NMR",
+      "symbol": "NMR",
         "name": "numeraire",
         "other_names": [
             "numeraire"
         ]
     },
     {
-        "codename": "MUE",
+      "symbol": "MUE",
         "name": "monetaryunit ",
         "other_names": [
             "monetaryunit",
@@ -1480,131 +1480,131 @@
         ]
     },
     {
-        "codename": "ADT",
+      "symbol": "ADT",
         "name": "adtoken",
         "other_names": [
             "adtoken"
         ]
     },
     {
-        "codename": "MDA",
+      "symbol": "MDA",
         "name": "moeda loyalty points",
         "other_names": [
             "moeda-loyalty-points"
         ]
     },
     {
-        "codename": "MSP",
+      "symbol": "MSP",
         "name": "msp",
         "other_names": [
             "mothership"
         ]
     },
     {
-        "codename": "OK",
+      "symbol": "OK",
         "name": "okcash",
         "other_names": [
             "okcash"
         ]
     },
     {
-        "codename": "NLC2",
+      "symbol": "NLC2",
         "name": "nlc2",
         "other_names": [
             "nolimitcoin"
         ]
     },
     {
-        "codename": "PTOY",
+      "symbol": "PTOY",
         "name": "patientory",
         "other_names": [
             "patientory"
         ]
     },
     {
-        "codename": "GOLOS",
+      "symbol": "GOLOS",
         "name": "golos",
         "other_names": [
             "golos"
         ]
     },
     {
-        "codename": "SBD",
+      "symbol": "SBD",
         "name": "sbd",
         "other_names": [
             "steem-dollars"
         ]
     },
     {
-        "codename": "BOT",
+      "symbol": "BOT",
         "name": "bot",
         "other_names": [
             "bodhi"
         ]
     },
     {
-        "codename": "STX",
+      "symbol": "STX",
         "name": "stox",
         "other_names": [
             "stox"
         ]
     },
     {
-        "codename": "BITB",
+      "symbol": "BITB",
         "name": "bitbean",
         "other_names": [
             "bitbean"
         ]
     },
     {
-        "codename": "SWT",
+      "symbol": "SWT",
         "name": "swt",
         "other_names": [
             "swarm-city"
         ]
     },
     {
-        "codename": "CSNO",
+      "symbol": "CSNO",
         "name": "bitdice",
         "other_names": [
             "bitdice"
         ]
     },
     {
-        "codename": "SAFEX",
+      "symbol": "SAFEX",
         "name": "safe exchange coin",
         "other_names": [
             "safe-exchange-coin"
         ]
     },
     {
-        "codename": "IFT",
+      "symbol": "IFT",
         "name": "investfeed",
         "other_names": [
             "investfeed"
         ]
     },
     {
-        "codename": "ICO",
+      "symbol": "ICO",
         "name": "ico",
         "other_names": []
     },
     {
-        "codename": "WCT",
+      "symbol": "WCT",
         "name": "waves community token",
         "other_names": [
             "waves-community-token"
         ]
     },
     {
-        "codename": "UNITY",
+      "symbol": "UNITY",
         "name": "supernet",
         "other_names": [
             "supernet-unity"
         ]
     },
     {
-        "codename": "PRO",
+      "symbol": "PRO",
         "name": "payprocoin",
         "other_names": [
             "propy",
@@ -1612,342 +1612,342 @@
         ]
     },
     {
-        "codename": "PHR",
+      "symbol": "PHR",
         "name": "phr",
         "other_names": [
             "phore"
         ]
     },
     {
-        "codename": "RBY",
+      "symbol": "RBY",
         "name": "rubycoin",
         "other_names": [
             "rubycoin"
         ]
     },
     {
-        "codename": "TKN",
+      "symbol": "TKN",
         "name": "tokencard",
         "other_names": [
             "tokencard"
         ]
     },
     {
-        "codename": "XCN",
+      "symbol": "XCN",
         "name": "cryptonite",
         "other_names": [
             "cryptonite"
         ]
     },
     {
-        "codename": "AIR",
+      "symbol": "AIR",
         "name": "air",
         "other_names": [
             "airtoken"
         ]
     },
     {
-        "codename": "PGL",
+      "symbol": "PGL",
         "name": "prospectors gold",
         "other_names": [
             "prospectors-gold"
         ]
     },
     {
-        "codename": "LMC",
+      "symbol": "LMC",
         "name": "lmc",
         "other_names": [
             "lomocoin"
         ]
     },
     {
-        "codename": "NXC",
+      "symbol": "NXC",
         "name": "nexium",
         "other_names": [
             "nexium"
         ]
     },
     {
-        "codename": "MYST",
+      "symbol": "MYST",
         "name": "mysterium",
         "other_names": [
             "mysterium"
         ]
     },
     {
-        "codename": "IXT",
+      "symbol": "IXT",
         "name": "insurex",
         "other_names": [
             "ixledger"
         ]
     },
     {
-        "codename": "CLICK",
+      "symbol": "CLICK",
         "name": "click",
         "other_names": []
     },
     {
-        "codename": "GAM",
+      "symbol": "GAM",
         "name": "gam",
         "other_names": [
             "gambit"
         ]
     },
     {
-        "codename": "PST",
+      "symbol": "PST",
         "name": "primas",
         "other_names": [
             "primas"
         ]
     },
     {
-        "codename": "WGR",
+      "symbol": "WGR",
         "name": "wagerr",
         "other_names": [
             "wagerr"
         ]
     },
     {
-        "codename": "XMY",
+      "symbol": "XMY",
         "name": "myriad",
         "other_names": [
             "myriad"
         ]
     },
     {
-        "codename": "HEAT",
+      "symbol": "HEAT",
         "name": "heat",
         "other_names": [
             "heat-ledger"
         ]
     },
     {
-        "codename": "FLO",
+      "symbol": "FLO",
         "name": "florincoin",
         "other_names": [
             "florincoin"
         ]
     },
     {
-        "codename": "GVT",
+      "symbol": "GVT",
         "name": "genesis vision",
         "other_names": [
             "genesis-vision"
         ]
     },
     {
-        "codename": "EVX",
+      "symbol": "EVX",
         "name": "everex",
         "other_names": [
             "everex"
         ]
     },
     {
-        "codename": "OAX",
+      "symbol": "OAX",
         "name": "openanx",
         "other_names": [
             "oax"
         ]
     },
     {
-        "codename": "ECC",
+      "symbol": "ECC",
         "name": "eccoin",
         "other_names": [
             "eccoin"
         ]
     },
     {
-        "codename": "GCR",
+      "symbol": "GCR",
         "name": "gcr",
         "other_names": [
             "global-currency-reserve"
         ]
     },
     {
-        "codename": "FLDC",
+      "symbol": "FLDC",
         "name": "foldingcoin",
         "other_names": [
             "foldingcoin"
         ]
     },
     {
-        "codename": "CLAM",
+      "symbol": "CLAM",
         "name": "clams",
         "other_names": [
             "clams"
         ]
     },
     {
-        "codename": "JINN",
+      "symbol": "JINN",
         "name": "jinn",
         "other_names": [
             "jinn"
         ]
     },
     {
-        "codename": "BCAP",
+      "symbol": "BCAP",
         "name": "bcap",
         "other_names": [
             "bcap"
         ]
     },
     {
-        "codename": "QAU",
+      "symbol": "QAU",
         "name": "qau",
         "other_names": [
             "quantum"
         ]
     },
     {
-        "codename": "VRC",
+      "symbol": "VRC",
         "name": "vericoin",
         "other_names": [
             "vericoin"
         ]
     },
     {
-        "codename": "FC2",
+      "symbol": "FC2",
         "name": "fuel2coin",
         "other_names": [
             "fuelcoin"
         ]
     },
     {
-        "codename": "INCNT",
+      "symbol": "INCNT",
         "name": "incent",
         "other_names": [
             "incent"
         ]
     },
     {
-        "codename": "ELIX",
+      "symbol": "ELIX",
         "name": "elixir",
         "other_names": [
             "elixir"
         ]
     },
     {
-        "codename": "DTB",
+      "symbol": "DTB",
         "name": "databits",
         "other_names": [
             "databits"
         ]
     },
     {
-        "codename": "HTML5",
+      "symbol": "HTML5",
         "name": "htmlcoin",
         "other_names": [
             "htmlcoin"
         ]
     },
     {
-        "codename": "FRST",
+      "symbol": "FRST",
         "name": "frst",
         "other_names": [
             "firstcoin"
         ]
     },
     {
-        "codename": "SNC",
+      "symbol": "SNC",
         "name": "snc",
         "other_names": [
             "suncontract"
         ]
     },
     {
-        "codename": "XST",
+      "symbol": "XST",
         "name": "stealthcoin",
         "other_names": [
             "stealthcoin"
         ]
     },
     {
-        "codename": "MUSIC",
+      "symbol": "MUSIC",
         "name": "music",
         "other_names": [
             "musicoin"
         ]
     },
     {
-        "codename": "ZOI",
+      "symbol": "ZOI",
         "name": "zoi",
         "other_names": [
             "zoin"
         ]
     },
     {
-        "codename": "PEPECASH",
+      "symbol": "PEPECASH",
         "name": "pepe cash",
         "other_names": [
             "pepe-cash"
         ]
     },
     {
-        "codename": "POSW",
+      "symbol": "POSW",
         "name": "posw",
         "other_names": [
             "posw-coin"
         ]
     },
     {
-        "codename": "DOPE",
+      "symbol": "DOPE",
         "name": "dopecoin",
         "other_names": [
             "dopecoin"
         ]
     },
     {
-        "codename": "CANN",
+      "symbol": "CANN",
         "name": "cannabiscoin",
         "other_names": [
             "cannabiscoin"
         ]
     },
     {
-        "codename": "CGB",
+      "symbol": "CGB",
         "name": "cryptogenicbullion",
         "other_names": []
     },
     {
-        "codename": "AVT",
+      "symbol": "AVT",
         "name": "aventus",
         "other_names": [
             "aventus"
         ]
     },
     {
-        "codename": "OBITS",
+      "symbol": "OBITS",
         "name": "obits",
         "other_names": [
             "obits"
         ]
     },
     {
-        "codename": "ENRG",
+      "symbol": "ENRG",
         "name": "energycoin",
         "other_names": [
             "energycoin"
         ]
     },
     {
-        "codename": "SLR",
+      "symbol": "SLR",
         "name": "solarcoin",
         "other_names": [
             "solarcoin"
         ]
     },
     {
-        "codename": "ROUND",
+      "symbol": "ROUND",
         "name": "round",
         "other_names": []
     },
     {
-        "codename": "ZCC",
+      "symbol": "ZCC",
         "name": "zccoin",
         "other_names": []
     },
     {
-        "codename": "BCPT",
+      "symbol": "BCPT",
         "name": "blockmason credit protocol",
         "other_names": [
             "blockmason-credit-protocol",
@@ -1955,300 +1955,300 @@
         ]
     },
     {
-        "codename": "HVN",
+      "symbol": "HVN",
         "name": "hive",
         "other_names": [
             "hive"
         ]
     },
     {
-        "codename": "IOP",
+      "symbol": "IOP",
         "name": "internet of people",
         "other_names": [
             "internet-of-people"
         ]
     },
     {
-        "codename": "SOAR",
+      "symbol": "SOAR",
         "name": "soar",
         "other_names": [
             "soarcoin"
         ]
     },
     {
-        "codename": "BQ",
+      "symbol": "BQ",
         "name": "bitqy",
         "other_names": [
             "bitqy"
         ]
     },
     {
-        "codename": "SEQ",
+      "symbol": "SEQ",
         "name": "seq",
         "other_names": [
             "sequence"
         ]
     },
     {
-        "codename": "SXC",
+      "symbol": "SXC",
         "name": "sexcoin",
         "other_names": [
             "sexcoin"
         ]
     },
     {
-        "codename": "BSD",
+      "symbol": "BSD",
         "name": "bsd",
         "other_names": [
             "bitsend"
         ]
     },
     {
-        "codename": "BCY",
+      "symbol": "BCY",
         "name": "bcy",
         "other_names": [
             "bitcrystals"
         ]
     },
     {
-        "codename": "COVAL",
+      "symbol": "COVAL",
         "name": "coval",
         "other_names": [
             "circuits-of-value"
         ]
     },
     {
-        "codename": "PINK",
+      "symbol": "PINK",
         "name": "pinkcoin",
         "other_names": [
             "pinkcoin"
         ]
     },
     {
-        "codename": "BBR",
+      "symbol": "BBR",
         "name": "boolberry",
         "other_names": [
             "boolberry"
         ]
     },
     {
-        "codename": "CV2",
+      "symbol": "CV2",
         "name": "cv2",
         "other_names": [
             "colossuscoin-v2"
         ]
     },
     {
-        "codename": "LEO",
+      "symbol": "LEO",
         "name": "leo",
         "other_names": [
             "leocoin"
         ]
     },
     {
-        "codename": "FLASH",
+      "symbol": "FLASH",
         "name": "flash",
         "other_names": [
             "flash"
         ]
     },
     {
-        "codename": "PLBT",
+      "symbol": "PLBT",
         "name": "plbt",
         "other_names": [
             "polybius"
         ]
     },
     {
-        "codename": "ZCOIN",
+      "symbol": "ZCOIN",
         "name": "zcoin",
         "other_names": []
     },
     {
-        "codename": "SUMO",
+      "symbol": "SUMO",
         "name": "sumo",
         "other_names": [
             "sumokoin"
         ]
     },
     {
-        "codename": "DICE",
+      "symbol": "DICE",
         "name": "neodice",
         "other_names": [
             "etheroll"
         ]
     },
     {
-        "codename": "SPHR",
+      "symbol": "SPHR",
         "name": "sphere",
         "other_names": [
             "sphere"
         ]
     },
     {
-        "codename": "XPM",
+      "symbol": "XPM",
         "name": "primecoin",
         "other_names": [
             "primecoin"
         ]
     },
     {
-        "codename": "ETB",
+      "symbol": "ETB",
         "name": "ethbits",
         "other_names": []
     },
     {
-        "codename": "MTC",
+      "symbol": "MTC",
         "name": "marinecoin",
         "other_names": []
     },
     {
-        "codename": "TX",
+      "symbol": "TX",
         "name": "tx",
         "other_names": [
             "transfercoin"
         ]
     },
     {
-        "codename": "PLU",
+      "symbol": "PLU",
         "name": "pluton",
         "other_names": [
             "pluton"
         ]
     },
     {
-        "codename": "XAUR",
+      "symbol": "XAUR",
         "name": "xaurum",
         "other_names": [
             "xaurum"
         ]
     },
     {
-        "codename": "ABY",
+      "symbol": "ABY",
         "name": "applebytes",
         "other_names": [
             "artbyte"
         ]
     },
     {
-        "codename": "CURE",
+      "symbol": "CURE",
         "name": "curecoin",
         "other_names": [
             "curecoin"
         ]
     },
     {
-        "codename": "NYC",
+      "symbol": "NYC",
         "name": "newyorkcoin",
         "other_names": [
             "newyorkcoin"
         ]
     },
     {
-        "codename": "COSS",
+      "symbol": "COSS",
         "name": "coss",
         "other_names": [
             "coss"
         ]
     },
     {
-        "codename": "EBTC",
+      "symbol": "EBTC",
         "name": "ebtc",
         "other_names": [
             "ebtcnew"
         ]
     },
     {
-        "codename": "UNO",
+      "symbol": "UNO",
         "name": "unobtanium",
         "other_names": [
             "unobtanium"
         ]
     },
     {
-        "codename": "CADASTRAL",
+      "symbol": "CADASTRAL",
         "name": "bitland",
         "other_names": []
     },
     {
-        "codename": "SPR",
+      "symbol": "SPR",
         "name": "supercoin",
         "other_names": [
             "spreadcoin"
         ]
     },
     {
-        "codename": "BMC",
+      "symbol": "BMC",
         "name": "blackmoon crypto",
         "other_names": [
             "blackmoon-crypto"
         ]
     },
     {
-        "codename": "UNIT",
+      "symbol": "UNIT",
         "name": "galaxyunit",
         "other_names": [
             "universal-currency"
         ]
     },
     {
-        "codename": "ATB",
+      "symbol": "ATB",
         "name": "atbcoin",
         "other_names": [
             "atbcoin"
         ]
     },
     {
-        "codename": "MEME",
+      "symbol": "MEME",
         "name": "meme",
         "other_names": [
             "memetic"
         ]
     },
     {
-        "codename": "AUR",
+      "symbol": "AUR",
         "name": "auroracoin",
         "other_names": [
             "auroracoin"
         ]
     },
     {
-        "codename": "DFT",
+      "symbol": "DFT",
         "name": "dft",
         "other_names": [
             "draftcoin"
         ]
     },
     {
-        "codename": "TIME",
+      "symbol": "TIME",
         "name": "chronobank",
         "other_names": [
             "chronobank"
         ]
     },
     {
-        "codename": "HUSH",
+      "symbol": "HUSH",
         "name": "hush",
         "other_names": [
             "hush"
         ]
     },
     {
-        "codename": "REC",
+      "symbol": "REC",
         "name": "realcoin",
         "other_names": [
             "regalcoin"
         ]
     },
     {
-        "codename": "ECN",
+      "symbol": "ECN",
         "name": "ecn",
         "other_names": [
             "e-coin"
         ]
     },
     {
-        "codename": "ETT",
+      "symbol": "ETT",
         "name": "encryptotel",
         "other_names": [
             "encryptotel",
@@ -2256,33 +2256,33 @@
         ]
     },
     {
-        "codename": "BTG",
+      "symbol": "BTG",
         "name": "bitcoin gold",
         "other_names": [
             "bitcoin-gold"
         ]
     },
     {
-        "codename": "QWARK",
+      "symbol": "QWARK",
         "name": "qwark",
         "other_names": [
             "qwark"
         ]
     },
     {
-        "codename": "TFL",
+      "symbol": "TFL",
         "name": "tfl",
         "other_names": [
             "trueflip"
         ]
     },
     {
-        "codename": "XC",
+      "symbol": "XC",
         "name": "xcurrency",
         "other_names": []
     },
     {
-        "codename": "BET",
+      "symbol": "BET",
         "name": "betacoin",
         "other_names": [
             "dao-casino",
@@ -2290,397 +2290,397 @@
         ]
     },
     {
-        "codename": "PIX",
+      "symbol": "PIX",
         "name": "pix",
         "other_names": [
             "lampix"
         ]
     },
     {
-        "codename": "CAGE",
+      "symbol": "CAGE",
         "name": "cagecoin",
         "other_names": []
     },
     {
-        "codename": "ATMS",
+      "symbol": "ATMS",
         "name": "atms",
         "other_names": [
             "atmos"
         ]
     },
     {
-        "codename": "MINT",
+      "symbol": "MINT",
         "name": "mintcoin",
         "other_names": [
             "mintcoin"
         ]
     },
     {
-        "codename": "BLITZ",
+      "symbol": "BLITZ",
         "name": "blitz",
         "other_names": [
             "blitzcash"
         ]
     },
     {
-        "codename": "PTC",
+      "symbol": "PTC",
         "name": "pesetacoin",
         "other_names": [
             "pesetacoin"
         ]
     },
     {
-        "codename": "XTO",
+      "symbol": "XTO",
         "name": "xto",
         "other_names": [
             "tao"
         ]
     },
     {
-        "codename": "XBC",
+      "symbol": "XBC",
         "name": "bitcoinplus",
         "other_names": [
             "bitcoin-plus"
         ]
     },
     {
-        "codename": "BWK",
+      "symbol": "BWK",
         "name": "bulwark",
         "other_names": [
             "bulwark"
         ]
     },
     {
-        "codename": "BELA",
+      "symbol": "BELA",
         "name": "bellacoin",
         "other_names": [
             "belacoin"
         ]
     },
     {
-        "codename": "KORE",
+      "symbol": "KORE",
         "name": "korecoin",
         "other_names": [
             "korecoin"
         ]
     },
     {
-        "codename": "PRT",
+      "symbol": "PRT",
         "name": "particle",
         "other_names": []
     },
     {
-        "codename": "BTSR",
+      "symbol": "BTSR",
         "name": "btsr",
         "other_names": [
             "btsr"
         ]
     },
     {
-        "codename": "ECOB",
+      "symbol": "ECOB",
         "name": "ecob",
         "other_names": [
             "ecobit"
         ]
     },
     {
-        "codename": "MYB",
+      "symbol": "MYB",
         "name": "myb",
         "other_names": [
             "mybit-token"
         ]
     },
     {
-        "codename": "CRB",
+      "symbol": "CRB",
         "name": "crb",
         "other_names": [
             "creditbit"
         ]
     },
     {
-        "codename": "IFC",
+      "symbol": "IFC",
         "name": "infinitecoin",
         "other_names": [
             "infinitecoin"
         ]
     },
     {
-        "codename": "ZNY",
+      "symbol": "ZNY",
         "name": "bitzeny",
         "other_names": [
             "bitzeny"
         ]
     },
     {
-        "codename": "MACRO",
+      "symbol": "MACRO",
         "name": "macro",
         "other_names": []
     },
     {
-        "codename": "XVC",
+      "symbol": "XVC",
         "name": "xvc",
         "other_names": [
             "vcash"
         ]
     },
     {
-        "codename": "RIC",
+      "symbol": "RIC",
         "name": "riecoin",
         "other_names": [
             "riecoin"
         ]
     },
     {
-        "codename": "DBIX",
+      "symbol": "DBIX",
         "name": "dbix",
         "other_names": [
             "dubaicoin-dbix"
         ]
     },
     {
-        "codename": "DVC",
+      "symbol": "DVC",
         "name": "devcoin",
         "other_names": []
     },
     {
-        "codename": "NVC",
+      "symbol": "NVC",
         "name": "novacoin",
         "other_names": [
             "novacoin"
         ]
     },
     {
-        "codename": "EXCL",
+      "symbol": "EXCL",
         "name": "exclusivecoin",
         "other_names": [
             "exclusivecoin"
         ]
     },
     {
-        "codename": "SNRG",
+      "symbol": "SNRG",
         "name": "synergy",
         "other_names": [
             "synergy"
         ]
     },
     {
-        "codename": "OCT",
+      "symbol": "OCT",
         "name": "oraclechain",
         "other_names": [
             "oraclechain"
         ]
     },
     {
-        "codename": "NTRN",
+      "symbol": "NTRN",
         "name": "ntrn",
         "other_names": [
             "neutron"
         ]
     },
     {
-        "codename": "GLD",
+      "symbol": "GLD",
         "name": "goldcoin",
         "other_names": [
             "goldcoin"
         ]
     },
     {
-        "codename": "SYNX",
+      "symbol": "SYNX",
         "name": "syndicate",
         "other_names": [
             "syndicate"
         ]
     },
     {
-        "codename": "TIPS",
+      "symbol": "TIPS",
         "name": "fedoracoin",
         "other_names": [
             "fedoracoin"
         ]
     },
     {
-        "codename": "BCOIN",
+      "symbol": "BCOIN",
         "name": "bcoin",
         "other_names": []
     },
     {
-        "codename": "ESP",
+      "symbol": "ESP",
         "name": "esp",
         "other_names": [
             "espers"
         ]
     },
     {
-        "codename": "CVCOIN",
+      "symbol": "CVCOIN",
         "name": "cvcoin",
         "other_names": [
             "cvcoin"
         ]
     },
     {
-        "codename": "2GIVE",
+      "symbol": "2GIVE",
         "name": "2give",
         "other_names": [
             "2give"
         ]
     },
     {
-        "codename": "VOISE",
+      "symbol": "VOISE",
         "name": "voise",
         "other_names": [
             "voisecom"
         ]
     },
     {
-        "codename": "XLR",
+      "symbol": "XLR",
         "name": "xlr",
         "other_names": [
             "solaris"
         ]
     },
     {
-        "codename": "APX",
+      "symbol": "APX",
         "name": "apx",
         "other_names": [
             "apx"
         ]
     },
     {
-        "codename": "UFO",
+      "symbol": "UFO",
         "name": "ufocoin",
         "other_names": [
             "ufo-coin"
         ]
     },
     {
-        "codename": "VRM",
+      "symbol": "VRM",
         "name": "verium",
         "other_names": [
             "veriumreserve"
         ]
     },
     {
-        "codename": "PDC",
+      "symbol": "PDC",
         "name": "pdc",
         "other_names": [
             "project-decorum"
         ]
     },
     {
-        "codename": "DIME",
+      "symbol": "DIME",
         "name": "dimecoin",
         "other_names": [
             "dimecoin"
         ]
     },
     {
-        "codename": "ISR",
+      "symbol": "ISR",
         "name": "isracoin",
         "other_names": []
     },
     {
-        "codename": "ERC",
+      "symbol": "ERC",
         "name": "europecoin",
         "other_names": [
             "europecoin"
         ]
     },
     {
-        "codename": "DYN",
+      "symbol": "DYN",
         "name": "dyn",
         "other_names": [
             "dynamic"
         ]
     },
     {
-        "codename": "ARN",
+      "symbol": "ARN",
         "name": "aeron",
         "other_names": [
             "aeron"
         ]
     },
     {
-        "codename": "EDR",
+      "symbol": "EDR",
         "name": "edr",
         "other_names": [
             "e-dinar-coin"
         ]
     },
     {
-        "codename": "BRX",
+      "symbol": "BRX",
         "name": "brx",
         "other_names": [
             "breakout-stake"
         ]
     },
     {
-        "codename": "XCR",
+      "symbol": "XCR",
         "name": "crypti",
         "other_names": []
     },
     {
-        "codename": "XMG",
+      "symbol": "XMG",
         "name": "magi",
         "other_names": [
             "magi"
         ]
     },
     {
-        "codename": "HYP",
+      "symbol": "HYP",
         "name": "hyperstake",
         "other_names": [
             "hyperstake"
         ]
     },
     {
-        "codename": "IOT",
+      "symbol": "IOT",
         "name": "iota",
         "other_names": []
     },
     {
-        "codename": "BRK",
+      "symbol": "BRK",
         "name": "brk",
         "other_names": [
             "breakout"
         ]
     },
     {
-        "codename": "NHZ",
+      "symbol": "NHZ",
         "name": "next horizon",
         "other_names": [
             "next-horizon"
         ]
     },
     {
-        "codename": "TRUST",
+      "symbol": "TRUST",
         "name": "trustplus",
         "other_names": [
             "trustplus"
         ]
     },
     {
-        "codename": "OCL",
+      "symbol": "OCL",
         "name": "oceanlab",
         "other_names": [
             "oceanlab"
         ]
     },
     {
-        "codename": "GEO",
+      "symbol": "GEO",
         "name": "geocoin",
         "other_names": [
             "geocoin"
         ]
     },
     {
-        "codename": "START",
+      "symbol": "START",
         "name": "startcoin",
         "other_names": [
             "startcoin"
         ]
     },
     {
-        "codename": "RMC",
+      "symbol": "RMC",
         "name": "remicoin",
         "other_names": [
             "russian-mining-coin",
@@ -2688,131 +2688,131 @@
         ]
     },
     {
-        "codename": "KRB",
+      "symbol": "KRB",
         "name": "krb",
         "other_names": [
             "karbowanec"
         ]
     },
     {
-        "codename": "KARM",
+      "symbol": "KARM",
         "name": "karma",
         "other_names": []
     },
     {
-        "codename": "LINDA",
+      "symbol": "LINDA",
         "name": "linda",
         "other_names": [
             "linda"
         ]
     },
     {
-        "codename": "MBRS",
+      "symbol": "MBRS",
         "name": "embers",
         "other_names": [
             "embers"
         ]
     },
     {
-        "codename": "1337",
+      "symbol": "1337",
         "name": "1337",
         "other_names": [
             "1337coin"
         ]
     },
     {
-        "codename": "INXT",
+      "symbol": "INXT",
         "name": "internxt",
         "other_names": [
             "internxt"
         ]
     },
     {
-        "codename": "ZRC",
+      "symbol": "ZRC",
         "name": "zrc",
         "other_names": [
             "zrcoin"
         ]
     },
     {
-        "codename": "EGC",
+      "symbol": "EGC",
         "name": "egc",
         "other_names": [
             "evergreencoin"
         ]
     },
     {
-        "codename": "CRAVE",
+      "symbol": "CRAVE",
         "name": "crave",
         "other_names": [
             "crave"
         ]
     },
     {
-        "codename": "OPT",
+      "symbol": "OPT",
         "name": "opt",
         "other_names": [
             "opus"
         ]
     },
     {
-        "codename": "DNR",
+      "symbol": "DNR",
         "name": "denarius",
         "other_names": [
             "denarius-dnr"
         ]
     },
     {
-        "codename": "PUT",
+      "symbol": "PUT",
         "name": "put",
         "other_names": [
             "putincoin"
         ]
     },
     {
-        "codename": "NOTE",
+      "symbol": "NOTE",
         "name": "dnotes",
         "other_names": [
             "dnotes"
         ]
     },
     {
-        "codename": "TKS",
+      "symbol": "TKS",
         "name": "tks",
         "other_names": [
             "tokes"
         ]
     },
     {
-        "codename": "YOC",
+      "symbol": "YOC",
         "name": "yoc",
         "other_names": [
             "yocoin"
         ]
     },
     {
-        "codename": "GOOD",
+      "symbol": "GOOD",
         "name": "goodcoin",
         "other_names": [
             "goodomy"
         ]
     },
     {
-        "codename": "CREA",
+      "symbol": "CREA",
         "name": "cryptoeagle",
         "other_names": [
             "creativecoin"
         ]
     },
     {
-        "codename": "ZER",
+      "symbol": "ZER",
         "name": "zerovert",
         "other_names": [
             "zero"
         ]
     },
     {
-        "codename": "PBT",
+      "symbol": "PBT",
         "name": "primalbase token",
         "other_names": [
             "primalbase",
@@ -2820,318 +2820,318 @@
         ]
     },
     {
-        "codename": "VTR",
+      "symbol": "VTR",
         "name": "vtorrent",
         "other_names": [
             "vtorrent"
         ]
     },
     {
-        "codename": "FLAP",
+      "symbol": "FLAP",
         "name": "flappycoin",
         "other_names": [
             "flappycoin"
         ]
     },
     {
-        "codename": "EBET",
+      "symbol": "EBET",
         "name": "ethbet",
         "other_names": [
             "ethbet"
         ]
     },
     {
-        "codename": "RUP",
+      "symbol": "RUP",
         "name": "rup",
         "other_names": [
             "rupee"
         ]
     },
     {
-        "codename": "HUC",
+      "symbol": "HUC",
         "name": "huntercoin",
         "other_names": [
             "huntercoin"
         ]
     },
     {
-        "codename": "MEOW",
+      "symbol": "MEOW",
         "name": "kittehcoin",
         "other_names": [
             "kittehcoin"
         ]
     },
     {
-        "codename": "NSR",
+      "symbol": "NSR",
         "name": "nushares",
         "other_names": [
             "nushares"
         ]
     },
     {
-        "codename": "PKB",
+      "symbol": "PKB",
         "name": "pkb",
         "other_names": [
             "parkbyte"
         ]
     },
     {
-        "codename": "BLU",
+      "symbol": "BLU",
         "name": "bluecoin",
         "other_names": [
             "bluecoin"
         ]
     },
     {
-        "codename": "VSL",
+      "symbol": "VSL",
         "name": "vslice",
         "other_names": [
             "vslice"
         ]
     },
     {
-        "codename": "FRC",
+      "symbol": "FRC",
         "name": "fireroostercoin",
         "other_names": [
             "freicoin"
         ]
     },
     {
-        "codename": "PING",
+      "symbol": "PING",
         "name": "ping",
         "other_names": [
             "cryptoping"
         ]
     },
     {
-        "codename": "CHC",
+      "symbol": "CHC",
         "name": "chaincoin",
         "other_names": [
             "chaincoin"
         ]
     },
     {
-        "codename": "EFL",
+      "symbol": "EFL",
         "name": "electronicgulden",
         "other_names": [
             "e-gulden"
         ]
     },
     {
-        "codename": "MCAP",
+      "symbol": "MCAP",
         "name": "mcap",
         "other_names": [
             "mcap"
         ]
     },
     {
-        "codename": "AC",
+      "symbol": "AC",
         "name": "asiacoin",
         "other_names": [
             "asiacoin"
         ]
     },
     {
-        "codename": "UNB",
+      "symbol": "UNB",
         "name": "unbreakablecoin",
         "other_names": [
             "unbreakablecoin"
         ]
     },
     {
-        "codename": "EQT",
+      "symbol": "EQT",
         "name": "eqt",
         "other_names": [
             "equitrader"
         ]
     },
     {
-        "codename": "MXT",
+      "symbol": "MXT",
         "name": "martexcoin",
         "other_names": [
             "martexcoin"
         ]
     },
     {
-        "codename": "INPAY",
+      "symbol": "INPAY",
         "name": "inpay",
         "other_names": [
             "inpay"
         ]
     },
     {
-        "codename": "TRC",
+      "symbol": "TRC",
         "name": "terracoin",
         "other_names": [
             "terracoin"
         ]
     },
     {
-        "codename": "QRK",
+      "symbol": "QRK",
         "name": "quarkcoin",
         "other_names": [
             "quark"
         ]
     },
     {
-        "codename": "FUEL",
+      "symbol": "FUEL",
         "name": "fuel",
         "other_names": [
             "etherparty"
         ]
     },
     {
-        "codename": "WDC",
+      "symbol": "WDC",
         "name": "worldcoin",
         "other_names": [
             "worldcoin"
         ]
     },
     {
-        "codename": "DAR",
+      "symbol": "DAR",
         "name": "dar",
         "other_names": [
             "darcrus"
         ]
     },
     {
-        "codename": "ADST",
+      "symbol": "ADST",
         "name": "adshares",
         "other_names": [
             "adshares"
         ]
     },
     {
-        "codename": "IFLT",
+      "symbol": "IFLT",
         "name": "iflt",
         "other_names": [
             "inflationcoin"
         ]
     },
     {
-        "codename": "SKIN",
+      "symbol": "SKIN",
         "name": "skincoin",
         "other_names": [
             "skincoin"
         ]
     },
     {
-        "codename": "DOT",
+      "symbol": "DOT",
         "name": "kimdotcoin",
         "other_names": [
             "dotcoin"
         ]
     },
     {
-        "codename": "WMC",
+      "symbol": "WMC",
         "name": "wmc",
         "other_names": [
             "wmcoin"
         ]
     },
     {
-        "codename": "CRC",
+      "symbol": "CRC",
         "name": "craftcoin",
         "other_names": [
             "crowdcoin"
         ]
     },
     {
-        "codename": "EOT",
+      "symbol": "EOT",
         "name": "eot token",
         "other_names": [
             "eot-token"
         ]
     },
     {
-        "codename": "ICOO",
+      "symbol": "ICOO",
         "name": "ico openledger",
         "other_names": [
             "ico-openledger"
         ]
     },
     {
-        "codename": "BTE",
+      "symbol": "BTE",
         "name": "bytecoin",
         "other_names": [
             "bitserial"
         ]
     },
     {
-        "codename": "LNK",
+      "symbol": "LNK",
         "name": "link platform",
         "other_names": [
             "link-platform"
         ]
     },
     {
-        "codename": "IXC",
+      "symbol": "IXC",
         "name": "ixcoin",
         "other_names": [
             "ixcoin"
         ]
     },
     {
-        "codename": "ZEIT",
+      "symbol": "ZEIT",
         "name": "zeitcoin",
         "other_names": [
             "zeitcoin"
         ]
     },
     {
-        "codename": "FIMK",
+      "symbol": "FIMK",
         "name": "fimkrypto",
         "other_names": [
             "fimkrypto"
         ]
     },
     {
-        "codename": "STA",
+      "symbol": "STA",
         "name": "stashcoin",
         "other_names": [
             "starta"
         ]
     },
     {
-        "codename": "CARBON",
+      "symbol": "CARBON",
         "name": "carboncoin",
         "other_names": [
             "carboncoin"
         ]
     },
     {
-        "codename": "FUCK",
+      "symbol": "FUCK",
         "name": "fucktoken",
         "other_names": [
             "fucktoken"
         ]
     },
     {
-        "codename": "CFT",
+      "symbol": "CFT",
         "name": "cft",
         "other_names": [
             "cryptoforecast"
         ]
     },
     {
-        "codename": "[EMAIL\u00a0PROTECTED]",
+      "symbol": "[EMAIL\u00a0PROTECTED]",
         "name": "[email\u00a0protected]",
         "other_names": []
     },
     {
-        "codename": "MSC",
+      "symbol": "MSC",
         "name": "mastercoin",
         "other_names": []
     },
     {
-        "codename": "TKR",
+      "symbol": "TKR",
         "name": "trackr",
         "other_names": [
             "trackr"
         ]
     },
     {
-        "codename": "MRT",
+      "symbol": "MRT",
         "name": "miners' rewar",
         "other_names": [
             "miners-reward-token",
@@ -3139,191 +3139,191 @@
         ]
     },
     {
-        "codename": "BQC",
+      "symbol": "BQC",
         "name": "bbqcoin",
         "other_names": []
     },
     {
-        "codename": "KZC",
+      "symbol": "KZC",
         "name": "kzcash",
         "other_names": []
     },
     {
-        "codename": "EBST",
+      "symbol": "EBST",
         "name": "ebst",
         "other_names": [
             "eboostcoin"
         ]
     },
     {
-        "codename": "ADC",
+      "symbol": "ADC",
         "name": "adc",
         "other_names": [
             "audiocoin"
         ]
     },
     {
-        "codename": "EMP",
+      "symbol": "EMP",
         "name": "emp",
         "other_names": []
     },
     {
-        "codename": "BYC",
+      "symbol": "BYC",
         "name": "bytecent",
         "other_names": [
             "bytecent"
         ]
     },
     {
-        "codename": "EXE",
+      "symbol": "EXE",
         "name": "execoin",
         "other_names": []
     },
     {
-        "codename": "NDC",
+      "symbol": "NDC",
         "name": "ndc",
         "other_names": [
             "neverdie"
         ]
     },
     {
-        "codename": "LGD",
+      "symbol": "LGD",
         "name": "legends room",
         "other_names": [
             "legends-room"
         ]
     },
     {
-        "codename": "FYN",
+      "symbol": "FYN",
         "name": "fyn",
         "other_names": [
             "fundyourselfnow"
         ]
     },
     {
-        "codename": "SCD",
+      "symbol": "SCD",
         "name": "suicidecoin",
         "other_names": []
     },
     {
-        "codename": "RC",
+      "symbol": "RC",
         "name": "russiacoin",
         "other_names": [
             "russiacoin"
         ]
     },
     {
-        "codename": "RNS",
+      "symbol": "RNS",
         "name": "rns",
         "other_names": [
             "renos"
         ]
     },
     {
-        "codename": "AHT",
+      "symbol": "AHT",
         "name": "bowhead",
         "other_names": [
             "bowhead"
         ]
     },
     {
-        "codename": "ALT",
+      "symbol": "ALT",
         "name": "alt",
         "other_names": [
             "altcoin-alt"
         ]
     },
     {
-        "codename": "DP",
+      "symbol": "DP",
         "name": "digitalprice",
         "other_names": [
             "digitalprice"
         ]
     },
     {
-        "codename": "MBI",
+      "symbol": "MBI",
         "name": "monster byte",
         "other_names": [
             "monster-byte"
         ]
     },
     {
-        "codename": "NTO",
+      "symbol": "NTO",
         "name": "fujinto",
         "other_names": [
             "fujinto"
         ]
     },
     {
-        "codename": "MEC",
+      "symbol": "MEC",
         "name": "megacoin",
         "other_names": [
             "megacoin"
         ]
     },
     {
-        "codename": "GAP",
+      "symbol": "GAP",
         "name": "gapcoin",
         "other_names": [
             "gapcoin"
         ]
     },
     {
-        "codename": "PND",
+      "symbol": "PND",
         "name": "pandacoin",
         "other_names": [
             "pandacoin-pnd"
         ]
     },
     {
-        "codename": "RAIN",
+      "symbol": "RAIN",
         "name": "rainbowgoldcoin",
         "other_names": [
             "condensate"
         ]
     },
     {
-        "codename": "USNBT",
+      "symbol": "USNBT",
         "name": "usnbt",
         "other_names": [
             "nubits"
         ]
     },
     {
-        "codename": "INSN",
+      "symbol": "INSN",
         "name": "insn",
         "other_names": [
             "insanecoin-insn"
         ]
     },
     {
-        "codename": "SWIFT",
+      "symbol": "SWIFT",
         "name": "bitswift",
         "other_names": [
             "bitswift"
         ]
     },
     {
-        "codename": "GME",
+      "symbol": "GME",
         "name": "gamecoins",
         "other_names": []
     },
     {
-        "codename": "BUZZ",
+      "symbol": "BUZZ",
         "name": "buzz",
         "other_names": [
             "buzzcoin"
         ]
     },
     {
-        "codename": "DALC",
+      "symbol": "DALC",
         "name": "dalecoin",
         "other_names": [
             "dalecoin"
         ]
     },
     {
-        "codename": "BTM",
+      "symbol": "BTM",
         "name": "bitmark",
         "other_names": [
             "bytom",
@@ -3331,7 +3331,7 @@
         ]
     },
     {
-        "codename": "CBX",
+      "symbol": "CBX",
         "name": "crypto bullion",
         "other_names": [
             "crypto-bullion",
@@ -3339,427 +3339,427 @@
         ]
     },
     {
-        "codename": "GCN",
+      "symbol": "GCN",
         "name": "gcoin",
         "other_names": [
             "gcoin"
         ]
     },
     {
-        "codename": "INFX",
+      "symbol": "INFX",
         "name": "infx",
         "other_names": [
             "influxcoin"
         ]
     },
     {
-        "codename": "BASH",
+      "symbol": "BASH",
         "name": "bash",
         "other_names": [
             "luckchain"
         ]
     },
     {
-        "codename": "CRYPT",
+      "symbol": "CRYPT",
         "name": "cryptcoin",
         "other_names": [
             "cryptcoin"
         ]
     },
     {
-        "codename": "STRC",
+      "symbol": "STRC",
         "name": "starcredits",
         "other_names": [
             "starcredits"
         ]
     },
     {
-        "codename": "FST",
+      "symbol": "FST",
         "name": "fastcoin",
         "other_names": [
             "fastcoin"
         ]
     },
     {
-        "codename": "RUSTBITS",
+      "symbol": "RUSTBITS",
         "name": "rustbits",
         "other_names": [
             "rustbits"
         ]
     },
     {
-        "codename": "TES",
+      "symbol": "TES",
         "name": "teslacoin",
         "other_names": [
             "teslacoin"
         ]
     },
     {
-        "codename": "UIS",
+      "symbol": "UIS",
         "name": "unitus",
         "other_names": [
             "unitus"
         ]
     },
     {
-        "codename": "NKA",
+      "symbol": "NKA",
         "name": "incakoin",
         "other_names": [
             "incakoin"
         ]
     },
     {
-        "codename": "PHO",
+      "symbol": "PHO",
         "name": "photon",
         "other_names": [
             "photon"
         ]
     },
     {
-        "codename": "CRIME",
+      "symbol": "CRIME",
         "name": "crime",
         "other_names": []
     },
     {
-        "codename": "WGO",
+      "symbol": "WGO",
         "name": "wavesgo",
         "other_names": [
             "wavesgo"
         ]
     },
     {
-        "codename": "GB",
+      "symbol": "GB",
         "name": "greenbacks",
         "other_names": [
             "goldblocks"
         ]
     },
     {
-        "codename": "FLT",
+      "symbol": "FLT",
         "name": "fluttercoin",
         "other_names": [
             "fluttercoin"
         ]
     },
     {
-        "codename": "QBK",
+      "symbol": "QBK",
         "name": "qibuck",
         "other_names": [
             "qibuck-asset"
         ]
     },
     {
-        "codename": "VASH",
+      "symbol": "VASH",
         "name": "vash",
         "other_names": [
             "vpncoin"
         ]
     },
     {
-        "codename": "E4ROW",
+      "symbol": "E4ROW",
         "name": "e4row",
         "other_names": [
             "ether-for-the-rest-of-the-world"
         ]
     },
     {
-        "codename": "DCY",
+      "symbol": "DCY",
         "name": "dcy",
         "other_names": [
             "dinastycoin"
         ]
     },
     {
-        "codename": "CPC",
+      "symbol": "CPC",
         "name": "compasscoin",
         "other_names": [
             "capricoin"
         ]
     },
     {
-        "codename": "PRE",
+      "symbol": "PRE",
         "name": "pre",
         "other_names": [
             "presearch"
         ]
     },
     {
-        "codename": "TOKEN",
+      "symbol": "TOKEN",
         "name": "supernet",
         "other_names": [
             "swaptoken"
         ]
     },
     {
-        "codename": "ELE",
+      "symbol": "ELE",
         "name": "ele",
         "other_names": [
             "elementrem"
         ]
     },
     {
-        "codename": "WTT",
+      "symbol": "WTT",
         "name": "wtt",
         "other_names": [
             "giga-watt-token"
         ]
     },
     {
-        "codename": "PROC",
+      "symbol": "PROC",
         "name": "proc",
         "other_names": [
             "procurrency"
         ]
     },
     {
-        "codename": "42",
+      "symbol": "42",
         "name": "fourtytwocoin",
         "other_names": [
             "42-coin"
         ]
     },
     {
-        "codename": "ANC",
+      "symbol": "ANC",
         "name": "anoncoin",
         "other_names": [
             "anoncoin"
         ]
     },
     {
-        "codename": "SIGT",
+      "symbol": "SIGT",
         "name": "signatum",
         "other_names": [
             "signatum"
         ]
     },
     {
-        "codename": "VISIO",
+      "symbol": "VISIO",
         "name": "visio",
         "other_names": [
             "visio"
         ]
     },
     {
-        "codename": "SUPER",
+      "symbol": "SUPER",
         "name": "supercoin",
         "other_names": [
             "supercoin"
         ]
     },
     {
-        "codename": "ENT",
+      "symbol": "ENT",
         "name": "ent",
         "other_names": [
             "eternity"
         ]
     },
     {
-        "codename": "BRIT",
+      "symbol": "BRIT",
         "name": "britcoin",
         "other_names": [
             "britcoin"
         ]
     },
     {
-        "codename": "CDN",
+      "symbol": "CDN",
         "name": "canada ecoin",
         "other_names": [
             "canada-ecoin"
         ]
     },
     {
-        "codename": "RKC",
+      "symbol": "RKC",
         "name": "royal kingdom coin",
         "other_names": [
             "royal-kingdom-coin"
         ]
     },
     {
-        "codename": "BITS",
+      "symbol": "BITS",
         "name": "bitstarcoin",
         "other_names": [
             "bitstar"
         ]
     },
     {
-        "codename": "HKG",
+      "symbol": "HKG",
         "name": "hkg",
         "other_names": []
     },
     {
-        "codename": "ZENI",
+      "symbol": "ZENI",
         "name": "zeni",
         "other_names": [
             "zennies"
         ]
     },
     {
-        "codename": "NOBL",
+      "symbol": "NOBL",
         "name": "noblecoin",
         "other_names": [
             "noblecoin"
         ]
     },
     {
-        "codename": "EXC",
+      "symbol": "EXC",
         "name": "extremecoin",
         "other_names": []
     },
     {
-        "codename": "V",
+      "symbol": "V",
         "name": "v",
         "other_names": [
             "version"
         ]
     },
     {
-        "codename": "FJC",
+      "symbol": "FJC",
         "name": "fujicoin",
         "other_names": [
             "fujicoin"
         ]
     },
     {
-        "codename": "MZC",
+      "symbol": "MZC",
         "name": "mazacoin",
         "other_names": [
             "mazacoin"
         ]
     },
     {
-        "codename": "RIYA",
+      "symbol": "RIYA",
         "name": "etheriya",
         "other_names": [
             "etheriya"
         ]
     },
     {
-        "codename": "MOIN",
+      "symbol": "MOIN",
         "name": "moin",
         "other_names": [
             "moin"
         ]
     },
     {
-        "codename": "LDOGE",
+      "symbol": "LDOGE",
         "name": "ldoge",
         "other_names": [
             "litedoge"
         ]
     },
     {
-        "codename": "EMB",
+      "symbol": "EMB",
         "name": "emb",
         "other_names": [
             "embercoin"
         ]
     },
     {
-        "codename": "CNC",
+      "symbol": "CNC",
         "name": "chncoin",
         "other_names": []
     },
     {
-        "codename": "ZET",
+      "symbol": "ZET",
         "name": "zetacoin",
         "other_names": [
             "zetacoin"
         ]
     },
     {
-        "codename": "ONX",
+      "symbol": "ONX",
         "name": "onx",
         "other_names": [
             "onix"
         ]
     },
     {
-        "codename": "UTC",
+      "symbol": "UTC",
         "name": "ultracoin",
         "other_names": [
             "ultracoin"
         ]
     },
     {
-        "codename": "CCN",
+      "symbol": "CCN",
         "name": "cannacoin",
         "other_names": [
             "cannacoin"
         ]
     },
     {
-        "codename": "BUN",
+      "symbol": "BUN",
         "name": "bunnycoin",
         "other_names": [
             "bunnycoin"
         ]
     },
     {
-        "codename": "DTT",
+      "symbol": "DTT",
         "name": "dratourism",
         "other_names": []
     },
     {
-        "codename": "TERRA",
+      "symbol": "TERRA",
         "name": "terralibre",
         "other_names": []
     },
     {
-        "codename": "ADZ",
+      "symbol": "ADZ",
         "name": "adz",
         "other_names": [
             "adzcoin"
         ]
     },
     {
-        "codename": "WRC",
+      "symbol": "WRC",
         "name": "warcoin",
         "other_names": [
             "worldcore"
         ]
     },
     {
-        "codename": "SMLY",
+      "symbol": "SMLY",
         "name": "smly",
         "other_names": [
             "smileycoin"
         ]
     },
     {
-        "codename": "XPD",
+      "symbol": "XPD",
         "name": "petrodollar",
         "other_names": [
             "petrodollar"
         ]
     },
     {
-        "codename": "CNT",
+      "symbol": "CNT",
         "name": "cnt",
         "other_names": [
             "centurion"
         ]
     },
     {
-        "codename": "TROLL",
+      "symbol": "TROLL",
         "name": "troll",
         "other_names": [
             "trollcoin"
         ]
     },
     {
-        "codename": "CAP",
+      "symbol": "CAP",
         "name": "bottlecaps",
         "other_names": []
     },
     {
-        "codename": "XLC",
+      "symbol": "XLC",
         "name": "xlc",
         "other_names": [
             "leviarcoin"
         ]
     },
     {
-        "codename": "NET",
+      "symbol": "NET",
         "name": "netcoin",
         "other_names": [
             "nimiq",
@@ -3767,56 +3767,56 @@
         ]
     },
     {
-        "codename": "GRE",
+      "symbol": "GRE",
         "name": "greencoin",
         "other_names": [
             "greencoin"
         ]
     },
     {
-        "codename": "HTC",
+      "symbol": "HTC",
         "name": "htc",
         "other_names": [
             "hitcoin"
         ]
     },
     {
-        "codename": "NETKO",
+      "symbol": "NETKO",
         "name": "netko",
         "other_names": [
             "netko"
         ]
     },
     {
-        "codename": "OTX",
+      "symbol": "OTX",
         "name": "otx",
         "other_names": [
             "octanox"
         ]
     },
     {
-        "codename": "DAXX",
+      "symbol": "DAXX",
         "name": "daxx",
         "other_names": [
             "daxxcoin"
         ]
     },
     {
-        "codename": "BTA",
+      "symbol": "BTA",
         "name": "bta",
         "other_names": [
             "bata"
         ]
     },
     {
-        "codename": "DEM",
+      "symbol": "DEM",
         "name": "deutsche emark",
         "other_names": [
             "deutsche-emark"
         ]
     },
     {
-        "codename": "BTCS",
+      "symbol": "BTCS",
         "name": "bitcoinscrypt",
         "other_names": [
             "bitcoin-silver",
@@ -3824,273 +3824,273 @@
         ]
     },
     {
-        "codename": "KOBO",
+      "symbol": "KOBO",
         "name": "kobocoin",
         "other_names": [
             "kobocoin"
         ]
     },
     {
-        "codename": "SHORTY",
+      "symbol": "SHORTY",
         "name": "shorty",
         "other_names": [
             "shorty"
         ]
     },
     {
-        "codename": "SDC",
+      "symbol": "SDC",
         "name": "shadowcash",
         "other_names": [
             "shadowcash"
         ]
     },
     {
-        "codename": "SMC",
+      "symbol": "SMC",
         "name": "smartcoin",
         "other_names": [
             "smartcoin"
         ]
     },
     {
-        "codename": "JNS",
+      "symbol": "JNS",
         "name": "jns",
         "other_names": [
             "janus"
         ]
     },
     {
-        "codename": "MNE",
+      "symbol": "MNE",
         "name": "munne",
         "other_names": [
             "minereum"
         ]
     },
     {
-        "codename": "ICE",
+      "symbol": "ICE",
         "name": "idice",
         "other_names": [
             "idice"
         ]
     },
     {
-        "codename": "DGC",
+      "symbol": "DGC",
         "name": "digitalcoin",
         "other_names": [
             "digitalcoin"
         ]
     },
     {
-        "codename": "BTB",
+      "symbol": "BTB",
         "name": "bitbar",
         "other_names": [
             "bitbar"
         ]
     },
     {
-        "codename": "KURT",
+      "symbol": "KURT",
         "name": "kurt",
         "other_names": [
             "kurrent"
         ]
     },
     {
-        "codename": "HODL",
+      "symbol": "HODL",
         "name": "hodl",
         "other_names": [
             "hodlcoin"
         ]
     },
     {
-        "codename": "MAC",
+      "symbol": "MAC",
         "name": "machinecoin",
         "other_names": [
             "machinecoin"
         ]
     },
     {
-        "codename": "BIGUP",
+      "symbol": "BIGUP",
         "name": "bigup",
         "other_names": [
             "bigup"
         ]
     },
     {
-        "codename": "KUSH",
+      "symbol": "KUSH",
         "name": "kush",
         "other_names": [
             "kushcoin"
         ]
     },
     {
-        "codename": "ORB",
+      "symbol": "ORB",
         "name": "orbitcoin",
         "other_names": [
             "orbitcoin"
         ]
     },
     {
-        "codename": "BLOCKPAY",
+      "symbol": "BLOCKPAY",
         "name": "blockpay",
         "other_names": [
             "blockpay"
         ]
     },
     {
-        "codename": "TRUMP",
+      "symbol": "TRUMP",
         "name": "trump",
         "other_names": [
             "trumpcoin"
         ]
     },
     {
-        "codename": "SHDW",
+      "symbol": "SHDW",
         "name": "shadow token",
         "other_names": [
             "shadow-token"
         ]
     },
     {
-        "codename": "PIGGY",
+      "symbol": "PIGGY",
         "name": "piggycoin",
         "other_names": [
             "piggycoin"
         ]
     },
     {
-        "codename": "Q2C",
+      "symbol": "Q2C",
         "name": "qubitcoin",
         "other_names": [
             "qubitcoin"
         ]
     },
     {
-        "codename": "VLT",
+      "symbol": "VLT",
         "name": "vaultcoin",
         "other_names": [
             "veltor"
         ]
     },
     {
-        "codename": "FXE",
+      "symbol": "FXE",
         "name": "futurxe",
         "other_names": [
             "futurexe"
         ]
     },
     {
-        "codename": "MNM",
+      "symbol": "MNM",
         "name": "mnm",
         "other_names": [
             "mineum"
         ]
     },
     {
-        "codename": "PXC",
+      "symbol": "PXC",
         "name": "phenixcoin",
         "other_names": [
             "phoenixcoin"
         ]
     },
     {
-        "codename": "RLT",
+      "symbol": "RLT",
         "name": "rlt",
         "other_names": [
             "roulettetoken"
         ]
     },
     {
-        "codename": "NYAN",
+      "symbol": "NYAN",
         "name": "nyancoin",
         "other_names": [
             "nyancoin"
         ]
     },
     {
-        "codename": "FUNK",
+      "symbol": "FUNK",
         "name": "the cypherfunks",
         "other_names": [
             "the-cypherfunks"
         ]
     },
     {
-        "codename": "CNO",
+      "symbol": "CNO",
         "name": "coino",
         "other_names": [
             "coin"
         ]
     },
     {
-        "codename": "AU",
+      "symbol": "AU",
         "name": "aurumcoin",
         "other_names": [
             "aurumcoin"
         ]
     },
     {
-        "codename": "BXT",
+      "symbol": "BXT",
         "name": "bxt",
         "other_names": [
             "bittokens"
         ]
     },
     {
-        "codename": "FNC",
+      "symbol": "FNC",
         "name": "fnc",
         "other_names": [
             "fincoin"
         ]
     },
     {
-        "codename": "TIT",
+      "symbol": "TIT",
         "name": "titcoin",
         "other_names": [
             "titcoin"
         ]
     },
     {
-        "codename": "TRI",
+      "symbol": "TRI",
         "name": "triangles",
         "other_names": [
             "triangles"
         ]
     },
     {
-        "codename": "XJO",
+      "symbol": "XJO",
         "name": "joulecoin",
         "other_names": [
             "joulecoin"
         ]
     },
     {
-        "codename": "METAL",
+      "symbol": "METAL",
         "name": "metalcoin",
         "other_names": [
             "metalcoin"
         ]
     },
     {
-        "codename": "USC",
+      "symbol": "USC",
         "name": "usc",
         "other_names": [
             "ultimate-secure-cash"
         ]
     },
     {
-        "codename": "PASL",
+      "symbol": "PASL",
         "name": "pasl",
         "other_names": [
             "pascal-lite"
         ]
     },
     {
-        "codename": "POS",
+      "symbol": "POS",
         "name": "pos",
         "other_names": [
             "postoken"
         ]
     },
     {
-        "codename": "CAT",
+      "symbol": "CAT",
         "name": "catcoin",
         "other_names": [
             "catcoin",
@@ -4098,232 +4098,232 @@
         ]
     },
     {
-        "codename": "XHI",
+      "symbol": "XHI",
         "name": "xhi",
         "other_names": [
             "hicoin"
         ]
     },
     {
-        "codename": "MAX",
+      "symbol": "MAX",
         "name": "maxcoin",
         "other_names": [
             "maxcoin"
         ]
     },
     {
-        "codename": "I0C",
+      "symbol": "I0C",
         "name": "i0coin",
         "other_names": [
             "i0coin"
         ]
     },
     {
-        "codename": "PSB",
+      "symbol": "PSB",
         "name": "psb",
         "other_names": []
     },
     {
-        "codename": "PAK",
+      "symbol": "PAK",
         "name": "pak",
         "other_names": [
             "pakcoin"
         ]
     },
     {
-        "codename": "UNY",
+      "symbol": "UNY",
         "name": "uny",
         "other_names": [
             "unity-ingot"
         ]
     },
     {
-        "codename": "GAIA",
+      "symbol": "GAIA",
         "name": "gaiacoin",
         "other_names": [
             "gaia"
         ]
     },
     {
-        "codename": "CCRB",
+      "symbol": "CCRB",
         "name": "ccrb",
         "other_names": [
             "cryptocarbon"
         ]
     },
     {
-        "codename": "TTC",
+      "symbol": "TTC",
         "name": "tittiecoin",
         "other_names": [
             "tittiecoin"
         ]
     },
     {
-        "codename": "HPC",
+      "symbol": "HPC",
         "name": "hpc",
         "other_names": [
             "happycoin"
         ]
     },
     {
-        "codename": "HBN",
+      "symbol": "HBN",
         "name": "hobonickels",
         "other_names": [
             "hobonickels"
         ]
     },
     {
-        "codename": "SLM",
+      "symbol": "SLM",
         "name": "slimcoin",
         "other_names": []
     },
     {
-        "codename": "SCORE",
+      "symbol": "SCORE",
         "name": "score",
         "other_names": [
             "scorecoin"
         ]
     },
     {
-        "codename": "ATOM",
+      "symbol": "ATOM",
         "name": "atom",
         "other_names": [
             "atomic-coin"
         ]
     },
     {
-        "codename": "AMBER",
+      "symbol": "AMBER",
         "name": "amber",
         "other_names": [
             "ambercoin"
         ]
     },
     {
-        "codename": "BOLI",
+      "symbol": "BOLI",
         "name": "boli",
         "other_names": [
             "bolivarcoin"
         ]
     },
     {
-        "codename": "GLC",
+      "symbol": "GLC",
         "name": "globalcoin",
         "other_names": [
             "globalcoin"
         ]
     },
     {
-        "codename": "VAL",
+      "symbol": "VAL",
         "name": "val",
         "other_names": [
             "valorbit"
         ]
     },
     {
-        "codename": "MCRN",
+      "symbol": "MCRN",
         "name": "mcrn",
         "other_names": [
             "macron"
         ]
     },
     {
-        "codename": "XPTX",
+      "symbol": "XPTX",
         "name": "xptx",
         "other_names": [
             "platinumbar"
         ]
     },
     {
-        "codename": "LOT",
+      "symbol": "LOT",
         "name": "lottocoin",
         "other_names": [
             "lottocoin"
         ]
     },
     {
-        "codename": "KLC",
+      "symbol": "KLC",
         "name": "klc",
         "other_names": [
             "kilocoin"
         ]
     },
     {
-        "codename": "BCF",
+      "symbol": "BCF",
         "name": "bitcoinfast",
         "other_names": [
             "bitcoinfast"
         ]
     },
     {
-        "codename": "VTA",
+      "symbol": "VTA",
         "name": "virtacoin",
         "other_names": [
             "virtacoin"
         ]
     },
     {
-        "codename": "RED",
+      "symbol": "RED",
         "name": "redcoin",
         "other_names": [
             "redcoin"
         ]
     },
     {
-        "codename": "CFD",
+      "symbol": "CFD",
         "name": "confido",
         "other_names": [
             "confido"
         ]
     },
     {
-        "codename": "UNIC",
+      "symbol": "UNIC",
         "name": "unic",
         "other_names": [
             "unicoin"
         ]
     },
     {
-        "codename": "PRIME",
+      "symbol": "PRIME",
         "name": "prime",
         "other_names": []
     },
     {
-        "codename": "CNNC",
+      "symbol": "CNNC",
         "name": "cnnc",
         "other_names": [
             "cannation"
         ]
     },
     {
-        "codename": "BAS",
+      "symbol": "BAS",
         "name": "bitasean",
         "other_names": [
             "bitasean"
         ]
     },
     {
-        "codename": "ECASH",
+      "symbol": "ECASH",
         "name": "ecashcoins",
         "other_names": [
             "ethereumcash"
         ]
     },
     {
-        "codename": "XBL",
+      "symbol": "XBL",
         "name": "bitlion",
         "other_names": [
             "billionaire-token"
         ]
     },
     {
-        "codename": "CSC",
+      "symbol": "CSC",
         "name": "casinocoin",
         "other_names": [
             "casinocoin"
         ]
     },
     {
-        "codename": "POP",
+      "symbol": "POP",
         "name": "popular coin",
         "other_names": [
             "popularcoin",
@@ -4331,336 +4331,336 @@
         ]
     },
     {
-        "codename": "PXI",
+      "symbol": "PXI",
         "name": "prime-xi",
         "other_names": [
             "prime-xi"
         ]
     },
     {
-        "codename": "BPC",
+      "symbol": "BPC",
         "name": "bitpopcoin",
         "other_names": [
             "bitpark-coin"
         ]
     },
     {
-        "codename": "SUB",
+      "symbol": "SUB",
         "name": "sub",
         "other_names": [
             "substratum"
         ]
     },
     {
-        "codename": "STS",
+      "symbol": "STS",
         "name": "sts",
         "other_names": [
             "stress"
         ]
     },
     {
-        "codename": "DDF",
+      "symbol": "DDF",
         "name": "ddf",
         "other_names": [
             "digital-developers-fund"
         ]
     },
     {
-        "codename": "SLG",
+      "symbol": "SLG",
         "name": "sterlingcoin",
         "other_names": [
             "sterlingcoin"
         ]
     },
     {
-        "codename": "8BIT",
+      "symbol": "8BIT",
         "name": "8bit",
         "other_names": [
             "8bit"
         ]
     },
     {
-        "codename": "J",
+      "symbol": "J",
         "name": "joincoin",
         "other_names": [
             "joincoin"
         ]
     },
     {
-        "codename": "UNI",
+      "symbol": "UNI",
         "name": "uni",
         "other_names": [
             "universe"
         ]
     },
     {
-        "codename": "LANA",
+      "symbol": "LANA",
         "name": "lana",
         "other_names": [
             "lanacoin"
         ]
     },
     {
-        "codename": "GUN",
+      "symbol": "GUN",
         "name": "guncoin",
         "other_names": [
             "guncoin"
         ]
     },
     {
-        "codename": "CJ",
+      "symbol": "CJ",
         "name": "cj",
         "other_names": [
             "cryptojacks"
         ]
     },
     {
-        "codename": "HAL",
+      "symbol": "HAL",
         "name": "halcyon",
         "other_names": [
             "halcyon"
         ]
     },
     {
-        "codename": "KAYI",
+      "symbol": "KAYI",
         "name": "kayi",
         "other_names": [
             "kayicoin"
         ]
     },
     {
-        "codename": "TRK",
+      "symbol": "TRK",
         "name": "truckcoin",
         "other_names": [
             "truckcoin"
         ]
     },
     {
-        "codename": "PHS",
+      "symbol": "PHS",
         "name": "philosopherstone",
         "other_names": [
             "philosopher-stones"
         ]
     },
     {
-        "codename": "LBTC",
+      "symbol": "LBTC",
         "name": "lbtc",
         "other_names": [
             "litebitcoin"
         ]
     },
     {
-        "codename": "OPAL",
+      "symbol": "OPAL",
         "name": "opalcoin",
         "other_names": [
             "opal"
         ]
     },
     {
-        "codename": "CHESS",
+      "symbol": "CHESS",
         "name": "chess",
         "other_names": [
             "chesscoin"
         ]
     },
     {
-        "codename": "ETHD",
+      "symbol": "ETHD",
         "name": "ethereum dark",
         "other_names": [
             "ethereum-dark"
         ]
     },
     {
-        "codename": "MOJO",
+      "symbol": "MOJO",
         "name": "mojocoin",
         "other_names": [
             "mojocoin"
         ]
     },
     {
-        "codename": "XCT",
+      "symbol": "XCT",
         "name": "xct",
         "other_names": [
             "c-bit"
         ]
     },
     {
-        "codename": "STV",
+      "symbol": "STV",
         "name": "sativacoin",
         "other_names": [
             "sativacoin"
         ]
     },
     {
-        "codename": "BTCR",
+      "symbol": "BTCR",
         "name": "btcr",
         "other_names": [
             "bitcurrency"
         ]
     },
     {
-        "codename": "XPY",
+      "symbol": "XPY",
         "name": "paycoin",
         "other_names": [
             "paycoin2"
         ]
     },
     {
-        "codename": "MTM",
+      "symbol": "MTM",
         "name": "mtmgaming",
         "other_names": [
             "mtmgaming"
         ]
     },
     {
-        "codename": "C2",
+      "symbol": "C2",
         "name": "coin2.1",
         "other_names": [
             "coin2-1"
         ]
     },
     {
-        "codename": "XGR",
+      "symbol": "XGR",
         "name": "goldreserve",
         "other_names": [
             "goldreserve"
         ]
     },
     {
-        "codename": "BLC",
+      "symbol": "BLC",
         "name": "blakecoin",
         "other_names": [
             "blakecoin"
         ]
     },
     {
-        "codename": "JET",
+      "symbol": "JET",
         "name": "jetcoin",
         "other_names": [
             "jetcoin"
         ]
     },
     {
-        "codename": "LTB",
+      "symbol": "LTB",
         "name": "litebar",
         "other_names": [
             "litebar"
         ]
     },
     {
-        "codename": "808",
+      "symbol": "808",
         "name": "808",
         "other_names": [
             "808coin"
         ]
     },
     {
-        "codename": "WAY",
+      "symbol": "WAY",
         "name": "way",
         "other_names": [
             "wayguide"
         ]
     },
     {
-        "codename": "EMD",
+      "symbol": "EMD",
         "name": "emerald",
         "other_names": [
             "emerald"
         ]
     },
     {
-        "codename": "ZUR",
+      "symbol": "ZUR",
         "name": "zur",
         "other_names": [
             "zurcoin"
         ]
     },
     {
-        "codename": "AIB",
+      "symbol": "AIB",
         "name": "aib",
         "other_names": [
             "advanced-internet-blocks"
         ]
     },
     {
-        "codename": "UNITS",
+      "symbol": "UNITS",
         "name": "units",
         "other_names": [
             "gameunits"
         ]
     },
     {
-        "codename": "BITSILVER",
+      "symbol": "BITSILVER",
         "name": "bitsilver",
         "other_names": [
             "bitsilver"
         ]
     },
     {
-        "codename": "XRA",
+      "symbol": "XRA",
         "name": "xra",
         "other_names": [
             "ratecoin"
         ]
     },
     {
-        "codename": "RPC",
+      "symbol": "RPC",
         "name": "ronpaulcoin",
         "other_names": [
             "ronpaulcoin"
         ]
     },
     {
-        "codename": "ITI",
+      "symbol": "ITI",
         "name": "iti",
         "other_names": [
             "iticoin"
         ]
     },
     {
-        "codename": "ARI",
+      "symbol": "ARI",
         "name": "aricoin",
         "other_names": [
             "aricoin"
         ]
     },
     {
-        "codename": "POST",
+      "symbol": "POST",
         "name": "post",
         "other_names": [
             "postcoin"
         ]
     },
     {
-        "codename": "ISL",
+      "symbol": "ISL",
         "name": "isl",
         "other_names": [
             "islacoin"
         ]
     },
     {
-        "codename": "TGC",
+      "symbol": "TGC",
         "name": "tigercoin",
         "other_names": [
             "tigercoin"
         ]
     },
     {
-        "codename": "BUCKS",
+      "symbol": "BUCKS",
         "name": "megabucks",
         "other_names": [
             "swagbucks"
         ]
     },
     {
-        "codename": "SPACE",
+      "symbol": "SPACE",
         "name": "space",
         "other_names": [
             "spacecoin"
         ]
     },
     {
-        "codename": "HNC",
+      "symbol": "HNC",
         "name": "hnc",
         "other_names": [
             "helleniccoin",
@@ -4668,162 +4668,162 @@
         ]
     },
     {
-        "codename": "BTWTY",
+      "symbol": "BTWTY",
         "name": "bit20",
         "other_names": [
             "bit20"
         ]
     },
     {
-        "codename": "VIDZ",
+      "symbol": "VIDZ",
         "name": "vidz",
         "other_names": [
             "purevidz"
         ]
     },
     {
-        "codename": "SPEX",
+      "symbol": "SPEX",
         "name": "spex",
         "other_names": [
             "sproutsextreme"
         ]
     },
     {
-        "codename": "TEK",
+      "symbol": "TEK",
         "name": "tekcoin",
         "other_names": [
             "tekcoin"
         ]
     },
     {
-        "codename": "BITGOLD",
+      "symbol": "BITGOLD",
         "name": "bitgold",
         "other_names": [
             "bitgold"
         ]
     },
     {
-        "codename": "MOTO",
+      "symbol": "MOTO",
         "name": "motocoin",
         "other_names": [
             "motocoin"
         ]
     },
     {
-        "codename": "HMP",
+      "symbol": "HMP",
         "name": "hmp",
         "other_names": [
             "hempcoin-hmp"
         ]
     },
     {
-        "codename": "SH",
+      "symbol": "SH",
         "name": "sh",
         "other_names": [
             "shilling"
         ]
     },
     {
-        "codename": "AMS",
+      "symbol": "AMS",
         "name": "ams",
         "other_names": [
             "amsterdamcoin"
         ]
     },
     {
-        "codename": "LKY",
+      "symbol": "LKY",
         "name": "luckycoin",
         "other_names": []
     },
     {
-        "codename": "NDAO",
+      "symbol": "NDAO",
         "name": "neurodao",
         "other_names": []
     },
     {
-        "codename": "REE",
+      "symbol": "REE",
         "name": "ree",
         "other_names": [
             "reecoin"
         ]
     },
     {
-        "codename": "BSTY",
+      "symbol": "BSTY",
         "name": "globalboost-y",
         "other_names": [
             "globalboost-y"
         ]
     },
     {
-        "codename": "ICOB",
+      "symbol": "ICOB",
         "name": "icob",
         "other_names": [
             "icobid"
         ]
     },
     {
-        "codename": "CUBE",
+      "symbol": "CUBE",
         "name": "cube",
         "other_names": [
             "digicube"
         ]
     },
     {
-        "codename": "EUC",
+      "symbol": "EUC",
         "name": "euc",
         "other_names": [
             "eurocoin"
         ]
     },
     {
-        "codename": "FLY",
+      "symbol": "FLY",
         "name": "fly",
         "other_names": [
             "flycoin"
         ]
     },
     {
-        "codename": "TALK",
+      "symbol": "TALK",
         "name": "talk",
         "other_names": [
             "btctalkcoin"
         ]
     },
     {
-        "codename": "SWING",
+      "symbol": "SWING",
         "name": "swing",
         "other_names": [
             "swing"
         ]
     },
     {
-        "codename": "TAG",
+      "symbol": "TAG",
         "name": "tagcoin",
         "other_names": [
             "tagcoin"
         ]
     },
     {
-        "codename": "DAS",
+      "symbol": "DAS",
         "name": "das",
         "other_names": []
     },
     {
-        "codename": "RBX",
+      "symbol": "RBX",
         "name": "rbx",
         "other_names": [
             "ripto-bux"
         ]
     },
     {
-        "codename": "FUZZ",
+      "symbol": "FUZZ",
         "name": "fuzz",
         "other_names": [
             "fuzzballs"
         ]
     },
     {
-        "codename": "USDE",
+      "symbol": "USDE",
         "name": "unitary status dollar ecoin",
         "other_names": [
             "usde",
@@ -4831,406 +4831,406 @@
         ]
     },
     {
-        "codename": "TSE",
+      "symbol": "TSE",
         "name": "tse",
         "other_names": [
             "tattoocoin"
         ]
     },
     {
-        "codename": "ECO",
+      "symbol": "ECO",
         "name": "eco",
         "other_names": [
             "ecocoin"
         ]
     },
     {
-        "codename": "HXX",
+      "symbol": "HXX",
         "name": "hexxcoin",
         "other_names": [
             "hexx"
         ]
     },
     {
-        "codename": "VC",
+      "symbol": "VC",
         "name": "virtualcoin",
         "other_names": [
             "virtualcoin"
         ]
     },
     {
-        "codename": "KED",
+      "symbol": "KED",
         "name": "ked",
         "other_names": [
             "darsek"
         ]
     },
     {
-        "codename": "XVP",
+      "symbol": "XVP",
         "name": "xvp",
         "other_names": [
             "virtacoinplus"
         ]
     },
     {
-        "codename": "FUNC",
+      "symbol": "FUNC",
         "name": "func",
         "other_names": [
             "funcoin"
         ]
     },
     {
-        "codename": "PR",
+      "symbol": "PR",
         "name": "pr",
         "other_names": [
             "prototanium"
         ]
     },
     {
-        "codename": "PIG",
+      "symbol": "PIG",
         "name": "piggycoin",
         "other_names": []
     },
     {
-        "codename": "IMS",
+      "symbol": "IMS",
         "name": "ims",
         "other_names": [
             "independent-money-system"
         ]
     },
     {
-        "codename": "U",
+      "symbol": "U",
         "name": "ucoin",
         "other_names": []
     },
     {
-        "codename": "CYP",
+      "symbol": "CYP",
         "name": "cyp",
         "other_names": [
             "cypher"
         ]
     },
     {
-        "codename": "RBIES",
+      "symbol": "RBIES",
         "name": "rbies",
         "other_names": [
             "rubies"
         ]
     },
     {
-        "codename": "EVIL",
+      "symbol": "EVIL",
         "name": "evil",
         "other_names": [
             "evil-coin"
         ]
     },
     {
-        "codename": "TOR",
+      "symbol": "TOR",
         "name": "torcoin",
         "other_names": [
             "torcoin-tor"
         ]
     },
     {
-        "codename": "888",
+      "symbol": "888",
         "name": "octocoin",
         "other_names": [
             "octocoin"
         ]
     },
     {
-        "codename": "BLZ",
+      "symbol": "BLZ",
         "name": "blazecoin",
         "other_names": [
             "blazecoin"
         ]
     },
     {
-        "codename": "MAD",
+      "symbol": "MAD",
         "name": "mad",
         "other_names": [
             "satoshimadness"
         ]
     },
     {
-        "codename": "EQUAL",
+      "symbol": "EQUAL",
         "name": "equal",
         "other_names": []
     },
     {
-        "codename": "FRN",
+      "symbol": "FRN",
         "name": "frn",
         "other_names": [
             "francs"
         ]
     },
     {
-        "codename": "BITZ",
+      "symbol": "BITZ",
         "name": "bitz",
         "other_names": [
             "bitz"
         ]
     },
     {
-        "codename": "QTL",
+      "symbol": "QTL",
         "name": "quatloo",
         "other_names": [
             "quatloo"
         ]
     },
     {
-        "codename": "NEWB",
+      "symbol": "NEWB",
         "name": "newb",
         "other_names": [
             "newbium"
         ]
     },
     {
-        "codename": "BIP",
+      "symbol": "BIP",
         "name": "bip",
         "other_names": [
             "bipcoin"
         ]
     },
     {
-        "codename": "BERN",
+      "symbol": "BERN",
         "name": "bern",
         "other_names": [
             "berncash"
         ]
     },
     {
-        "codename": "MAR",
+      "symbol": "MAR",
         "name": "mar",
         "other_names": [
             "marijuanacoin"
         ]
     },
     {
-        "codename": "DUO",
+      "symbol": "DUO",
         "name": "parallelcoin",
         "other_names": [
             "parallelcoin"
         ]
     },
     {
-        "codename": "XBTC21",
+      "symbol": "XBTC21",
         "name": "xbtc21",
         "other_names": [
             "bitcoin-21"
         ]
     },
     {
-        "codename": "SOIL",
+      "symbol": "SOIL",
         "name": "soil",
         "other_names": [
             "soilcoin"
         ]
     },
     {
-        "codename": "CORG",
+      "symbol": "CORG",
         "name": "corgicoin",
         "other_names": [
             "corgicoin"
         ]
     },
     {
-        "codename": "YAC",
+      "symbol": "YAC",
         "name": "yacoin",
         "other_names": [
             "yacoin"
         ]
     },
     {
-        "codename": "SRC",
+      "symbol": "SRC",
         "name": "securecoin",
         "other_names": [
             "securecoin"
         ]
     },
     {
-        "codename": "BUMBA",
+      "symbol": "BUMBA",
         "name": "bumbacoin",
         "other_names": [
             "bumbacoin"
         ]
     },
     {
-        "codename": "FAME",
+      "symbol": "FAME",
         "name": "famecoin",
         "other_names": []
     },
     {
-        "codename": "CACH",
+      "symbol": "CACH",
         "name": "cachecoin",
         "other_names": [
             "cachecoin"
         ]
     },
     {
-        "codename": "XCO",
+      "symbol": "XCO",
         "name": "xco",
         "other_names": [
             "x-coin"
         ]
     },
     {
-        "codename": "GPL",
+      "symbol": "GPL",
         "name": "gpl",
         "other_names": [
             "gold-pressed-latinum"
         ]
     },
     {
-        "codename": "SCRT",
+      "symbol": "SCRT",
         "name": "scrt",
         "other_names": [
             "secretcoin"
         ]
     },
     {
-        "codename": "GPU",
+      "symbol": "GPU",
         "name": "gpu",
         "other_names": [
             "gpu-coin"
         ]
     },
     {
-        "codename": "$$$",
+      "symbol": "$$$",
         "name": "$$$",
         "other_names": [
             "money"
         ]
     },
     {
-        "codename": "CON",
+      "symbol": "CON",
         "name": "coino",
         "other_names": [
             "paycon"
         ]
     },
     {
-        "codename": "300",
+      "symbol": "300",
         "name": "300 token",
         "other_names": [
             "300-token"
         ]
     },
     {
-        "codename": "LEAF",
+      "symbol": "LEAF",
         "name": "leafcoin",
         "other_names": []
     },
     {
-        "codename": "MNC",
+      "symbol": "MNC",
         "name": "mincoin",
         "other_names": [
             "mincoin"
         ]
     },
     {
-        "codename": "UNIBURST",
+      "symbol": "UNIBURST",
         "name": "uniburst",
         "other_names": []
     },
     {
-        "codename": "LUX",
+      "symbol": "LUX",
         "name": "lux",
         "other_names": [
             "luxcoin"
         ]
     },
     {
-        "codename": "HONEY",
+      "symbol": "HONEY",
         "name": "honeycoin",
         "other_names": [
             "honey"
         ]
     },
     {
-        "codename": "QQC",
+      "symbol": "QQC",
         "name": "qqcoin",
         "other_names": []
     },
     {
-        "codename": "TAJ",
+      "symbol": "TAJ",
         "name": "taj",
         "other_names": [
             "tajcoin"
         ]
     },
     {
-        "codename": "ARG",
+      "symbol": "ARG",
         "name": "argentum",
         "other_names": [
             "argentum"
         ]
     },
     {
-        "codename": "EVO",
+      "symbol": "EVO",
         "name": "evo",
         "other_names": [
             "evotion"
         ]
     },
     {
-        "codename": "GP",
+      "symbol": "GP",
         "name": "goldpieces",
         "other_names": [
             "goldpieces"
         ]
     },
     {
-        "codename": "EL",
+      "symbol": "EL",
         "name": "el",
         "other_names": [
             "elcoin-el"
         ]
     },
     {
-        "codename": "ARCO",
+      "symbol": "ARCO",
         "name": "arco",
         "other_names": [
             "aquariuscoin"
         ]
     },
     {
-        "codename": "PX",
+      "symbol": "PX",
         "name": "px",
         "other_names": [
             "px"
         ]
     },
     {
-        "codename": "COAL",
+      "symbol": "COAL",
         "name": "coal",
         "other_names": [
             "bitcoal"
         ]
     },
     {
-        "codename": "SOON",
+      "symbol": "SOON",
         "name": "sooncoin",
         "other_names": [
             "sooncoin"
         ]
     },
     {
-        "codename": "DLC",
+      "symbol": "DLC",
         "name": "dlc",
         "other_names": [
             "dollarcoin"
         ]
     },
     {
-        "codename": "XRE",
+      "symbol": "XRE",
         "name": "xre",
         "other_names": [
             "revolvercoin"
         ]
     },
     {
-        "codename": "ARC",
+      "symbol": "ARC",
         "name": "arc",
         "other_names": [
             "arcade-token",
@@ -5238,103 +5238,103 @@
         ]
     },
     {
-        "codename": "BLN",
+      "symbol": "BLN",
         "name": "bolenum",
         "other_names": [
             "bolenum"
         ]
     },
     {
-        "codename": "ALL",
+      "symbol": "ALL",
         "name": "all",
         "other_names": [
             "allion"
         ]
     },
     {
-        "codename": "FRK",
+      "symbol": "FRK",
         "name": "frankocoin",
         "other_names": [
             "franko"
         ]
     },
     {
-        "codename": "QCN",
+      "symbol": "QCN",
         "name": "quazarcoin",
         "other_names": [
             "quazarcoin"
         ]
     },
     {
-        "codename": "XCRE",
+      "symbol": "XCRE",
         "name": "xcre",
         "other_names": [
             "creatio"
         ]
     },
     {
-        "codename": "FIRE",
+      "symbol": "FIRE",
         "name": "firecoin",
         "other_names": [
             "firecoin"
         ]
     },
     {
-        "codename": "MAY",
+      "symbol": "MAY",
         "name": "may",
         "other_names": [
             "theresa-may-coin"
         ]
     },
     {
-        "codename": "KDC",
+      "symbol": "KDC",
         "name": "klondikecoin",
         "other_names": []
     },
     {
-        "codename": "611",
+      "symbol": "611",
         "name": "611",
         "other_names": [
             "sixeleven"
         ]
     },
     {
-        "codename": "ICON",
+      "symbol": "ICON",
         "name": "icon",
         "other_names": [
             "iconic"
         ]
     },
     {
-        "codename": "ACOIN",
+      "symbol": "ACOIN",
         "name": "acoin",
         "other_names": [
             "acoin"
         ]
     },
     {
-        "codename": "ANTI",
+      "symbol": "ANTI",
         "name": "anti",
         "other_names": [
             "antibitcoin"
         ]
     },
     {
-        "codename": "DBTC",
+      "symbol": "DBTC",
         "name": "dbtc",
         "other_names": [
             "debitcoin"
         ]
     },
     {
-        "codename": "SLING",
+      "symbol": "SLING",
         "name": "sling",
         "other_names": [
             "sling"
         ]
     },
     {
-        "codename": "CMT",
+      "symbol": "CMT",
         "name": "cmt",
         "other_names": [
             "comet",
@@ -5342,139 +5342,139 @@
         ]
     },
     {
-        "codename": "URC",
+      "symbol": "URC",
         "name": "urc",
         "other_names": [
             "unrealcoin"
         ]
     },
     {
-        "codename": "RBT",
+      "symbol": "RBT",
         "name": "rabbitcoin",
         "other_names": [
             "rimbit"
         ]
     },
     {
-        "codename": "BOST",
+      "symbol": "BOST",
         "name": "boostcoin",
         "other_names": [
             "boostcoin"
         ]
     },
     {
-        "codename": "MST",
+      "symbol": "MST",
         "name": "mastercoin",
         "other_names": [
             "mustangcoin"
         ]
     },
     {
-        "codename": "DRS",
+      "symbol": "DRS",
         "name": "denariuscoin",
         "other_names": [
             "digital-rupees"
         ]
     },
     {
-        "codename": "COXST",
+      "symbol": "COXST",
         "name": "coxst",
         "other_names": [
             "coexistcoin"
         ]
     },
     {
-        "codename": "ENTER",
+      "symbol": "ENTER",
         "name": "enterprise",
         "other_names": []
     },
     {
-        "codename": "GLOBE",
+      "symbol": "GLOBE",
         "name": "globe",
         "other_names": []
     },
     {
-        "codename": "CHAMP",
+      "symbol": "CHAMP",
         "name": "champ",
         "other_names": []
     },
     {
-        "codename": "LEA",
+      "symbol": "LEA",
         "name": "lea",
         "other_names": [
             "leacoin"
         ]
     },
     {
-        "codename": "NEVA",
+      "symbol": "NEVA",
         "name": "neva",
         "other_names": [
             "nevacoin"
         ]
     },
     {
-        "codename": "GTC",
+      "symbol": "GTC",
         "name": "gtc",
         "other_names": [
             "global-tour-coin"
         ]
     },
     {
-        "codename": "SPT",
+      "symbol": "SPT",
         "name": "spots",
         "other_names": [
             "spots"
         ]
     },
     {
-        "codename": "CPN",
+      "symbol": "CPN",
         "name": "compucoin",
         "other_names": [
             "compucoin"
         ]
     },
     {
-        "codename": "SFC",
+      "symbol": "SFC",
         "name": "sfc",
         "other_names": [
             "solarflarecoin"
         ]
     },
     {
-        "codename": "ERY",
+      "symbol": "ERY",
         "name": "ery",
         "other_names": [
             "eryllium"
         ]
     },
     {
-        "codename": "VEC2",
+      "symbol": "VEC2",
         "name": "vec2",
         "other_names": [
             "vector"
         ]
     },
     {
-        "codename": "SONG",
+      "symbol": "SONG",
         "name": "songcoin",
         "other_names": [
             "songcoin"
         ]
     },
     {
-        "codename": "CHIEF",
+      "symbol": "CHIEF",
         "name": "chief",
         "other_names": []
     },
     {
-        "codename": "LUNA",
+      "symbol": "LUNA",
         "name": "luna",
         "other_names": [
             "luna-coin"
         ]
     },
     {
-        "codename": "GCC",
+      "symbol": "GCC",
         "name": "gcc",
         "other_names": [
             "guccionecoin",
@@ -5482,7 +5482,7 @@
         ]
     },
     {
-        "codename": "BTQ",
+      "symbol": "BTQ",
         "name": "bter securities",
         "other_names": [
             "bter-securities",
@@ -5490,286 +5490,286 @@
         ]
     },
     {
-        "codename": "CF",
+      "symbol": "CF",
         "name": "cf",
         "other_names": [
             "californium"
         ]
     },
     {
-        "codename": "BENJI",
+      "symbol": "BENJI",
         "name": "benji",
         "other_names": [
             "benjirolls"
         ]
     },
     {
-        "codename": "CRX",
+      "symbol": "CRX",
         "name": "crx",
         "other_names": [
             "chronos"
         ]
     },
     {
-        "codename": "CXT",
+      "symbol": "CXT",
         "name": "cxt",
         "other_names": [
             "coinonat"
         ]
     },
     {
-        "codename": "PRC",
+      "symbol": "PRC",
         "name": "prospercoin",
         "other_names": [
             "prcoin"
         ]
     },
     {
-        "codename": "VPRC",
+      "symbol": "VPRC",
         "name": "vprc",
         "other_names": [
             "vaperscoin"
         ]
     },
     {
-        "codename": "BVC",
+      "symbol": "BVC",
         "name": "beavercoin",
         "other_names": [
             "beavercoin"
         ]
     },
     {
-        "codename": "CTO",
+      "symbol": "CTO",
         "name": "cto",
         "other_names": [
             "crypto"
         ]
     },
     {
-        "codename": "OFF",
+      "symbol": "OFF",
         "name": "offerings",
         "other_names": [
             "cthulhu-offerings"
         ]
     },
     {
-        "codename": "MTLMC3",
+      "symbol": "MTLMC3",
         "name": "mtlmc3",
         "other_names": [
             "metal-music-coin"
         ]
     },
     {
-        "codename": "BSTAR",
+      "symbol": "BSTAR",
         "name": "bstar",
         "other_names": [
             "blackstar"
         ]
     },
     {
-        "codename": "ATX",
+      "symbol": "ATX",
         "name": "atx",
         "other_names": [
             "artex-coin"
         ]
     },
     {
-        "codename": "FLAX",
+      "symbol": "FLAX",
         "name": "flax",
         "other_names": [
             "flaxscript"
         ]
     },
     {
-        "codename": "GRT",
+      "symbol": "GRT",
         "name": "grt",
         "other_names": [
             "grantcoin"
         ]
     },
     {
-        "codename": "FLVR",
+      "symbol": "FLVR",
         "name": "flvr",
         "other_names": [
             "flavorcoin"
         ]
     },
     {
-        "codename": "ZMC",
+      "symbol": "ZMC",
         "name": "zetamicron",
         "other_names": [
             "zetamicron"
         ]
     },
     {
-        "codename": "ADCN",
+      "symbol": "ADCN",
         "name": "adcn",
         "other_names": [
             "asiadigicoin"
         ]
     },
     {
-        "codename": "PRX",
+      "symbol": "PRX",
         "name": "prx",
         "other_names": [
             "printerium"
         ]
     },
     {
-        "codename": "INDEX",
+      "symbol": "INDEX",
         "name": "indexcoins",
         "other_names": []
     },
     {
-        "codename": "BLRY",
+      "symbol": "BLRY",
         "name": "blry",
         "other_names": [
             "billarycoin"
         ]
     },
     {
-        "codename": "ASAFE2",
+      "symbol": "ASAFE2",
         "name": "asafe2",
         "other_names": [
             "allsafe"
         ]
     },
     {
-        "codename": "DRM",
+      "symbol": "DRM",
         "name": "drm",
         "other_names": [
             "dreamcoin"
         ]
     },
     {
-        "codename": "JWL",
+      "symbol": "JWL",
         "name": "jwl",
         "other_names": [
             "jewels"
         ]
     },
     {
-        "codename": "PULSE",
+      "symbol": "PULSE",
         "name": "pulse",
         "other_names": [
             "pulse"
         ]
     },
     {
-        "codename": "ELS",
+      "symbol": "ELS",
         "name": "els",
         "other_names": [
             "elysium"
         ]
     },
     {
-        "codename": "JKC",
+      "symbol": "JKC",
         "name": "junkcoin",
         "other_names": []
     },
     {
-        "codename": "ACP",
+      "symbol": "ACP",
         "name": "acp",
         "other_names": [
             "anarchistsprime"
         ]
     },
     {
-        "codename": "ZYD",
+      "symbol": "ZYD",
         "name": "zyd",
         "other_names": [
             "zayedcoin"
         ]
     },
     {
-        "codename": "EXN",
+      "symbol": "EXN",
         "name": "exn",
         "other_names": [
             "exchangen"
         ]
     },
     {
-        "codename": "VIP",
+      "symbol": "VIP",
         "name": "vip",
         "other_names": [
             "vip-tokens"
         ]
     },
     {
-        "codename": "PWC",
+      "symbol": "PWC",
         "name": "pwc",
         "other_names": []
     },
     {
-        "codename": "DIBC",
+      "symbol": "DIBC",
         "name": "dibc",
         "other_names": [
             "dibcoin"
         ]
     },
     {
-        "codename": "DOLLAR",
+      "symbol": "DOLLAR",
         "name": "dollar",
         "other_names": [
             "dollar-online"
         ]
     },
     {
-        "codename": "GEERT",
+      "symbol": "GEERT",
         "name": "geert",
         "other_names": [
             "geertcoin"
         ]
     },
     {
-        "codename": "MSCN",
+      "symbol": "MSCN",
         "name": "mscn",
         "other_names": [
             "master-swiscoin"
         ]
     },
     {
-        "codename": "B3",
+      "symbol": "B3",
         "name": "b3",
         "other_names": [
             "b3coin"
         ]
     },
     {
-        "codename": "VRS",
+      "symbol": "VRS",
         "name": "vrs",
         "other_names": [
             "veros"
         ]
     },
     {
-        "codename": "1CR",
+      "symbol": "1CR",
         "name": "1credit",
         "other_names": []
     },
     {
-        "codename": "URO",
+      "symbol": "URO",
         "name": "urocoin",
         "other_names": [
             "uro"
         ]
     },
     {
-        "codename": "PIE",
+      "symbol": "PIE",
         "name": "pie",
         "other_names": [
             "piecoin"
         ]
     },
     {
-        "codename": "WARP",
+      "symbol": "WARP",
         "name": "warp",
         "other_names": [
             "warp"
         ]
     },
     {
-        "codename": "CASH",
+      "symbol": "CASH",
         "name": "cash",
         "other_names": [
             "cashcoin",
@@ -5777,300 +5777,300 @@
         ]
     },
     {
-        "codename": "LTCR",
+      "symbol": "LTCR",
         "name": "ltcr",
         "other_names": [
             "litecred"
         ]
     },
     {
-        "codename": "UET",
+      "symbol": "UET",
         "name": "uet",
         "other_names": [
             "useless-ethereum-token"
         ]
     },
     {
-        "codename": "ORLY",
+      "symbol": "ORLY",
         "name": "orly",
         "other_names": [
             "orlycoin"
         ]
     },
     {
-        "codename": "BNX",
+      "symbol": "BNX",
         "name": "bnx",
         "other_names": [
             "bnrtxcoin"
         ]
     },
     {
-        "codename": "GRID",
+      "symbol": "GRID",
         "name": "gridcoin",
         "other_names": [
             "grid"
         ]
     },
     {
-        "codename": "MND",
+      "symbol": "MND",
         "name": "mnd",
         "other_names": [
             "mindcoin"
         ]
     },
     {
-        "codename": "MILO",
+      "symbol": "MILO",
         "name": "milo",
         "other_names": [
             "milocoin"
         ]
     },
     {
-        "codename": "ANT",
+      "symbol": "ANT",
         "name": "aragon",
         "other_names": [
             "aragon"
         ]
     },
     {
-        "codename": "CWXT",
+      "symbol": "CWXT",
         "name": "cwxt",
         "other_names": [
             "cryptoworldx-token"
         ]
     },
     {
-        "codename": "STEPS",
+      "symbol": "STEPS",
         "name": "steps",
         "other_names": [
             "steps"
         ]
     },
     {
-        "codename": "MI",
+      "symbol": "MI",
         "name": "mi",
         "other_names": []
     },
     {
-        "codename": "RIDE",
+      "symbol": "RIDE",
         "name": "ride",
         "other_names": [
             "ride-my-car"
         ]
     },
     {
-        "codename": "DLISK",
+      "symbol": "DLISK",
         "name": "dlisk",
         "other_names": [
             "dappster"
         ]
     },
     {
-        "codename": "DPAY",
+      "symbol": "DPAY",
         "name": "dpay",
         "other_names": [
             "dpay"
         ]
     },
     {
-        "codename": "CRT",
+      "symbol": "CRT",
         "name": "crtcoin",
         "other_names": [
             "crtcoin"
         ]
     },
     {
-        "codename": "PLNC",
+      "symbol": "PLNC",
         "name": "plnc",
         "other_names": [
             "plncoin"
         ]
     },
     {
-        "codename": "IMPS",
+      "symbol": "IMPS",
         "name": "imps",
         "other_names": [
             "impulsecoin"
         ]
     },
     {
-        "codename": "GBT",
+      "symbol": "GBT",
         "name": "gbt",
         "other_names": [
             "gamebet-coin"
         ]
     },
     {
-        "codename": "DIX",
+      "symbol": "DIX",
         "name": "dix asset",
         "other_names": [
             "dix-asset"
         ]
     },
     {
-        "codename": "PONZI",
+      "symbol": "PONZI",
         "name": "ponzi",
         "other_names": [
             "ponzicoin"
         ]
     },
     {
-        "codename": "VLTC",
+      "symbol": "VLTC",
         "name": "vltc",
         "other_names": [
             "vault-coin"
         ]
     },
     {
-        "codename": "CCM100",
+      "symbol": "CCM100",
         "name": "ccminer",
         "other_names": [
             "ccminer"
         ]
     },
     {
-        "codename": "BIOS",
+      "symbol": "BIOS",
         "name": "bios",
         "other_names": [
             "bios-crypto"
         ]
     },
     {
-        "codename": "TAGR",
+      "symbol": "TAGR",
         "name": "tagr",
         "other_names": [
             "tagrcoin"
         ]
     },
     {
-        "codename": "BRAIN",
+      "symbol": "BRAIN",
         "name": "brain",
         "other_names": [
             "braincoin"
         ]
     },
     {
-        "codename": "WBB",
+      "symbol": "WBB",
         "name": "wbb",
         "other_names": [
             "wild-beast-block"
         ]
     },
     {
-        "codename": "BSC",
+      "symbol": "BSC",
         "name": "bsc",
         "other_names": [
             "bowscoin"
         ]
     },
     {
-        "codename": "XVS",
+      "symbol": "XVS",
         "name": "xvs",
         "other_names": []
     },
     {
-        "codename": "ASR",
+      "symbol": "ASR",
         "name": "astrocoin",
         "other_names": []
     },
     {
-        "codename": "JOBS",
+      "symbol": "JOBS",
         "name": "jobs",
         "other_names": [
             "jobscoin"
         ]
     },
     {
-        "codename": "ARB",
+      "symbol": "ARB",
         "name": "arb",
         "other_names": [
             "arbit"
         ]
     },
     {
-        "codename": "DES",
+      "symbol": "DES",
         "name": "des",
         "other_names": [
             "destiny"
         ]
     },
     {
-        "codename": "EGO",
+      "symbol": "EGO",
         "name": "ego",
         "other_names": [
             "ego"
         ]
     },
     {
-        "codename": "XBTS",
+      "symbol": "XBTS",
         "name": "xbts",
         "other_names": [
             "beatcoin"
         ]
     },
     {
-        "codename": "ZNE",
+      "symbol": "ZNE",
         "name": "zne",
         "other_names": [
             "zonecoin"
         ]
     },
     {
-        "codename": "FCN",
+      "symbol": "FCN",
         "name": "fantomcoin",
         "other_names": [
             "fantomcoin"
         ]
     },
     {
-        "codename": "LIR",
+      "symbol": "LIR",
         "name": "lir",
         "other_names": [
             "letitride"
         ]
     },
     {
-        "codename": "SPA",
+      "symbol": "SPA",
         "name": "spaincoin",
         "other_names": []
     },
     {
-        "codename": "ARGUS",
+      "symbol": "ARGUS",
         "name": "argus",
         "other_names": [
             "argus"
         ]
     },
     {
-        "codename": "HVCO",
+      "symbol": "HVCO",
         "name": "hvco",
         "other_names": [
             "high-voltage"
         ]
     },
     {
-        "codename": "NANOX",
+      "symbol": "NANOX",
         "name": "nanox",
         "other_names": [
             "project-x"
         ]
     },
     {
-        "codename": "OS76",
+      "symbol": "OS76",
         "name": "os76",
         "other_names": [
             "osmiumcoin"
         ]
     },
     {
-        "codename": "SCS",
+      "symbol": "SCS",
         "name": "scs",
         "other_names": [
             "speedcash"
         ]
     },
     {
-        "codename": "EBT",
+      "symbol": "EBT",
         "name": "electronic benefit transfer",
         "other_names": [
             "electronic-benefit-transfer",
@@ -6078,52 +6078,52 @@
         ]
     },
     {
-        "codename": "MGM",
+      "symbol": "MGM",
         "name": "mgm",
         "other_names": [
             "magnum"
         ]
     },
     {
-        "codename": "ALTC",
+      "symbol": "ALTC",
         "name": "altc",
         "other_names": [
             "antilitecoin"
         ]
     },
     {
-        "codename": "XOC",
+      "symbol": "XOC",
         "name": "xoc",
         "other_names": [
             "xonecoin"
         ]
     },
     {
-        "codename": "PEX",
+      "symbol": "PEX",
         "name": "pex",
         "other_names": [
             "posex"
         ]
     },
     {
-        "codename": "ETOK",
+      "symbol": "ETOK",
         "name": "etoken",
         "other_names": []
     },
     {
-        "codename": "REV",
+      "symbol": "REV",
         "name": "rev",
         "other_names": []
     },
     {
-        "codename": "CAB",
+      "symbol": "CAB",
         "name": "cab",
         "other_names": [
             "cabbage"
         ]
     },
     {
-        "codename": "ACC",
+      "symbol": "ACC",
         "name": "acc",
         "other_names": [
             "accelerator-network",
@@ -6131,244 +6131,244 @@
         ]
     },
     {
-        "codename": "KGC",
+      "symbol": "KGC",
         "name": "krugercoin",
         "other_names": []
     },
     {
-        "codename": "CREVA",
+      "symbol": "CREVA",
         "name": "creva",
         "other_names": [
             "crevacoin"
         ]
     },
     {
-        "codename": "CESC",
+      "symbol": "CESC",
         "name": "cryptoescudo",
         "other_names": [
             "cryptoescudo"
         ]
     },
     {
-        "codename": "P7C",
+      "symbol": "P7C",
         "name": "p7c",
         "other_names": [
             "p7coin"
         ]
     },
     {
-        "codename": "WEX",
+      "symbol": "WEX",
         "name": "wex",
         "other_names": []
     },
     {
-        "codename": "RYC",
+      "symbol": "RYC",
         "name": "royalcoin",
         "other_names": []
     },
     {
-        "codename": "SDP",
+      "symbol": "SDP",
         "name": "sdp",
         "other_names": [
             "sydpak"
         ]
     },
     {
-        "codename": "LVPS",
+      "symbol": "LVPS",
         "name": "lvps",
         "other_names": [
             "levoplus"
         ]
     },
     {
-        "codename": "IBANK",
+      "symbol": "IBANK",
         "name": "ibank",
         "other_names": [
             "ibank"
         ]
     },
     {
-        "codename": "DRAGON",
+      "symbol": "DRAGON",
         "name": "btcdragon",
         "other_names": []
     },
     {
-        "codename": "BIOB",
+      "symbol": "BIOB",
         "name": "biob",
         "other_names": [
             "biobar"
         ]
     },
     {
-        "codename": "SOCC",
+      "symbol": "SOCC",
         "name": "socc",
         "other_names": [
             "socialcoin-socc"
         ]
     },
     {
-        "codename": "XNG",
+      "symbol": "XNG",
         "name": "xng",
         "other_names": [
             "enigma"
         ]
     },
     {
-        "codename": "SLFI",
+      "symbol": "SLFI",
         "name": "slfi",
         "other_names": [
             "selfiecoin"
         ]
     },
     {
-        "codename": "VOLT",
+      "symbol": "VOLT",
         "name": "electric",
         "other_names": [
             "bitvolt"
         ]
     },
     {
-        "codename": "XRC",
+      "symbol": "XRC",
         "name": "rhinocoin",
         "other_names": [
             "rawcoin2"
         ]
     },
     {
-        "codename": "COIN",
+      "symbol": "COIN",
         "name": "coin",
         "other_names": []
     },
     {
-        "codename": "ITC",
+      "symbol": "ITC",
         "name": "itc",
         "other_names": [
             "iot-chain"
         ]
     },
     {
-        "codename": "LEX",
+      "symbol": "LEX",
         "name": "lex4all",
         "other_names": [
             "lex4all"
         ]
     },
     {
-        "codename": "NODC",
+      "symbol": "NODC",
         "name": "nodc",
         "other_names": [
             "nodecoin"
         ]
     },
     {
-        "codename": "SANDG",
+      "symbol": "SANDG",
         "name": "sandg",
         "other_names": [
             "save-and-gain"
         ]
     },
     {
-        "codename": "BRD",
+      "symbol": "BRD",
         "name": "birdcoin",
         "other_names": [
             "bread"
         ]
     },
     {
-        "codename": "MUG",
+      "symbol": "MUG",
         "name": "mikethemug",
         "other_names": []
     },
     {
-        "codename": "NICE",
+      "symbol": "NICE",
         "name": "nice",
         "other_names": []
     },
     {
-        "codename": "GRUMP",
+      "symbol": "GRUMP",
         "name": "grumpycoin",
         "other_names": []
     },
     {
-        "codename": "TEA",
+      "symbol": "TEA",
         "name": "teacoin",
         "other_names": []
     },
     {
-        "codename": "KNC",
+      "symbol": "KNC",
         "name": "kyber network",
         "other_names": [
             "kyber-network"
         ]
     },
     {
-        "codename": "CONX",
+      "symbol": "CONX",
         "name": "conx",
         "other_names": [
             "concoin"
         ]
     },
     {
-        "codename": "OCEAN",
+      "symbol": "OCEAN",
         "name": "oceancoin",
         "other_names": [
             "burstocean"
         ]
     },
     {
-        "codename": "FLIK",
+      "symbol": "FLIK",
         "name": "flik",
         "other_names": [
             "flik"
         ]
     },
     {
-        "codename": "OLYMP",
+      "symbol": "OLYMP",
         "name": "olympia",
         "other_names": []
     },
     {
-        "codename": "MARS",
+      "symbol": "MARS",
         "name": "mars",
         "other_names": [
             "marscoin"
         ]
     },
     {
-        "codename": "LOC",
+      "symbol": "LOC",
         "name": "loc",
         "other_names": [
             "lockchain"
         ]
     },
     {
-        "codename": "CHIP",
+      "symbol": "CHIP",
         "name": "chip",
         "other_names": []
     },
     {
-        "codename": "PIZZA",
+      "symbol": "PIZZA",
         "name": "pizza",
         "other_names": [
             "pizzacoin"
         ]
     },
     {
-        "codename": "DGCS",
+      "symbol": "DGCS",
         "name": "dgcs",
         "other_names": [
             "digital-credits"
         ]
     },
     {
-        "codename": "PURE",
+      "symbol": "PURE",
         "name": "purecoin",
         "other_names": [
             "pure"
         ]
     },
     {
-        "codename": "GBC",
+      "symbol": "GBC",
         "name": "gb coin",
         "other_names": [
             "gbcgoldcoin",
@@ -6376,884 +6376,884 @@
         ]
     },
     {
-        "codename": "BON",
+      "symbol": "BON",
         "name": "bon",
         "other_names": [
             "bonpay"
         ]
     },
     {
-        "codename": "MEGA",
+      "symbol": "MEGA",
         "name": "megacoins",
         "other_names": []
     },
     {
-        "codename": "XEN",
+      "symbol": "XEN",
         "name": "xen",
         "other_names": []
     },
     {
-        "codename": "ABN",
+      "symbol": "ABN",
         "name": "abn",
         "other_names": [
             "abncoin"
         ]
     },
     {
-        "codename": "DMB",
+      "symbol": "DMB",
         "name": "dmb",
         "other_names": [
             "digital-money-bits"
         ]
     },
     {
-        "codename": "LEMON",
+      "symbol": "LEMON",
         "name": "lemons",
         "other_names": []
     },
     {
-        "codename": "ROC",
+      "symbol": "ROC",
         "name": "redoakcoin",
         "other_names": [
             "rasputin-online-coin"
         ]
     },
     {
-        "codename": "SOLAR",
+      "symbol": "SOLAR",
         "name": "solar",
         "other_names": []
     },
     {
-        "codename": "PWR",
+      "symbol": "PWR",
         "name": "pwr",
         "other_names": []
     },
     {
-        "codename": "CALC",
+      "symbol": "CALC",
         "name": "calc",
         "other_names": [
             "caliphcoin"
         ]
     },
     {
-        "codename": "DARK",
+      "symbol": "DARK",
         "name": "dark",
         "other_names": []
     },
     {
-        "codename": "MALC",
+      "symbol": "MALC",
         "name": "malc",
         "other_names": []
     },
     {
-        "codename": "GREED",
+      "symbol": "GREED",
         "name": "greed",
         "other_names": []
     },
     {
-        "codename": "KISS",
+      "symbol": "KISS",
         "name": "kiss",
         "other_names": []
     },
     {
-        "codename": "SWEET",
+      "symbol": "SWEET",
         "name": "sweet",
         "other_names": []
     },
     {
-        "codename": "PARTY",
+      "symbol": "PARTY",
         "name": "partycoins",
         "other_names": []
     },
     {
-        "codename": "FIRST",
+      "symbol": "FIRST",
         "name": "first",
         "other_names": []
     },
     {
-        "codename": "GIFT",
+      "symbol": "GIFT",
         "name": "giftcoins",
         "other_names": []
     },
     {
-        "codename": "POWER",
+      "symbol": "POWER",
         "name": "power",
         "other_names": []
     },
     {
-        "codename": "PUTIN",
+      "symbol": "PUTIN",
         "name": "putin",
         "other_names": []
     },
     {
-        "codename": "FOREX",
+      "symbol": "FOREX",
         "name": "forexcoins",
         "other_names": []
     },
     {
-        "codename": "LOOT",
+      "symbol": "LOOT",
         "name": "loot",
         "other_names": []
     },
     {
-        "codename": "ALIEN",
+      "symbol": "ALIEN",
         "name": "alien",
         "other_names": []
     },
     {
-        "codename": "007",
+      "symbol": "007",
         "name": "007",
         "other_names": []
     },
     {
-        "codename": "2015",
+      "symbol": "2015",
         "name": "twenty15",
         "other_names": []
     },
     {
-        "codename": "256",
+      "symbol": "256",
         "name": "256",
         "other_names": []
     },
     {
-        "codename": "66",
+      "symbol": "66",
         "name": "66coin",
         "other_names": []
     },
     {
-        "codename": "666",
+      "symbol": "666",
         "name": "666",
         "other_names": []
     },
     {
-        "codename": "ACN",
+      "symbol": "ACN",
         "name": "acn",
         "other_names": [
             "avoncoin"
         ]
     },
     {
-        "codename": "ACPR",
+      "symbol": "ACPR",
         "name": "acpr",
         "other_names": []
     },
     {
-        "codename": "ACRN",
+      "symbol": "ACRN",
         "name": "acrn",
         "other_names": []
     },
     {
-        "codename": "ACTIF",
+      "symbol": "ACTIF",
         "name": "actifs",
         "other_names": []
     },
     {
-        "codename": "AIRE",
+      "symbol": "AIRE",
         "name": "aire",
         "other_names": []
     },
     {
-        "codename": "AIRPO",
+      "symbol": "AIRPO",
         "name": "airport",
         "other_names": []
     },
     {
-        "codename": "AL",
+      "symbol": "AL",
         "name": "al",
         "other_names": []
     },
     {
-        "codename": "ALARM",
+      "symbol": "ALARM",
         "name": "alarm",
         "other_names": []
     },
     {
-        "codename": "ALBER",
+      "symbol": "ALBER",
         "name": "alberta",
         "other_names": []
     },
     {
-        "codename": "ALBUM",
+      "symbol": "ALBUM",
         "name": "album",
         "other_names": []
     },
     {
-        "codename": "ALC",
+      "symbol": "ALC",
         "name": "alc",
         "other_names": []
     },
     {
-        "codename": "ALCOH",
+      "symbol": "ALCOH",
         "name": "alcohol",
         "other_names": []
     },
     {
-        "codename": "ALEX",
+      "symbol": "ALEX",
         "name": "alex",
         "other_names": []
     },
     {
-        "codename": "ALEXA",
+      "symbol": "ALEXA",
         "name": "alexandria",
         "other_names": []
     },
     {
-        "codename": "ALF",
+      "symbol": "ALF",
         "name": "alphacoin",
         "other_names": []
     },
     {
-        "codename": "ALGOR",
+      "symbol": "ALGOR",
         "name": "algorithm",
         "other_names": []
     },
     {
-        "codename": "ASIA",
+      "symbol": "ASIA",
         "name": "asia",
         "other_names": []
     },
     {
-        "codename": "ASIAN",
+      "symbol": "ASIAN",
         "name": "asian",
         "other_names": []
     },
     {
-        "codename": "ASICS",
+      "symbol": "ASICS",
         "name": "asics",
         "other_names": []
     },
     {
-        "codename": "ASN",
+      "symbol": "ASN",
         "name": "asn",
         "other_names": [
             "aseancoin"
         ]
     },
     {
-        "codename": "ASSET",
+      "symbol": "ASSET",
         "name": "asset",
         "other_names": []
     },
     {
-        "codename": "ASTRO",
+      "symbol": "ASTRO",
         "name": "astro",
         "other_names": [
             "astro"
         ]
     },
     {
-        "codename": "ATARI",
+      "symbol": "ATARI",
         "name": "atari",
         "other_names": []
     },
     {
-        "codename": "ATEN",
+      "symbol": "ATEN",
         "name": "aten",
         "other_names": []
     },
     {
-        "codename": "ATERY",
+      "symbol": "ATERY",
         "name": "watery",
         "other_names": []
     },
     {
-        "codename": "ATH",
+      "symbol": "ATH",
         "name": "athenian warrior elite token",
         "other_names": [
             "athenian-warrior-elite-token"
         ]
     },
     {
-        "codename": "ATHEN",
+      "symbol": "ATHEN",
         "name": "athens",
         "other_names": []
     },
     {
-        "codename": "ATHST",
+      "symbol": "ATHST",
         "name": "athena2016",
         "other_names": []
     },
     {
-        "codename": "ATISM",
+      "symbol": "ATISM",
         "name": "autismcoin",
         "other_names": []
     },
     {
-        "codename": "ATLAN",
+      "symbol": "ATLAN",
         "name": "atlanta",
         "other_names": []
     },
     {
-        "codename": "ATLUS",
+      "symbol": "ATLUS",
         "name": "atlus",
         "other_names": []
     },
     {
-        "codename": "ATO",
+      "symbol": "ATO",
         "name": "ato",
         "other_names": []
     },
     {
-        "codename": "ATOMIC",
+      "symbol": "ATOMIC",
         "name": "atomic asset",
         "other_names": [
             "atomic-asset"
         ]
     },
     {
-        "codename": "ATP",
+      "symbol": "ATP",
         "name": "atomic points",
         "other_names": [
             "atomic-points"
         ]
     },
     {
-        "codename": "BLUS",
+      "symbol": "BLUS",
         "name": "blus",
         "other_names": []
     },
     {
-        "codename": "BM",
+      "symbol": "BM",
         "name": "bm",
         "other_names": []
     },
     {
-        "codename": "BMY",
+      "symbol": "BMY",
         "name": "bitmoney",
         "other_names": []
     },
     {
-        "codename": "BN",
+      "symbol": "BN",
         "name": "bn",
         "other_names": []
     },
     {
-        "codename": "BNC",
+      "symbol": "BNC",
         "name": "bnc",
         "other_names": []
     },
     {
-        "codename": "BNCR",
+      "symbol": "BNCR",
         "name": "bancorcoin",
         "other_names": []
     },
     {
-        "codename": "BNS",
+      "symbol": "BNS",
         "name": "bonuscoin",
         "other_names": []
     },
     {
-        "codename": "BOARD",
+      "symbol": "BOARD",
         "name": "board",
         "other_names": []
     },
     {
-        "codename": "BOAT",
+      "symbol": "BOAT",
         "name": "boat",
         "other_names": [
             "doubloon"
         ]
     },
     {
-        "codename": "BOATS",
+      "symbol": "BOATS",
         "name": "boats",
         "other_names": []
     },
     {
-        "codename": "BOB",
+      "symbol": "BOB",
         "name": "dobbscoin",
         "other_names": []
     },
     {
-        "codename": "BOC",
+      "symbol": "BOC",
         "name": "bountycoin",
         "other_names": []
     },
     {
-        "codename": "BOCOI",
+      "symbol": "BOCOI",
         "name": "bonuscoin",
         "other_names": []
     },
     {
-        "codename": "BOEIN",
+      "symbol": "BOEIN",
         "name": "boeing",
         "other_names": []
     },
     {
-        "codename": "BOGOT",
+      "symbol": "BOGOT",
         "name": "bogota",
         "other_names": []
     },
     {
-        "codename": "BOLLY",
+      "symbol": "BOLLY",
         "name": "bollywood",
         "other_names": []
     },
     {
-        "codename": "BOLTS",
+      "symbol": "BOLTS",
         "name": "bolts",
         "other_names": []
     },
     {
-        "codename": "BOMB",
+      "symbol": "BOMB",
         "name": "bomb",
         "other_names": []
     },
     {
-        "codename": "BONDS",
+      "symbol": "BONDS",
         "name": "bonds",
         "other_names": []
     },
     {
-        "codename": "BONES",
+      "symbol": "BONES",
         "name": "bones",
         "other_names": []
     },
     {
-        "codename": "BONUS",
+      "symbol": "BONUS",
         "name": "bonuscoins",
         "other_names": []
     },
     {
-        "codename": "BOOBS",
+      "symbol": "BOOBS",
         "name": "boobs",
         "other_names": []
     },
     {
-        "codename": "BOOBY",
+      "symbol": "BOOBY",
         "name": "booby",
         "other_names": []
     },
     {
-        "codename": "BOOKS",
+      "symbol": "BOOKS",
         "name": "books",
         "other_names": []
     },
     {
-        "codename": "BOOM",
+      "symbol": "BOOM",
         "name": "boomcoin",
         "other_names": []
     },
     {
-        "codename": "BOOST",
+      "symbol": "BOOST",
         "name": "boost",
         "other_names": []
     },
     {
-        "codename": "BOOTY",
+      "symbol": "BOOTY",
         "name": "booty",
         "other_names": []
     },
     {
-        "codename": "BOOZE",
+      "symbol": "BOOZE",
         "name": "boozecoin",
         "other_names": []
     },
     {
-        "codename": "BORG",
+      "symbol": "BORG",
         "name": "borgcoin",
         "other_names": []
     },
     {
-        "codename": "BORIC",
+      "symbol": "BORIC",
         "name": "boricoin",
         "other_names": []
     },
     {
-        "codename": "BOS",
+      "symbol": "BOS",
         "name": "bos",
         "other_names": [
             "boscoin"
         ]
     },
     {
-        "codename": "BOSON",
+      "symbol": "BOSON",
         "name": "boson",
         "other_names": []
     },
     {
-        "codename": "BOSS",
+      "symbol": "BOSS",
         "name": "boss",
         "other_names": []
     },
     {
-        "codename": "BOSSC",
+      "symbol": "BOSSC",
         "name": "bosscoin",
         "other_names": []
     },
     {
-        "codename": "BOSTO",
+      "symbol": "BOSTO",
         "name": "boston",
         "other_names": []
     },
     {
-        "codename": "BOUN",
+      "symbol": "BOUN",
         "name": "boun",
         "other_names": []
     },
     {
-        "codename": "BPOK",
+      "symbol": "BPOK",
         "name": "bpok",
         "other_names": []
     },
     {
-        "codename": "CRYST",
+      "symbol": "CRYST",
         "name": "crystalcoin",
         "other_names": []
     },
     {
-        "codename": "CS",
+      "symbol": "CS",
         "name": "cs",
         "other_names": []
     },
     {
-        "codename": "CSA",
+      "symbol": "CSA",
         "name": "csa",
         "other_names": []
     },
     {
-        "codename": "CSD",
+      "symbol": "CSD",
         "name": "coinshield",
         "other_names": []
     },
     {
-        "codename": "CSHUF",
+      "symbol": "CSHUF",
         "name": "coinshuffl",
         "other_names": []
     },
     {
-        "codename": "CSMIC",
+      "symbol": "CSMIC",
         "name": "csmic",
         "other_names": []
     },
     {
-        "codename": "CSO",
+      "symbol": "CSO",
         "name": "cscoin",
         "other_names": []
     },
     {
-        "codename": "CST",
+      "symbol": "CST",
         "name": "capstone",
         "other_names": []
     },
     {
-        "codename": "CT",
+      "symbol": "CT",
         "name": "ct",
         "other_names": []
     },
     {
-        "codename": "CTC",
+      "symbol": "CTC",
         "name": "ctc",
         "other_names": []
     },
     {
-        "codename": "CTIC",
+      "symbol": "CTIC",
         "name": "ctic",
         "other_names": []
     },
     {
-        "codename": "CTL",
+      "symbol": "CTL",
         "name": "ctl",
         "other_names": []
     },
     {
-        "codename": "CTM",
+      "symbol": "CTM",
         "name": "continuumcoin",
         "other_names": []
     },
     {
-        "codename": "CTNET",
+      "symbol": "CTNET",
         "name": "cybertech",
         "other_names": []
     },
     {
-        "codename": "CTZ",
+      "symbol": "CTZ",
         "name": "ctz",
         "other_names": []
     },
     {
-        "codename": "CUBA",
+      "symbol": "CUBA",
         "name": "cuba",
         "other_names": []
     },
     {
-        "codename": "CUBIC",
+      "symbol": "CUBIC",
         "name": "cubic",
         "other_names": []
     },
     {
-        "codename": "CUBIT",
+      "symbol": "CUBIT",
         "name": "cubit",
         "other_names": []
     },
     {
-        "codename": "CUM",
+      "symbol": "CUM",
         "name": "cummingtonite",
         "other_names": []
     },
     {
-        "codename": "CUPON",
+      "symbol": "CUPON",
         "name": "cupon",
         "other_names": []
     },
     {
-        "codename": "CURA",
+      "symbol": "CURA",
         "name": "cura",
         "other_names": []
     },
     {
-        "codename": "CWORK",
+      "symbol": "CWORK",
         "name": "cworkcoin",
         "other_names": []
     },
     {
-        "codename": "CX",
+      "symbol": "CX",
         "name": "cx",
         "other_names": []
     },
     {
-        "codename": "CXC",
+      "symbol": "CXC",
         "name": "checkoutcoin",
         "other_names": []
     },
     {
-        "codename": "CYBER",
+      "symbol": "CYBER",
         "name": "cyber",
         "other_names": []
     },
     {
-        "codename": "CYBOR",
+      "symbol": "CYBOR",
         "name": "cyborg",
         "other_names": []
     },
     {
-        "codename": "CYBSP",
+      "symbol": "CYBSP",
         "name": "cyberspace",
         "other_names": []
     },
     {
-        "codename": "CYC",
+      "symbol": "CYC",
         "name": "conspiracycoin",
         "other_names": [
             "cycling-coin"
         ]
     },
     {
-        "codename": "CYCLE",
+      "symbol": "CYCLE",
         "name": "cycle",
         "other_names": []
     },
     {
-        "codename": "CYG",
+      "symbol": "CYG",
         "name": "cyg",
         "other_names": []
     },
     {
-        "codename": "CYPHR",
+      "symbol": "CYPHR",
         "name": "cypher",
         "other_names": []
     },
     {
-        "codename": "CYPRU",
+      "symbol": "CYPRU",
         "name": "cyprus",
         "other_names": []
     },
     {
-        "codename": "CYT",
+      "symbol": "CYT",
         "name": "cyt",
         "other_names": []
     },
     {
-        "codename": "CZC",
+      "symbol": "CZC",
         "name": "czechcrowncoin",
         "other_names": []
     },
     {
-        "codename": "CZE",
+      "symbol": "CZE",
         "name": "czecoin",
         "other_names": []
     },
     {
-        "codename": "CZECH",
+      "symbol": "CZECH",
         "name": "czechrepub",
         "other_names": []
     },
     {
-        "codename": "CZECO",
+      "symbol": "CZECO",
         "name": "czeco",
         "other_names": []
     },
     {
-        "codename": "CZR",
+      "symbol": "CZR",
         "name": "czarcoin",
         "other_names": []
     },
     {
-        "codename": "DADDY",
+      "symbol": "DADDY",
         "name": "godaddy",
         "other_names": []
     },
     {
-        "codename": "DAILY",
+      "symbol": "DAILY",
         "name": "dailycoin",
         "other_names": []
     },
     {
-        "codename": "DALLA",
+      "symbol": "DALLA",
         "name": "dallas",
         "other_names": []
     },
     {
-        "codename": "DANC",
+      "symbol": "DANC",
         "name": "danc",
         "other_names": []
     },
     {
-        "codename": "DANCE",
+      "symbol": "DANCE",
         "name": "dance",
         "other_names": []
     },
     {
-        "codename": "DANK",
+      "symbol": "DANK",
         "name": "darkkush",
         "other_names": []
     },
     {
-        "codename": "DAO",
+      "symbol": "DAO",
         "name": "dao",
         "other_names": []
     },
     {
-        "codename": "DARKB",
+      "symbol": "DARKB",
         "name": "darkblock",
         "other_names": []
     },
     {
-        "codename": "DARKC",
+      "symbol": "DARKC",
         "name": "darkcoin",
         "other_names": []
     },
     {
-        "codename": "DARKN",
+      "symbol": "DARKN",
         "name": "darknet",
         "other_names": []
     },
     {
-        "codename": "DARKS",
+      "symbol": "DARKS",
         "name": "darksend",
         "other_names": []
     },
     {
-        "codename": "DARKW",
+      "symbol": "DARKW",
         "name": "darkweb",
         "other_names": []
     },
     {
-        "codename": "DARTH",
+      "symbol": "DARTH",
         "name": "darthvader",
         "other_names": []
     },
     {
-        "codename": "DASHS",
+      "symbol": "DASHS",
         "name": "dashs",
         "other_names": [
             "dashs"
         ]
     },
     {
-        "codename": "DASYN",
+      "symbol": "DASYN",
         "name": "datasyn",
         "other_names": []
     },
     {
-        "codename": "DATAB",
+      "symbol": "DATAB",
         "name": "database",
         "other_names": []
     },
     {
-        "codename": "DAVAO",
+      "symbol": "DAVAO",
         "name": "davao",
         "other_names": []
     },
     {
-        "codename": "DAVIF",
+      "symbol": "DAVIF",
         "name": "davidoff",
         "other_names": []
     },
     {
-        "codename": "DB",
+      "symbol": "DB",
         "name": "distroblitz",
         "other_names": []
     },
     {
-        "codename": "DBANK",
+      "symbol": "DBANK",
         "name": "databank",
         "other_names": []
     },
     {
-        "codename": "DBEST",
+      "symbol": "DBEST",
         "name": "dailybeast",
         "other_names": []
     },
     {
-        "codename": "DBG",
+      "symbol": "DBG",
         "name": "dbg",
         "other_names": [
             "digital-bullion-gold"
         ]
     },
     {
-        "codename": "DBIC",
+      "symbol": "DBIC",
         "name": "dbic",
         "other_names": []
     },
     {
-        "codename": "DBL",
+      "symbol": "DBL",
         "name": "doubloons",
         "other_names": []
     },
     {
-        "codename": "DBLK",
+      "symbol": "DBLK",
         "name": "dblk",
         "other_names": []
     },
     {
-        "codename": "DBLUE",
+      "symbol": "DBLUE",
         "name": "deepblue",
         "other_names": []
     },
     {
-        "codename": "DC",
+      "symbol": "DC",
         "name": "dc",
         "other_names": []
     },
     {
-        "codename": "DCC",
+      "symbol": "DCC",
         "name": "dcc",
         "other_names": []
     },
     {
-        "codename": "DCK",
+      "symbol": "DCK",
         "name": "dck",
         "other_names": []
     },
     {
-        "codename": "DCLUB",
+      "symbol": "DCLUB",
         "name": "dclub",
         "other_names": []
     },
     {
-        "codename": "DCM",
+      "symbol": "DCM",
         "name": "dcm",
         "other_names": []
     },
     {
-        "codename": "DCOIN",
+      "symbol": "DCOIN",
         "name": "dcoin",
         "other_names": []
     },
     {
-        "codename": "DCRE",
+      "symbol": "DCRE",
         "name": "dcre",
         "other_names": [
             "deltacredits"

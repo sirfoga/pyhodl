@@ -154,15 +154,14 @@ def download_prices(coins, since, until, where_to, verbose, currency="USD",
     print("Just got data from", since, "until", until, "(", hours,
           "-hours intervals)")
     print("Expecting", len(intervals), "intervals")
-    for coin, values in data.items():
-        print(coin)
-        n_intervals = len(values)
-        first, last = values[0]["datetime"], values[-1]["datetime"]
-        time_interval = parse_datetime(last) - parse_datetime(first)
-        time_interval = (time_interval.total_seconds() / n_intervals) / 60.0
-        print("\t", first, "->", last)
-        print("\t", n_intervals, " intervals of", time_interval, "minutes")
 
+    n_intervals = len(data)
+    print("Got", n_intervals)
+    first, last = data[0]["datetime"], data[-1]["datetime"]
+    time_interval = last - first
+    time_interval = (time_interval.total_seconds() / n_intervals) / 60.0
+    print("\t", first, "->", last)
+    print("\t", n_intervals, " intervals of", time_interval, "minutes")
     # write_dicts_to_json(data, output_file)
 
     if verbose:
@@ -181,7 +180,7 @@ def main():
         exchanges = get_all_exchanges()
         dates = get_transactions_dates(exchanges)
         # todo debug starts
-        dates = ["2017-06-15 07:17:00 +0000", "2017-06-16 19:17:00 +0000"]
+        dates = ["2017-06-15 07:17:00 +0000", "2017-06-25 19:17:00 +0000"]
         dates = [parse_datetime(d) for d in dates]
         # todo debug ends
         first_transaction, last_transaction = min(dates), max(dates)
