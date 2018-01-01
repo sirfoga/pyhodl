@@ -162,7 +162,7 @@ def datetime_to_unix_timestamp_s(dt):
 
 
 def unix_timestamp_ms_to_datetime(ms):
-    dt = datetime.fromtimestamp(ms / 1e3)
+    dt = datetime.fromtimestamp(float(ms) / 1e3)
     return pytz.utc.localize(dt)  # utc as default time zone
 
 

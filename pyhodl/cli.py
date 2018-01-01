@@ -33,6 +33,7 @@ from pyhodl.data.parsers import build_parser
 from pyhodl.stats.transactions import get_transactions_dates, \
     get_all_exchanges, get_all_coins
 from pyhodl.updater.core import Updater
+from pyhodl.utils import generate_dates, parse_datetime
 
 
 class RunMode(Enum):
@@ -138,16 +139,31 @@ def download_market_cap(since, until, where_to, verbose):
         print("Saved market cap data to", output_file)
 
 
-def download_prices(coins, since, until, where_to, verbose, hours=4,
-                    currency="USD", tor=False):
+def download_prices(coins, since, until, where_to, verbose, currency="USD",
+                    tor=False):
     if verbose:
         print("Getting historical prices for", len(coins), "coins")
 
     output_file = os.path.join(where_to, currency.lower() + ".json")
     data = get_prices(
-        coins, currency, since, until, hours, tor
+        ["BTC", "BLOCK"], currency, since, until, tor
     )
-    write_dicts_to_json(data, output_file)
+
+    hours = 6
+    intervals = list(generate_dates(since, until, hours))
+    print("Just got data from", since, "until", until, "(", hours,
+          "-hours intervals)")
+    print("Expecting", len(intervals), "intervals")
+    for coin, values in data.items():
+        print(coin)
+        n_intervals = len(values)
+        first, last = values[0]["datetime"], values[-1]["datetime"]
+        time_interval = parse_datetime(last) - parse_datetime(first)
+        time_interval = (time_interval.total_seconds() / n_intervals) / 60.0
+        print("\t", first, "->", last)
+        print("\t", n_intervals, " intervals of", time_interval, "minutes")
+
+    # write_dicts_to_json(data, output_file)
 
     if verbose:
         print("Saved historical prices to", output_file)
@@ -164,16 +180,20 @@ def main():
     elif run_mode == RunMode.DOWNLOAD_HISTORICAL:
         exchanges = get_all_exchanges()
         dates = get_transactions_dates(exchanges)
+        # todo debug starts
+        dates = ["2017-06-15 07:17:00 +0000", "2017-06-16 19:17:00 +0000"]
+        dates = [parse_datetime(d) for d in dates]
+        # todo debug ends
         first_transaction, last_transaction = min(dates), max(dates)
         coins = get_all_coins(exchanges)
-
         download_prices(
             coins, first_transaction, last_transaction, args[0], args[1],
             tor=args[2]
         )
-        download_market_cap(
-            first_transaction, last_transaction, args[0], args[1]
-        )
+        # todo debug starts
+        # download_market_cap(
+        #     first_transaction, last_transaction, args[0], args[1]
+        # )
 
 
 def handle_exception():

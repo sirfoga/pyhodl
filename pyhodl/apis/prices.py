@@ -24,9 +24,10 @@ import urllib.parse
 import urllib.request
 from datetime import timedelta
 
-from pyhodl.app import DATE_TIME_KEY, NAN, VALUE_KEY, FIAT_COINS
+from pyhodl.app import DATE_TIME_KEY, NAN, VALUE_KEY, FIAT_COINS, \
+    get_coin_by_codename
 from pyhodl.data.coins import Coin
-from pyhodl.logging import Logger
+from pyhodl.logs import Logger
 from pyhodl.utils import replace_items, \
     datetime_to_unix_timestamp_ms, unix_timestamp_ms_to_datetime, download, \
     download_with_tor, datetime_to_str, datetime_to_unix_timestamp_s, middle, \
@@ -185,7 +186,7 @@ class CoinmarketCapClient(PricesApiClient):
     """ Get coinmarketcap.com APIs data """
 
     BASE_URL = "https://graphs.coinmarketcap.com/"
-    AVAILABLE_FIAT = Coin("USD")
+    AVAILABLE_FIAT = [Coin("USD")]
     TIME_FRAME = timedelta(minutes=5)  # API does not provide exact timing
 
     def __init__(self, base_url=BASE_URL):
@@ -194,6 +195,10 @@ class CoinmarketCapClient(PricesApiClient):
     def _create_path(self, action):
         if action == "marketcap":
             return os.path.join("global", "marketcap-total")
+        else:  # action is a coin
+            return os.path.join(
+                "currencies", get_coin_by_codename(action).name
+            )
 
     def _create_url(self, action, since, until):
         since = datetime_to_unix_timestamp_ms(since)  # to ms unix
@@ -235,15 +240,14 @@ class CoinmarketCapClient(PricesApiClient):
         ).json()
         data = {}
         for category, values in raw_data.items():
-            values = [
+            data[category] = [
                 {
                     DATE_TIME_KEY: datetime_to_str(
                         unix_timestamp_ms_to_datetime(item[0])
                     ),
                     VALUE_KEY: float(item[1])
-                } for item in data
+                } for item in values
             ]
-            data[category] = values
         return data
 
     def get_price(self, coins, dt, **kwargs):
@@ -264,14 +268,16 @@ class CoinmarketCapClient(PricesApiClient):
     def get_prices(self, coins, **kwargs):
         since = kwargs["since"] - self.TIME_FRAME
         until = kwargs["until"] + self.TIME_FRAME
-        prices = []
+        prices = {}  # dict <str coin -> [] prices>
         for coin in coins:  # get all prices for each coin
             try:
-                prices[coin] = self.get_coin_stats(
+                d = self.get_coin_stats(
                     coin, since, until
                 )["price_usd"]
+                prices[coin] = d
             except Exception as e:
-                self.log("Failed getting prices of", coin, "due to", e)
+                self.log("Failed getting", coin, "prices due to", e)
+
         return prices
 
 
@@ -280,12 +286,12 @@ def get_market_cap(since, until):
     return client.get_market_cap(since, until)
 
 
-def get_prices(coins, currency, since, until, hours, tor):
+def get_prices(coins, currency, since, until, tor):
     if Coin(currency) in CoinmarketCapClient.AVAILABLE_FIAT:
         client = CoinmarketCapClient()  # better client (use as default)
     else:
         client = CryptocompareClient(tor=tor)
 
     return client.get_prices(
-        coins, since=since, until=until, hours=hours, currency=currency
+        coins, since=since, until=until, hours=6, currency=currency
     )

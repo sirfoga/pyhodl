@@ -131,3 +131,15 @@ def create_workplace():
     for directory in [APP_FOLDER, API_FOLDER, DATA_FOLDER]:
         if not os.path.exists(directory):
             os.makedirs(directory)
+
+
+def get_coin_by_name(coin_name):
+    for coin in CRYPTO_COINS:
+        if coin.name == coin_name or coin_name in coin.other_names:
+            return coin
+
+
+def get_coin_by_codename(codename):
+    for coin in CRYPTO_COINS:
+        if coin.codename == codename:
+            return coin

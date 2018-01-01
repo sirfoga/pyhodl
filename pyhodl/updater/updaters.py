@@ -28,7 +28,7 @@ from coinbase.wallet.client import Client as CoinbaseClient
 from gdax.authenticated_client import AuthenticatedClient as GdaxClient
 from hal.files.save_as import write_dicts_to_json
 
-from pyhodl.logging import Logger
+from pyhodl.logs import Logger
 from pyhodl.utils import handle_rate_limits
 
 INT_32_MAX = 2 ** 31 - 1
