@@ -47,6 +47,11 @@ class ApiManager(ConfigManager):
         return ApiConfig.build_api(out)
 
     def get_all(self):
+        """
+        :return: generator of API
+            Generate all APIs clients
+        """
+
         for key in self.data:
             yield self.get(key)
 
@@ -64,15 +69,13 @@ class ApiConfig:
         self.key = raw["key"]
         self.secret = raw["secret"]
 
-    def to_dict(self):
-        return self.raw
-
     @abc.abstractmethod
     def get_client(self):
         """
         :return: ApiClient
             Api client
         """
+
         return
 
     @staticmethod
@@ -84,21 +87,16 @@ class ApiConfig:
             ApiConfig
         """
 
-        try:
-            if raw["name"] == "binance":
-                return BinanceApi(raw)
-            elif raw["name"] == "bitfinex":
-                return BitfinexApi(raw)
-            elif raw["name"] == "coinbase":
-                return CoinbaseApi(raw)
-            elif raw["name"] == "gdax":
-                return GdaxApi(raw)
-            else:
-                raise ValueError("Cannot infer type of API")
-        except Exception as e:
-            print(raw)
-            print(e)
-            raise ValueError("Cannot infer type of API")
+        if raw["name"] == "binance":
+            return BinanceApi(raw)
+        elif raw["name"] == "bitfinex":
+            return BitfinexApi(raw)
+        elif raw["name"] == "coinbase":
+            return CoinbaseApi(raw)
+        elif raw["name"] == "gdax":
+            return GdaxApi(raw)
+
+        raise ValueError("Cannot infer type of API")
 
 
 class BinanceApi(ApiConfig):
