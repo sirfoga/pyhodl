@@ -23,6 +23,13 @@ from pyhodl.updater.core import UpdateManager
 
 
 def get_transactions_dates(items):
+    """
+    :param items: Exchange, Wallet ...
+        Anything with 'transactions' attr
+    :return: sorted [] of datetime
+        Sorted list of date and time of all transactions in list
+    """
+
     dates = []
     for item in items:
         dates += [
@@ -32,12 +39,24 @@ def get_transactions_dates(items):
 
 
 def get_all_coins(exchanges):
-    return [
+    """
+    :param exchanges: [] of CryptoExchange
+        List of exchanges
+    :return: [] of str
+        List of coins in all exchanges
+    """
+
+    return list(set([
         coin for exchange in exchanges
         for coin in exchange.build_wallets().keys()
-    ]
+    ]))
 
 
 def get_all_exchanges():
+    """
+    :return: [] of CryptoExchange
+        List of exchange found in data folder
+    """
+
     folder_in = UpdateManager().get_data_folder()
     return list(build_exchanges(folder_in))

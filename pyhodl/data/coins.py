@@ -50,9 +50,6 @@ class CryptoCoin(Coin):
         else:
             self.other_names = []
 
-    def get_other_names(self):
-        return self.other_names
-
     def __eq__(self, other):
         if super().__eq__(other):
             return True

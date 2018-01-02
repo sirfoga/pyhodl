@@ -49,17 +49,6 @@ class AbstractApiClient(Logger):
         Logger.__init__(self)
         self.base_url = base_url
 
-    @abc.abstractmethod
-    def download(self, url):
-        """
-        :param url: str
-            Url to get
-        :return: response
-            Response of request
-        """
-
-        return
-
 
 class PricesApiClient(AbstractApiClient):
     """ Simple prices API client """

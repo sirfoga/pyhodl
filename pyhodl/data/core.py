@@ -25,8 +25,8 @@ from datetime import datetime
 
 from hal.files.parsers import JSONParser
 
-from ..models.exchanges import CryptoExchange
-from ..models.transactions import TransactionType, Transaction, Commission
+from pyhodl.models.exchanges import CryptoExchange
+from pyhodl.models.transactions import TransactionType, Transaction, Commission
 
 
 class CryptoParser:
@@ -107,6 +107,13 @@ class CryptoParser:
 
     @abc.abstractmethod
     def get_date(self, raw):
+        """
+        :param raw: {}
+            Raw details of transaction
+        :return: datetime
+            Date and time of transaction
+        """
+
         return
 
     @abc.abstractmethod
@@ -121,6 +128,13 @@ class CryptoParser:
         return
 
     def get_transaction_type(self, raw):
+        """
+        :param raw: {}
+            Raw details of transaction
+        :return: TransactionType
+            Type of transaction
+        """
+
         if self.is_trade(raw):
             return TransactionType.TRADING
         elif self.is_deposit(raw):
@@ -160,8 +174,8 @@ class CryptoParser:
         for transaction in raw:
             try:
                 yield self.parse_transaction(transaction)
-            except Exception as e:
-                print("Cannot parse transaction", transaction, "due to", e)
+            except:
+                print("Cannot parse transaction", transaction)
 
     def build_exchange(self, exchange_name):
         """
@@ -185,16 +199,16 @@ class BinanceParser(CryptoParser):
             market = raw["symbol"]
             if market.endswith("USDT"):
                 coin_buy, coin_sell = market.replace("USDT", ""), "USDT"
-            else:
-                coin_buy, coin_sell = market[:-3], market[-3:]
+
+            coin_buy, coin_sell = market[:-3], market[-3:]
 
             amount_buy = float(raw["qty"])
             amount_sell = float(raw["price"]) * amount_buy
 
             if raw["isBuyer"]:
                 return coin_buy, amount_buy, coin_sell, amount_sell
-            else:
-                return coin_sell, amount_sell, coin_buy, amount_buy
+
+            return coin_sell, amount_sell, coin_buy, amount_buy
         elif self.is_deposit(raw):
             return raw["asset"], float(raw["amount"]), None, 0
         elif self.is_withdrawal(raw):
@@ -259,8 +273,8 @@ class BitfinexParser(CryptoParser):
             sell_amount = buy_amount * float(raw["price"])
             if raw["type"] == "Buy":
                 return coin_buy, buy_amount, coin_sell, sell_amount
-            else:
-                return coin_sell, sell_amount, coin_buy, buy_amount
+
+            return coin_sell, sell_amount, coin_buy, buy_amount
         elif self.is_deposit(raw):
             return raw["currency"], float(raw["amount"]), None, 0
         elif self.is_withdrawal(raw):
@@ -324,9 +338,9 @@ class CoinbaseParser(CryptoParser):
                     return currency, \
                            abs(float(raw["native_amount"]["amount"])), \
                            coin, abs(float(raw["amount"]["amount"]))
-                else:
-                    return coin, abs(float(raw["amount"]["amount"])), \
-                           currency, abs(float(raw["native_amount"]["amount"]))
+
+                return coin, abs(float(raw["amount"]["amount"])), \
+                       currency, abs(float(raw["native_amount"]["amount"]))
 
             return None, 0, None, 0
         elif self.is_deposit(raw):
@@ -377,9 +391,9 @@ class CoinbaseParser(CryptoParser):
             for transaction in transactions:
                 try:
                     yield self.parse_transaction(transaction)
-                except Exception as e:
+                except:
                     print("Cannot parse transaction", transaction,
-                          "of account", account, "due to", e)
+                          "of account", account)
 
     def build_exchange(self, exchange_name="coinbase"):
         return super(CoinbaseParser, self).build_exchange(exchange_name)
@@ -394,8 +408,8 @@ class GdaxParser(CryptoParser):
 
         if amount >= 0:  # buy
             return coin, abs(amount), None, 0
-        else:  # sell
-            return None, 0, coin, abs(amount)
+
+        return None, 0, coin, abs(amount)
 
     def is_trade(self, raw):
         return "product_id" in raw["details"]
@@ -423,9 +437,9 @@ class GdaxParser(CryptoParser):
             for transaction in transactions:
                 try:
                     yield self.parse_transaction(transaction)
-                except Exception as e:
+                except:
                     print("Cannot parse transaction", transaction,
-                          "of account", account, "due to", e)
+                          "of account", account)
 
     def build_exchange(self, exchange_name="gdax"):
         return super(GdaxParser, self).build_exchange(exchange_name)
