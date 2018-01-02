@@ -194,6 +194,8 @@ def parse_datetime(raw):
 
 
 def datetime_to_str(dt):
+    if dt.tzinfo is None:
+        dt = pytz.utc.localize(dt)  # utc as default time zone
     return dt.strftime(DATE_TIME_FORMAT)
 
 

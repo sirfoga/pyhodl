@@ -22,17 +22,17 @@ import optparse
 import os
 import time
 import traceback
-from datetime import timedelta, datetime
+from datetime import timedelta
 from enum import Enum
 
 from hal.files.save_as import write_dicts_to_json
-from hal.streams.pretty_table import pretty_format_table
 from hal.streams.user import UserInput
 
 from pyhodl.apis.exchanges import API_CONFIG
 from pyhodl.apis.prices import get_market_cap, get_prices
 from pyhodl.charts.balances import OtherCurrencyPlotter
 from pyhodl.config import DATA_FOLDER, HISTORICAL_DATA_FOLDER
+from pyhodl.data.balance import get_balance_file
 from pyhodl.data.parsers import build_parser, build_exchanges
 from pyhodl.models.exchanges import Portfolio
 from pyhodl.stats.transactions import get_transactions_dates, \
@@ -150,20 +150,13 @@ def plot(input_file, verbose):
 
 
 def show_exchange_balance(exchange):
-    print("\n\nExchange:", exchange.exchange_name.title())
+    print("\nExchange:", exchange.exchange_name.title())
 
     wallets = exchange.build_wallets()
     portfolio = Portfolio(wallets.values())
-    table, tot_balance = portfolio.get_current_balance()
-    pretty_table = pretty_format_table(
-        ["symbol", "balance", "$ value", "$ price per coin"],
-        table
-    )
-
-    print("As of", datetime.now(), "you got")
-    print(pretty_table)
-    print("Total value: ~", tot_balance, "$")
-    return tot_balance
+    last_balance = get_balance_file(exchange.exchange_name)
+    save_to = last_balance
+    return portfolio.show_balance(save_to=save_to)
 
 
 def show_folder_balance(input_folder):
