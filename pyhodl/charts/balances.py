@@ -20,7 +20,8 @@
 
 import matplotlib.pyplot as plt
 
-from pyhodl.config import DATE_TIME_KEY, VALUE_KEY
+from pyhodl.config import DATE_TIME_KEY, VALUE_KEY, FIAT_COINS
+from pyhodl.data.coins import Coin
 from pyhodl.models.exchanges import Portfolio
 from pyhodl.utils import generate_dates, normalize
 
@@ -206,19 +207,38 @@ class OtherCurrencyPlotter(BalancePlotter):
             )
 
     def plot_total_balances(self):
-        crypto_values, fiat_values = \
-            self.portfolio.get_balance_values(self.base_currency)
+        dates = []
+        for wallet in self.wallets:
+            dates += wallet.dates()
+        dates = sorted(dates)
+        crypto_values = [0.0 for _ in range(len(dates))]
+        fiat_values = [0.0 for _ in range(len(dates))]
+
+        for wallet in self.wallets:
+            balances = wallet.get_balances_in_dates(dates)
+            for i, balance in enumerate(balances):
+                val = wallet.get_equivalent(
+                    balance[DATE_TIME_KEY],
+                    self.base_currency,
+                    float(balance[VALUE_KEY])
+                )
+
+                if str(val) != "nan":
+                    if Coin(wallet.base_currency) in FIAT_COINS:
+                        fiat_values[i] += val
+                    else:
+                        crypto_values[i] += val
 
         plt.plot(
-            [balance[DATE_TIME_KEY] for balance in crypto_values],
-            [balance[VALUE_KEY] for balance in crypto_values],
-            label="Crypto value of wallets (" + self.base_currency + ")"
+            dates,
+            crypto_values,
+            label="Crypto value of portfolio (" + self.base_currency + ")"
         )  # plot crypto balances
 
         plt.plot(
-            [balance[DATE_TIME_KEY] for balance in fiat_values],
-            [balance[VALUE_KEY] for balance in fiat_values],
-            label="Fiat value of wallets (" + self.base_currency + ")"
+            dates,
+            fiat_values,
+            label="Fiat value of portfolio (" + self.base_currency + ")"
         )  # plot crypto balances
 
     def show(self, title, x_label="Time", y_label="value"):

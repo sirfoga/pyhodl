@@ -61,7 +61,7 @@ class DatetimeTable(JSONParser):
         bisect_insert = bisect(self.dates, dt)
         low, high = bisect_insert - 1, bisect_insert  # 2 nearest dates
         low = self.dates[low] if low >= 0 else None
-        high = self.dates[high] if high < len(self.dates) else None
+        high = self.dates[high - 1] if high <= len(self.dates) else None
         err_low = (dt - low).total_seconds() if low else INFINITY
         err_high = (high - dt).total_seconds() if low else INFINITY
 
@@ -109,7 +109,7 @@ class CoinPricesTable(DatetimeTable):
         DatetimeTable.__init__(
             self,
             os.path.join(HISTORICAL_DATA_FOLDER, currency.lower() + ".json"),
-            6 * 60 * 60  # 6 hours
+            24 * 60 * 60  # a day
         )
 
         self.base_currency = currency.upper()
