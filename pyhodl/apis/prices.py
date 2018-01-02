@@ -49,6 +49,17 @@ class AbstractApiClient(Logger):
         Logger.__init__(self)
         self.base_url = base_url
 
+    @abc.abstractmethod
+    def download(self, url):
+        """
+        :param url: str
+            Url to get
+        :return: response
+            Response of request
+        """
+
+        return
+
 
 class PricesApiClient(AbstractApiClient):
     """ Simple prices API client """
@@ -126,6 +137,13 @@ class TorApiClient:
             print("Handling tor sessions with password:", self.tor)
 
     def download(self, url):
+        """
+        :param url: str
+            Url to fetch
+        :return: response
+            Response downloaded with tor
+        """
+
         if self.tor:
             return download_with_tor(url, self.tor, 3)
 
@@ -146,7 +164,7 @@ class CryptocompareClient(PricesApiClient, TorApiClient):
     AVAILABLE_FIAT = FIAT_COINS
 
     def __init__(self, base_url=BASE_URL, tor=False):
-        AbstractApiClient.__init__(self, base_url)
+        PricesApiClient.__init__(self, base_url)
         TorApiClient.__init__(self, tor)
 
     def _encode_coins(self, coins):
@@ -179,11 +197,11 @@ class CryptocompareClient(PricesApiClient, TorApiClient):
     def download(self, url):
         return super().download(url).json()  # parse as json
 
-    def get_api_url(self, coins, dt, **kwargs):
+    def get_api_url(self, coins, date_time, **kwargs):
         """
         :param coins: [] of str
             BTC, ETH ...
-        :param dt: datetime
+        :param date_time: datetime
             Date and time of price
         :return: str
             Url to call
@@ -193,7 +211,7 @@ class CryptocompareClient(PricesApiClient, TorApiClient):
             {
                 "fsym": str(kwargs["currency"]),
                 "tsyms": ",".join(coins),
-                "ts": datetime_to_unix_timestamp_s(dt)
+                "ts": datetime_to_unix_timestamp_s(date_time)
             }
         )
         url = self.base_url + "?%s" % params
@@ -237,10 +255,11 @@ class CoinmarketCapClient(PricesApiClient, TorApiClient):
     TIME_FRAME = timedelta(minutes=5)  # API does not provide exact timing
 
     def __init__(self, base_url=BASE_URL, tor=False):
-        AbstractApiClient.__init__(self, base_url)
+        PricesApiClient.__init__(self, base_url)
         TorApiClient.__init__(self, tor)
 
-    def _create_path(self, action):
+    @staticmethod
+    def _create_path(action):
         if action == "marketcap":
             return os.path.join("global", "marketcap-total")
 
@@ -288,9 +307,12 @@ class CoinmarketCapClient(PricesApiClient, TorApiClient):
         """
         :param coin: str
             Coin to fetch
-        :param since:
-        :param until:
-        :return:
+        :param since: datetime
+            Get data since this date
+        :param until: datetime
+            Get data until this date
+        :return: {}
+            Coin stats
         """
 
         raw_data = self.download(self._create_url(coin, since, until))

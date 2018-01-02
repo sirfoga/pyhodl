@@ -167,6 +167,13 @@ def unix_timestamp_ms_to_datetime(ms):
 
 
 def download(url):
+    """
+    :param url: str
+        Url to get
+    :return: response
+        Response of request
+    """
+
     return requests.get(url)
 
 
