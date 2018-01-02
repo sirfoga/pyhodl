@@ -23,8 +23,8 @@ from bisect import bisect
 
 from hal.files.parsers import JSONParser
 
-from pyhodl.app import HISTORICAL_DATA_FOLDER, DATE_TIME_KEY, INFINITY, \
-    VALUE_KEY
+from pyhodl.config import HISTORICAL_DATA_FOLDER, DATE_TIME_KEY, VALUE_KEY, \
+    INFINITY
 from pyhodl.utils import parse_datetime
 
 

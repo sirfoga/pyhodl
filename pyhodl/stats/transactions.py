@@ -18,7 +18,7 @@
 
 """ Get transactions stats """
 
-from pyhodl.app import DATE_TIME_KEY, VALUE_KEY
+from pyhodl.config import DATE_TIME_KEY, VALUE_KEY
 from pyhodl.data.parsers import build_exchanges
 from pyhodl.updater.core import UpdateManager
 

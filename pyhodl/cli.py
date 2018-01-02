@@ -30,8 +30,8 @@ from hal.streams.pretty_table import pretty_format_table
 from hal.streams.user import UserInput
 
 from pyhodl.apis.prices import get_market_cap, get_prices
-from pyhodl.app import DATA_FOLDER
 from pyhodl.charts.balances import OtherCurrencyPlotter
+from pyhodl.config import DATA_FOLDER
 from pyhodl.data.parsers import build_parser, build_exchanges
 from pyhodl.models.exchanges import Portfolio
 from pyhodl.stats.transactions import get_transactions_dates, \

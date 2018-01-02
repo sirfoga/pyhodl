@@ -23,7 +23,8 @@ import threading
 from datetime import datetime, timedelta
 
 from pyhodl.apis.exchanges import ApiManager
-from pyhodl.app import DATA_FOLDER, ConfigManager
+from pyhodl.app import ConfigManager
+from pyhodl.config import DATA_FOLDER
 from pyhodl.updater.updaters import ExchangeUpdater
 from pyhodl.utils import get_actual_class_name, parse_datetime, datetime_to_str
 

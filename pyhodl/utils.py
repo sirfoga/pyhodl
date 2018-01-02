@@ -28,7 +28,7 @@ import pytz
 import requests
 from hal.internet.web import get_tor_session, renew_connection
 
-from pyhodl.app import DATE_TIME_FORMAT
+from pyhodl.config import DATE_TIME_FORMAT
 
 
 def generate_dates(since, until, hours):

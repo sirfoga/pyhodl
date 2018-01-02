@@ -17,7 +17,8 @@
 
 
 """ Analyze transactions in exchanges """
-from pyhodl.app import DATE_TIME_KEY, VALUE_KEY, FIAT_COINS
+
+from pyhodl.config import DATE_TIME_KEY, VALUE_KEY, FIAT_COINS
 from pyhodl.data.coins import Coin
 from pyhodl.models.transactions import Wallet
 from pyhodl.stats.transactions import get_balances_from_deltas

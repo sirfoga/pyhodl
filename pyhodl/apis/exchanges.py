@@ -26,7 +26,8 @@ from ccxt import bitfinex as BitfinexClient
 from coinbase.wallet.client import Client as CoinbaseClient
 from gdax.authenticated_client import AuthenticatedClient as GdaxClient
 
-from ..app import API_FOLDER, ConfigManager
+from pyhodl.config import API_FOLDER
+from ..app import ConfigManager
 
 API_CONFIG = os.path.join(
     API_FOLDER,

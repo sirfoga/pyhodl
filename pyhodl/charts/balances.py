@@ -20,7 +20,7 @@
 
 import matplotlib.pyplot as plt
 
-from pyhodl.app import VALUE_KEY, DATE_TIME_KEY
+from pyhodl.config import DATE_TIME_KEY, VALUE_KEY
 from pyhodl.models.exchanges import Portfolio
 from pyhodl.utils import generate_dates, normalize
 

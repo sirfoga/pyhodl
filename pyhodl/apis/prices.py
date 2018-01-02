@@ -27,8 +27,8 @@ from datetime import timedelta
 
 from hal.time.profile import get_time_eta, print_time_eta
 
-from pyhodl.app import DATE_TIME_KEY, NAN, VALUE_KEY, FIAT_COINS, \
-    get_coin_by_symbol
+from pyhodl.app import get_coin_by_symbol
+from pyhodl.config import DATE_TIME_KEY, VALUE_KEY, NAN, FIAT_COINS
 from pyhodl.data.coins import Coin
 from pyhodl.logs import Logger
 from pyhodl.utils import replace_items, \

@@ -24,7 +24,7 @@ from enum import Enum
 import pytz
 
 from pyhodl.apis.prices import CryptocompareClient
-from pyhodl.app import VALUE_KEY, NAN
+from pyhodl.config import VALUE_KEY, NAN
 from pyhodl.data.tables import get_coin_prices_table
 
 
