@@ -18,6 +18,8 @@
 
 """ Plot balances data with trends and stats """
 
+import abc
+
 import matplotlib.pyplot as plt
 
 from pyhodl.config import DATE_TIME_KEY, VALUE_KEY, FIAT_COINS
@@ -29,9 +31,11 @@ from pyhodl.utils import generate_dates, normalize
 class CryptoPlotter:
     """ Plots crypto data """
 
-    def __init__(self):
-        self.fig, self.ax = plt.subplots()
+    def __init__(self, wallets):
+        self.wallets = wallets
+        self.fig, self.axis = plt.subplots()
 
+    @abc.abstractmethod
     def show(self, title, x_label="Time", y_label="Amount"):
         """
         :param y_label: str
@@ -56,8 +60,7 @@ class BalancePlotter(CryptoPlotter):
     """ Plots balance data of each coin for each date available """
 
     def __init__(self, wallets):
-        CryptoPlotter.__init__(self)
-        self.wallets = wallets
+        CryptoPlotter.__init__(self, wallets)
 
     def plot_balances(self):
         """
@@ -88,11 +91,11 @@ class BalancePlotter(CryptoPlotter):
         for wallet in self.wallets:
             try:
                 self._plot_delta_balance(wallet)
-            except Exception as e:
-                print("Cannot plot delta balances wallet",
-                      wallet, "due to", e)
+            except:
+                print("Cannot plot delta balances wallet", wallet)
 
-    def _plot_delta_balance(self, wallet):
+    @staticmethod
+    def _plot_delta_balance(wallet):
         """
         :param wallet: Wallet
             Coin wallet with transactions
@@ -160,8 +163,8 @@ class OtherCurrencyPlotter(BalancePlotter):
                 dates,
                 balances,
                 "-x",
-                label="Value of " + wallet.base_currency +
-                      " (" + self.base_currency + ")"
+                label="Value of " + wallet.base_currency + " (" +
+                      self.base_currency + ")"
             )
 
     def plot_buy_sells(self, wallet):
@@ -207,6 +210,11 @@ class OtherCurrencyPlotter(BalancePlotter):
             )
 
     def plot_total_balances(self):
+        """
+        :return: void
+            Total balance for wach coin
+        """
+
         dates = []
         for wallet in self.wallets:
             dates += wallet.dates()
