@@ -25,6 +25,7 @@ from hal.files.parsers import JSONParser
 from hal.files.save_as import write_dicts_to_json
 
 from pyhodl.config import DATA_FOLDER, DATE_TIME_KEY
+from pyhodl.utils import datetime_to_str, parse_datetime
 
 
 def get_balance_file(exchange):
@@ -51,11 +52,8 @@ def parse_balance(input_file):
 
     if os.path.exists(input_file):
         content = JSONParser(input_file).get_content()
-        data = {}
-        for balance in content:
-            if "symbol" in balance:
-                data[balance["symbol"]] = balance
-        return data
+        content[DATE_TIME_KEY] = parse_datetime(content[DATE_TIME_KEY])
+        return content
 
 
 def save_balance(balances, output_file, timestamp=datetime.now()):
@@ -64,6 +62,8 @@ def save_balance(balances, output_file, timestamp=datetime.now()):
         List of balanced for each wallet
     :param output_file: str
         Path to save data to
+    :param timestamp: datetime
+        Time of log
     :return: void
         Saves data to file
     """
@@ -75,5 +75,5 @@ def save_balance(balances, output_file, timestamp=datetime.now()):
     data = {}
     for balance in balances:  # lst -> dict
         data[balance["symbol"]] = balance
-    data[DATE_TIME_KEY] = timestamp
-    write_dicts_to_json(balances, output_file)
+    data[DATE_TIME_KEY] = datetime_to_str(timestamp)
+    write_dicts_to_json(data, output_file)

@@ -156,7 +156,7 @@ def show_exchange_balance(exchange):
     portfolio = Portfolio(wallets.values())
     last_balance = get_balance_file(exchange.exchange_name)
     save_to = last_balance
-    return portfolio.show_balance(save_to=save_to)
+    return portfolio.show_balance(last_balance, save_to)
 
 
 def show_folder_balance(input_folder):
@@ -165,7 +165,7 @@ def show_folder_balance(input_folder):
     for exchange in exchanges:
         exchange_value = show_exchange_balance(exchange)
         total_value += exchange_value
-    print("Total value of all exchanges ~", total_value, "$")
+    print("\nTotal value of all exchanges ~", total_value, "$")
 
 
 def download_market_cap(since, until, where_to, verbose):

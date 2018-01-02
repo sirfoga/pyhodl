@@ -26,7 +26,7 @@ from pyhodl.config import DATE_TIME_KEY, VALUE_KEY, FIAT_COINS, NAN
 from pyhodl.data.balance import parse_balance, save_balance
 from pyhodl.data.coins import Coin
 from pyhodl.models.transactions import Wallet
-from pyhodl.utils import datetime_to_str, parse_datetime
+from pyhodl.utils import datetime_to_str, get_delta_seconds
 
 
 class CryptoExchange:
@@ -188,7 +188,7 @@ class Portfolio:
                 float(balance["value"] / tot_balance) if \
                     tot_balance != 0.0 else 0.0
             balances[i]["percentage"] = \
-                100.0 * max(1.0,
+                100.0 * min(1.0,
                             1.0 * float(balance["value"]) / tot_balance) if \
                     tot_balance != 0.0 else 0.0
 
@@ -260,7 +260,8 @@ class Portfolio:
                 str(
                     100.0 * (float(balance["value"]) /
                              float(last[balance["symbol"]]["value"]) - 1.0)
-                ) + " %" if last and balance["symbol"] in last else "+/- 0 %"
+                ) + " %" if last and balance["symbol"] in last and float(
+                    last[balance["symbol"]]["value"]) != 0.0 else "+/- 0 %"
             ] for balance in balances
         ]
         pretty_table = pretty_format_table(
@@ -276,16 +277,20 @@ class Portfolio:
         print("Total value: ~", total, "$")
 
         if last:
-            last_time = parse_datetime(last[DATE_TIME_KEY])
-            time_elapsed = (now - last_time).total_seconds() / 60.0
+            last_time = last[DATE_TIME_KEY]
+            time_elapsed = get_delta_seconds(now, last_time) / (60.0 * 60.0)
             print("As of last time", datetime_to_str(last_time), "(",
                   time_elapsed, "hours ago):")
 
             last_total_balance = sum(
-                [float(coin["value"]) for symbol, coin in last.items()]
+                [
+                    float(coin["value"])
+                    for symbol, coin in last.items() if symbol != DATE_TIME_KEY
+                ]
             )
             delta = total - last_total_balance
-            percentage = abs(100.0 * (total / last_total_balance - 1.0))
+            percentage = abs(100.0 * (total / last_total_balance - 1.0)) if \
+                last_total_balance != 0.0 else 0.0
             if delta >= 0:
                 print("+", delta, "$ (+", percentage, "%)")
             else:
