@@ -50,20 +50,20 @@ class DatetimeTable(JSONParser):
 
         self.max_error = float(max_error_search)  # seconds
 
-    def get_values_on(self, dt):
+    def get_values_on(self, date_time):
         """
-        :param dt: datetime
+        :param date_time: datetime
             Date to get values of
         :return: {}
             Value on date
         """
 
-        bisect_insert = bisect(self.dates, dt)
+        bisect_insert = bisect(self.dates, date_time)
         low, high = bisect_insert - 1, bisect_insert  # 2 nearest dates
         low = self.dates[low] if low >= 0 else None
         high = self.dates[high - 1] if high <= len(self.dates) else None
-        err_low = (dt - low).total_seconds() if low else INFINITY
-        err_high = (high - dt).total_seconds() if low else INFINITY
+        err_low = (date_time - low).total_seconds() if low else INFINITY
+        err_high = (high - date_time).total_seconds() if low else INFINITY
 
         if err_low <= err_high and err_low <= self.max_error:
             return self.content[low]
@@ -97,8 +97,15 @@ class MarketDataTable(DatetimeTable):
             3 * 60 * 60  # 3 hours
         )
 
-    def get_value_on(self, dt):
-        raw_data = self.get_values_on(dt)
+    def get_value_on(self, date_time):
+        """
+        :param date_time: datetime
+            Date and time to fetch
+        :return: *
+            Data at specified date and time
+        """
+
+        raw_data = self.get_values_on(date_time)
         return raw_data[VALUE_KEY]
 
 
@@ -114,11 +121,11 @@ class CoinPricesTable(DatetimeTable):
 
         self.base_currency = currency.upper()
 
-    def get_value_on(self, coin, dt):
+    def get_value_on(self, coin, date_time):
         """
         :param coin: str
             Coin to convert
-        :param dt: datetime
+        :param date_time: datetime
             Date and time of conversion
         :return: float
             Currency value of coin at specified date
@@ -127,7 +134,7 @@ class CoinPricesTable(DatetimeTable):
         if coin.upper() == self.base_currency:
             return 1.0
 
-        raw_data = self.get_values_on(dt)
+        raw_data = self.get_values_on(date_time)
         if raw_data:
             return raw_data[coin.upper()]
 
@@ -138,6 +145,13 @@ COINS_PRICES_TABLE = CoinPricesTable()
 
 
 def get_coin_prices_table(currency="USD"):
+    """
+    :param currency: str
+        Convert prices to this currency
+    :return: CoinPricesTable
+        Database of prices
+    """
+
     if currency == "USD":
         return COINS_PRICES_TABLE
 

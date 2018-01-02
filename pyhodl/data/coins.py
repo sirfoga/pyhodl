@@ -76,11 +76,20 @@ class CoinsNamesTable(JSONParser):
     """ Loads coins database """
 
     def __init__(self, input_file):
-        JSONParser.__init__(self, input_file)
+        """
+        :param input_file: str
+            Use this file as database
+        """
 
+        JSONParser.__init__(self, input_file)
         self.content = self.get_content()
 
     def get_coins(self):
+        """
+        :return: [] of CryptoCoin
+            List of default coins
+        """
+
         return [
             CryptoCoin(
                 raw["symbol"],

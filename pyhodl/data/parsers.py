@@ -36,7 +36,7 @@ def build_parser(input_file):
     raw_data = parser.get_raw_data()
 
     if isinstance(raw_data, dict):  # dict
-        for key, raw_lst in raw_data.items():
+        for _, raw_lst in raw_data.items():
             if raw_lst:
                 raw_dict = raw_lst[0]
                 if "instant_exchange" in raw_dict:
