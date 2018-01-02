@@ -18,10 +18,9 @@
 
 """ Analyze transactions in exchanges """
 
-from pyhodl.config import DATE_TIME_KEY, VALUE_KEY, FIAT_COINS
+from pyhodl.config import DATE_TIME_KEY, VALUE_KEY, FIAT_COINS, NAN
 from pyhodl.data.coins import Coin
 from pyhodl.models.transactions import Wallet
-from pyhodl.stats.transactions import get_balances_from_deltas
 
 
 class CryptoExchange:
@@ -158,8 +157,8 @@ class Portfolio:
 
     def get_balance_values(self, currency):
         crypto_deltas, fiat_deltas = self.get_crypto_fiat_deltas(currency)
-        crypto_deltas = get_balances_from_deltas(crypto_deltas)
-        fiat_deltas = get_balances_from_deltas(fiat_deltas)
+        crypto_deltas = self.get_balances_from_deltas(crypto_deltas)
+        fiat_deltas = self.get_balances_from_deltas(fiat_deltas)
         return crypto_deltas, fiat_deltas
 
     def get_current_balance(self):
@@ -186,3 +185,32 @@ class Portfolio:
 
         tot_balance = sum([balance["value"] for balance in balances])
         return table, tot_balance
+
+    @staticmethod
+    def get_balances_from_deltas(deltas):
+        """
+        :param deltas: [] of {}
+            List of delta by transaction date
+        :return: [] of {}
+            List of subtotal balances by transaction date
+        """
+
+        if not deltas:
+            return []
+
+        deltas = sorted([
+            delta for delta in deltas if delta[VALUE_KEY] != NAN
+        ], key=lambda x: x[DATE_TIME_KEY])
+        balances = [deltas[0]]
+        for delta in deltas[1:]:
+            balances.append({
+                DATE_TIME_KEY: delta[DATE_TIME_KEY],
+                VALUE_KEY: balances[-1][VALUE_KEY] + delta[VALUE_KEY]
+            })
+        return balances
+
+    def get_balances(self):
+        dates = []
+        for wallet in self.wallets:
+            dates += wallet.dates()
+        dates = sorted([dates])

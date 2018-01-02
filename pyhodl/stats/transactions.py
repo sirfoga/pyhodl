@@ -18,7 +18,6 @@
 
 """ Get transactions stats """
 
-from pyhodl.config import DATE_TIME_KEY, VALUE_KEY
 from pyhodl.data.parsers import build_exchanges
 from pyhodl.updater.core import UpdateManager
 
@@ -42,21 +41,3 @@ def get_all_coins(exchanges):
 def get_all_exchanges():
     folder_in = UpdateManager().get_data_folder()
     return list(build_exchanges(folder_in))
-
-
-def get_balances_from_deltas(deltas):
-    """
-    :param deltas: [] of {}
-        List of delta by transaction date
-    :return: [] of {}
-        List of subtotal balances by transaction date
-    """
-
-    deltas = sorted(deltas, key=lambda x: x[DATE_TIME_KEY])
-    balances = [deltas[0]]
-    for delta in deltas[1:]:
-        balances.append({
-            DATE_TIME_KEY: delta[DATE_TIME_KEY],
-            VALUE_KEY: balances[-1][VALUE_KEY] + delta[VALUE_KEY]
-        })
-    return balances

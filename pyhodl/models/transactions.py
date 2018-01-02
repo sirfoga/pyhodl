@@ -18,13 +18,14 @@
 
 """ Core models """
 
+from bisect import bisect
 from datetime import datetime
 from enum import Enum
 
 import pytz
 
 from pyhodl.apis.prices import CryptocompareClient
-from pyhodl.config import VALUE_KEY, NAN
+from pyhodl.config import VALUE_KEY, NAN, DATE_TIME_KEY
 from pyhodl.data.tables import get_coin_prices_table
 
 
@@ -199,7 +200,7 @@ class Wallet:
         """
 
         subtotals = sorted(
-            list(self.get_balances_by_transaction()),
+            self.get_balances_by_transaction(),
             key=lambda x: x["transaction"].date
         )
         return subtotals[-1][VALUE_KEY]
@@ -239,18 +240,21 @@ class Wallet:
             self.is_sorted = True
 
     def get_balances_by_transaction(self):
-        current_balance = 0.0
         deltas = sorted(
             list(self.get_delta_balance_by_transaction()),
             key=lambda x: x["transaction"].date
         )
 
-        for delta in deltas:
-            current_balance += delta[VALUE_KEY]
-            yield {
+        if not deltas:
+            return []
+
+        balances = [deltas[0]]
+        for delta in deltas[1:]:
+            balances.append({
                 "transaction": delta["transaction"],
-                VALUE_KEY: current_balance
-            }
+                VALUE_KEY: balances[-1][VALUE_KEY] + delta[VALUE_KEY]
+            })
+        return balances
 
     def get_delta_balance_by_transaction(self):
         self._sort_transactions()
@@ -311,3 +315,53 @@ class Wallet:
             return float(val) * amount
         except:
             return 0.0
+
+    def get_deltas_in_dates(self, dates):
+        deltas = sorted(
+            self.get_delta_balance_by_transaction(),
+            key=lambda x: x["transaction"].date
+        )
+        delta_dates = [
+            delta["transaction"].date for delta in deltas
+        ]
+        filling_deltas = []
+        for date in dates:
+            i = bisect(delta_dates, date)
+            if i == 0:
+                filling_deltas.append({
+                    DATE_TIME_KEY: date,
+                    VALUE_KEY: 0.0
+                })
+            elif date in delta_dates:
+                filling_deltas.append({
+                    DATE_TIME_KEY: date,
+                    VALUE_KEY: deltas[i - 1][VALUE_KEY]
+                })
+            else:
+                filling_deltas.append(filling_deltas[-1])
+        return filling_deltas
+
+    def get_balances_in_dates(self, dates):
+        balances = sorted(
+            self.get_balances_by_transaction(),
+            key=lambda x: x["transaction"].date
+        )
+        balances_dates = [
+            balance["transaction"].date for balance in balances
+        ]
+        filling_balances = []
+        for date in dates:
+            i = bisect(balances_dates, date)
+            if i == 0:
+                filling_balances.append({
+                    DATE_TIME_KEY: date,
+                    VALUE_KEY: 0.0
+                })
+            elif date in balances_dates:
+                filling_balances.append({
+                    DATE_TIME_KEY: date,
+                    VALUE_KEY: balances[i - 1][VALUE_KEY]
+                })
+            else:
+                filling_balances.append(filling_balances[-1])
+        return filling_balances

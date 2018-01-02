@@ -25,8 +25,8 @@ from datetime import datetime
 
 from hal.files.parsers import JSONParser
 
-from pyhodl.models.exchanges import CryptoExchange
-from pyhodl.models.transactions import TransactionType, Transaction, Commission
+from ..models.exchanges import CryptoExchange
+from ..models.transactions import TransactionType, Transaction, Commission
 
 
 class CryptoParser:

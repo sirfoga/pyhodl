@@ -62,16 +62,21 @@ class BalancePlotter(CryptoPlotter):
         """
         :return: void
             Plots balances for each date for each coin
-        :return min_perc: float in [0, 1]
-            Hide small asset that are below this percentage of the wallet value
         """
 
+        dates = []
         for wallet in self.wallets:
-            try:
-                self._plot_balance(wallet)
-            except Exception as e:
-                print("Cannot plot balances of wallet",
-                      wallet, "due to", e)
+            dates += wallet.dates()
+        dates = sorted(dates)
+
+        for wallet in self.wallets:
+            balances = wallet.get_balances_in_dates(dates)
+            plt.plot(
+                dates,
+                [b[VALUE_KEY] for b in balances],
+                "-x",
+                label="Amount of " + wallet.base_currency
+            )
 
     def plot_delta_balances(self):
         """
@@ -85,29 +90,6 @@ class BalancePlotter(CryptoPlotter):
             except Exception as e:
                 print("Cannot plot delta balances wallet",
                       wallet, "due to", e)
-
-    def _plot_balance(self, wallet):
-        """
-        :param wallet: Wallet
-            Coin wallet with transactions
-        :return: void
-            Plots balances for transaction of coin
-        """
-
-        balances = list(wallet.get_balances_by_transaction())
-        dates = [
-            balance["transaction"].date for balance in balances
-        ]
-        subtotals = [
-            float(balance[VALUE_KEY]) for balance in balances
-        ]
-
-        plt.plot(
-            dates,
-            subtotals,
-            "-x",
-            label=wallet.base_currency
-        )
 
     def _plot_delta_balance(self, wallet):
         """
@@ -150,7 +132,7 @@ class OtherCurrencyPlotter(BalancePlotter):
         }
         self.portfolio = Portfolio(self.wallets)
 
-    def _plot_balance(self, wallet):
+    def plot_balances(self):
         """
         :param wallet: Wallet
             Coin wallet with transactions
@@ -158,24 +140,28 @@ class OtherCurrencyPlotter(BalancePlotter):
             Plots balances for transaction of coin
         """
 
-        balances = list(wallet.get_balances_by_transaction())
-        dates = [
-            balance["transaction"].date for balance in balances
-        ]
-        subtotals = [
-            wallet.get_equivalent(
-                balance["transaction"].date,
-                self.base_currency,
-                float(balance[VALUE_KEY])
-            ) for balance in balances
-        ]
+        dates = []
+        for wallet in self.wallets:
+            dates += wallet.dates()
+        dates = sorted(dates)
 
-        plt.plot(
-            dates,
-            subtotals,
-            "-x",
-            label=wallet.base_currency + " - " + self.base_currency + " value"
-        )
+        for wallet in self.wallets:
+            balances = wallet.get_balances_in_dates(dates)
+            balances = [
+                wallet.get_equivalent(
+                    balance[DATE_TIME_KEY],
+                    self.base_currency,
+                    float(balance[VALUE_KEY])
+                ) for balance in balances
+            ]
+
+            plt.plot(
+                dates,
+                balances,
+                "-x",
+                label="Value of " + wallet.base_currency +
+                      " (" + self.base_currency + ")"
+            )
 
     def plot_buy_sells(self, wallet):
         """
