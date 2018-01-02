@@ -38,8 +38,8 @@ API_CONFIG = os.path.join(
 class ApiManager(ConfigManager):
     """ Manages your API secrets """
 
-    def __init__(self):
-        ConfigManager.__init__(self, API_CONFIG)
+    def __init__(self, config_file=API_CONFIG):
+        ConfigManager.__init__(self, config_file)
 
     def get(self, key):
         out = super().get(key)

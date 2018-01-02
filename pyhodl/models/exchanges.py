@@ -18,9 +18,15 @@
 
 """ Analyze transactions in exchanges """
 
+from datetime import datetime
+
+from hal.streams.pretty_table import pretty_format_table
+
 from pyhodl.config import DATE_TIME_KEY, VALUE_KEY, FIAT_COINS, NAN
+from pyhodl.data.balance import parse_balance, save_balance
 from pyhodl.data.coins import Coin
 from pyhodl.models.transactions import Wallet
+from pyhodl.utils import datetime_to_str, get_delta_seconds
 
 
 class CryptoExchange:
@@ -170,21 +176,27 @@ class Portfolio:
             }
             for wallet in self.wallets
         ]
+        tot_balance = sum(
+            [
+                balance["value"] for balance in balances
+                if str(balance["value"]) != "nan"
+            ]
+        )
+
+        for i, balance in enumerate(balances):  # add price and %
+            balances[i]["price"] = \
+                float(balance["value"] / tot_balance) if \
+                    tot_balance != 0.0 else 0.0
+            balances[i]["percentage"] = \
+                100.0 * min(1.0,
+                            1.0 * float(balance["value"]) / tot_balance) if \
+                    tot_balance != 0.0 else 0.0
+
         balances = sorted([
             balance for balance in balances if float(balance["balance"]) > 0.0
         ], key=lambda x: x["value"], reverse=True)
-        table = [
-            [
-                str(balance["symbol"]),
-                str(balance["balance"]),
-                str(balance["value"]) + " $",
-                str(float(balance["value"] / float(balance["balance"]))) + " $"
-            ]
-            for balance in balances
-        ]
 
-        tot_balance = sum([balance["value"] for balance in balances])
-        return table, tot_balance
+        return balances
 
     @staticmethod
     def get_balances_from_deltas(deltas):
@@ -214,3 +226,77 @@ class Portfolio:
         for wallet in self.wallets:
             dates += wallet.dates()
         dates = sorted([dates])
+        # todo merge with raw plot methods
+
+    def show_balance(self, last=None, save_to=None):
+        """
+        :param save_to: str
+            Path to file where to save balance data
+        :param last: str
+            Path to file where to read balance data
+        :return: float
+            Total balance
+        """
+
+        last = parse_balance(last) if last else None
+        balances = self.get_current_balance()
+        total = sum(
+            [
+                balance["value"] for balance in balances
+                if str(balance["value"]) != "nan"
+            ]
+        )
+        table = [
+            [
+                str(balance["symbol"]),
+                str(balance["balance"]),
+                str(balance["value"]) + " $",
+                str(balance["price"]) + " $",
+                str(balance["percentage"]) + " %",
+                str(
+                    float(balance["value"]) -
+                    float(last[balance["symbol"]]["value"])
+                ) + " $" if last and balance["symbol"] in last else "+/- 0 $",
+                str(
+                    100.0 * (float(balance["value"]) /
+                             float(last[balance["symbol"]]["value"]) - 1.0)
+                ) + " %" if last and balance["symbol"] in last and float(
+                    last[balance["symbol"]]["value"]) != 0.0 else "+/- 0 %"
+            ] for balance in balances
+        ]
+        pretty_table = pretty_format_table(
+            [
+                "symbol", "balance", "$ value", "$ price per coin", "%",
+                "$ delta", "% delta"
+            ], table
+        )
+
+        now = datetime.now()
+        print("As of", now, "you got")
+        print(pretty_table)
+        print("Total value: ~", total, "$")
+
+        if last:
+            last_time = last[DATE_TIME_KEY]
+            time_elapsed = get_delta_seconds(now, last_time) / (60.0 * 60.0)
+            print("As of last time", datetime_to_str(last_time), "(",
+                  time_elapsed, "hours ago):")
+
+            last_total_balance = sum(
+                [
+                    float(coin["value"])
+                    for symbol, coin in last.items() if symbol != DATE_TIME_KEY
+                ]
+            )
+            delta = total - last_total_balance
+            percentage = abs(100.0 * (total / last_total_balance - 1.0)) if \
+                last_total_balance != 0.0 else 0.0
+            if delta >= 0:
+                print("+", delta, "$ (+", percentage, "%)")
+            else:
+                print("-", abs(delta), "$ (-", percentage, "%)")
+
+        if save_to:
+            save_balance(balances, save_to, timestamp=now)
+
+        return total

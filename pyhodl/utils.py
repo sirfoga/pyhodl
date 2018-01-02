@@ -163,7 +163,7 @@ def datetime_to_unix_timestamp_s(dt):
 
 def unix_timestamp_ms_to_datetime(ms):
     dt = datetime.fromtimestamp(float(ms) / 1e3)
-    return pytz.utc.localize(dt)  # utc as default time zone
+    return localize(dt)  # utc as default time zone
 
 
 def download(url):
@@ -194,7 +194,20 @@ def parse_datetime(raw):
 
 
 def datetime_to_str(dt):
+    if dt.tzinfo is None:
+        dt = localize(dt)  # utc as default time zone
     return dt.strftime(DATE_TIME_FORMAT)
+
+
+def localize(dt):
+    if dt.tzinfo is None:
+        return pytz.utc.localize(dt)
+
+    return dt
+
+
+def get_delta_seconds(dt0, dt1):
+    return (localize(dt0) - localize(dt1)).total_seconds()
 
 
 def normalize(val, min_val, max_val, min_range=-1.0, max_range=1.0):

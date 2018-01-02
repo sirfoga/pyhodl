@@ -32,6 +32,9 @@ class Coin:
         if isinstance(other, Coin):
             return self.symbol == other.symbol
 
+        if isinstance(other, str):  # equals with string
+            return self == Coin(other)
+
         return False
 
 
@@ -40,12 +43,33 @@ class CryptoCoin(Coin):
 
     def __init__(self, symbol, name=None, other_names=None):
         Coin.__init__(self, symbol, name)
-        self.other_names = [
-            str(other).upper() for other in other_names
-        ]
+        if other_names:
+            self.other_names = [
+                str(other).lower() for other in other_names
+            ]
+        else:
+            self.other_names = []
 
     def get_other_names(self):
         return self.other_names
+
+    def __eq__(self, other):
+        if super().__eq__(other):
+            return True
+
+        try_with_name = self.name == other.name
+        if try_with_name:
+            return True
+        else:
+            if isinstance(other, CryptoCoin):
+                if self.name in other.other_names:
+                    return True
+
+                for name in self.other_names:
+                    if name in other.other_names:
+                        return True
+
+        return False
 
 
 class CoinsNamesTable(JSONParser):

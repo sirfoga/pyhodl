@@ -99,9 +99,9 @@ class UpdateManager(ConfigManager):
 class Updater:
     """ Updates exchanges local data """
 
-    def __init__(self, verbose):
+    def __init__(self, config_file, verbose):
         self.manager = UpdateManager()
-        self.api_manager = ApiManager()
+        self.api_manager = ApiManager(config_file=config_file)
         self.api_updaters = []
         self.verbose = verbose
 
