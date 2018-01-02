@@ -45,6 +45,8 @@ setup(
     keywords="crypto hodl portfolio",
     url="https://github.com/sirfoga/pyhodl",
     packages=find_packages(exclude=["tests"]),
+    package_data={"pyhodl": [".json", "pyhodl/data/raw/*.json"]},
+    include_package_data=True,
     install_requires=[
         "matplotlib",
         "numpy",
