@@ -23,6 +23,7 @@ from pyhodl.data.coins import Coin, CoinsNamesTable
 
 APP_NAME = "Pyhodl"
 APP_SHORT_NAME = "pyhodl"
+
 THIS_FOLDER = os.path.dirname(os.path.realpath(__file__))
 HOME_FOLDER = os.getenv("HOME")
 APP_FOLDER = os.path.join(
@@ -33,6 +34,7 @@ API_FOLDER = os.path.join(
     APP_FOLDER,
     "api"
 )
+
 DATA_FOLDER = os.path.join(
     APP_FOLDER,
     "data"
@@ -41,6 +43,7 @@ HISTORICAL_DATA_FOLDER = os.path.join(
     APP_FOLDER,
     "historical"
 )
+
 DATE_TIME_FORMAT = "%Y-%m-%d %H:%M:%S %z"
 DATE_TIME_KEY = "datetime"
 VALUE_KEY = "val"

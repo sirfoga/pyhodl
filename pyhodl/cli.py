@@ -18,7 +18,7 @@
 
 """ Command-line interface to pyhodl """
 
-import argparse
+import optparse
 import os
 import time
 import traceback
@@ -29,9 +29,10 @@ from hal.files.save_as import write_dicts_to_json
 from hal.streams.pretty_table import pretty_format_table
 from hal.streams.user import UserInput
 
+from pyhodl.apis.exchanges import API_CONFIG
 from pyhodl.apis.prices import get_market_cap, get_prices
 from pyhodl.charts.balances import OtherCurrencyPlotter
-from pyhodl.config import DATA_FOLDER
+from pyhodl.config import DATA_FOLDER, HISTORICAL_DATA_FOLDER
 from pyhodl.data.parsers import build_parser, build_exchanges
 from pyhodl.models.exchanges import Portfolio
 from pyhodl.stats.transactions import get_transactions_dates, \
@@ -42,10 +43,17 @@ from pyhodl.updater.core import Updater
 class RunMode(Enum):
     """ Run as ... """
 
-    UPDATER = 0
-    PLOTTER = 1
-    STATS = 2
-    DOWNLOAD_HISTORICAL = 3
+    PLOTTER = "plotter"
+    STATS = "stats"
+    DOWNLOAD_HISTORICAL = "download"
+    UPDATER = "update"
+
+
+DEFAULT_PATHS = {
+    RunMode.STATS: DATA_FOLDER,
+    RunMode.DOWNLOAD_HISTORICAL: HISTORICAL_DATA_FOLDER,
+    RunMode.UPDATER: API_CONFIG
+}
 
 
 def create_args():
@@ -54,27 +62,46 @@ def create_args():
         Parser that handles cmd arguments.
     """
 
-    parser = argparse.ArgumentParser(
+    parser = optparse.OptionParser(
         usage="-[mode] -h/--help for full usage"
     )
 
-    parser.add_argument("-update", "--update", action="store_true",
-                        help="Syncs local data with the transactions from "
-                             "your exchanges")
-    parser.add_argument("-hist", dest="hist",
-                        help="Downloads historical prices of your coins",
-                        required=False)
-    parser.add_argument("-plot", dest="plot",
-                        help="Creates charts of your data",
-                        required=False)
-    parser.add_argument("-stats", "--stats", action="store_true",
-                        help="Computes"
-                             "statistics and trends using local data")
-    parser.add_argument("-verbose", "--verbose", action="store_true",
-                        help="Increase verbosity")
-    parser.add_argument("-tor", dest="tor",
-                        help="Connect to tor via this password (advanced)",
-                        required=False)
+    # run mode
+    parser.add_option(
+        "-m",
+        "--mode",
+        dest="mode",
+        help="Run mode",
+        choices=[x.value for x in RunMode]
+    )
+
+    # path
+    parser.add_option(
+        "-p",
+        "--path",
+        dest="path",
+        help="Path to use as input",
+        type=str
+    )
+
+    # extra options
+    parser.add_option(
+        "-t",
+        "--tor",
+        dest="tor",
+        help="Connect to tor via this password (advanced)",
+        default=False
+    )
+
+    # extra options
+    parser.add_option(
+        "-v",
+        "--verbose",
+        dest="verbose",
+        action="store_true",
+        default=False,
+        help="Increase verbosity"
+    )
 
     return parser
 
@@ -87,23 +114,26 @@ def parse_args(parser):
         Values of arguments.
     """
 
-    args = parser.parse_args()
+    args = parser.parse_args()[0].__dict__
+    options = {
+        "run": RunMode(args["mode"]),
+        "verbose": args["verbose"],
+        "tor": args["tor"],
+        "path": args["path"]
+    }
 
-    if args.update:
-        return RunMode.UPDATER, args.verbose
-    elif args.plot:
-        return RunMode.PLOTTER, os.path.join(args.plot), args.verbose
-    elif args.stats:
-        return RunMode.STATS, DATA_FOLDER, args.verbose
-    elif args.hist:
-        return RunMode.DOWNLOAD_HISTORICAL, \
-               os.path.join(args.hist), args.verbose, args.tor
+    if options["path"] is None and options["run"] in DEFAULT_PATHS:
+        options["path"] = DEFAULT_PATHS[options["run"]]  # default path
+    elif options["path"] is None:
+        raise ValueError(
+            "You must pass a path option for '" + args["mode"] + "' mode"
+        )
 
-    raise ValueError("Invalid run mode!")
+    return options
 
 
-def update(verbose):
-    driver = Updater(verbose)
+def update(config_file, verbose):
+    driver = Updater(config_file, verbose)
     driver.run()
 
 
@@ -119,9 +149,8 @@ def plot(input_file, verbose):
     plotter.show("Balances from " + input_file)
 
 
-def show_exchange_balance(exchange, verbose):
-    if verbose:
-        print("\n\nPrinting balances of", exchange.exchange_name)
+def show_exchange_balance(exchange):
+    print("\n\nExchange:", exchange.exchange_name.title())
 
     wallets = exchange.build_wallets()
     portfolio = Portfolio(wallets.values())
@@ -141,7 +170,7 @@ def show_folder_balance(input_folder):
     exchanges = build_exchanges(input_folder)
     total_value = 0.0
     for exchange in exchanges:
-        exchange_value = show_exchange_balance(exchange, True)
+        exchange_value = show_exchange_balance(exchange)
         total_value += exchange_value
     print("Total value of all exchanges ~", total_value, "$")
 
@@ -177,39 +206,43 @@ def download_prices(coins, since, until, where_to, verbose, currency="USD",
 
 
 def main():
-    run_mode, *args = parse_args(create_args())
+    args = parse_args(create_args())
+    run_mode, run_path, tor, verbose = \
+        args["run"], args["path"], args["tor"], args["verbose"]
+
     if run_mode == RunMode.UPDATER:
-        update(args[0])
+        update(run_path, verbose)
     elif run_mode == RunMode.PLOTTER:
-        plot(args[0], args[1])
+        plot(run_path, verbose)
     elif run_mode == RunMode.STATS:
-        if os.path.isfile(args[0]):
-            show_exchange_balance(args[0], args[1])
-        elif os.path.isdir(args[0]):
-            show_folder_balance(args[0])
+        if os.path.isfile(run_path):
+            show_exchange_balance(run_path)
         else:
-            show_folder_balance(DATA_FOLDER)
+            show_folder_balance(run_path)
     elif run_mode == RunMode.DOWNLOAD_HISTORICAL:
         exchanges = get_all_exchanges()
         dates = get_transactions_dates(exchanges)
         first_transaction, last_transaction = min(dates), max(dates)
         coins = get_all_coins(exchanges)
+
         download_prices(
-            coins, first_transaction, last_transaction, args[0], args[1],
-            tor=args[2]
+            coins, first_transaction, last_transaction, run_path, verbose, tor
         )
-
         download_market_cap(
-            first_transaction, last_transaction, args[0], args[1]
+            first_transaction, last_transaction, run_path, verbose
         )
+    else:  # null run mode
+        print("You realize you just called `pyhodl` with no meaningful args?")
+        print("Run `pyhodl --help` to get a list of options.")
 
 
-def handle_exception():
+def handle_exception(e):
     """
     :return: void
         Tries to handle it
     """
 
+    print("[CRITICAL ERROR]:", str(e).replace("\n", ".") + "!!!")
     print("pyhodl stopped abruptly, but your data is safe, don't worry.")
     user_input = UserInput()
     if user_input.get_yes_no("Want to fill a bug report?"):
@@ -231,8 +264,8 @@ def cli():
     try:
         main()
     except Exception as e:
-        traceback.print_exc()  # debug only handle_exception(e)
+        handle_exception(e)
 
 
 if __name__ == '__main__':
-    cli()
+    main()  # todo cli()

@@ -214,3 +214,4 @@ class Portfolio:
         for wallet in self.wallets:
             dates += wallet.dates()
         dates = sorted([dates])
+        # todo merge with raw plot methods
