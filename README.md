@@ -72,7 +72,13 @@ pyhodl -plot "~/.pyhodl/data/BitfinexUpdater.json" -verbose
 would result in a series of plot like this one:
 ![Example bitfinex](extra/buy_sells.jpg)
 
-Note that actual data has been omitted
+while if you want to plot your gains against your total spent, just run
+```bash
+-plot -verbose
+```
+
+![Example bitfinex](extra/crypto_fiat_balance.jpg)
+
 
 ## Install
 Just run `./install.sh` and test your installation with `pyhodl -h`. Should come out
