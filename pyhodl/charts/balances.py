@@ -21,7 +21,7 @@
 import matplotlib.pyplot as plt
 
 from pyhodl.app import VALUE_KEY, DATE_TIME_KEY
-from pyhodl.stats.wallets import get_total_equivalent_balances
+from pyhodl.models.exchanges import Portfolio
 from pyhodl.utils import generate_dates, normalize
 
 
@@ -148,6 +148,7 @@ class OtherCurrencyPlotter(BalancePlotter):
                 wallet.get_balance_equivalent(self.base_currency)
             for wallet in self.wallets
         }
+        self.portfolio = Portfolio(self.wallets)
 
     def _plot_balance(self, wallet):
         """
@@ -219,9 +220,7 @@ class OtherCurrencyPlotter(BalancePlotter):
             )
 
     def plot_total_balances(self):
-        balances = get_total_equivalent_balances(
-            self.wallets, self.base_currency
-        )
+        balances = self.portfolio.get_balance_values(self.base_currency)
         plt.plot(
             [balance[DATE_TIME_KEY] for balance in balances],
             [balance[VALUE_KEY] for balance in balances],

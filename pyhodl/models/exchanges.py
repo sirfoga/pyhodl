@@ -18,6 +18,8 @@
 
 """ Analyze transactions in exchanges """
 
+from pyhodl.app import DATE_TIME_KEY, VALUE_KEY
+
 from pyhodl.models.transactions import Wallet
 
 
@@ -114,3 +116,61 @@ class CryptoExchange:
                         wallets[coin].add_transaction(transaction)
 
         return wallets
+
+
+class Portfolio:
+    """ Contains wallets, of also different coins """
+
+    def __init__(self, wallets, portfolio_name=None):
+        self.wallets = wallets
+        self.portfolio_name = str(portfolio_name) if portfolio_name else None
+
+    def get_balance_values(self, currency):
+        all_deltas = []
+        for wallet in self.wallets:
+            deltas = list(wallet.get_delta_balance_by_transaction())
+            equivalents = [
+                {
+                    DATE_TIME_KEY: delta["transaction"].date,
+                    VALUE_KEY: wallet.get_equivalent(
+                        delta["transaction"].date,
+                        currency,
+                        delta[VALUE_KEY]
+                    )
+                } for delta in deltas
+            ]
+            all_deltas += equivalents
+
+        all_deltas = sorted(all_deltas, key=lambda x: x[DATE_TIME_KEY])
+        all_balances = [all_deltas[0]]
+        for delta in all_deltas[1:]:
+            all_balances.append({
+                DATE_TIME_KEY: delta[DATE_TIME_KEY],
+                VALUE_KEY: all_balances[-1][VALUE_KEY] + delta[VALUE_KEY]
+            })
+        return all_balances
+
+    def get_current_balance(self):
+        balances = [
+            {
+                "symbol": wallet.base_currency,
+                "balance": wallet.balance(),
+                "value": wallet.get_balance_equivalent_now()
+            }
+            for wallet in self.wallets
+        ]
+        balances = sorted([
+            balance for balance in balances if float(balance["balance"]) > 0.0
+        ], key=lambda x: x["value"], reverse=True)
+        table = [
+            [
+                str(balance["symbol"]),
+                str(balance["balance"]),
+                str(balance["value"]) + " $",
+                str(float(balance["value"] / float(balance["balance"]))) + " $"
+            ]
+            for balance in balances
+        ]
+
+        tot_balance = sum([balance["value"] for balance in balances])
+        return table, tot_balance

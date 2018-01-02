@@ -22,20 +22,20 @@ import argparse
 import os
 import time
 import traceback
-from datetime import timedelta
+from datetime import timedelta, datetime
 from enum import Enum
 
 from hal.files.save_as import write_dicts_to_json
+from hal.streams.pretty_table import pretty_format_table
 from hal.streams.user import UserInput
 
 from pyhodl.apis.prices import get_market_cap, get_prices
 from pyhodl.app import DATA_FOLDER
 from pyhodl.charts.balances import OtherCurrencyPlotter
-from pyhodl.data.parsers import build_parser
+from pyhodl.data.parsers import build_parser, build_exchanges
+from pyhodl.models.exchanges import Portfolio
 from pyhodl.stats.transactions import get_transactions_dates, \
     get_all_exchanges, get_all_coins
-from pyhodl.stats.wallets import show_balance_of_exchange, \
-    show_balance_of_folder
 from pyhodl.updater.core import Updater
 
 
@@ -67,9 +67,9 @@ def create_args():
     parser.add_argument("-plot", dest="plot",
                         help="Creates charts of your data",
                         required=False)
-    parser.add_argument("-stats", dest="stats",
-                        help="Computes statistics and trends using local data",
-                        required=False)
+    parser.add_argument("-stats", "--stats", action="store_true",
+                        help="Computes"
+                             "statistics and trends using local data")
     parser.add_argument("-verbose", "--verbose", action="store_true",
                         help="Increase verbosity")
     parser.add_argument("-tor", dest="tor",
@@ -94,7 +94,7 @@ def parse_args(parser):
     elif args.plot:
         return RunMode.PLOTTER, os.path.join(args.plot), args.verbose
     elif args.stats:
-        return RunMode.STATS, os.path.join(args.stats), args.verbose
+        return RunMode.STATS, DATA_FOLDER, args.verbose
     elif args.hist:
         return RunMode.DOWNLOAD_HISTORICAL, \
                os.path.join(args.hist), args.verbose, args.tor
@@ -114,17 +114,36 @@ def plot(input_file, verbose):
     parser = build_parser(input_file)
     exchange = parser.build_exchange()
     wallets = exchange.build_wallets()
-    plotter = OtherCurrencyPlotter(list(wallets.values()))
+    plotter = OtherCurrencyPlotter(wallets.values())
     plotter.plot_total_balances()
     plotter.show("Balances from " + input_file)
 
 
-def compute_stats(exchange, verbose):
-    show_balance_of_exchange(exchange, verbose)
+def show_exchange_balance(exchange, verbose):
+    if verbose:
+        print("\n\nPrinting balances of", exchange.exchange_name)
+
+    wallets = exchange.build_wallets()
+    portfolio = Portfolio(wallets.values())
+    table, tot_balance = portfolio.get_current_balance()
+    pretty_table = pretty_format_table(
+        ["symbol", "balance", "$ value", "$ price per coin"],
+        table
+    )
+
+    print("As of", datetime.now(), "you got")
+    print(pretty_table)
+    print("Total value: ~", tot_balance, "$")
+    return tot_balance
 
 
-def compute_stats_of_folder(input_folder):
-    show_balance_of_folder(input_folder)
+def show_folder_balance(input_folder):
+    exchanges = build_exchanges(input_folder)
+    total_value = 0.0
+    for exchange in exchanges:
+        exchange_value = show_exchange_balance(exchange, True)
+        total_value += exchange_value
+    print("Total value of all exchanges ~", total_value, "$")
 
 
 def download_market_cap(since, until, where_to, verbose):
@@ -165,11 +184,11 @@ def main():
         plot(args[0], args[1])
     elif run_mode == RunMode.STATS:
         if os.path.isfile(args[0]):
-            compute_stats(args[0], args[1])
+            show_exchange_balance(args[0], args[1])
         elif os.path.isdir(args[0]):
-            compute_stats_of_folder(args[0])
+            show_folder_balance(args[0])
         else:
-            compute_stats_of_folder(DATA_FOLDER)
+            show_folder_balance(DATA_FOLDER)
     elif run_mode == RunMode.DOWNLOAD_HISTORICAL:
         exchanges = get_all_exchanges()
         dates = get_transactions_dates(exchanges)

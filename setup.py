@@ -36,7 +36,7 @@ DESCRIPTION = \
 
 setup(
     name="pyhodl",
-    version="0.2.2",
+    version="0.2.4",
     author="sirfoga",
     author_email="sirfoga@protonmail.com",
     description=LITTLE_DESCRIPTION,
