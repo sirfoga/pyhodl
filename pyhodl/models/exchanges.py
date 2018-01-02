@@ -20,6 +20,7 @@
 from pyhodl.app import DATE_TIME_KEY, VALUE_KEY, FIAT_COINS
 from pyhodl.data.coins import Coin
 from pyhodl.models.transactions import Wallet
+from pyhodl.stats.transactions import get_balances_from_deltas
 
 
 class CryptoExchange:
@@ -124,9 +125,17 @@ class Portfolio:
         self.wallets = wallets
         self.portfolio_name = str(portfolio_name) if portfolio_name else None
 
-    def get_balance_values(self, currency):
+    def get_crypto_fiat_deltas(self, currency):
+        """
+        :param currency: str
+            Currency to convert to
+        :return: tuple [], []
+            List of crypto deltas and fiat deltas by transaction
+        """
+
         crypto_deltas = []
         fiat_deltas = []
+
         for wallet in self.wallets:
             deltas = list(wallet.get_delta_balance_by_transaction())
             equivalents = [
@@ -142,19 +151,15 @@ class Portfolio:
 
             if Coin(wallet.base_currency) in FIAT_COINS:
                 fiat_deltas += equivalents
-                print(wallet.base_currency, "to fiats")
             else:
                 crypto_deltas += equivalents
-                print(wallet.base_currency, "to cryptos")
+        return crypto_deltas, fiat_deltas
 
-        all_deltas = sorted(all_deltas, key=lambda x: x[DATE_TIME_KEY])
-        all_balances = [all_deltas[0]]
-        for delta in all_deltas[1:]:
-            all_balances.append({
-                DATE_TIME_KEY: delta[DATE_TIME_KEY],
-                VALUE_KEY: all_balances[-1][VALUE_KEY] + delta[VALUE_KEY]
-            })
-        return all_balances
+    def get_balance_values(self, currency):
+        crypto_deltas, fiat_deltas = self.get_crypto_fiat_deltas(currency)
+        crypto_deltas = get_balances_from_deltas(crypto_deltas)
+        fiat_deltas = get_balances_from_deltas(fiat_deltas)
+        return crypto_deltas, fiat_deltas
 
     def get_current_balance(self):
         balances = [

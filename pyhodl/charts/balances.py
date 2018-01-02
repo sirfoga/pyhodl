@@ -220,12 +220,20 @@ class OtherCurrencyPlotter(BalancePlotter):
             )
 
     def plot_total_balances(self):
-        balances = self.portfolio.get_balance_values(self.base_currency)
+        crypto_values, fiat_values = \
+            self.portfolio.get_balance_values(self.base_currency)
+
         plt.plot(
-            [balance[DATE_TIME_KEY] for balance in balances],
-            [balance[VALUE_KEY] for balance in balances],
-            label="Total " + self.base_currency + " value of wallets"
-        )  # plot price
+            [balance[DATE_TIME_KEY] for balance in crypto_values],
+            [balance[VALUE_KEY] for balance in crypto_values],
+            label="Crypto value of wallets (" + self.base_currency + ")"
+        )  # plot crypto balances
+
+        plt.plot(
+            [balance[DATE_TIME_KEY] for balance in fiat_values],
+            [balance[VALUE_KEY] for balance in fiat_values],
+            label="Fiat value of wallets (" + self.base_currency + ")"
+        )  # plot crypto balances
 
     def show(self, title, x_label="Time", y_label="value"):
         super().show(title, x_label, self.base_currency + " " + y_label)
