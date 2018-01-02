@@ -236,6 +236,7 @@ class Wallet:
             self.transactions = sorted(
                 self.transactions, key=lambda x: x.date
             )  # sort by date
+            self.is_sorted = True
 
     def get_balances_by_transaction(self):
         current_balance = 0.0

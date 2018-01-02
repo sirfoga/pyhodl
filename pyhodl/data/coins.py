@@ -28,12 +28,9 @@ class Coin:
         self.symbol = str(symbol).upper()
         self.name = str(name).lower() if name else None
 
-    def get_symbol(self):
-        return self.symbol
-
     def __eq__(self, other):
         if isinstance(other, Coin):
-            return other.get_symbol() == other.get_symbol()
+            return self.symbol == other.symbol
 
         return False
 

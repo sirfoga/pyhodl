@@ -17,9 +17,8 @@
 
 
 """ Analyze transactions in exchanges """
-
-from pyhodl.app import DATE_TIME_KEY, VALUE_KEY
-
+from pyhodl.app import DATE_TIME_KEY, VALUE_KEY, FIAT_COINS
+from pyhodl.data.coins import Coin
 from pyhodl.models.transactions import Wallet
 
 
@@ -126,7 +125,8 @@ class Portfolio:
         self.portfolio_name = str(portfolio_name) if portfolio_name else None
 
     def get_balance_values(self, currency):
-        all_deltas = []
+        crypto_deltas = []
+        fiat_deltas = []
         for wallet in self.wallets:
             deltas = list(wallet.get_delta_balance_by_transaction())
             equivalents = [
@@ -139,7 +139,13 @@ class Portfolio:
                     )
                 } for delta in deltas
             ]
-            all_deltas += equivalents
+
+            if Coin(wallet.base_currency) in FIAT_COINS:
+                fiat_deltas += equivalents
+                print(wallet.base_currency, "to fiats")
+            else:
+                crypto_deltas += equivalents
+                print(wallet.base_currency, "to cryptos")
 
         all_deltas = sorted(all_deltas, key=lambda x: x[DATE_TIME_KEY])
         all_balances = [all_deltas[0]]
