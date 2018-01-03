@@ -125,7 +125,7 @@ class Portfolio:
             {
                 "symbol": wallet.base_currency,
                 "balance": wallet.balance(),
-                "value": wallet.balance(currency, True)
+                VALUE_KEY: wallet.balance(currency, True)
             }
             for wallet in self.wallets
         ]
@@ -133,16 +133,16 @@ class Portfolio:
 
         for i, balance in enumerate(balances):  # add price and %
             balances[i]["price"] = \
-                float(balance["value"] / balance["balance"]) if \
+                float(balance[VALUE_KEY] / balance["balance"]) if \
                     balance["balance"] != 0.0 else 0.0
             balances[i]["percentage"] = \
                 100.0 * min(1.0,
-                            1.0 * float(balance["value"]) / tot_balance) if \
+                            1.0 * float(balance[VALUE_KEY]) / tot_balance) if \
                     tot_balance != 0.0 else 0.0
 
         balances = sorted([
             balance for balance in balances if float(balance["balance"]) > 0.0
-        ], key=lambda x: x["value"], reverse=True)
+        ], key=lambda x: x[VALUE_KEY], reverse=True)
 
         return balances
 
@@ -213,18 +213,18 @@ class Portfolio:
             [
                 str(balance["symbol"]),
                 str(balance["balance"]),
-                str(balance["value"]) + " $",
+                str(balance[VALUE_KEY]) + " $",
                 str(balance["price"]) + " $",
                 str(balance["percentage"]) + " %",
                 str(
-                    float(balance["value"]) -
-                    float(last[balance["symbol"]]["value"])
+                    float(balance[VALUE_KEY]) -
+                    float(last[balance["symbol"]][VALUE_KEY])
                 ) + " $" if last and balance["symbol"] in last else "+/- 0 $",
                 str(
-                    100.0 * (float(balance["value"]) /
-                             float(last[balance["symbol"]]["value"]) - 1.0)
+                    100.0 * (float(balance[VALUE_KEY]) /
+                             float(last[balance["symbol"]][VALUE_KEY]) - 1.0)
                 ) + " %" if last and balance["symbol"] in last and float(
-                    last[balance["symbol"]]["value"]) != 0.0 else "+/- 0 %"
+                    last[balance["symbol"]][VALUE_KEY]) != 0.0 else "+/- 0 %"
             ] for balance in balances
         ]
         pretty_table = pretty_format_table(
@@ -247,7 +247,7 @@ class Portfolio:
 
             last_total_balance = sum(
                 [
-                    float(coin["value"])
+                    float(coin[VALUE_KEY])
                     for symbol, coin in last.items() if symbol != DATE_TIME_KEY
                 ]
             )
