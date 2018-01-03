@@ -20,7 +20,6 @@
 
 import abc
 import os
-import time
 
 from binance.client import Client as BinanceClient
 from ccxt import bitfinex as BitfinexClient
@@ -29,7 +28,7 @@ from gdax.authenticated_client import AuthenticatedClient as GdaxClient
 from hal.files.save_as import write_dicts_to_json
 
 from pyhodl.logs import Logger
-from pyhodl.utils import handle_rate_limits
+from pyhodl.utils import handle_rate_limits, get_and_sleep
 
 INT_32_MAX = 2 ** 31 - 1
 
@@ -130,18 +129,14 @@ class BinanceUpdater(ExchangeUpdater):
 
     def get_transactions(self):
         super().get_transactions()
-        transactions = self.get_deposits() + self.get_withdraw()  # deposits
-        symbols = self.get_symbols_list()
-
-        for symbol in symbols:  # scan all symbols
-            try:
-                result = self.get_all_transactions(symbol)
-                transactions += result
-                self.log("Found", len(result), symbol, "transactions")
-                time.sleep(self.rate)
-            except:
-                self.log("Cannot get", symbol, "transactions")
-        self.transactions = transactions
+        transactions = get_and_sleep(
+            self.get_symbols_list(),
+            self.get_all_transactions,
+            self.rate,
+            "transactions"
+        )
+        self.transactions = \
+            transactions + self.get_deposits() + self.get_withdraw()
 
 
 class BitfinexUpdater(ExchangeUpdater):
@@ -189,17 +184,12 @@ class BitfinexUpdater(ExchangeUpdater):
         return self.fetch(data)
 
     def get_movements(self):
-        symbols = self.get_currencies_list()
-        movements = []
-        for symbol in symbols:
-            try:
-                result = self.get_all_movements(symbol)
-                movements += result
-                self.log("Found", len(result), symbol, "movements")
-                time.sleep(self.rate)
-            except:
-                self.log("Cannot get", symbol, "movements")
-        return movements
+        return get_and_sleep(
+            self.get_currencies_list(),
+            self.get_all_movements,
+            self.rate,
+            "movements"
+        )
 
     @handle_rate_limits
     def get_all_transactions(self, symbol):
@@ -218,24 +208,21 @@ class BitfinexUpdater(ExchangeUpdater):
 
     def get_transactions(self):
         super().get_transactions()
-        self.log("Total current balance:",
-                 [
+        self.log(
+            "Total current balance:",
+            [
                 (key, val) for key, val
                 in self.client.fetch_balance()["total"].items()
             ]
-                 )
+        )
 
-        transactions = self.get_movements()  # deposits and withdrawals
-        symbols = self.get_symbols_list()
-        for symbol in symbols:  # scan all symbols
-            try:
-                result = self.get_all_transactions(symbol)
-                transactions += result
-                self.log("Found", len(result), symbol, "transactions")
-                time.sleep(self.rate)
-            except:
-                self.log("Cannot get", symbol, "transactions")
-        self.transactions = transactions
+        transactions = get_and_sleep(
+            self.get_symbols_list(),
+            self.get_all_transactions,
+            self.rate,
+            "transactions"
+        )
+        self.transactions = transactions + self.get_movements()
 
 
 class CoinbaseUpdater(ExchangeUpdater):

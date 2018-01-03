@@ -136,6 +136,33 @@ def handle_rate_limits(func, time_wait=60, max_attempts=2):
     return _handle_rate_limits
 
 
+def get_and_sleep(symbols, fetcher, sleep_time, log_data):
+    """
+    :param symbols: [] of *
+        List of data to fetch
+    :param fetcher: func
+        Perform operations with this function on each data
+    :param sleep_time: int
+        After operations, sleep this amount of seconds
+    :param log_data: str
+        Extra log data to print
+    :return: [] of *
+        Performs function on each data, waits (after each operation) and
+        returns results
+    """
+
+    data = []
+    for symbol in symbols:  # scan all symbols
+        try:
+            result = fetcher(symbol)
+            data += result
+            print("Found", len(result), symbol, log_data)
+            time.sleep(sleep_time)
+        except:
+            print("Cannot get", symbol, log_data)
+    return data
+
+
 def replace_items(lst, old, new):
     """
     :param lst: []
