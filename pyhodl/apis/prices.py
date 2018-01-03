@@ -401,6 +401,22 @@ def get_market_cap(since, until):
     return client.get_market_cap(since, until)
 
 
+def get_client(currency, tor):
+    """
+    :param currency: str
+        Currency to get price
+    :param tor: *
+        Tor arg
+    :return: ApiClient
+        Client to get price with
+    """
+
+    if Coin(currency) in CryptocompareClient.AVAILABLE_FIAT:
+        return CryptocompareClient(tor=tor)  # better client (use as default)
+
+    return CoinmarketCapClient(tor=tor)
+
+
 def get_prices(coins, currency, since, until, tor):
     """
     :param coins: [] of str
@@ -417,11 +433,7 @@ def get_prices(coins, currency, since, until, tor):
         List of prices of coins at dates
     """
 
-    if Coin(currency) in CryptocompareClient.AVAILABLE_FIAT:
-        client = CryptocompareClient(tor=tor)  # better client (use as default)
-    else:
-        client = CoinmarketCapClient(tor=tor)
-
+    client = get_client(currency, tor)
     return client.get_prices(
         coins, since=since, until=until, hours=6, currency=currency
     )
@@ -441,11 +453,7 @@ def get_price(coins, currency, date_time, tor):
         List of prices of coins at dates
     """
 
-    if Coin(currency) in CryptocompareClient.AVAILABLE_FIAT:
-        client = CryptocompareClient(tor=tor)  # better client (use as default)
-    else:
-        client = CoinmarketCapClient(tor=tor)
-
+    client = get_client(currency, tor)
     return client.get_price(
         coins, date_time=date_time, currency=currency
     )
