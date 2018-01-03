@@ -22,7 +22,8 @@ from enum import Enum
 
 import pytz
 
-from pyhodl.data.coins import Coin
+from pyhodl.config import FIAT_COINS
+from pyhodl.data.coins import Coin, CryptoCoin
 
 
 class TransactionType(Enum):
@@ -40,17 +41,33 @@ class TransactionType(Enum):
 class CoinAmount:
     """ Amount of coin """
 
-    def __init__(self, coin, amount):
+    def __init__(self, coin, amount, is_in):
         self.coin = Coin(coin) if coin else None
         self.amount = float(amount) if amount else None
+        self.is_in = bool(is_in) if is_in else False
+
+    def get_symbol(self):
+        if self.coin:
+            if self.coin in FIAT_COINS:
+                return self.coin
+            return CryptoCoin(self.coin.symbol)
+        return False
+
+    def get_amount(self):
+        return self.amount
+
+    def __str__(self):
+        prefix = "+" if self.is_in else "-"
+        if self.amount > 0:
+            return "\n" + prefix + str(self.amount) + " " + str(self.coin)
+
+        return ""
 
 
 class Transaction:
     """ Exchange transaction """
 
-    def __init__(self, raw_dict,
-                 coin_bought, buy_amount,
-                 coin_sold, sell_amount, date,
+    def __init__(self, raw_dict, coin_in, coin_out, date,
                  trans_type=TransactionType.TRADING,
                  successful=True, commission=None):
         """
@@ -67,10 +84,8 @@ class Transaction:
         """
 
         self.raw = raw_dict
-        self.coin_buy = str(coin_bought)
-        self.buy_amount = float(buy_amount) if buy_amount else 0
-        self.coin_sell = str(coin_sold)
-        self.sell_amount = float(sell_amount) if sell_amount else 0
+        self.coin_buy = coin_in
+        self.coin_sell = coin_out
         self.transaction_type = trans_type
         self.date = pytz.utc.localize(date) if not date.tzinfo else date
         self.successful = bool(successful)
@@ -134,7 +149,7 @@ class Transaction:
 
     def get_amount_buy_sell(self, coin):
         """
-        :param coin: str
+        :param coin: Coin
             Coin to get
         :return: float
             Amount of coin trade
@@ -142,66 +157,65 @@ class Transaction:
 
         amount = 0.0
         if self.is_trade():
-            if self.coin_buy == coin:
-                amount += self.buy_amount
+            if self.coin_buy.get_symbol() == coin:
+                amount += self.coin_buy.get_amount()
 
-            if self.coin_sell == coin:
-                amount -= self.sell_amount
+            if self.coin_sell.get_symbol() == coin:
+                amount -= self.coin_sell.get_amount()
         return amount
 
     def get_amount_traded(self, coin):
         """
-        :param coin: str
+        :param coin: Coin
             Coin to get
         :return: float
             Amount of coin trade
         """
 
         amount = self.get_amount_buy_sell(coin)
-
         if self.is_trade():
-            if self.commission and self.commission.coin == coin:
-                amount -= self.commission.amount
-
+            if self.commission and self.commission.coin.get_symbol() == coin:
+                amount -= self.commission.coin.get_amount()
         return amount
 
     def get_amount_commission(self, coin):
         """
-        :param coin: str
+        :param coin: Coin
             Coin to get
         :return: float
             Amount of coin fee
         """
 
         amount = 0.0
-        if self.is_fee() and self.commission.coin == coin:
-            amount -= self.commission.amount
+        if self.is_fee() and self.commission.coin.get_symbol() == coin:
+            amount -= self.commission.coin.get_amount()
         return amount
 
     def get_amount_moved(self, coin):
         """
-        :param coin: str
+        :param coin: Coin
             Coin to get
         :return: float
             Amount of coin moved (withdrawn/deposited)
         """
 
         amount = 0.0
-        if self.is_deposit() and self.coin_buy == coin:
-            amount += self.buy_amount
+        if self.is_deposit() and self.coin_buy.get_symbol() == coin:
+            amount += self.coin_buy.get_amount()
 
-        if self.is_withdrawal() and self.coin_sell == coin:
-            amount -= self.sell_amount
+        if self.is_withdrawal() and self.coin_sell.get_symbol() == coin:
+            amount -= self.coin_sell.get_amount()
         return amount
 
     def get_amount(self, coin):
         """
-        :param coin: str
+        :param coin: Coin
             Coin to get
         :return: float
             Amount of coin in transaction
         """
 
+        coin = Coin(coin)
         amount = self.get_amount_traded(coin)
         amount += self.get_amount_commission(coin)
         amount += self.get_amount_moved(coin)
@@ -218,18 +232,19 @@ class Transaction:
         if self.commission:
             coin_fee = self.commission.coin
 
-        coins = {coin_buy, coin_sell, coin_fee}  # set
+        coins = [coin_buy, coin_sell, coin_fee]
+        coins = [coin.get_symbol() for coin in coins if coin]  # only valid
         return {
-            coin for coin in coins if coin and str(coin) != "None"
-        }  # only valid coins
+            coin.symbol for coin in coins if coin  # get only symbol
+        }
 
     def __getitem__(self, key):
         return self.raw[key]
 
     def __str__(self):
         out = "Transaction on " + str(self.date)
-        out += self.amount_to_str(self.buy_amount, self.coin_buy, "+")
-        out += self.amount_to_str(self.sell_amount, self.coin_sell, "-")
+        out += str(self.coin_buy)
+        out += str(self.coin_sell)
         if self.commission:
             out += "\nPaying " + str(self.commission.amount) + " " + \
                    str(self.commission.coin) + " as fee"
@@ -238,18 +253,11 @@ class Transaction:
 
         return out
 
-    @staticmethod
-    def amount_to_str(amount, coin, prefix):
-        if amount > 0:
-            return "\n" + prefix + str(amount) + " " + str(coin)
-
-        return ""
-
 
 class Commission(Transaction):
     """ Transaction commission """
 
-    def __init__(self, raw_dict, coin, amount, date, successful=True):
+    def __init__(self, raw_dict, coin, date, successful=True):
         """
         :param raw_dict: {}
             Dict containing raw data
@@ -262,14 +270,11 @@ class Commission(Transaction):
         Transaction.__init__(
             self,
             raw_dict,
-            coin_bought=None,
-            buy_amount=None,
-            coin_sold=coin,
-            sell_amount=amount,
+            coin_in=None,
+            coin_out=coin,
             date=date,
             trans_type=TransactionType.COMMISSION,
             successful=successful
         )
 
         self.coin = self.coin_sell
-        self.amount = self.sell_amount

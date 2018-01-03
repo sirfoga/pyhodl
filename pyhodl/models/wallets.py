@@ -86,22 +86,24 @@ class Wallet:
         """
 
         subtotals = self.get_balance_by_transaction()
-        total = subtotals[-1][VALUE_KEY]  # amount of coins
+        if subtotals:
+            total = subtotals[-1][VALUE_KEY]  # amount of coins
 
-        if now:  # convert to currency now
-            price = get_price_on_date(
-                [self.base_currency], currency, datetime.now(), tor=False
-            )[self.base_currency]
-            return float(price) * total
+            if now:  # convert to currency now
+                price = get_price_on_date(
+                    [self.base_currency], currency, datetime.now(), tor=False
+                )[self.base_currency]
+                return float(price) * total
 
-        if currency:  # convert to currency
-            return self.convert_to(
-                subtotals[-1]["transaction"].date,
-                currency,
-                amount=total
-            )
+            if currency:  # convert to currency
+                return self.convert_to(
+                    subtotals[-1]["transaction"].date,
+                    currency,
+                    amount=total
+                )
 
-        return total
+            return total
+        return 0.0
 
     def convert_to(self, date_time, currency, amount=1.0):
         """

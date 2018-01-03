@@ -24,7 +24,7 @@ import os
 from hal.files.parsers import JSONParser
 
 from pyhodl.models.exchanges import CryptoExchange
-from pyhodl.models.transactions import TransactionType, Transaction
+from pyhodl.models.transactions import TransactionType, Transaction, CoinAmount
 
 
 class CryptoParser:
@@ -197,13 +197,14 @@ class CryptoParser:
 
         coin_bought, amount_bought, coin_sold, amount_sold = \
             self.get_coins_amounts(raw)
+        coin_buy = CoinAmount(coin_bought, amount_bought, True) \
+            if coin_bought else None
+        coin_sell = CoinAmount(coin_sold, amount_sold, False) \
+            if coin_sold else None
 
         return Transaction(
-            raw,
-            coin_bought, amount_bought, coin_sold, amount_sold,
-            self.get_date(raw),
-            self.get_transaction_type(raw),
-            self.is_successful(raw),
+            raw, coin_buy, coin_sell, self.get_date(raw),
+            self.get_transaction_type(raw), self.is_successful(raw),
             self.get_commission(raw)
         )
 
@@ -215,10 +216,7 @@ class CryptoParser:
 
         raw = self.get_raw_data()
         for transaction in raw:
-            try:
-                yield self.parse_transaction(transaction)
-            except:
-                print("Cannot parse transaction", transaction)
+            yield self.parse_transaction(transaction)
 
     def build_exchange(self, exchange_name):
         """

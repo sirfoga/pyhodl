@@ -54,12 +54,12 @@ class CryptoCoin(Coin):
         if super().__eq__(other):
             return True
 
-        try_with_name = self.name == other.name
+        try_with_name = self.name and self.name == other.name
         if try_with_name:
             return True
         else:
             if isinstance(other, CryptoCoin):
-                if self.name in other.other_names:
+                if self.name and self.name in other.other_names:
                     return True
 
                 for name in self.other_names:

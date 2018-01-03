@@ -126,8 +126,7 @@ class FiatPlotter(BalancePlotter):
 
         self.base_currency = base_currency
         self.wallets_value = {
-            wallet.base_currency:
-                wallet.balance(self.base_currency)
+            wallet.base_currency: wallet.balance(self.base_currency)
             for wallet in self.wallets
         }
 
@@ -198,14 +197,12 @@ class FiatPlotter(BalancePlotter):
             self.portfolio.get_crypto_fiat_balance(self.base_currency)
 
         plt.plot(
-            dates,
-            crypto_values,
+            dates, crypto_values,
             label="Crypto value of portfolio (" + self.base_currency + ")"
         )  # plot crypto balances
 
         plt.plot(
-            dates,
-            fiat_values,
+            dates, fiat_values,
             label="Fiat value of portfolio (" + self.base_currency + ")"
         )  # plot crypto balances
 

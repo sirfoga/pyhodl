@@ -136,7 +136,7 @@ class Updater:
         self.api_updaters = []
         self.verbose = verbose
 
-        self._build_updaters()
+        self.build_updaters()
 
     def run(self):
         """
@@ -153,14 +153,13 @@ class Updater:
         for updater in self.api_updaters:
             try:
                 updater.update(self.verbose)
-            except Exception as e:
-                print("Cannot update", get_actual_class_name(updater),
-                      "due to", e)
+            except Exception:
+                print("Cannot update", get_actual_class_name(updater))
 
         self.manager.save_time_update()
         print("Next update:", datetime_to_str(self.manager.time_next_update()))
 
-    def _build_updaters(self):
+    def build_updaters(self):
         """
         :return: void
             Authenticates each API client

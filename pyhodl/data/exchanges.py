@@ -22,7 +22,7 @@ import ciso8601
 from datetime import datetime
 
 from pyhodl.data.core import CryptoParser
-from pyhodl.models.transactions import Commission
+from pyhodl.models.transactions import Commission, CoinAmount
 
 
 class BinanceParser(CryptoParser):
@@ -78,8 +78,11 @@ class BinanceParser(CryptoParser):
         if "commissionAsset" in raw:
             return Commission(
                 raw,
-                raw["commissionAsset"],
-                float(raw["commission"]),
+                CoinAmount(
+                    raw["commissionAsset"],
+                    raw["commission"],
+                    False
+                ),
                 self.get_date(raw),
                 self.is_successful(raw)
             )
@@ -160,11 +163,10 @@ class BitfinexParser(CryptoParser):
 
     def get_commission(self, raw):
         fee_coin, amount = self.get_fee(raw)
-        if fee_coin:
-            return Commission(
-                raw, fee_coin, amount, self.get_date(raw),
-                self.is_successful(raw)
-            )
+        return Commission(
+            raw, CoinAmount(fee_coin, amount, False), self.get_date(raw),
+            self.is_successful(raw)
+        )
 
     def get_date(self, raw):
         return datetime.fromtimestamp(int(float(raw["timestamp"])))
@@ -221,8 +223,11 @@ class CoinbaseParser(CryptoParser):
             commission_data = raw["network"]
             return Commission(
                 commission_data,
-                commission_data["transaction_fee"]["currency"],
-                commission_data["transaction_fee"]["amount"],
+                CoinAmount(
+                    commission_data["transaction_fee"]["currency"],
+                    commission_data["transaction_fee"]["amount"],
+                    False
+                ),
                 self.get_date(raw),
                 commission_data["status"] == "confirmed"
             )
