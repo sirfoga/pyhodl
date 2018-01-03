@@ -197,6 +197,22 @@ class Transaction:
         amount += self.get_amount_moved(coin)
         return amount
 
+    def get_coins(self):
+        """
+        :return: tuple (str, str, str)
+            Coin buy, coin sell and coin fee
+        """
+
+        coin_buy, coin_sell, coin_fee = self.coin_buy, self.coin_sell, None
+
+        if self.commission:
+            coin_fee = self.commission.coin
+
+        coins = {coin_buy, coin_sell, coin_fee}  # set
+        return {
+            coin for coin in coins if coin and str(coin) != "None"
+        }  # only valid coins
+
     def __getitem__(self, key):
         return self.raw[key]
 

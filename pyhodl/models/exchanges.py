@@ -95,21 +95,14 @@ class CryptoExchange:
             there
         """
 
-        wallets = {}
-        for transaction in self.transactions:
-            if transaction.successful:
-                # get coins involved
-                coin_buy, coin_sell, coin_fee = \
-                    transaction.coin_buy, transaction.coin_sell, \
-                    transaction.commission.coin if transaction.commission else None
+        wallets = {}  # get only successful transactions
+        transactions = self.get_transactions(lambda x: x.successful)
+        for transaction in transactions:
+            for coin in transaction.get_coins():
+                if coin not in wallets:
+                    wallets[coin] = Wallet(coin)
 
-                # update wallets
-                for coin in {coin_buy, coin_sell, coin_fee}:
-                    if coin and str(coin) != "None":
-                        if coin not in wallets:
-                            wallets[coin] = Wallet(coin)
-
-                        wallets[coin].add_transaction(transaction)
+                wallets[coin].add_transaction(transaction)
 
         return wallets
 
