@@ -18,7 +18,7 @@
 
 """ Command-line interface to pyhodl """
 
-import optparse
+import argparse
 import os
 import time
 import traceback
@@ -63,12 +63,12 @@ def create_args():
         Parser that handles cmd arguments.
     """
 
-    parser = optparse.OptionParser(
+    parser = argparse.ArgumentParser(
         usage="-[mode] -h/--help for full usage"
     )
 
     # run mode
-    parser.add_option(
+    parser.add_argument(
         "-m",
         "--mode",
         dest="mode",
@@ -77,7 +77,7 @@ def create_args():
     )
 
     # path
-    parser.add_option(
+    parser.add_argument(
         "-p",
         "--path",
         dest="path",
@@ -86,7 +86,7 @@ def create_args():
     )
 
     # extra options
-    parser.add_option(
+    parser.add_argument(
         "-t",
         "--tor",
         dest="tor",
@@ -95,7 +95,7 @@ def create_args():
     )
 
     # extra options
-    parser.add_option(
+    parser.add_argument(
         "-v",
         "--verbose",
         dest="verbose",
@@ -115,7 +115,7 @@ def parse_args(parser):
         Values of arguments.
     """
 
-    args = parser.parse_args()[0].__dict__
+    args = vars(parser.parse_args())
     options = {
         "run": RunMode(args["mode"]),
         "verbose": args["verbose"],
