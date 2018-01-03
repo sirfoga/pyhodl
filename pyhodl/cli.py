@@ -23,15 +23,13 @@ import os
 import time
 import traceback
 from datetime import timedelta
-from enum import Enum
 
 from hal.files.save_as import write_dicts_to_json
 from hal.streams.user import UserInput
 
-from pyhodl.apis.exchanges import API_CONFIG
 from pyhodl.apis.prices.utils import get_market_cap, get_price_on_dates
 from pyhodl.charts.balances import FiatPlotter
-from pyhodl.config import DATA_FOLDER, HISTORICAL_DATA_FOLDER
+from pyhodl.config import DEFAULT_PATHS, RunMode
 from pyhodl.core.models.exchanges import Portfolio
 from pyhodl.data.balance import get_balance_file
 from pyhodl.data.parsers import build_parser, build_exchanges
@@ -39,22 +37,6 @@ from pyhodl.stats.transactions import get_transactions_dates, \
     get_all_exchanges, get_all_coins
 from pyhodl.updater.core import Updater
 from pyhodl.utils.dates import generate_dates
-
-
-class RunMode(Enum):
-    """ Run as ... """
-
-    PLOTTER = "plotter"
-    STATS = "stats"
-    DOWNLOAD_HISTORICAL = "download"
-    UPDATER = "update"
-
-
-DEFAULT_PATHS = {
-    RunMode.STATS: DATA_FOLDER,
-    RunMode.DOWNLOAD_HISTORICAL: HISTORICAL_DATA_FOLDER,
-    RunMode.UPDATER: API_CONFIG
-}
 
 
 def create_args():
