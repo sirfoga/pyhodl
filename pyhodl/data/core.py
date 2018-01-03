@@ -105,8 +105,8 @@ class CryptoParser:
 
         if self.is_deposit(raw):
             return currency, amount, None, 0
-        else:
-            return None, 0, currency, amount
+
+        return None, 0, currency, amount
 
     def get_coins_amounts(self, raw):
         """
@@ -118,8 +118,8 @@ class CryptoParser:
 
         if self.is_trade(raw):
             return self.get_coins_amount_traded(raw)
-        else:
-            return self.get_coins_amount_moved(raw)
+
+        return self.get_coins_amount_moved(raw)
 
     @staticmethod
     def get_coins_amount_traded(raw):
@@ -134,7 +134,7 @@ class CryptoParser:
         return None, 0, None, 0
 
     @abc.abstractmethod
-    def get_coin_moved(self, raw, coin_key, amount_key):
+    def get_coin_moved(self, raw, coin_key="coin", amount_key="amount"):
         """
         :param raw: {}
             Raw details of transaction

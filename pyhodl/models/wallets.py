@@ -26,7 +26,7 @@ import numpy as np
 from pyhodl.apis.prices.utils import get_price_on_date
 from pyhodl.config import VALUE_KEY, DATE_TIME_KEY
 from pyhodl.data.tables import get_coin_prices_table
-from pyhodl.utils import is_crypto, is_nan
+from pyhodl.utils.dak import is_crypto, is_nan
 
 
 class Wallet:

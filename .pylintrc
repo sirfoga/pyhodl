@@ -17,5 +17,6 @@
 # R0904 Too many public methods
 # more here: http://pylint-messages.wikidot.com/all-codes
 
-disable=W0702
+disable=W0702,R1710,W0703
 output-format=colorized
+extension-pkg-whitelist=ciso8601

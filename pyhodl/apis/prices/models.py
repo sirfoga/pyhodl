@@ -25,7 +25,7 @@ from hal.time.profile import print_time_eta, get_time_eta
 
 from pyhodl.apis.models import AbstractApiClient
 from pyhodl.config import DATE_TIME_KEY
-from pyhodl.utils import datetime_to_str, generate_dates
+from pyhodl.utils.dates import generate_dates, datetime_to_str
 
 
 class PricesApiClient(AbstractApiClient):

@@ -38,7 +38,7 @@ from pyhodl.models.exchanges import Portfolio
 from pyhodl.stats.transactions import get_transactions_dates, \
     get_all_exchanges, get_all_coins
 from pyhodl.updater.core import Updater
-from pyhodl.utils import generate_dates
+from pyhodl.utils.dates import generate_dates
 
 
 class RunMode(Enum):
@@ -134,11 +134,29 @@ def parse_args(parser):
 
 
 def update(config_file, verbose):
+    """
+    :param config_file: str
+        Path to config file
+    :param verbose: bool
+        True iff you want verbose output
+    :return: void
+        Updates your local transactions and saves results
+    """
+
     driver = Updater(config_file, verbose)
     driver.run()
 
 
 def plot(input_file, verbose):
+    """
+    :param input_file: str
+        Path to input file
+    :param verbose: bool
+        True iff you want verbose output
+    :return: void
+        Shows plots with data parsed from input file
+    """
+
     if verbose:
         print("Getting balances from", input_file)
 
@@ -151,6 +169,13 @@ def plot(input_file, verbose):
 
 
 def show_exchange_balance(exchange):
+    """
+    :param exchange: CryptoExchange
+        Exchange to get balance of
+    :return: void
+        Prints balance of exchange
+    """
+
     print("\nExchange:", exchange.exchange_name.title())
 
     wallets = exchange.build_wallets()
@@ -161,6 +186,13 @@ def show_exchange_balance(exchange):
 
 
 def show_folder_balance(input_folder):
+    """
+    :param input_folder: str
+        Path to input folder
+    :return: void
+        Prints balance of wallets found in folder
+    """
+
     exchanges = build_exchanges(input_folder)
     total_value = 0.0
     for exchange in exchanges:
@@ -170,6 +202,19 @@ def show_folder_balance(input_folder):
 
 
 def download_market_cap(since, until, where_to, verbose):
+    """
+    :param since: datetime
+            Get data since this date
+    :param until: datetime
+        Get data until this date
+    :param where_to: str
+        Save data here
+    :param verbose: bool
+        True iff you want verbose output
+    :return: void
+        Downloads market cap data and saves results
+    """
+
     if verbose:
         print("Getting market cap since", since, "until", until)
 
@@ -184,6 +229,25 @@ def download_market_cap(since, until, where_to, verbose):
 
 def download_prices(coins, since, until, where_to, verbose, currency="USD",
                     tor=False):
+    """
+    :param coins: [] of str
+        List of coins to fetch
+    :param since: datetime
+            Get data since this date
+    :param until: datetime
+        Get data until this date
+    :param where_to: str
+        Save data here
+    :param verbose: bool
+        True iff you want verbose output
+    :param currency: str
+        Currency to get prices on
+    :param tor: str or None
+        Connect to tor proxy with this password
+    :return: void
+        Downloads prices and saves results
+    """
+
     if verbose:
         print("Getting historical prices for", len(coins), "coins")
 
@@ -199,6 +263,11 @@ def download_prices(coins, since, until, where_to, verbose, currency="USD",
 
 
 def main():
+    """
+    :return: void
+        Parse args and run selected mode
+    """
+
     args = parse_args(create_args())
     run_mode, run_path, tor, verbose = \
         args["run"], args["path"], args["tor"], args["verbose"]
@@ -230,13 +299,13 @@ def main():
         print("Run `pyhodl --help` to get a list of options.")
 
 
-def handle_exception(e):
+def handle_exception(exc):
     """
     :return: void
         Tries to handle it
     """
 
-    print("[CRITICAL ERROR]:", str(e).replace("\n", ".") + "!!!")
+    print("[CRITICAL ERROR]:", str(exc).replace("\n", ".") + "!!!")
     print("pyhodl stopped abruptly, but your data is safe, don't worry.")
     user_input = UserInput()
     if user_input.get_yes_no("Want to fill a bug report?"):
@@ -257,8 +326,8 @@ def cli():
 
     try:
         main()
-    except Exception as e:
-        handle_exception(e)
+    except Exception as exc:
+        handle_exception(exc)
 
 
 if __name__ == '__main__':

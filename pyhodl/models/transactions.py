@@ -47,6 +47,11 @@ class CoinAmount:
         self.is_in = bool(is_in) if is_in else False
 
     def get_symbol(self):
+        """
+        :return: Coin
+            Inner coin
+        """
+
         if self.coin:
             if self.coin in FIAT_COINS:
                 return self.coin
@@ -54,6 +59,11 @@ class CoinAmount:
         return False
 
     def get_amount(self):
+        """
+        :return: float
+            Amount exchanged
+        """
+
         return self.amount
 
     def __str__(self):

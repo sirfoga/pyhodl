@@ -25,7 +25,8 @@ from hal.files.parsers import JSONParser
 from hal.files.save_as import write_dicts_to_json
 
 from pyhodl.config import DATA_FOLDER, DATE_TIME_KEY, VALUE_KEY
-from pyhodl.utils import datetime_to_str, parse_datetime, is_nan
+from pyhodl.utils.dak import is_nan
+from pyhodl.utils.dates import parse_datetime, datetime_to_str
 
 
 def get_balance_file(exchange):

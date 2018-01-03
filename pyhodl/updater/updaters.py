@@ -28,7 +28,7 @@ from gdax.authenticated_client import AuthenticatedClient as GdaxClient
 from hal.files.save_as import write_dicts_to_json
 
 from pyhodl.logs import Logger
-from pyhodl.utils import handle_rate_limits, get_and_sleep
+from pyhodl.utils.dak import handle_rate_limits, get_and_sleep
 
 INT_32_MAX = 2 ** 31 - 1
 

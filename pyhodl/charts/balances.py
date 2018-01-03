@@ -24,7 +24,8 @@ import matplotlib.pyplot as plt
 
 from pyhodl.config import VALUE_KEY
 from pyhodl.models.exchanges import Portfolio
-from pyhodl.utils import generate_dates, normalize
+from pyhodl.utils.dak import normalize
+from pyhodl.utils.dates import generate_dates
 
 
 class CryptoPlotter:

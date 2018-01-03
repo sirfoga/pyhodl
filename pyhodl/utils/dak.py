@@ -21,33 +21,11 @@
 import functools
 import time
 from collections import Counter
-from datetime import datetime
-from datetime import timedelta
 
-import pytz
 import requests
 from hal.internet.web import get_tor_session, renew_connection
 
-from pyhodl.config import DATE_TIME_FORMAT, FIAT_COINS
-
-
-def generate_dates(since, until, hours):
-    """
-    :param since: datetime
-        Generate dates since this date
-    :param until: datetime
-        Generate dates until this date
-    :param hours: float
-        Number of hours between 2 consecutive dates
-    :return: generator of datetime
-        Dates in between boundaries and separated by exact interval
-    """
-
-    date = since
-    while date <= until:
-        yield date
-        date += timedelta(hours=hours)
-    yield until
+from pyhodl.config import FIAT_COINS
 
 
 def get_full_lists(big_dict):
@@ -180,19 +158,6 @@ def replace_items(lst, old, new):
     return lst
 
 
-def datetime_to_unix_timestamp_ms(dt):
-    return int(time.mktime(dt.timetuple()) * 1e3 + dt.microsecond / 1e3)
-
-
-def datetime_to_unix_timestamp_s(dt):
-    return int(time.mktime(dt.timetuple()) * 1e3)
-
-
-def unix_timestamp_ms_to_datetime(ms):
-    dt = datetime.fromtimestamp(float(ms) / 1e3)
-    return localize(dt)  # utc as default time zone
-
-
 def download(url):
     """
     :param url: str
@@ -213,35 +178,13 @@ def download_with_tor(url, tor_password, max_attempts):
             "Cookie": "__cfduid=d87e2b033d4ee407a1c3303b532c32dec1514830829"
         }
         return session.get(url)
-    except Exception as e:
+    except:
         if max_attempts > 0:
-            print("Cannot download", url, "via tor due to", e,
-                  ". Trying to renew session.")
+            print("Cannot download", url, "via tor. Trying to renew session.")
             renew_connection(tor_password)
             return download_with_tor(url, tor_password, max_attempts - 1)
 
         return None
-
-
-def parse_datetime(raw):
-    return datetime.strptime(raw, DATE_TIME_FORMAT)
-
-
-def datetime_to_str(dt):
-    if dt.tzinfo is None:
-        dt = localize(dt)  # utc as default time zone
-    return dt.strftime(DATE_TIME_FORMAT)
-
-
-def localize(dt):
-    if dt.tzinfo is None:
-        return pytz.utc.localize(dt)
-
-    return dt
-
-
-def get_delta_seconds(dt0, dt1):
-    return (localize(dt0) - localize(dt1)).total_seconds()
 
 
 def normalize(val, min_val, max_val, min_range=-1.0, max_range=1.0):

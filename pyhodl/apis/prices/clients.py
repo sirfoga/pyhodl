@@ -23,12 +23,13 @@ from datetime import timedelta
 
 from pyhodl.apis.models import TorApiClient
 from pyhodl.apis.prices.models import PricesApiClient
-from pyhodl.app import get_coin_by_symbol
+from pyhodl.app import get_coin
 from pyhodl.config import FIAT_COINS, NAN, DATE_TIME_KEY, VALUE_KEY
 from pyhodl.data.coins import Coin
-from pyhodl.utils import replace_items, datetime_to_unix_timestamp_s, \
-    datetime_to_unix_timestamp_ms, datetime_to_str, \
-    unix_timestamp_ms_to_datetime, middle, generate_dates
+from pyhodl.utils.dak import replace_items, middle
+from pyhodl.utils.dates import generate_dates, datetime_to_unix_timestamp_ms, \
+    datetime_to_unix_timestamp_s, unix_timestamp_ms_to_datetime, \
+    datetime_to_str
 
 
 class CryptocompareClient(PricesApiClient, TorApiClient):
@@ -178,7 +179,7 @@ class CoinmarketCapClient(PricesApiClient, TorApiClient):
 
         # action is a coin
         return os.path.join(
-            "currencies", get_coin_by_symbol(action).name
+            "currencies", get_coin(action).name
         )
 
     def _create_url(self, action, since, until):

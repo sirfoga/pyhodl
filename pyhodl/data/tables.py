@@ -25,7 +25,7 @@ from hal.files.parsers import JSONParser
 
 from pyhodl.config import HISTORICAL_DATA_FOLDER, DATE_TIME_KEY, VALUE_KEY, \
     INFINITY, get_coin_historical_data_file
-from pyhodl.utils import parse_datetime
+from pyhodl.utils.dates import parse_datetime
 
 
 class DatetimeTable(JSONParser):

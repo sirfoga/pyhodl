@@ -24,6 +24,7 @@ from hal.files.parsers import JSONParser
 from hal.files.save_as import write_dicts_to_json
 
 from pyhodl.config import APP_FOLDER, API_FOLDER, DATA_FOLDER, CRYPTO_COINS
+from pyhodl.data.coins import CryptoCoin
 
 
 class ConfigManager:
@@ -77,11 +78,12 @@ class ConfigManager:
         return self.data[key]
 
     def save(self):
-        out = {}
-        for key, value in self.data.items():
-            out[key] = value
+        """
+        :return: void
+            Saves app data to local config file
+        """
 
-        write_dicts_to_json(out, self.config_file)
+        write_dicts_to_json(self.data, self.config_file)
 
 
 def create_workplace():
@@ -95,13 +97,15 @@ def create_workplace():
             os.makedirs(directory)
 
 
-def get_coin_by_name(coin_name):
-    for coin in CRYPTO_COINS:
-        if coin.name == coin_name or coin_name in coin.other_names:
-            return coin
+def get_coin(symbol):
+    """
+    :param symbol: str
+        Symbol of coin
+    :return: CryptoCoin
+        Coin if a crypto-coin exists with that name
+    """
 
-
-def get_coin_by_symbol(symbol):
+    candidate = CryptoCoin(symbol, symbol)
     for coin in CRYPTO_COINS:
-        if coin.symbol == symbol:
+        if coin.symbol == candidate:
             return coin

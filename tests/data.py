@@ -64,6 +64,8 @@ class TestCoins(unittest.TestCase):
         self.assertTrue("usd" in FIAT_COINS)
         self.assertTrue("USD" in FIAT_COINS)
         self.assertTrue(Coin("usd") in FIAT_COINS)
+        self.assertTrue("BTC" == Coin("BTC"))
+        self.assertTrue("BTC" == CryptoCoin("BTC"))
 
 
 def main():

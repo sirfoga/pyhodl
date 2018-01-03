@@ -86,6 +86,7 @@ class BinanceParser(CryptoParser):
                 self.get_date(raw),
                 self.is_successful(raw)
             )
+        return None
 
     def get_date(self, raw):
         if self.is_trade(raw):
