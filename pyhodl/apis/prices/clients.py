@@ -78,6 +78,59 @@ class CryptocompareClient(PricesApiClient, TorApiClient):
     def download(self, url):
         return super().download(url).json()  # parse as json
 
+    def fetch_raw_prices(self, coins, date_time, currency):
+        """
+        :param coins: [] of str
+            List of coins
+        :param date_time: datetime
+            Date and time to get price
+        :param currency: str
+            Currency to convert to
+        :return: {}
+            List of raw prices
+        """
+
+        if len(coins) <= self.MAX_COINS_PER_REQUEST:
+            url = self.get_api_url(
+                self._encode_coins(coins), date_time, currency=currency
+            )
+            result = self.download(url)
+            return result[currency]
+
+        long_data = self.fetch_raw_prices(
+            coins[self.MAX_COINS_PER_REQUEST:], date_time,
+            currency=currency
+        )  # get other data
+        data = self.fetch_raw_prices(
+            coins[:self.MAX_COINS_PER_REQUEST], date_time, currency=currency
+        )
+        return {**data, **long_data}  # merge dicts
+
+    def fetch_prices(self, coins, date_time, currency):
+        """
+        :param coins: [] of str
+            List of coins
+        :param date_time: datetime
+            Date and time to get price
+        :param currency: str
+            Currency to convert to
+        :return: {}
+            List of prices of each coin
+        """
+
+        data = self.fetch_raw_prices(coins, date_time, currency)
+        data = self._decode_coins(data)
+
+        for coin in coins:
+            if coin not in data:
+                data[coin] = NAN
+
+        for coin, price in data.items():
+            if price == 0.0:
+                data[coin] = NAN
+
+        return data
+
     def get_api_url(self, coins, date_time, **kwargs):
         """
         :param coins: [] of str
@@ -100,32 +153,11 @@ class CryptocompareClient(PricesApiClient, TorApiClient):
 
     def get_price(self, coins, date_time, **kwargs):
         currency = kwargs["currency"]
-        if len(coins) > self.MAX_COINS_PER_REQUEST:
-            data = self.get_price(
-                coins[self.MAX_COINS_PER_REQUEST:], date_time,
-                currency=currency
-            )
-        else:
-            data = {}
-
-        url = self.get_api_url(
-            self._encode_coins(coins[:self.MAX_COINS_PER_REQUEST]),
-            date_time, currency=currency
-        )
-        result = self.download(url)
-        values = result[currency]
-        for coin, price in values.items():
-            try:
-                price = float(1 / price)
-            except:
-                price = NAN
-            data[coin] = price
-        data = self._decode_coins(data)
-
-        for coin in coins:
-            if coin not in data:
-                data[coin] = NAN
-        return data
+        prices = self.fetch_raw_prices(coins, date_time, currency)
+        return {
+            coin: float(1 / price)  # e.g we want USD -> BTC, not BTC -> USD
+            for coin, price in prices.items()
+        }
 
 
 class CoinmarketCapClient(PricesApiClient, TorApiClient):
