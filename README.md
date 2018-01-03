@@ -1,5 +1,6 @@
 # Pyhodl
 
+[![Codacy Badge](https://api.codacy.com/project/badge/Grade/d81387657ba14272be45ec6a8e332de3)](https://www.codacy.com/app/sirfoga/pyhodl?utm_source=github.com&utm_medium=referral&utm_content=sirfoga/pyhodl&utm_campaign=badger)
 [![Code Health](https://landscape.io/github/sirfoga/pyhodl/master/landscape.svg?style=flat)](https://landscape.io/github/sirfoga/pyhodl/master) [![BCH compliance](https://bettercodehub.com/edge/badge/sirfoga/pyhodl?branch=master)](https://bettercodehub.com/) [![Code Climate](https://lima.codeclimate.com/github/sirfoga/pyhodl/badges/gpa.svg)](https://codeclimate.com/github/sirfoga/pyhodl) ![pylint Score](https://mperlet.de/pybadge/badges/9.14.svg)
 
 [![Open Source Love](https://badges.frapsoft.com/os/v1/open-source.svg?v=103)](https://opensource.org/licenses/Apache-2.0) [![Contributions welcome](https://img.shields.io/badge/contributions-welcome-brightgreen.svg?style=flat)](https://github.com/MY_USERNAME/MY_REPOSITORY/issues) [![License](https://img.shields.io/badge/license-Apache%202.0-blue.svg)](https://www.apache.org/licenses/LICENSE-2.0)
