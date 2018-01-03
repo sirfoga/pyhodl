@@ -92,7 +92,6 @@ class CryptoParser:
 
         return
 
-    @abc.abstractmethod
     def get_coins_amount_moved(self, raw):
         """
         :param raw: {}
@@ -101,7 +100,13 @@ class CryptoParser:
             Coin bought, amount bought, coin sold, amount sold in case of
             deposit/withdraw data
         """
-        return None, 0, None, 0
+
+        currency, amount = self.get_coin_moved(raw)
+
+        if self.is_deposit(raw):
+            return currency, amount, None, 0
+        else:
+            return None, 0, currency, amount
 
     def get_coins_amounts(self, raw):
         """
@@ -127,6 +132,21 @@ class CryptoParser:
         """
 
         return None, 0, None, 0
+
+    @abc.abstractmethod
+    def get_coin_moved(self, raw, coin_key, amount_key):
+        """
+        :param raw: {}
+            Raw details of transaction
+        :param coin_key: str
+            Identify coin name in raw data
+        :param amount_key: str
+            Identify coin amount in raw data
+        :return: tuple (str, float)
+            Coin name and amount moved
+        """
+
+        return raw[coin_key], abs(float(raw[amount_key]))
 
     @abc.abstractmethod
     def get_date(self, raw):

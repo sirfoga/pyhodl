@@ -28,13 +28,8 @@ from pyhodl.models.transactions import Commission
 class BinanceParser(CryptoParser):
     """ Parses Binance transactions data """
 
-    def get_coins_amount_moved(self, raw):
-        currency, amount = raw["asset"], abs(float(raw["amount"]))
-
-        if self.is_deposit(raw):
-            return currency, amount, None, 0
-        else:  # withdraw
-            return None, 0, currency, amount
+    def get_coin_moved(self, raw, coin_key="asset", amount_key="amount"):
+        return super().get_coin_moved(raw, coin_key, amount_key)
 
     @staticmethod
     def get_coins_amount_traded(raw):
@@ -139,13 +134,8 @@ class BitfinexParser(CryptoParser):
 
         return coin_sell, sell_amount, coin_buy, buy_amount
 
-    def get_coins_amount_moved(self, raw):
-        currency, amount = raw["currency"], abs(float(raw["amount"]))
-
-        if self.is_deposit(raw):
-            return currency, amount, None, 0
-        else:  # withdraw
-            return None, 0, currency, amount
+    def get_coin_moved(self, raw, coin_key="currency", amount_key="amount"):
+        return super().get_coin_moved(raw, coin_key, amount_key)
 
     def is_trade(self, raw):
         return raw["type"] in ["Sell", "Buy"]
@@ -197,14 +187,8 @@ class BitfinexParser(CryptoParser):
 class CoinbaseParser(CryptoParser):
     """ Parses Coinbase transactions data """
 
-    def get_coins_amount_moved(self, raw):
-        currency, amount = \
-            raw["amount"]["currency"], abs(float(raw["amount"]["amount"]))
-
-        if self.is_deposit(raw):
-            return currency, amount, None, 0
-        else:
-            return None, 0, currency, amount
+    def get_coin_moved(self, raw, coin_key="currency", amount_key="amount"):
+        return super().get_coin_moved(raw["amount"], coin_key, amount_key)
 
     @staticmethod
     def get_coins_amount_traded(raw):
