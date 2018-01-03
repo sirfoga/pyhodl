@@ -22,12 +22,13 @@ from bisect import bisect
 from datetime import datetime
 from enum import Enum
 
+import numpy as np
 import pytz
 
 from pyhodl.apis.prices import get_price
 from pyhodl.config import VALUE_KEY, DATE_TIME_KEY
 from pyhodl.data.tables import get_coin_prices_table
-from pyhodl.utils import is_crypto
+from pyhodl.utils import is_crypto, is_nan
 
 
 class TransactionType(Enum):
@@ -271,7 +272,7 @@ class Wallet:
 
         if currency:  # convert to currency
             return self.convert_to(
-                subtotals[-1].date,
+                subtotals[-1]["transaction"].date,
                 currency,
                 amount=total
             )
@@ -372,6 +373,23 @@ class Wallet:
             ]
 
         return filled
+
+    def get_balance_array_by_date(self, dates, currency=None):
+        """
+        :param dates: [] of datetime
+            List of dates
+        :param currency: str or None
+            Currency to convert balances to
+        :return: numpy array
+            Balance value by date
+        """
+
+        balances = self.get_balance_by_date(dates, currency)
+        lst = np.zeros(len(balances))
+        for i, balance in enumerate(balances):
+            if not is_nan(balance):
+                lst[i] += balance
+        return lst
 
     @staticmethod
     def fill_missing_data(data, dates, all_dates):

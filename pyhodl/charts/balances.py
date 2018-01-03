@@ -194,7 +194,7 @@ class FiatPlotter(BalancePlotter):
         """
 
         dates, crypto_values, fiat_values = \
-            self.portfolio.get_crypto_fiat_deltas(self.base_currency)
+            self.portfolio.get_crypto_fiat_balance(self.base_currency)
 
         plt.plot(
             dates,
