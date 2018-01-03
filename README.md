@@ -9,8 +9,6 @@
 ## Table of content
 
 - [Key Features](#key-features)
-- [Overview](#overview)
-- [Settings](#settings)
 - [Usage](#usage)
 - [Install](#install)
 - [Changelog](#changelog)
@@ -21,11 +19,11 @@
 
 ## Key Features
 
-* continuous (hourly) updates from your exchanges
+* continuous (hourly, daily, you-decide-when) updates from your exchanges
 * completely off-line
-* you own your data
+* **you** own your data
 * analyze profit and ROI of transactions
-* plot charts of your capital
+* plot charts (buy/sells, prices, market cap ...)
 * stats and trends
 * cross-OS
 * supported exchanges:
@@ -34,23 +32,12 @@
     - Coinbase
     - GDAX
     
-## Settings
-`pyhodl` needs general settings to run. For more information please refer to [the guide](WRITE_CONFIGS.md).
-
-
-## Overview
-`pyhodl` consists of 4 submodules:
-- `updater`: syncs local data with the transactions from your exchanges. Can run as daemon and can update every other minute.
-- `plotter`: creates charts with local data. Saves `.png` images too.
-- `stats`: Computes statistics and trends using local data. Correlations, future prices, trading analysis and so on-
-- `controller`: Manages your data, parses raw downloads and fix API errors. You cannot invoke this module directly.
-
 ## Usage
 
 ```bash
 $ pyhodl [options]
 ```
-
+To specify your settins, please refer to [this](WRITE_CONFIGS.md).
 To import your transactions, please refer to [the guide](IMPORT_DATA.md).
 
 ### Supported commands
@@ -95,6 +82,10 @@ optional arguments:
   -stats STATS         Computes statistics and trends using local data
   -verbose, --verbose  Increase verbosity
   -tor TOR             Connect to tor via this password (advanced)
+```
+To run the tests (please do):
+```bash
+python3 setup.py test
 ```
 
 ## Changelog

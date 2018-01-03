@@ -210,18 +210,22 @@ class Transaction:
 
     def __str__(self):
         out = "Transaction on " + str(self.date)
-        if self.buy_amount > 0:
-            out += "\n+" + str(self.buy_amount) + " " + str(self.coin_buy)
-
-        if self.sell_amount > 0:
-            out += "\n-" + str(self.sell_amount) + " " + str(self.coin_sell)
-
+        out += self.amount_to_str(self.buy_amount, self.coin_buy, "+")
+        out += self.amount_to_str(self.sell_amount, self.coin_sell, "-")
         if self.commission:
             out += "\nPaying " + str(self.commission.amount) + " " + \
                    str(self.commission.coin) + " as fee"
+
         out += "\nSuccessful? " + str(self.successful)
 
         return out
+
+    @staticmethod
+    def amount_to_str(amount, coin, prefix):
+        if amount > 0:
+            return "\n" + prefix + str(amount) + " " + str(coin)
+
+        return ""
 
 
 class Commission(Transaction):

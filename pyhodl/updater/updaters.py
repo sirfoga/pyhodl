@@ -139,8 +139,8 @@ class BinanceUpdater(ExchangeUpdater):
                 transactions += result
                 self.log("Found", len(result), symbol, "transactions")
                 time.sleep(self.rate)
-            except Exception as e:
-                self.log("Cannot get", symbol, "transactions due to", e)
+            except:
+                self.log("Cannot get", symbol, "transactions")
         self.transactions = transactions
 
 
@@ -179,16 +179,16 @@ class BitfinexUpdater(ExchangeUpdater):
         )
 
     def get_movements(self):
-        currencies = self.get_currencies_list()
+        symbols = self.get_currencies_list()
         movements = []
-        for currency in currencies:
+        for symbol in symbols:
             try:
-                result = self.get_all_movements(currency)
+                result = self.get_all_movements(symbol)
                 movements += result
-                self.log("Found", len(result), currency, "movements")
+                self.log("Found", len(result), symbol, "movements")
                 time.sleep(self.rate)
-            except Exception as e:
-                self.log("Cannot get", currency, "movements due to", e)
+            except:
+                self.log("Cannot get", symbol, "movements")
         return movements
 
     @handle_rate_limits
@@ -210,13 +210,12 @@ class BitfinexUpdater(ExchangeUpdater):
 
     def get_transactions(self):
         super().get_transactions()
-        self.log(
-            "Total current balance:",
-            [
+        self.log("Total current balance:",
+                 [
                 (key, val) for key, val
                 in self.client.fetch_balance()["total"].items()
             ]
-        )
+                 )
 
         transactions = self.get_movements()  # deposits and withdrawals
         symbols = self.get_symbols_list()
@@ -226,8 +225,8 @@ class BitfinexUpdater(ExchangeUpdater):
                 transactions += result
                 self.log("Found", len(result), symbol, "transactions")
                 time.sleep(self.rate)
-            except Exception as e:
-                self.log("Cannot get", symbol, "transactions due to", e)
+            except:
+                self.log("Cannot get", symbol, "transactions")
         self.transactions = transactions
 
 
