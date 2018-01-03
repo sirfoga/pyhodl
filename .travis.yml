@@ -1,0 +1,14 @@
+sudo: false
+language: "python"
+python:
+  - "3.5"
+install:
+  - "pip3 install -U pip"  # upgrade pip
+  - "pip3 install coveralls"  # for test coverage
+  - "git clone --depth=1 https://github.com/sirfoga/pyhodl.git"  # clone repo
+  - "cd pyhodl"
+  - "pip3 install ."  # run local setup
+script:
+  - "python3 setup.py test"
+notifications:
+  email: "false"  # no email notify
