@@ -28,22 +28,22 @@ from pyhodl.models.transactions import Commission
 class BinanceParser(CryptoParser):
     """ Parses Binance transactions data """
 
-    def get_coins_amounts(self, raw):
-        if self.is_trade(raw):
-            return self.get_coins_amount_traded(raw)
-        elif self.is_deposit(raw):
-            return raw["asset"], float(raw["amount"]), None, 0
-        elif self.is_withdrawal(raw):
-            return None, 0, raw["asset"], float(raw["amount"])
+    def get_coins_amount_moved(self, raw):
+        currency, amount = raw["asset"], abs(float(raw["amount"]))
 
-        return None, 0, None, 0
+        if self.is_deposit(raw):
+            return currency, amount, None, 0
+        else:  # withdraw
+            return None, 0, currency, amount
 
-    def get_coins_amount_traded(self, raw):
-        coin_buy, coin_sell = self.get_coins_traded(raw)
-        amount_buy, amount_sell = self.get_amount_traded(raw)
+    @staticmethod
+    def get_coins_amount_traded(raw):
+        coin_buy, coin_sell = BinanceParser.get_coins_traded(raw)
+        amount_buy, amount_sell = BinanceParser.get_amount_traded(raw)
         return coin_buy, amount_buy, coin_sell, amount_sell
 
-    def get_coins_traded(self, raw):
+    @staticmethod
+    def get_coins_traded(raw):
         """
         :param raw: {}
             Raw details of transaction
@@ -51,21 +51,19 @@ class BinanceParser(CryptoParser):
             Coin bought, coin sold, in case of trading data
         """
 
-        if self.is_trade(raw):
-            market = raw["symbol"]
-            if market.endswith("USDT"):
-                coin_buy, coin_sell = market.replace("USDT", ""), "USDT"
-            else:
-                coin_buy, coin_sell = market[:-3], market[-3:]
+        market = raw["symbol"]
+        if market.endswith("USDT"):
+            coin_buy, coin_sell = market.replace("USDT", ""), "USDT"
+        else:
+            coin_buy, coin_sell = market[:-3], market[-3:]
 
-            if raw["isBuyer"]:
-                return coin_buy, coin_sell
+        if raw["isBuyer"]:
+            return coin_buy, coin_sell
 
-            return coin_sell, coin_buy
+        return coin_sell, coin_buy
 
-        return None, None
-
-    def get_amount_traded(self, raw):
+    @staticmethod
+    def get_amount_traded(raw):
         """
         :param raw: {}
             Raw details of transaction
@@ -73,16 +71,13 @@ class BinanceParser(CryptoParser):
             Amount bought, amount sold in case of trading data
         """
 
-        if self.is_trade(raw):
-            amount_buy = float(raw["qty"])
-            amount_sell = float(raw["price"]) * amount_buy
+        amount_buy = float(raw["qty"])
+        amount_sell = float(raw["price"]) * amount_buy
 
-            if raw["isBuyer"]:
-                return amount_buy, amount_sell
+        if raw["isBuyer"]:
+            return amount_buy, amount_sell
 
-            return amount_sell, amount_buy
-
-        return 0, 0
+        return amount_sell, amount_buy
 
     def get_commission(self, raw):
         if "commissionAsset" in raw:
@@ -134,16 +129,6 @@ class BinanceParser(CryptoParser):
 class BitfinexParser(CryptoParser):
     """ Parses Binance transactions data """
 
-    def get_coins_amounts(self, raw):
-        if self.is_trade(raw):
-            return self.get_coins_amount_traded(raw)
-        elif self.is_deposit(raw):
-            return raw["currency"], float(raw["amount"]), None, 0
-        elif self.is_withdrawal(raw):
-            return None, 0, raw["currency"], float(raw["amount"])
-
-        return None, 0, None, 0
-
     @staticmethod
     def get_coins_amount_traded(raw):
         coin_buy, coin_sell = raw["symbol"][:3], raw["symbol"][3:]
@@ -153,6 +138,14 @@ class BitfinexParser(CryptoParser):
             return coin_buy, buy_amount, coin_sell, sell_amount
 
         return coin_sell, sell_amount, coin_buy, buy_amount
+
+    def get_coins_amount_moved(self, raw):
+        currency, amount = raw["currency"], abs(float(raw["amount"]))
+
+        if self.is_deposit(raw):
+            return currency, amount, None, 0
+        else:  # withdraw
+            return None, 0, currency, amount
 
     def is_trade(self, raw):
         return raw["type"] in ["Sell", "Buy"]
@@ -204,18 +197,14 @@ class BitfinexParser(CryptoParser):
 class CoinbaseParser(CryptoParser):
     """ Parses Coinbase transactions data """
 
-    def get_coins_amounts(self, raw):
-        if self.is_trade(raw):
-            return self.get_coins_amount_traded(raw)
-        elif self.is_deposit(raw):
-            return raw["amount"]["currency"], \
-                   abs(float(raw["amount"]["amount"])), None, 0
-        elif self.is_withdrawal(raw):
-            return None, 0, \
-                   raw["amount"]["currency"], \
-                   abs(float(raw["amount"]["amount"]))
+    def get_coins_amount_moved(self, raw):
+        currency, amount = \
+            raw["amount"]["currency"], abs(float(raw["amount"]["amount"]))
 
-        return None, 0, None, 0
+        if self.is_deposit(raw):
+            return currency, amount, None, 0
+        else:
+            return None, 0, currency, amount
 
     @staticmethod
     def get_coins_amount_traded(raw):

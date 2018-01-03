@@ -93,12 +93,37 @@ class CryptoParser:
         return
 
     @abc.abstractmethod
+    def get_coins_amount_moved(self, raw):
+        """
+        :param raw: {}
+            Raw details of transaction
+        :return: tuple (str, float, str, float)
+            Coin bought, amount bought, coin sold, amount sold in case of
+            deposit/withdraw data
+        """
+        return None, 0, None, 0
+
     def get_coins_amounts(self, raw):
         """
         :param raw: {}
             Raw details of transaction
         :return: tuple (str, float, str, float)
             Coin bought, amount bought, coin sold, amount sold
+        """
+
+        if self.is_trade(raw):
+            return self.get_coins_amount_traded(raw)
+        else:
+            return self.get_coins_amount_moved(raw)
+
+    @staticmethod
+    def get_coins_amount_traded(raw):
+        """
+        :param raw: {}
+            Raw details of transaction
+        :return: tuple (str, float, str, float)
+            Coin bought, amount bought, coin sold, amount sold in case of
+            trading data
         """
 
         return None, 0, None, 0
