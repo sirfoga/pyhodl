@@ -98,7 +98,39 @@ class Transaction:
                 pass
         return False
 
-    def get_amount_traded(self, coin):
+    def is_trade(self):
+        """
+        :return: bool
+            True iff data is a trading
+        """
+
+        return self.transaction_type == TransactionType.TRADING
+
+    def is_deposit(self):
+        """
+        :return: bool
+            True iff data is a deposit
+        """
+
+        return self.transaction_type == TransactionType.DEPOSIT
+
+    def is_fee(self):
+        """
+        :return: bool
+            True iff data is a fee
+        """
+
+        return self.transaction_type == TransactionType.COMMISSION
+
+    def is_withdrawal(self):
+        """
+        :return: bool
+            True iff data is a withdrawal
+        """
+
+        return self.transaction_type == TransactionType.WITHDRAWAL
+
+    def get_amount_buy_sell(self, coin):
         """
         :param coin: str
             Coin to get
@@ -107,15 +139,28 @@ class Transaction:
         """
 
         amount = 0.0
-        if self.transaction_type == TransactionType.TRADING:
+        if self.is_trade():
             if self.coin_buy == coin:
                 amount += self.buy_amount
 
             if self.coin_sell == coin:
                 amount -= self.sell_amount
+        return amount
 
+    def get_amount_traded(self, coin):
+        """
+        :param coin: str
+            Coin to get
+        :return: float
+            Amount of coin trade
+        """
+
+        amount = self.get_amount_buy_sell(coin)
+
+        if self.is_trade():
             if self.commission and self.commission.coin == coin:
                 amount -= self.commission.amount
+
         return amount
 
     def get_amount_commission(self, coin):
@@ -127,9 +172,8 @@ class Transaction:
         """
 
         amount = 0.0
-        if self.transaction_type == TransactionType.COMMISSION:
-            if self.commission.coin == coin:
-                amount -= self.commission.amount
+        if self.is_fee() and self.commission.coin == coin:
+            amount -= self.commission.amount
         return amount
 
     def get_amount_moved(self, coin):
@@ -141,13 +185,11 @@ class Transaction:
         """
 
         amount = 0.0
-        if self.transaction_type == TransactionType.DEPOSIT:
-            if self.coin_buy == coin:
-                amount += self.buy_amount
+        if self.is_deposit() and self.coin_buy == coin:
+            amount += self.buy_amount
 
-        if self.transaction_type == TransactionType.WITHDRAWAL:
-            if self.coin_sell == coin:
-                amount -= self.sell_amount
+        if self.is_withdrawal() and self.coin_sell == coin:
+            amount -= self.sell_amount
         return amount
 
     def get_amount(self, coin):
