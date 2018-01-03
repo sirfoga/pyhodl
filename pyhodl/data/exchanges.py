@@ -21,8 +21,8 @@
 import ciso8601
 from datetime import datetime
 
+from pyhodl.core.models.transactions import Commission, CoinAmount
 from pyhodl.data.core import CryptoParser
-from pyhodl.models.transactions import Commission, CoinAmount
 
 
 class BinanceParser(CryptoParser):

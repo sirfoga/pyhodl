@@ -23,7 +23,7 @@ import abc
 import matplotlib.pyplot as plt
 
 from pyhodl.config import VALUE_KEY
-from pyhodl.models.exchanges import Portfolio
+from pyhodl.core.models.exchanges import Portfolio
 from pyhodl.utils.dates import generate_dates
 from pyhodl.utils.misc import normalize
 

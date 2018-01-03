@@ -16,7 +16,7 @@
 # limitations under the License.
 
 
-""" Wallets-related models """
+""" Wallets-related core """
 
 from bisect import bisect
 from datetime import datetime

@@ -16,7 +16,7 @@
 # limitations under the License.
 
 
-""" Core models """
+""" Core core """
 
 from enum import Enum
 

@@ -25,8 +25,8 @@ from hal.streams.pretty_table import pretty_format_table
 
 from pyhodl.config import DATE_TIME_KEY, VALUE_KEY, NAN, \
     DEFAULT_FIAT
+from pyhodl.core.models.wallets import Wallet
 from pyhodl.data.balance import parse_balance, save_balance
-from pyhodl.models.wallets import Wallet
 from pyhodl.utils.dates import datetime_to_str, get_delta_seconds
 from pyhodl.utils.misc import is_nan
 

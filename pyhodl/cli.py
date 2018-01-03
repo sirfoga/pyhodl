@@ -32,9 +32,9 @@ from pyhodl.apis.exchanges import API_CONFIG
 from pyhodl.apis.prices.utils import get_market_cap, get_price_on_dates
 from pyhodl.charts.balances import FiatPlotter
 from pyhodl.config import DATA_FOLDER, HISTORICAL_DATA_FOLDER
+from pyhodl.core.models.exchanges import Portfolio
 from pyhodl.data.balance import get_balance_file
 from pyhodl.data.parsers import build_parser, build_exchanges
-from pyhodl.models.exchanges import Portfolio
 from pyhodl.stats.transactions import get_transactions_dates, \
     get_all_exchanges, get_all_coins
 from pyhodl.updater.core import Updater

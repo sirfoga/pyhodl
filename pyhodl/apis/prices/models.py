@@ -16,7 +16,7 @@
 # limitations under the License.
 
 
-""" API client models to fetch prices data """
+""" API client core to fetch prices data """
 
 import abc
 import time
