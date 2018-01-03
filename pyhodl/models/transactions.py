@@ -27,6 +27,7 @@ import pytz
 from pyhodl.apis.prices import get_price
 from pyhodl.config import VALUE_KEY, DATE_TIME_KEY
 from pyhodl.data.tables import get_coin_prices_table
+from pyhodl.utils import is_crypto
 
 
 class TransactionType(Enum):
@@ -96,6 +97,71 @@ class Transaction:
                 pass
         return False
 
+    def get_amount_traded(self, coin):
+        """
+        :param coin: str
+            Coin to get
+        :return: float
+            Amount of coin trade
+        """
+
+        amount = 0.0
+        if self.transaction_type == TransactionType.TRADING:
+            if self.coin_buy == coin:
+                amount += self.buy_amount
+
+            if self.coin_sell == coin:
+                amount -= self.sell_amount
+
+            if self.commission.coin and self.commission.coin == coin:
+                amount -= self.commission.amount
+        return amount
+
+    def get_amount_commission(self, coin):
+        """
+        :param coin: str
+            Coin to get
+        :return: float
+            Amount of coin fee
+        """
+
+        amount = 0.0
+        if self.transaction_type == TransactionType.COMMISSION:
+            if self.commission.coin == coin:
+                amount -= self.commission.amount
+        return amount
+
+    def get_amount_moved(self, coin):
+        """
+        :param coin: str
+            Coin to get
+        :return: float
+            Amount of coin moved (withdrawn/deposited)
+        """
+
+        amount = 0.0
+        if self.transaction_type == TransactionType.DEPOSIT:
+            if self.coin_buy == coin:
+                amount += self.buy_amount
+
+        if self.transaction_type == TransactionType.WITHDRAWAL:
+            if self.coin_sell == coin:
+                amount -= self.sell_amount
+        return amount
+
+    def get_amount(self, coin):
+        """
+        :param coin: str
+            Coin to get
+        :return: float
+            Amount of coin in transaction
+        """
+
+        amount = self.get_amount_traded(coin)
+        amount += self.get_amount_commission(coin)
+        amount += self.get_amount_moved(coin)
+        return amount
+
     def __getitem__(self, key):
         return self.raw[key]
 
@@ -151,6 +217,14 @@ class Wallet:
         self.base_currency = base_currency
         self.transactions = []  # list of operations performed
         self.is_sorted = False
+
+    def is_crypto(self):
+        """
+        :return: bool
+            True iff wallet base currency is crypto currency
+        """
+
+        return is_crypto(self.base_currency)
 
     def _sort_transactions(self):
         if not self.is_sorted:
@@ -222,46 +296,29 @@ class Wallet:
         except:
             return 0.0
 
+    def get_price_on(self, dates, currency):
+        """
+        :param dates: [] of datetime
+            List of dates
+        :param currency: str
+            Currency to get price
+        :return: [] of float
+            List of prices if coin converted to currency on those dates
+        """
+
+        return [
+            self.convert_to(date, currency) for date in dates
+        ]
+
     def get_delta_by_transaction(self):
         self._sort_transactions()
         data = []
         for transaction in self.transactions:
-            delta_balance = 0.0
-            has_edited_balance = False  # True iff coin was traded
-
-            if transaction.transaction_type == TransactionType.TRADING:
-                if transaction.coin_buy == self.base_currency:
-                    delta_balance += transaction.buy_amount
-                    has_edited_balance = True
-
-                if transaction.coin_sell == self.base_currency:
-                    delta_balance -= transaction.sell_amount
-                    has_edited_balance = True
-
-                if transaction.commission and transaction.commission.coin \
-                        == self.base_currency:
-                    delta_balance -= transaction.commission.amount
-                    has_edited_balance = True
-
-            if transaction.transaction_type == TransactionType.COMMISSION:
-                if transaction.commission.coin == self.base_currency:
-                    delta_balance -= transaction.commission.amount
-                    has_edited_balance = True
-
-            if transaction.transaction_type == TransactionType.DEPOSIT:
-                if transaction.coin_buy == self.base_currency:
-                    delta_balance += transaction.buy_amount
-                    has_edited_balance = True
-
-            if transaction.transaction_type == TransactionType.WITHDRAWAL:
-                if transaction.coin_sell == self.base_currency:
-                    delta_balance -= transaction.sell_amount
-                    has_edited_balance = True
-
-            if has_edited_balance:  # balance has changed
+            delta = transaction.get_amount(self.base_currency)
+            if delta != 0.0:  # balance has actually changed
                 data.append({
                     "transaction": transaction,
-                    VALUE_KEY: delta_balance
+                    VALUE_KEY: delta
                 })
         return data
 

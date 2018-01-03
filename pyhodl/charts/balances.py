@@ -156,19 +156,16 @@ class FiatPlotter(BalancePlotter):
             Plots buy/sells points of coin against coin price
         """
 
-        deltas = list(wallet.get_delta_by_transaction())
+        deltas = wallet.get_delta_by_transaction()
         dates = list(generate_dates(
             deltas[0]["transaction"].date,
             deltas[-1]["transaction"].date,
             hours=4
         ))
-        equivalents = [
-            wallet.convert_to(date, self.base_currency) for date in dates
-        ]
+        price = wallet.get_price_on(dates, self.base_currency)
         plt.plot(
-            dates,
-            equivalents,
-            label=wallet.base_currency + " " + self.base_currency + " price"
+            dates, price,
+            label=wallet.base_currency + " " + self.base_currency + "price"
         )  # plot price
 
         max_delta = max(abs(delta[VALUE_KEY]) for delta in deltas)

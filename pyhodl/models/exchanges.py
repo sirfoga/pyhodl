@@ -219,23 +219,18 @@ class Portfolio:
 
     def get_crypto_fiat_balance(self, currency):
         dates = self.get_transactions_dates()
-        crypto_values = [0.0 for _ in range(len(dates))]
+        crypto_values = [0.0 for _ in range(len(dates))]  # zeros
         fiat_values = [0.0 for _ in range(len(dates))]
 
         for wallet in self.wallets:
-            balances = wallet.get_balance_by_date(dates)
+            balances = wallet.get_balance_by_date(dates, currency)
             for i, balance in enumerate(balances):
-                val = wallet.convert_to(
-                    balance[DATE_TIME_KEY],
-                    currency,
-                    float(balance[VALUE_KEY])
-                )
-
+                val = balance[VALUE_KEY]
                 if not is_nan(val):
-                    if Coin(wallet.base_currency) in FIAT_COINS:
-                        fiat_values[i] += val
-                    else:
+                    if wallet.is_crypto():
                         crypto_values[i] += val
+                    else:
+                        fiat_values[i] += val
         return dates, crypto_values, fiat_values
 
     def show_balance(self, last=None, save_to=None):
@@ -250,12 +245,10 @@ class Portfolio:
 
         last = parse_balance(last) if last else None
         balances = self.get_current_balance()
-        total = sum(
-            [
-                balance["value"] for balance in balances
-                if not is_nan(balance["value"])
-            ]
-        )
+        total = sum([
+            balance["value"] for balance in balances
+            if not is_nan(balance["value"])
+        ])
         table = [
             [
                 str(balance["symbol"]),

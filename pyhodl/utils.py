@@ -28,7 +28,8 @@ import pytz
 import requests
 from hal.internet.web import get_tor_session, renew_connection
 
-from pyhodl.config import DATE_TIME_FORMAT
+from pyhodl.config import DATE_TIME_FORMAT, FIAT_COINS
+from pyhodl.data.coins import Coin
 
 
 def generate_dates(since, until, hours):
@@ -242,3 +243,14 @@ def is_nan(candidate):
     """
 
     return str(candidate) == "nan"
+
+
+def is_crypto(coin):
+    """
+    :param coin: str or Coin
+        Coin to check
+    :return: bool
+        True iff coin is among crypto supported
+    """
+
+    return not Coin(coin) in FIAT_COINS
