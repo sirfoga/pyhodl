@@ -30,15 +30,18 @@ class BinanceParser(CryptoParser):
 
     def get_coins_amounts(self, raw):
         if self.is_trade(raw):
-            coin_buy, coin_sell = self.get_coins_traded(raw)
-            amount_buy, amount_sell = self.get_amount_traded(raw)
-            return coin_buy, amount_buy, coin_sell, amount_sell
+            return self.get_coins_amount_traded(raw)
         elif self.is_deposit(raw):
             return raw["asset"], float(raw["amount"]), None, 0
         elif self.is_withdrawal(raw):
             return None, 0, raw["asset"], float(raw["amount"])
 
         return None, 0, None, 0
+
+    def get_coins_amount_traded(self, raw):
+        coin_buy, coin_sell = self.get_coins_traded(raw)
+        amount_buy, amount_sell = self.get_amount_traded(raw)
+        return coin_buy, amount_buy, coin_sell, amount_sell
 
     def get_coins_traded(self, raw):
         """
@@ -141,25 +144,15 @@ class BitfinexParser(CryptoParser):
 
         return None, 0, None, 0
 
-    def get_coins_amount_traded(self, raw):
-        """
-        :param raw: {}
-            Raw details of transaction
-        :return: tuple (str, float, str, float)
-            Coin bought, amount bought, coin sold, amount sold in case of
-            trading data
-        """
+    @staticmethod
+    def get_coins_amount_traded(raw):
+        coin_buy, coin_sell = raw["symbol"][:3], raw["symbol"][3:]
+        buy_amount = float(raw["amount"])
+        sell_amount = buy_amount * float(raw["price"])
+        if raw["type"] == "Buy":
+            return coin_buy, buy_amount, coin_sell, sell_amount
 
-        if self.is_trade(raw):
-            coin_buy, coin_sell = raw["symbol"][:3], raw["symbol"][3:]
-            buy_amount = float(raw["amount"])
-            sell_amount = buy_amount * float(raw["price"])
-            if raw["type"] == "Buy":
-                return coin_buy, buy_amount, coin_sell, sell_amount
-
-            return coin_sell, sell_amount, coin_buy, buy_amount
-
-        return None, 0, None, 0
+        return coin_sell, sell_amount, coin_buy, buy_amount
 
     def is_trade(self, raw):
         return raw["type"] in ["Sell", "Buy"]
@@ -213,20 +206,7 @@ class CoinbaseParser(CryptoParser):
 
     def get_coins_amounts(self, raw):
         if self.is_trade(raw):
-            coin, currency = \
-                raw["amount"]["currency"], raw["native_amount"]["currency"]
-            if coin != currency:  # otherwise just a fiat log to discard
-                coin_buy, amount_buy = \
-                    currency, abs(float(raw["native_amount"]["amount"]))
-                coin_sell, amount_sell = \
-                    coin, abs(float(raw["amount"]["amount"]))
-
-                if raw["type"] == "sell":
-                    return coin_buy, amount_buy, coin_sell, amount_sell
-
-                return coin_sell, amount_sell, coin_buy, amount_buy
-
-            return None, 0, None, 0
+            return self.get_coins_amount_traded(raw)
         elif self.is_deposit(raw):
             return raw["amount"]["currency"], \
                    abs(float(raw["amount"]["amount"])), None, 0
@@ -234,6 +214,24 @@ class CoinbaseParser(CryptoParser):
             return None, 0, \
                    raw["amount"]["currency"], \
                    abs(float(raw["amount"]["amount"]))
+
+        return None, 0, None, 0
+
+    @staticmethod
+    def get_coins_amount_traded(raw):
+        coin, currency = \
+            raw["amount"]["currency"], raw["native_amount"]["currency"]
+
+        if coin != currency:  # otherwise just a fiat log to discard
+            coin_buy, amount_buy = \
+                currency, abs(float(raw["native_amount"]["amount"]))
+            coin_sell, amount_sell = \
+                coin, abs(float(raw["amount"]["amount"]))
+
+            if raw["type"] == "sell":
+                return coin_buy, amount_buy, coin_sell, amount_sell
+
+            return coin_sell, amount_sell, coin_buy, amount_buy
 
         return None, 0, None, 0
 
@@ -271,13 +269,9 @@ class CoinbaseParser(CryptoParser):
 
     def get_transactions_list(self):
         raw = self.get_raw_data()
-        for account, transactions in raw.items():
+        for _, transactions in raw.items():
             for transaction in transactions:
-                try:
-                    yield self.parse_transaction(transaction)
-                except:
-                    print("Cannot parse transaction", transaction,
-                          "of account", account)
+                yield self.parse_transaction(transaction)
 
     def build_exchange(self, exchange_name="coinbase"):
         return super().build_exchange(exchange_name)
