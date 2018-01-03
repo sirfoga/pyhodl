@@ -231,3 +231,14 @@ def normalize(val, min_val, max_val, min_range=-1.0, max_range=1.0):
 def middle(lst):
     middle_point = len(lst) / 2
     return lst[middle_point]
+
+
+def is_nan(candidate):
+    """
+    :param candidate: float, str
+        Candidate to check
+    :return: bool
+        True iff is considered NotANumber
+    """
+
+    return str(candidate) == "nan"

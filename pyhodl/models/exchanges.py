@@ -27,7 +27,7 @@ from pyhodl.config import DATE_TIME_KEY, VALUE_KEY, FIAT_COINS, NAN, \
 from pyhodl.data.balance import parse_balance, save_balance
 from pyhodl.data.coins import Coin
 from pyhodl.models.transactions import Wallet
-from pyhodl.utils import datetime_to_str, get_delta_seconds
+from pyhodl.utils import datetime_to_str, get_delta_seconds, is_nan
 
 
 class CryptoExchange:
@@ -175,7 +175,7 @@ class Portfolio:
         tot_balance = sum(
             [
                 balance["value"] for balance in balances
-                if str(balance["value"]) != "nan"
+                if not is_nan(balance["value"])
             ]
         )
 
@@ -231,7 +231,7 @@ class Portfolio:
                     float(balance[VALUE_KEY])
                 )
 
-                if str(val) != "nan":
+                if not is_nan(val):
                     if Coin(wallet.base_currency) in FIAT_COINS:
                         fiat_values[i] += val
                     else:
@@ -253,7 +253,7 @@ class Portfolio:
         total = sum(
             [
                 balance["value"] for balance in balances
-                if str(balance["value"]) != "nan"
+                if not is_nan(balance["value"])
             ]
         )
         table = [
