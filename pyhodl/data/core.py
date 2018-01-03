@@ -288,25 +288,26 @@ class BitfinexParser(CryptoParser):
     def is_withdrawal(self, raw):
         return raw["type"] == "WITHDRAWAL"
 
-    def get_commission(self, raw):
-        if self.is_trade(raw):
-            return Commission(
-                raw,
-                raw["fee_currency"],
-                abs(float(raw["fee_amount"])),
-                self.get_date(raw),
-                self.is_successful(raw)
-            )
-        elif self.is_deposit(raw) or self.is_trade(raw):
-            return Commission(
-                raw,
-                raw["currency"],
-                abs(float(raw["fee"])),
-                self.get_date(raw),
-                self.is_successful(raw)
-            )
+    def get_fee(self, raw):
+        """
+        :param raw: {}
+            Raw trade
+        :return: tuple (str, float)
+            Coin fee and amount
+        """
 
-        return None
+        if self.is_trade(raw):
+            return raw["fee_currency"], abs(float(raw["fee_amount"]))
+        elif self.is_deposit(raw) or self.is_trade(raw):
+            return raw["currency"], abs(float(raw["fee"]))
+
+    def get_commission(self, raw):
+        fee_coin, amount = self.get_fee(raw)
+        if fee_coin:
+            return Commission(
+                raw, fee_coin, amount, self.get_date(raw),
+                self.is_successful(raw)
+            )
 
     def get_date(self, raw):
         return datetime.fromtimestamp(int(float(raw["timestamp"])))
@@ -416,7 +417,15 @@ class GdaxParser(CoinbaseParser):
     def is_trade(self, raw):
         return "product_id" in raw["details"]
 
-    def get_transfer_type(self, raw):
+    @staticmethod
+    def get_transfer_type(raw):
+        """
+        :param raw: {}
+            Raw trade
+        :return: str
+            Transfer type
+        """
+
         if raw["type"] == "transfer":
             return raw["details"]["transfer_type"]
 
