@@ -61,3 +61,14 @@ COINS_DATABASE = os.path.join(
 FIAT_COINS = [Coin("USD"), Coin("EUR")]  # supported fiat coins
 DEFAULT_FIAT = "USD"
 CRYPTO_COINS = CoinsNamesTable(COINS_DATABASE).get_coins()
+
+
+def get_coin_historical_data_file(currency):
+    """
+    :param currency: str
+        Currency to get
+    :return: str
+        Path to file containing currency historical data
+    """
+
+    return os.path.join(HISTORICAL_DATA_FOLDER, currency.lower() + ".json")

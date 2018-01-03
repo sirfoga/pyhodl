@@ -4,7 +4,7 @@
 
 [![Code Health](https://landscape.io/github/sirfoga/pyhodl/master/landscape.svg?style=flat)](https://landscape.io/github/sirfoga/pyhodl/master) [![BCH compliance](https://bettercodehub.com/edge/badge/sirfoga/pyhodl?branch=master)](https://bettercodehub.com/) [![Code Climate](https://lima.codeclimate.com/github/sirfoga/pyhodl/badges/gpa.svg)](https://codeclimate.com/github/sirfoga/pyhodl)
 
-[![Build Status](https://travis-ci.org/sirfoga/pyhodl.svg?branch=master)](https://travis-ci.org/sirfoga/pyhodl)
+[![Build Status](https://travis-ci.org/sirfoga/pyhodl.svg?branch=master)](https://travis-ci.org/sirfoga/pyhodl) [![CircleCI](https://circleci.com/gh/sirfoga/pyhodl.png)](https://circleci.com/gh/sirfoga/pyhodl)
 
 ![Python version](https://img.shields.io/badge/Python-3.5.2-blue.svg) ![pylint Score](https://mperlet.de/pybadge/badges/9.14.svg)
 

@@ -17,5 +17,4 @@
 
 
 pip3 install . --upgrade --force-reinstall
-pip3 install six==1.10.0  # gdax requires these dependencies
-pip3 install requests==2.13.0
+python3 setup.py test
