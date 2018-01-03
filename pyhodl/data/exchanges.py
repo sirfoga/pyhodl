@@ -132,8 +132,10 @@ class BitfinexParser(CryptoParser):
 
         if self.is_trade(raw):
             return raw["fee_currency"], abs(float(raw["fee_amount"]))
-        elif self.is_deposit(raw) or self.is_trade(raw):
+        elif self.is_deposit(raw):
             return raw["currency"], abs(float(raw["fee"]))
+
+        return None, None
 
     def get_commission(self, raw):
         fee_coin, amount = self.get_fee(raw)

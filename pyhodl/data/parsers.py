@@ -94,7 +94,7 @@ def get_transactions(input_folder):
         Transactions found in all files from folder
     """
 
-    parsers = build_parser(input_folder)
+    parsers = build_parsers(input_folder)
     transactions = []
     for parser in parsers:
         transactions += list(parser.get_transactions_list())
