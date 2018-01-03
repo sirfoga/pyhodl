@@ -334,13 +334,15 @@ class CoinbaseParser(CryptoParser):
             coin, currency = \
                 raw["amount"]["currency"], raw["native_amount"]["currency"]
             if coin != currency:  # otherwise just a fiat log to discard
-                if raw["type"] == "sell":
-                    return currency, \
-                           abs(float(raw["native_amount"]["amount"])), \
-                           coin, abs(float(raw["amount"]["amount"]))
+                coin_buy, amount_buy = \
+                    currency, abs(float(raw["native_amount"]["amount"]))
+                coin_sell, amount_sell = \
+                    coin, abs(float(raw["amount"]["amount"]))
 
-                return coin, abs(float(raw["amount"]["amount"])), \
-                       currency, abs(float(raw["native_amount"]["amount"]))
+                if raw["type"] == "sell":
+                    return coin_buy, amount_buy, coin_sell, amount_sell
+
+                return coin_sell, amount_sell, coin_buy, amount_buy
 
             return None, 0, None, 0
         elif self.is_deposit(raw):
@@ -414,9 +416,12 @@ class GdaxParser(CoinbaseParser):
     def is_trade(self, raw):
         return "product_id" in raw["details"]
 
+    def get_transfer_type(self, raw):
+        if raw["type"] == "transfer":
+            return raw["details"]["transfer_type"]
+
     def is_withdrawal(self, raw):
-        return raw["type"] == "transfer" \
-               and raw["details"]["transfer_type"] == "withdraw"
+        return self.get_transfer_type(raw) == "withdraw"
 
     def get_commission(self, raw):
         return None  # by default no way to check if transaction has fee or not
@@ -425,8 +430,7 @@ class GdaxParser(CoinbaseParser):
         return ciso8601.parse_datetime(raw["created_at"])
 
     def is_deposit(self, raw):
-        return raw["type"] == "transfer" \
-               and raw["details"]["transfer_type"] == "deposit"
+        return self.get_transfer_type(raw) == "deposit"
 
     def is_successful(self, raw):
         return True  # always
