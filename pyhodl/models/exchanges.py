@@ -144,11 +144,11 @@ class Portfolio:
         fiat_deltas = []
 
         for wallet in self.wallets:
-            deltas = list(wallet.get_delta_balance_by_transaction())
+            deltas = list(wallet.get_delta_by_transaction())
             equivalents = [
                 {
                     DATE_TIME_KEY: delta["transaction"].date,
-                    VALUE_KEY: wallet.get_equivalent(
+                    VALUE_KEY: wallet.convert_to(
                         delta["transaction"].date,
                         currency,
                         delta[VALUE_KEY]
@@ -234,9 +234,9 @@ class Portfolio:
         fiat_values = [0.0 for _ in range(len(dates))]
 
         for wallet in self.wallets:
-            balances = wallet.get_balances_in_dates(dates)
+            balances = wallet.get_balance_by_date(dates)
             for i, balance in enumerate(balances):
-                val = wallet.get_equivalent(
+                val = wallet.convert_to(
                     balance[DATE_TIME_KEY],
                     currency,
                     float(balance[VALUE_KEY])

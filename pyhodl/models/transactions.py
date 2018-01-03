@@ -186,10 +186,7 @@ class Wallet:
             Balance up to date with last transaction
         """
 
-        subtotals = sorted(
-            self.get_balances_by_transaction(),
-            key=lambda x: x["transaction"].date
-        )
+        subtotals = self.get_balance_by_transaction()
         total = subtotals[-1][VALUE_KEY]  # amount of coins
 
         if now:  # convert to currency now
@@ -198,7 +195,7 @@ class Wallet:
             return float(price) * total
 
         if currency:  # convert to currency
-            return self.get_equivalent(
+            return self.convert_to(
                 subtotals[-1].date,
                 currency,
                 amount=total
@@ -206,25 +203,28 @@ class Wallet:
 
         return total
 
-    def get_balances_by_transaction(self):
-        deltas = sorted(
-            list(self.get_delta_balance_by_transaction()),
-            key=lambda x: x["transaction"].date
-        )
+    def convert_to(self, dt, currency, amount=1.0):
+        """
+        :param dt: datetime
+            Date and time of conversion
+        :param currency: str
+            Currency to convert to
+        :param amount: float
+            Amount to convert
+        :return: float
+            Amount of wallet base currency converted to currency
+        """
 
-        if not deltas:
-            return []
+        try:
+            prices_table = get_coin_prices_table(currency)
+            val = prices_table.get_value_on(self.base_currency, dt)
+            return float(val) * amount
+        except:
+            return 0.0
 
-        balances = [deltas[0]]
-        for delta in deltas[1:]:
-            balances.append({
-                "transaction": delta["transaction"],
-                VALUE_KEY: balances[-1][VALUE_KEY] + delta[VALUE_KEY]
-            })
-        return balances
-
-    def get_delta_balance_by_transaction(self):
+    def get_delta_by_transaction(self):
         self._sort_transactions()
+        data = []
         for transaction in self.transactions:
             delta_balance = 0.0
             has_edited_balance = False  # True iff coin was traded
@@ -259,56 +259,34 @@ class Wallet:
                     has_edited_balance = True
 
             if has_edited_balance:  # balance has changed
-                yield {
+                data.append({
                     "transaction": transaction,
                     VALUE_KEY: delta_balance
-                }
+                })
+        return data
 
-    def get_equivalent(self, dt, currency, amount=1.0):
-        """
-        :param dt: datetime
-            Date and time of conversion
-        :param currency: str
-            Currency to convert to
-        :param amount: float
-            Amount to convert
-        :return: float
-            Amount of wallet base currency converted to currency
-        """
-
-        try:
-            prices_table = get_coin_prices_table(currency)
-            val = prices_table.get_value_on(self.base_currency, dt)
-            return float(val) * amount
-        except:
-            return 0.0
-
-    def get_deltas_in_dates(self, dates):
-        deltas = sorted(
-            self.get_delta_balance_by_transaction(),
-            key=lambda x: x["transaction"].date
+    def get_delta_by_date(self, dates):
+        deltas = self.get_delta_by_transaction()
+        return self.fill_missing_data(
+            [data[VALUE_KEY] for data in deltas],  # data
+            [data["transaction"].date for data in deltas],  # dates
+            dates
         )
-        delta_dates = [
-            delta["transaction"].date for delta in deltas
-        ]
-        filling_deltas = []
-        for date in dates:
-            i = bisect(delta_dates, date)
-            if i == 0:
-                filling_deltas.append({
-                    DATE_TIME_KEY: date,
-                    VALUE_KEY: 0.0
-                })
-            elif date in delta_dates:
-                filling_deltas.append({
-                    DATE_TIME_KEY: date,
-                    VALUE_KEY: deltas[i - 1][VALUE_KEY]
-                })
-            else:
-                filling_deltas.append(filling_deltas[-1])
-        return filling_deltas
 
-    def get_balances_in_dates(self, dates, currency=None):
+    def get_balance_by_transaction(self):
+        deltas = self.get_delta_by_transaction()
+        if not deltas:
+            return []
+
+        balances = [deltas[0]]
+        for delta in deltas[1:]:
+            balances.append({
+                "transaction": delta["transaction"],
+                VALUE_KEY: balances[-1][VALUE_KEY] + delta[VALUE_KEY]
+            })
+        return balances
+
+    def get_balance_by_date(self, dates, currency=None):
         """
         :param dates: [] of datetime
             List of dates
@@ -318,38 +296,54 @@ class Wallet:
             List of balance amount by date
         """
 
-        balances = sorted(
-            self.get_balances_by_transaction(),
-            key=lambda x: x["transaction"].date
+        balances = self.get_balance_by_transaction()
+        filled = self.fill_missing_data(
+            [data[VALUE_KEY] for data in balances],  # data
+            [data["transaction"].date for data in balances],  # dates
+            dates
         )
-        balances_dates = [
-            balance["transaction"].date for balance in balances
-        ]
-
-        filling_balances = []
-        for date in dates:
-            i = bisect(balances_dates, date)
-            if i == 0:
-                filling_balances.append({
-                    DATE_TIME_KEY: date,
-                    VALUE_KEY: 0.0
-                })
-            elif date in balances_dates:
-                filling_balances.append({
-                    DATE_TIME_KEY: date,
-                    VALUE_KEY: balances[i - 1][VALUE_KEY]
-                })
-            else:
-                filling_balances.append(filling_balances[-1])
 
         if currency:
-            filling_balances = [
-                self.get_equivalent(
+            filled = [
+                self.convert_to(
                     balance[DATE_TIME_KEY],
                     currency,
                     float(balance[VALUE_KEY])
                 )
-                for balance in filling_balances
+                for balance in filled
             ]
 
-        return filling_balances
+        return filled
+
+    @staticmethod
+    def fill_missing_data(data, dates, all_dates):
+        """
+        :param data: [] of summable (e.g float)
+            Data to be filled
+        :param dates: [] of datetime
+            Dates of data
+        :param all_dates: [] of datetime
+            Full dates
+        :return: [] of {}
+            Fill missing data: when date not in original data, we create a
+            new data point with value the last value
+        """
+
+        filled = []
+
+        for date in all_dates:
+            i = bisect(dates, date)
+            if i == 0:
+                filled.append({
+                    DATE_TIME_KEY: date,
+                    VALUE_KEY: 0.0
+                })
+            elif date in dates:
+                filled.append({
+                    DATE_TIME_KEY: date,
+                    VALUE_KEY: data[i - 1]
+                })
+            else:
+                filled.append(filled[-1])
+
+        return filled

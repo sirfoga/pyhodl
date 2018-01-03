@@ -70,7 +70,7 @@ class BalancePlotter(CryptoPlotter):
 
         dates = self.portfolio.get_transactions_dates()
         for wallet in self.wallets:
-            balances = wallet.get_balances_in_dates(dates)
+            balances = wallet.get_balance_by_date(dates)
             plt.plot(
                 dates,
                 [b[VALUE_KEY] for b in balances],
@@ -99,7 +99,7 @@ class BalancePlotter(CryptoPlotter):
             Plots balances for transaction of coin
         """
 
-        deltas = list(wallet.get_delta_balance_by_transaction())
+        deltas = list(wallet.get_delta_by_transaction())
         dates = [
             balance["transaction"].date for balance in deltas
         ]
@@ -139,7 +139,7 @@ class FiatPlotter(BalancePlotter):
 
         dates = self.portfolio.get_transactions_dates()
         for wallet in self.wallets:
-            balances = wallet.get_balances_in_dates(dates, self.base_currency)
+            balances = wallet.get_balance_by_date(dates, self.base_currency)
             plt.plot(
                 dates,
                 balances,
@@ -156,14 +156,14 @@ class FiatPlotter(BalancePlotter):
             Plots buy/sells points of coin against coin price
         """
 
-        deltas = list(wallet.get_delta_balance_by_transaction())
+        deltas = list(wallet.get_delta_by_transaction())
         dates = list(generate_dates(
             deltas[0]["transaction"].date,
             deltas[-1]["transaction"].date,
             hours=4
         ))
         equivalents = [
-            wallet.get_equivalent(date, self.base_currency) for date in dates
+            wallet.convert_to(date, self.base_currency) for date in dates
         ]
         plt.plot(
             dates,
@@ -184,7 +184,7 @@ class FiatPlotter(BalancePlotter):
             date = delta["transaction"].date
             plt.plot(
                 [date],
-                [wallet.get_equivalent(date, self.base_currency)],
+                [wallet.convert_to(date, self.base_currency)],
                 marker="o",
                 markersize=int(radius),
                 color=color
