@@ -22,7 +22,8 @@ from datetime import datetime
 
 from hal.streams.pretty_table import pretty_format_table
 
-from pyhodl.config import DATE_TIME_KEY, VALUE_KEY, FIAT_COINS, NAN
+from pyhodl.config import DATE_TIME_KEY, VALUE_KEY, FIAT_COINS, NAN, \
+    DEFAULT_FIAT
 from pyhodl.data.balance import parse_balance, save_balance
 from pyhodl.data.coins import Coin
 from pyhodl.models.transactions import Wallet
@@ -173,12 +174,12 @@ class Portfolio:
         fiat_deltas = self.get_balances_from_deltas(fiat_deltas)
         return crypto_deltas, fiat_deltas
 
-    def get_current_balance(self):
+    def get_current_balance(self, currency=DEFAULT_FIAT):
         balances = [
             {
                 "symbol": wallet.base_currency,
                 "balance": wallet.balance(),
-                "value": wallet.get_balance_equivalent_now()
+                "value": wallet.balance(currency, True)
             }
             for wallet in self.wallets
         ]

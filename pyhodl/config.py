@@ -59,4 +59,5 @@ COINS_DATABASE = os.path.join(
     "coins.json"
 )
 FIAT_COINS = [Coin("USD"), Coin("EUR")]  # supported fiat coins
+DEFAULT_FIAT = "USD"
 CRYPTO_COINS = CoinsNamesTable(COINS_DATABASE).get_coins()

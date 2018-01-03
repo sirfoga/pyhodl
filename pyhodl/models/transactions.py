@@ -24,8 +24,8 @@ from enum import Enum
 
 import pytz
 
-from pyhodl.apis.prices import CryptocompareClient
-from pyhodl.config import VALUE_KEY, NAN, DATE_TIME_KEY
+from pyhodl.apis.prices import get_price
+from pyhodl.config import VALUE_KEY, DATE_TIME_KEY
 from pyhodl.data.tables import get_coin_prices_table
 
 
@@ -151,7 +151,13 @@ class Wallet:
         self.base_currency = base_currency
         self.transactions = []  # list of operations performed
         self.is_sorted = False
-        self.price_client = CryptocompareClient()
+
+    def _sort_transactions(self):
+        if not self.is_sorted:
+            self.transactions = sorted(
+                self.transactions, key=lambda x: x.date
+            )  # sort by date
+            self.is_sorted = True
 
     def add_transaction(self, transaction):
         """
@@ -163,37 +169,18 @@ class Wallet:
 
         self.transactions.append(transaction)
 
-    def remove(self, amount, date):
-        """
-        :param amount: float
-            Amount to be removed to balance
-        :param date: datetime
-            Date of transaction
-        :return: void
-            Removes amount from balance
-        """
-
-        self.transactions.append(
-            {
-                "action": "out",
-                "amount": abs(amount),
-                "date": date
-            }
-        )
-
-        self.balance -= abs(amount)
-
     def dates(self):
         """
         :return: [] of datetime
             List of all dates
         """
 
+        self._sort_transactions()
         return [
             transaction.date for transaction in self.transactions
         ]
 
-    def balance(self):
+    def balance(self, currency=None, now=False):
         """
         :return: float
             Balance up to date with last transaction
@@ -203,41 +190,21 @@ class Wallet:
             self.get_balances_by_transaction(),
             key=lambda x: x["transaction"].date
         )
-        return subtotals[-1][VALUE_KEY]
+        total = subtotals[-1][VALUE_KEY]  # amount of coins
 
-    def get_balance_equivalent(self, currency):
-        self._sort_transactions()
-        return self.get_equivalent(
-            self.transactions[-1].date,
-            currency,
-            amount=self.balance()
-        )
+        if now:  # convert to currency now
+            now = datetime.now()
+            price = get_price([self.base_currency], now, currency, tor=False)
+            return float(price) * total
 
-    def get_balance_equivalent_now(self, time_range=30, max_attempts=3):
-        self._sort_transactions()
-        now = datetime.now()
-        if max_attempts <= 0:
-            return NAN
-
-        try:
-            price = self.price_client.get_price(
-                [self.base_currency],
-                now,
-                currency="USD"
-            )
-            price = price[self.base_currency]
-            return float(price) * self.balance()
-        except:
-            return self.get_balance_equivalent_now(
-                time_range=time_range + 30, max_attempts=max_attempts - 1
+        if currency:  # convert to currency
+            return self.get_equivalent(
+                subtotals[-1].date,
+                currency,
+                amount=total
             )
 
-    def _sort_transactions(self):
-        if not self.is_sorted:
-            self.transactions = sorted(
-                self.transactions, key=lambda x: x.date
-            )  # sort by date
-            self.is_sorted = True
+        return total
 
     def get_balances_by_transaction(self):
         deltas = sorted(

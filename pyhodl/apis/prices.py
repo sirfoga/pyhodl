@@ -425,3 +425,27 @@ def get_prices(coins, currency, since, until, tor):
     return client.get_prices(
         coins, since=since, until=until, hours=6, currency=currency
     )
+
+
+def get_price(coins, currency, date_time, tor):
+    """
+    :param coins: [] of str
+        List of coins
+    :param currency: str
+        Convert prices to this currency
+    :param date_time: datetime
+        Get prices on date
+    :param tor: str or None
+        Password to access tor proxy
+    :return: [] of {}
+        List of prices of coins at dates
+    """
+
+    if Coin(currency) in CryptocompareClient.AVAILABLE_FIAT:
+        client = CryptocompareClient(tor=tor)  # better client (use as default)
+    else:
+        client = CoinmarketCapClient(tor=tor)
+
+    return client.get_price(
+        coins, date_time=date_time, currency=currency
+    )

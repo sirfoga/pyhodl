@@ -127,7 +127,7 @@ class FiatPlotter(BalancePlotter):
         self.base_currency = base_currency
         self.wallets_value = {
             wallet.base_currency:
-                wallet.get_balance_equivalent(self.base_currency)
+                wallet.balance(self.base_currency)
             for wallet in self.wallets
         }
 
