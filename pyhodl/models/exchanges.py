@@ -185,8 +185,8 @@ class Portfolio:
 
         for i, balance in enumerate(balances):  # add price and %
             balances[i]["price"] = \
-                float(balance["value"] / tot_balance) if \
-                    tot_balance != 0.0 else 0.0
+                float(balance["value"] / balance["balance"]) if \
+                    balance["balance"] != 0.0 else 0.0
             balances[i]["percentage"] = \
                 100.0 * min(1.0,
                             1.0 * float(balance["value"]) / tot_balance) if \

@@ -219,7 +219,8 @@ def main():
         coins = get_all_coins(exchanges)
 
         download_prices(
-            coins, first_transaction, last_transaction, run_path, verbose, tor
+            coins, first_transaction, last_transaction, run_path, verbose,
+            tor=tor
         )
         download_market_cap(
             first_transaction, last_transaction, run_path, verbose
