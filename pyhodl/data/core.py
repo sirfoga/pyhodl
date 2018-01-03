@@ -101,7 +101,7 @@ class CryptoParser:
             Coin bought, amount bought, coin sold, amount sold
         """
 
-        return None, None, None, None
+        return None, 0, None, None
 
     @abc.abstractmethod
     def get_date(self, raw):

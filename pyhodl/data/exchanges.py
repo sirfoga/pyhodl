@@ -133,6 +133,24 @@ class BitfinexParser(CryptoParser):
 
     def get_coins_amounts(self, raw):
         if self.is_trade(raw):
+            return self.get_coins_amount_traded(raw)
+        elif self.is_deposit(raw):
+            return raw["currency"], float(raw["amount"]), None, 0
+        elif self.is_withdrawal(raw):
+            return None, 0, raw["currency"], float(raw["amount"])
+
+        return None, 0, None, 0
+
+    def get_coins_amount_traded(self, raw):
+        """
+        :param raw: {}
+            Raw details of transaction
+        :return: tuple (str, float, str, float)
+            Coin bought, amount bought, coin sold, amount sold in case of
+            trading data
+        """
+
+        if self.is_trade(raw):
             coin_buy, coin_sell = raw["symbol"][:3], raw["symbol"][3:]
             buy_amount = float(raw["amount"])
             sell_amount = buy_amount * float(raw["price"])
@@ -140,10 +158,6 @@ class BitfinexParser(CryptoParser):
                 return coin_buy, buy_amount, coin_sell, sell_amount
 
             return coin_sell, sell_amount, coin_buy, buy_amount
-        elif self.is_deposit(raw):
-            return raw["currency"], float(raw["amount"]), None, 0
-        elif self.is_withdrawal(raw):
-            return None, 0, raw["currency"], float(raw["amount"])
 
         return None, 0, None, 0
 
