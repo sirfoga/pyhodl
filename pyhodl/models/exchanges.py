@@ -33,17 +33,6 @@ from pyhodl.utils import datetime_to_str, get_delta_seconds
 class CryptoExchange:
     """ Exchange dealing with crypto-coins """
 
-    TIME_INTERVALS = {
-        "1h": 1,
-        "1d": 24,
-        "7d": 24 * 7,
-        "30d": 24 * 30,
-        "3m": 24 * 30 * 3,
-        "6m": 24 * 30 * 6,
-        "1y": 24 * 365
-    }  # interval -> hours
-    OUTPUT_DATE_FORMAT = "%Y-%m-%d %H:%M:%S"
-
     def __init__(self, transactions, exchange_name):
         """
         :param transactions: [] of Transaction
