@@ -115,12 +115,22 @@ class Portfolio:
         self.portfolio_name = str(portfolio_name) if portfolio_name else None
 
     def get_transactions_dates(self):
+        """
+        :return: [] of datetime
+            List of all dates of all transactions of all wallets
+        """
+
         dates = []
         for wallet in self.wallets:
             dates += wallet.dates()
         return sorted(dates)
 
     def get_current_balance(self, currency=DEFAULT_FIAT):
+        """
+        :return: [] of {}
+            List of current balance by wallet
+        """
+
         balances = [
             {
                 "symbol": wallet.base_currency,
@@ -184,6 +194,11 @@ class Portfolio:
         ])
 
     def get_crypto_fiat_balance(self, currency):
+        """
+        :return: tuple ([] of datetime, [] of float, [] of float)
+            List of dates, balances of crypto coins and fiat balances
+        """
+
         dates = self.get_transactions_dates()
         crypto_values = np.zeros(len(dates))  # zeros
         fiat_values = np.zeros(len(dates))

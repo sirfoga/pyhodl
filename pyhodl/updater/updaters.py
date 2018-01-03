@@ -196,6 +196,11 @@ class BitfinexUpdater(ExchangeUpdater):
     """ Updates Bitfinex data """
 
     def get_symbols_list(self):
+        """
+        :return: [] of str
+            List of symbols (markets) in exchange
+        """
+
         currencies = self.client.currencies
         symbols = self.client.symbols
         for i, symbol in enumerate(symbols):
@@ -206,6 +211,11 @@ class BitfinexUpdater(ExchangeUpdater):
         return symbols
 
     def get_currencies_list(self):
+        """
+        :return: [] of str
+            List of currencies in exchange
+        """
+
         currencies = self.client.currencies
         currencies = [
             value["id"] for key, value in currencies.items()
@@ -226,6 +236,13 @@ class BitfinexUpdater(ExchangeUpdater):
 
     @handle_rate_limits
     def get_all_movements(self, symbol):
+        """
+        :param symbol: str
+            Symbol to fetch
+        :return: [] of {}
+            List of deposits/withdrawals with symbol
+        """
+
         data = self.client.sign(
             "history/movements",
             api="private",
@@ -237,6 +254,11 @@ class BitfinexUpdater(ExchangeUpdater):
         return self.fetch(data)
 
     def get_movements(self):
+        """
+        :return: [] of {}
+            List of deposits and withdrawals
+        """
+
         return get_and_sleep(
             self.get_currencies_list(),
             self.get_all_movements,
@@ -246,6 +268,13 @@ class BitfinexUpdater(ExchangeUpdater):
 
     @handle_rate_limits
     def get_all_transactions(self, symbol):
+        """
+        :param symbol: str
+            Symbol to fetch
+        :return: [] of {}
+            List of transactions with symbol
+        """
+
         data = self.client.sign(
             "mytrades",
             api="private",
@@ -255,7 +284,7 @@ class BitfinexUpdater(ExchangeUpdater):
             }
         )
         trades = self.fetch(data)
-        for i, trade in enumerate(trades):
+        for i, _ in enumerate(trades):
             trades[i]["symbol"] = symbol
         return trades
 
@@ -335,7 +364,7 @@ class GdaxUpdater(ExchangeUpdater):
                 transactions += page
 
             if transactions:  # add currency symbol
-                for i, transaction in enumerate(transactions):
+                for i, _ in enumerate(transactions):
                     transactions[i]["currency"] = account["currency"]
 
             self.transactions[account_id] = transactions

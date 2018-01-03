@@ -22,6 +22,8 @@ from enum import Enum
 
 import pytz
 
+from pyhodl.data.coins import Coin
+
 
 class TransactionType(Enum):
     """ Deposit, withdrawal ... """
@@ -33,6 +35,14 @@ class TransactionType(Enum):
     FUNDING = 4
     ORDER = 5
     COMMISSION = 6
+
+
+class CoinAmount:
+    """ Amount of coin """
+
+    def __init__(self, coin, amount):
+        self.coin = Coin(coin) if coin else None
+        self.amount = float(amount) if amount else None
 
 
 class Transaction:
