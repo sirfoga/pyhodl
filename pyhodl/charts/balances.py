@@ -140,12 +140,13 @@ class FiatPlotter(BalancePlotter):
         dates = self.portfolio.get_transactions_dates()
         for wallet in self.wallets:
             balances = wallet.get_balance_by_date(dates, self.base_currency)
+            label = "Value of " + wallet.base_currency + " (" + \
+                    self.base_currency + ")"
             plt.plot(
                 dates,
                 balances,
                 "-x",
-                label="Value of " + wallet.base_currency + " (" +
-                      self.base_currency + ")"
+                label=label
             )
 
     def plot_buy_sells(self, wallet):

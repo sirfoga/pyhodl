@@ -43,12 +43,28 @@ class UpdateManager(ConfigManager):
         self.last_update = None
 
     def is_time_to_update(self):
+        """
+        :return: bool
+            True iff time elapsed since last time is too much and need to
+            update
+        """
+
         return datetime.now() > self.time_next_update()
 
     def time_next_update(self):
+        """
+        :return: datetime
+            Time of next scheduled update
+        """
+
         return self.time_last_update() + self.update_interval()
 
     def time_last_update(self):
+        """
+        :return: datetime
+            Time of last update
+        """
+
         if self.last_update:
             return self.last_update
 
@@ -58,6 +74,11 @@ class UpdateManager(ConfigManager):
             return datetime.fromtimestamp(0)  # no record
 
     def update_interval(self):
+        """
+        :return: timedelta
+            Parse time to wait between 2 consecutive updates
+        """
+
         raw = self.get("interval")
         tokens = ["s", "m", "h", "d", "w"]
         time_token = 0.0
@@ -79,11 +100,21 @@ class UpdateManager(ConfigManager):
             raise ValueError("Cannot parse update interval", raw)
 
     def save_time_update(self):
+        """
+        :return: void
+            Saves last time of update to config file
+        """
+
         self.last_update = datetime.now()
         self.data["last_update"] = datetime_to_str(self.last_update)
         self.save()
 
     def get_data_folder(self):
+        """
+        :return: str
+            Path to folder where will save data
+        """
+
         try:
             folder = self.get("folder")
             os.stat(folder)
@@ -108,6 +139,11 @@ class Updater:
         self._build_updaters()
 
     def run(self):
+        """
+        :return: void
+            Updates each client and saves data
+        """
+
         interval = self.manager.update_interval().total_seconds()
         threading.Timer(interval, self.run).start()
 
@@ -125,6 +161,11 @@ class Updater:
         print("Next update:", datetime_to_str(self.manager.time_next_update()))
 
     def _build_updaters(self):
+        """
+        :return: void
+            Authenticates each API client
+        """
+
         for api in self.api_manager.get_all():
             try:
                 updater = ExchangeUpdater.build_updater(
@@ -133,6 +174,5 @@ class Updater:
                 self.api_updaters.append(updater)
                 print("Successfully authenticated client",
                       get_actual_class_name(api))
-            except Exception as e:
-                print("Cannot authenticate client",
-                      get_actual_class_name(api), "due to", e)
+            except:
+                print("Cannot authenticate client", get_actual_class_name(api))

@@ -6,7 +6,7 @@
 
 [![Build Status](https://travis-ci.org/sirfoga/pyhodl.svg?branch=master)](https://travis-ci.org/sirfoga/pyhodl) [![CircleCI](https://circleci.com/gh/sirfoga/pyhodl.png)](https://circleci.com/gh/sirfoga/pyhodl)
 
-![Python version](https://img.shields.io/badge/Python-3.5.2-blue.svg) ![pylint Score](https://mperlet.de/pybadge/badges/9.14.svg)
+![Python version](https://img.shields.io/badge/Python-3.5.2-blue.svg) ![pylint Score](https://mperlet.de/pybadge/badges/9.17.svg)
 
 ## Table of content
 

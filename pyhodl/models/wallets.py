@@ -46,6 +46,11 @@ class Wallet:
         return is_crypto(self.base_currency)
 
     def _sort_transactions(self):
+        """
+        :return: void
+            Sort transactions by date
+        """
+
         if not self.is_sorted:
             self.transactions = sorted(
                 self.transactions, key=lambda x: x.date
@@ -61,6 +66,7 @@ class Wallet:
         """
 
         self.transactions.append(transaction)
+        self.is_sorted = False
 
     def dates(self):
         """
@@ -97,9 +103,9 @@ class Wallet:
 
         return total
 
-    def convert_to(self, dt, currency, amount=1.0):
+    def convert_to(self, date_time, currency, amount=1.0):
         """
-        :param dt: datetime
+        :param date_time: datetime
             Date and time of conversion
         :param currency: str
             Currency to convert to
@@ -111,7 +117,7 @@ class Wallet:
 
         try:
             prices_table = get_coin_prices_table(currency)
-            val = prices_table.get_value_on(self.base_currency, dt)
+            val = prices_table.get_value_on(self.base_currency, date_time)
             return float(val) * amount
         except:
             return 0.0
@@ -131,6 +137,11 @@ class Wallet:
         ]
 
     def get_delta_by_transaction(self):
+        """
+        :return: [] of {}
+            List of delta balance by transaction
+        """
+
         self._sort_transactions()
         data = []
         for transaction in self.transactions:
@@ -164,6 +175,11 @@ class Wallet:
         return self.fill_missing_transactions(data, dates, currency)
 
     def get_balance_by_transaction(self):
+        """
+        :return: [] of {}
+            List of balance by transaction
+        """
+
         deltas = self.get_delta_by_transaction()
         if not deltas:
             return []

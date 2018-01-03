@@ -37,7 +37,7 @@ class ExchangeUpdater(Logger):
     """ Abstract exchange updater """
 
     def __init__(self, api_client, data_folder, rate_limit=1,
-                 rate_limit_wait=60, page_limit=INT_32_MAX):
+                 rate_limit_wait=60):
         """
         :param api_client: ApiClient
             Client with which to perform requests
@@ -52,7 +52,7 @@ class ExchangeUpdater(Logger):
         """
 
         Logger.__init__(self)
-        
+
         self.client = api_client
         self.folder = data_folder
         self.output_file = os.path.join(
@@ -62,17 +62,35 @@ class ExchangeUpdater(Logger):
         self.transactions = {}
         self.rate = float(rate_limit)
         self.rate_wait = float(rate_limit_wait)
-        self.page_limit = int(page_limit)
+        self.page_limit = INT_32_MAX
 
     @abc.abstractmethod
     def get_transactions(self):
+        """
+        :return: [] of Transaction
+            List of transactions found
+        """
+
         self.log("getting transactions")
 
     def save_data(self):
-        self.log("saving data")
-        write_dicts_to_json(self.transactions, self.output_file)
+        """
+        :return: void
+            Saves transactions to file
+        """
+
+        if self.transactions:
+            self.log("saving data")
+            write_dicts_to_json(self.transactions, self.output_file)
 
     def update(self, verbose):
+        """
+        :param verbose: bool
+            True iff you want to increase verbosity
+        :return: void
+            Updates local transaction data and saves results
+        """
+
         self.log("updating local data")
         self.get_transactions()
         self.save_data()
@@ -81,6 +99,15 @@ class ExchangeUpdater(Logger):
 
     @staticmethod
     def build_updater(api_client, data_folder):
+        """
+        :param api_client: ApiClient
+            Client to get exchange data
+        :param data_folder: str
+            Folder where to save data
+        :return: ExchangeUpdater
+            Concrete updater
+        """
+
         if isinstance(api_client, BinanceClient):
             return BinanceUpdater(api_client, data_folder)
         elif isinstance(api_client, BitfinexClient):
@@ -97,6 +124,11 @@ class BinanceUpdater(ExchangeUpdater):
     """ Updates Binance data """
 
     def get_symbols_list(self):
+        """
+        :return: [] of str
+            List of symbols (currencies)
+        """
+
         symbols = self.client.get_all_tickers()
         return [
             symbol["symbol"] for symbol in symbols
@@ -104,16 +136,31 @@ class BinanceUpdater(ExchangeUpdater):
 
     @handle_rate_limits
     def get_deposits(self):
+        """
+        :return: [] of {}
+            List of exchange deposits
+        """
+
         return self.client.get_deposit_history()["depositList"]
 
     @handle_rate_limits
     def get_withdraw(self):
+        """
+        :return: [] of {}
+            List of exchange withdrawals
+        """
+
         return self.client.get_withdraw_history()["withdrawList"]
 
     @handle_rate_limits
     def get_all_transactions(self, symbol, from_id=0, page_size=500):
+        """
+        :return: [] of {}
+            List of exchange transactions
+        """
+
         trades = self.client.get_my_trades(symbol=symbol, fromId=from_id)
-        for i, trade in enumerate(trades):
+        for i, _ in enumerate(trades):
             trades[i]["symbol"] = symbol
 
         if trades:  # if page returns some trades, search for others
@@ -128,6 +175,12 @@ class BinanceUpdater(ExchangeUpdater):
         return trades
 
     def get_transactions(self):
+        """
+        :return: [] of {}
+            List of all exchange movements (transactions + deposits +
+            withdrawals)
+        """
+
         super().get_transactions()
         transactions = get_and_sleep(
             self.get_symbols_list(),
@@ -229,8 +282,7 @@ class CoinbaseUpdater(ExchangeUpdater):
     """ Updates Coinbase data """
 
     def __init__(self, api_client, data_folder):
-        ExchangeUpdater.__init__(self, api_client, data_folder, page_limit=100)
-
+        ExchangeUpdater.__init__(self, api_client, data_folder)
         self.accounts = self.client.get_accounts()["data"]
         self.accounts = {
             account["id"]: account for account in self.accounts
@@ -238,6 +290,7 @@ class CoinbaseUpdater(ExchangeUpdater):
         self.transactions = {
             account_id: [] for account_id in self.accounts
         }
+        self.page_limit = 100  # reduced page limit for coinbase and gdax
 
     def get_transactions(self):
         super().get_transactions()
