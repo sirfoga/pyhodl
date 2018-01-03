@@ -366,13 +366,18 @@ class Wallet:
                 })
         return data
 
-    def get_delta_by_date(self, dates):
-        deltas = self.get_delta_by_transaction()
-        return self.fill_missing_data(
-            [data[VALUE_KEY] for data in deltas],  # data
-            [data["transaction"].date for data in deltas],  # dates
-            dates
-        )
+    def get_delta_by_date(self, dates, currency=None):
+        """
+        :param dates: [] of datetime
+            List of dates
+        :param currency: str or None
+            Currency to convert deltas to
+        :return: [] of {}
+            List of delta amount by date
+        """
+
+        data = self.get_delta_by_transaction()
+        return self.fill_missing_transactions(data, dates, currency)
 
     def get_balance_by_transaction(self):
         deltas = self.get_delta_by_transaction()
@@ -397,24 +402,8 @@ class Wallet:
             List of balance amount by date
         """
 
-        balances = self.get_balance_by_transaction()
-        filled = self.fill_missing_data(
-            [data[VALUE_KEY] for data in balances],  # data
-            [data["transaction"].date for data in balances],  # dates
-            dates
-        )
-
-        if currency:
-            filled = [
-                self.convert_to(
-                    balance[DATE_TIME_KEY],
-                    currency,
-                    float(balance[VALUE_KEY])
-                )
-                for balance in filled
-            ]
-
-        return filled
+        data = self.get_balance_by_transaction()
+        return self.fill_missing_transactions(data, dates, currency)
 
     def get_balance_array_by_date(self, dates, currency=None):
         """
@@ -463,5 +452,36 @@ class Wallet:
                 })
             else:
                 filled.append(filled[-1])
+
+        return filled
+
+    def fill_missing_transactions(self, data, dates, currency=None):
+        """
+        :param data: [] of {}
+            List of transactions
+        :param dates: [] of datetime
+            All dates
+        :param currency: str or None
+            Currency to convert balances to
+        :return: [] of {}
+            Fill missing data: when date not in original data, we create a
+            new data point with value the last value
+        """
+
+        filled = self.fill_missing_data(
+            [transaction[VALUE_KEY] for transaction in data],  # data
+            [transaction["transaction"].date for transaction in data],  # dates
+            dates
+        )
+
+        if currency:
+            filled = [
+                self.convert_to(
+                    data[DATE_TIME_KEY],
+                    currency,
+                    float(data[VALUE_KEY])
+                )
+                for data in filled
+            ]
 
         return filled
