@@ -142,8 +142,10 @@ class Wallet:
                 })
         return data
 
-    def get_delta_by_date(self, dates, currency=None):
+    def get_data_by_date(self, data, dates, currency=None):
         """
+        :param data: str
+            Data to get. Must be in ["delta", "balance"]
         :param dates: [] of datetime
             List of dates
         :param currency: str or None
@@ -152,7 +154,13 @@ class Wallet:
             List of delta amount by date
         """
 
-        data = self.get_delta_by_transaction()
+        if data == "delta":
+            data = self.get_delta_by_transaction(), dates, currency
+        elif data == "balance":
+            data = self.get_balance_by_transaction()
+        else:
+            raise ValueError(data + "not available")
+
         return self.fill_missing_transactions(data, dates, currency)
 
     def get_balance_by_transaction(self):
@@ -168,19 +176,6 @@ class Wallet:
             })
         return balances
 
-    def get_balance_by_date(self, dates, currency=None):
-        """
-        :param dates: [] of datetime
-            List of dates
-        :param currency: str or None
-            Currency to convert balances to
-        :return: [] of {}
-            List of balance amount by date
-        """
-
-        data = self.get_balance_by_transaction()
-        return self.fill_missing_transactions(data, dates, currency)
-
     def get_balance_array_by_date(self, dates, currency=None):
         """
         :param dates: [] of datetime
@@ -191,7 +186,7 @@ class Wallet:
             Balance value by date
         """
 
-        balances = self.get_balance_by_date(dates, currency)
+        balances = self.get_data_by_date("balance", dates, currency)
         lst = np.zeros(len(balances))
         for i, balance in enumerate(balances):
             if not is_nan(balance):
