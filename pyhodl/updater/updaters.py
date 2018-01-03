@@ -164,6 +164,18 @@ class BitfinexUpdater(ExchangeUpdater):
         ]
         return currencies
 
+    def fetch(self, data):
+        """
+        :param data: {}
+            Raw request
+        :return: response
+            Fetch with client
+        """
+
+        return self.client.fetch(
+            data["url"], headers=data["headers"], body=data["body"]
+        )
+
     @handle_rate_limits
     def get_all_movements(self, symbol):
         data = self.client.sign(
@@ -174,9 +186,7 @@ class BitfinexUpdater(ExchangeUpdater):
                 "limit": INT_32_MAX
             }
         )
-        return self.client.fetch(
-            data["url"], headers=data["headers"], body=data["body"]
-        )
+        return self.fetch(data)
 
     def get_movements(self):
         symbols = self.get_currencies_list()
@@ -201,9 +211,7 @@ class BitfinexUpdater(ExchangeUpdater):
                 "limit_trades": INT_32_MAX
             }
         )
-        trades = self.client.fetch(
-            data["url"], headers=data["headers"], body=data["body"]
-        )
+        trades = self.fetch(data)
         for i, trade in enumerate(trades):
             trades[i]["symbol"] = symbol
         return trades

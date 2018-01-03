@@ -283,7 +283,7 @@ class BitfinexParser(CryptoParser):
         return None, 0, None, 0
 
     def is_trade(self, raw):
-        return raw["type"] == "Sell" or raw["type"] == "Buy"
+        return raw["type"] in ["Sell", "Buy"]
 
     def is_withdrawal(self, raw):
         return raw["type"] == "WITHDRAWAL"
@@ -357,7 +357,7 @@ class CoinbaseParser(CryptoParser):
         return None, 0, None, 0
 
     def is_trade(self, raw):
-        return raw["type"] == "buy" or raw["type"] == "sell"
+        return raw["type"] in ["buy", "sell"]
 
     def is_withdrawal(self, raw):
         amount = float(raw["amount"]["amount"])
