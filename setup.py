@@ -58,8 +58,7 @@ setup(
         "ccxt",
         "pytz",
         "requests",
-        "ciso8601",
-        "pyhal"
+        "ciso8601"  # todo "pyhal"
     ],
     entry_points={
         "console_scripts": ["pyhodl = pyhodl.cli:cli"]

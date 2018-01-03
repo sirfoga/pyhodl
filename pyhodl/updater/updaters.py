@@ -21,15 +21,9 @@
 import abc
 import os
 
-from binance.client import Client as BinanceClient
-from ccxt import bitfinex as BitfinexClient
-from coinbase.wallet.client import Client as CoinbaseClient
-from gdax.authenticated_client import AuthenticatedClient as GdaxClient
 from hal.files.save_as import write_dicts_to_json
 
 from pyhodl.logs import Logger
-from pyhodl.updater.models import BinanceUpdater, BitfinexUpdater, \
-    CoinbaseUpdater, GdaxUpdater
 
 INT_32_MAX = 2 ** 31 - 1
 
@@ -97,25 +91,3 @@ class ExchangeUpdater(Logger):
         self.save_data()
         if verbose:
             print(self.class_name, "Transactions written to", self.output_file)
-
-    @staticmethod
-    def build_updater(api_client, data_folder):
-        """
-        :param api_client: ApiClient
-            Client to get exchange data
-        :param data_folder: str
-            Folder where to save data
-        :return: ExchangeUpdater
-            Concrete updater
-        """
-
-        if isinstance(api_client, BinanceClient):
-            return BinanceUpdater(api_client, data_folder)
-        elif isinstance(api_client, BitfinexClient):
-            return BitfinexUpdater(api_client, data_folder)
-        elif isinstance(api_client, CoinbaseClient):
-            return CoinbaseUpdater(api_client, data_folder)
-        elif isinstance(api_client, GdaxClient):
-            return GdaxUpdater(api_client, data_folder)
-        else:
-            raise ValueError("Cannot infer type of API client")

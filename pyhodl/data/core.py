@@ -22,8 +22,8 @@ import abc
 import os
 
 from hal.files.parsers import JSONParser
-from pyhodl.core.exchanges import CryptoExchange
 
+from pyhodl.core.models.exchanges import CryptoExchange
 from pyhodl.core.models.transactions import TransactionType, Transaction, \
     CoinAmount
 
