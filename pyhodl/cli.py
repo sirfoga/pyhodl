@@ -29,7 +29,7 @@ from hal.files.save_as import write_dicts_to_json
 from hal.streams.user import UserInput
 
 from pyhodl.apis.exchanges import API_CONFIG
-from pyhodl.apis.prices.utils import get_market_cap, get_prices
+from pyhodl.apis.prices.utils import get_market_cap, get_price_on_dates
 from pyhodl.charts.balances import FiatPlotter
 from pyhodl.config import DATA_FOLDER, HISTORICAL_DATA_FOLDER
 from pyhodl.data.balance import get_balance_file
@@ -38,6 +38,7 @@ from pyhodl.models.exchanges import Portfolio
 from pyhodl.stats.transactions import get_transactions_dates, \
     get_all_exchanges, get_all_coins
 from pyhodl.updater.core import Updater
+from pyhodl.utils import generate_dates
 
 
 class RunMode(Enum):
@@ -188,9 +189,8 @@ def download_prices(coins, since, until, where_to, verbose, currency="USD",
 
     output_file = os.path.join(where_to, currency.lower() + ".json")
     extra_time = timedelta(hours=6)
-    data = get_prices(
-        coins, currency, since - extra_time, until + extra_time, tor
-    )
+    dates = list(generate_dates(since - extra_time, until + extra_time, 6))
+    data = get_price_on_dates(coins, currency, dates, tor)
     if data:
         write_dicts_to_json(data, output_file)
 

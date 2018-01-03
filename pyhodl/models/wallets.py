@@ -23,7 +23,7 @@ from datetime import datetime
 
 import numpy as np
 
-from pyhodl.apis.prices.utils import get_price
+from pyhodl.apis.prices.utils import get_price_on_date
 from pyhodl.config import VALUE_KEY, DATE_TIME_KEY
 from pyhodl.data.tables import get_coin_prices_table
 from pyhodl.utils import is_crypto, is_nan
@@ -83,7 +83,7 @@ class Wallet:
         total = subtotals[-1][VALUE_KEY]  # amount of coins
 
         if now:  # convert to currency now
-            price = get_price(
+            price = get_price_on_date(
                 [self.base_currency], currency, datetime.now(), tor=False
             )[self.base_currency]
             return float(price) * total

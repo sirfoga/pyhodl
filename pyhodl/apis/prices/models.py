@@ -354,9 +354,15 @@ class CoinmarketCapClient(PricesApiClient, TorApiClient):
         return prices
 
     def get_prices(self, coins, **kwargs):
-        since = kwargs["since"] - self.TIME_FRAME
-        until = kwargs["until"] + self.TIME_FRAME
-        dates = list(generate_dates(since, until, hours=23))  # day intervals
+        if "dates" in kwargs:
+            dates = kwargs["dates"]
+        else:  # args since, until and hours provided
+            dates = generate_dates(
+                kwargs["since"] - self.TIME_FRAME,
+                kwargs["until"] + self.TIME_FRAME,
+                24  # day intervals
+            )
+
         prices = {
             coin: [] for coin in coins
         }  # get raw prices with 5 minutes interval time

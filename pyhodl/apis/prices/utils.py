@@ -52,16 +52,14 @@ def get_client(currency, tor):
     return CoinmarketCapClient(tor=tor)
 
 
-def get_prices(coins, currency, since, until, tor):
+def get_price_on_dates(coins, currency, dates, tor):
     """
     :param coins: [] of str
         List of coins
     :param currency: str
         Convert prices to this currency
-    :param since: datetime
-        Get prices since this date
-    :param until: datetime
-        Get prices until this date
+    :param dates: [] of datetime
+        Get prices on these dates
     :param tor: str or None
         Password to access tor proxy
     :return: [] of {}
@@ -70,11 +68,11 @@ def get_prices(coins, currency, since, until, tor):
 
     client = get_client(currency, tor)
     return client.get_prices(
-        coins, since=since, until=until, hours=6, currency=currency
+        coins, dates=dates, hours=6, currency=currency
     )
 
 
-def get_price(coins, currency, date_time, tor):
+def get_price_on_date(coins, currency, date_time, tor):
     """
     :param coins: [] of str
         List of coins
