@@ -16,25 +16,23 @@
 # limitations under the License.
 
 
-""" API requests for historical info """
+""" API client models to fetch prices data """
 
 import abc
 import os
 import time
 import urllib.parse
-import urllib.request
 from datetime import timedelta
 
-from hal.time.profile import get_time_eta, print_time_eta
+from hal.time.profile import print_time_eta, get_time_eta
 
 from pyhodl.app import get_coin_by_symbol
-from pyhodl.config import DATE_TIME_KEY, VALUE_KEY, NAN, FIAT_COINS
+from pyhodl.config import DATE_TIME_KEY, FIAT_COINS, NAN, VALUE_KEY
 from pyhodl.data.coins import Coin
 from pyhodl.logs import Logger
-from pyhodl.utils import replace_items, \
-    datetime_to_unix_timestamp_ms, unix_timestamp_ms_to_datetime, download, \
-    download_with_tor, datetime_to_str, datetime_to_unix_timestamp_s, middle, \
-    generate_dates
+from pyhodl.utils import datetime_to_str, generate_dates, download_with_tor, \
+    download, replace_items, datetime_to_unix_timestamp_s, \
+    datetime_to_unix_timestamp_ms, unix_timestamp_ms_to_datetime, middle
 
 
 class AbstractApiClient(Logger):
@@ -385,75 +383,3 @@ class CoinmarketCapClient(PricesApiClient, TorApiClient):
                 price[DATE_TIME_KEY] = date
                 data.append(price)
         return data
-
-
-def get_market_cap(since, until):
-    """
-    :param since: datetime
-        Get data since this date
-    :param until: datetime
-        Get data until this date
-    :return: [] of {}
-        Crypto market cap at specified dates
-    """
-
-    client = CoinmarketCapClient()
-    return client.get_market_cap(since, until)
-
-
-def get_client(currency, tor):
-    """
-    :param currency: str
-        Currency to get price
-    :param tor: *
-        Tor arg
-    :return: ApiClient
-        Client to get price with
-    """
-
-    if Coin(currency) in CryptocompareClient.AVAILABLE_FIAT:
-        return CryptocompareClient(tor=tor)  # better client (use as default)
-
-    return CoinmarketCapClient(tor=tor)
-
-
-def get_prices(coins, currency, since, until, tor):
-    """
-    :param coins: [] of str
-        List of coins
-    :param currency: str
-        Convert prices to this currency
-    :param since: datetime
-        Get prices since this date
-    :param until: datetime
-        Get prices until this date
-    :param tor: str or None
-        Password to access tor proxy
-    :return: [] of {}
-        List of prices of coins at dates
-    """
-
-    client = get_client(currency, tor)
-    return client.get_prices(
-        coins, since=since, until=until, hours=6, currency=currency
-    )
-
-
-def get_price(coins, currency, date_time, tor):
-    """
-    :param coins: [] of str
-        List of coins
-    :param currency: str
-        Convert prices to this currency
-    :param date_time: datetime
-        Get prices on date
-    :param tor: str or None
-        Password to access tor proxy
-    :return: [] of {}
-        List of prices of coins at dates
-    """
-
-    client = get_client(currency, tor)
-    return client.get_price(
-        coins, date_time=date_time, currency=currency
-    )

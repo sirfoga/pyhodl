@@ -29,7 +29,7 @@ from hal.files.save_as import write_dicts_to_json
 from hal.streams.user import UserInput
 
 from pyhodl.apis.exchanges import API_CONFIG
-from pyhodl.apis.prices import get_market_cap, get_prices
+from pyhodl.apis.prices.utils import get_market_cap, get_prices
 from pyhodl.charts.balances import FiatPlotter
 from pyhodl.config import DATA_FOLDER, HISTORICAL_DATA_FOLDER
 from pyhodl.data.balance import get_balance_file
