@@ -28,7 +28,8 @@ import pytz
 import requests
 from hal.internet.web import get_tor_session, renew_connection
 
-from pyhodl.config import DATE_TIME_FORMAT
+from pyhodl.config import DATE_TIME_FORMAT, FIAT_COINS
+from pyhodl.data.coins import Coin
 
 
 def generate_dates(since, until, hours):
@@ -167,6 +168,13 @@ def unix_timestamp_ms_to_datetime(ms):
 
 
 def download(url):
+    """
+    :param url: str
+        Url to get
+    :return: response
+        Response of request
+    """
+
     return requests.get(url)
 
 
@@ -224,3 +232,25 @@ def normalize(val, min_val, max_val, min_range=-1.0, max_range=1.0):
 def middle(lst):
     middle_point = len(lst) / 2
     return lst[middle_point]
+
+
+def is_nan(candidate):
+    """
+    :param candidate: float, str
+        Candidate to check
+    :return: bool
+        True iff is considered NotANumber
+    """
+
+    return str(candidate) == "nan"
+
+
+def is_crypto(coin):
+    """
+    :param coin: str or Coin
+        Coin to check
+    :return: bool
+        True iff coin is among crypto supported
+    """
+
+    return not Coin(coin) in FIAT_COINS

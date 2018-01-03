@@ -18,10 +18,11 @@
 
 """ Plot balances data with trends and stats """
 
+import abc
+
 import matplotlib.pyplot as plt
 
-from pyhodl.config import DATE_TIME_KEY, VALUE_KEY, FIAT_COINS
-from pyhodl.data.coins import Coin
+from pyhodl.config import VALUE_KEY
 from pyhodl.models.exchanges import Portfolio
 from pyhodl.utils import generate_dates, normalize
 
@@ -29,9 +30,11 @@ from pyhodl.utils import generate_dates, normalize
 class CryptoPlotter:
     """ Plots crypto data """
 
-    def __init__(self):
-        self.fig, self.ax = plt.subplots()
+    def __init__(self, wallets):
+        self.wallets = wallets
+        self.fig, self.axis = plt.subplots()
 
+    @abc.abstractmethod
     def show(self, title, x_label="Time", y_label="Amount"):
         """
         :param y_label: str
@@ -56,8 +59,8 @@ class BalancePlotter(CryptoPlotter):
     """ Plots balance data of each coin for each date available """
 
     def __init__(self, wallets):
-        CryptoPlotter.__init__(self)
-        self.wallets = wallets
+        CryptoPlotter.__init__(self, wallets)
+        self.portfolio = Portfolio(self.wallets)
 
     def plot_balances(self):
         """
@@ -65,13 +68,9 @@ class BalancePlotter(CryptoPlotter):
             Plots balances for each date for each coin
         """
 
-        dates = []
+        dates = self.portfolio.get_transactions_dates()
         for wallet in self.wallets:
-            dates += wallet.dates()
-        dates = sorted(dates)
-
-        for wallet in self.wallets:
-            balances = wallet.get_balances_in_dates(dates)
+            balances = wallet.get_balance_by_date(dates)
             plt.plot(
                 dates,
                 [b[VALUE_KEY] for b in balances],
@@ -88,11 +87,11 @@ class BalancePlotter(CryptoPlotter):
         for wallet in self.wallets:
             try:
                 self._plot_delta_balance(wallet)
-            except Exception as e:
-                print("Cannot plot delta balances wallet",
-                      wallet, "due to", e)
+            except:
+                print("Cannot plot delta balances wallet", wallet)
 
-    def _plot_delta_balance(self, wallet):
+    @staticmethod
+    def _plot_delta_balance(wallet):
         """
         :param wallet: Wallet
             Coin wallet with transactions
@@ -100,7 +99,7 @@ class BalancePlotter(CryptoPlotter):
             Plots balances for transaction of coin
         """
 
-        deltas = list(wallet.get_delta_balance_by_transaction())
+        deltas = list(wallet.get_delta_by_transaction())
         dates = [
             balance["transaction"].date for balance in deltas
         ]
@@ -119,7 +118,7 @@ class BalancePlotter(CryptoPlotter):
         super().show(title, x_label, y_label)
 
 
-class OtherCurrencyPlotter(BalancePlotter):
+class FiatPlotter(BalancePlotter):
     """ Plots coins-equivalent of your wallet """
 
     def __init__(self, wallets, base_currency="USD"):
@@ -128,40 +127,25 @@ class OtherCurrencyPlotter(BalancePlotter):
         self.base_currency = base_currency
         self.wallets_value = {
             wallet.base_currency:
-                wallet.get_balance_equivalent(self.base_currency)
+                wallet.balance(self.base_currency)
             for wallet in self.wallets
         }
-        self.portfolio = Portfolio(self.wallets)
 
     def plot_balances(self):
         """
-        :param wallet: Wallet
-            Coin wallet with transactions
         :return: void
             Plots balances for transaction of coin
         """
 
-        dates = []
+        dates = self.portfolio.get_transactions_dates()
         for wallet in self.wallets:
-            dates += wallet.dates()
-        dates = sorted(dates)
-
-        for wallet in self.wallets:
-            balances = wallet.get_balances_in_dates(dates)
-            balances = [
-                wallet.get_equivalent(
-                    balance[DATE_TIME_KEY],
-                    self.base_currency,
-                    float(balance[VALUE_KEY])
-                ) for balance in balances
-            ]
-
+            balances = wallet.get_balance_by_date(dates, self.base_currency)
             plt.plot(
                 dates,
                 balances,
                 "-x",
-                label="Value of " + wallet.base_currency +
-                      " (" + self.base_currency + ")"
+                label="Value of " + wallet.base_currency + " (" +
+                      self.base_currency + ")"
             )
 
     def plot_buy_sells(self, wallet):
@@ -172,19 +156,16 @@ class OtherCurrencyPlotter(BalancePlotter):
             Plots buy/sells points of coin against coin price
         """
 
-        deltas = list(wallet.get_delta_balance_by_transaction())
+        deltas = wallet.get_delta_by_transaction()
         dates = list(generate_dates(
             deltas[0]["transaction"].date,
             deltas[-1]["transaction"].date,
             hours=4
         ))
-        equivalents = [
-            wallet.get_equivalent(date, self.base_currency) for date in dates
-        ]
+        price = wallet.get_price_on(dates, self.base_currency)
         plt.plot(
-            dates,
-            equivalents,
-            label=wallet.base_currency + " " + self.base_currency + " price"
+            dates, price,
+            label=wallet.base_currency + " " + self.base_currency + "price"
         )  # plot price
 
         max_delta = max(abs(delta[VALUE_KEY]) for delta in deltas)
@@ -200,34 +181,20 @@ class OtherCurrencyPlotter(BalancePlotter):
             date = delta["transaction"].date
             plt.plot(
                 [date],
-                [wallet.get_equivalent(date, self.base_currency)],
+                [wallet.convert_to(date, self.base_currency)],
                 marker="o",
                 markersize=int(radius),
                 color=color
             )
 
-    def plot_total_balances(self):
-        dates = []
-        for wallet in self.wallets:
-            dates += wallet.dates()
-        dates = sorted(dates)
-        crypto_values = [0.0 for _ in range(len(dates))]
-        fiat_values = [0.0 for _ in range(len(dates))]
+    def plot_crypto_fiat_balance(self):
+        """
+        :return: void
+            Total balance for wach coin
+        """
 
-        for wallet in self.wallets:
-            balances = wallet.get_balances_in_dates(dates)
-            for i, balance in enumerate(balances):
-                val = wallet.get_equivalent(
-                    balance[DATE_TIME_KEY],
-                    self.base_currency,
-                    float(balance[VALUE_KEY])
-                )
-
-                if str(val) != "nan":
-                    if Coin(wallet.base_currency) in FIAT_COINS:
-                        fiat_values[i] += val
-                    else:
-                        crypto_values[i] += val
+        dates, crypto_values, fiat_values = \
+            self.portfolio.get_crypto_fiat_balance(self.base_currency)
 
         plt.plot(
             dates,

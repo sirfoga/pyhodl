@@ -20,28 +20,18 @@
 
 from datetime import datetime
 
+import numpy as np
 from hal.streams.pretty_table import pretty_format_table
 
-from pyhodl.config import DATE_TIME_KEY, VALUE_KEY, FIAT_COINS, NAN
+from pyhodl.config import DATE_TIME_KEY, VALUE_KEY, NAN, \
+    DEFAULT_FIAT
 from pyhodl.data.balance import parse_balance, save_balance
-from pyhodl.data.coins import Coin
 from pyhodl.models.transactions import Wallet
-from pyhodl.utils import datetime_to_str, get_delta_seconds
+from pyhodl.utils import datetime_to_str, get_delta_seconds, is_nan
 
 
 class CryptoExchange:
     """ Exchange dealing with crypto-coins """
-
-    TIME_INTERVALS = {
-        "1h": 1,
-        "1d": 24,
-        "7d": 24 * 7,
-        "30d": 24 * 30,
-        "3m": 24 * 30 * 3,
-        "6m": 24 * 30 * 6,
-        "1y": 24 * 365
-    }  # interval -> hours
-    OUTPUT_DATE_FORMAT = "%Y-%m-%d %H:%M:%S"
 
     def __init__(self, transactions, exchange_name):
         """
@@ -131,62 +121,27 @@ class Portfolio:
         self.wallets = wallets
         self.portfolio_name = str(portfolio_name) if portfolio_name else None
 
-    def get_crypto_fiat_deltas(self, currency):
-        """
-        :param currency: str
-            Currency to convert to
-        :return: tuple [], []
-            List of crypto deltas and fiat deltas by transaction
-        """
-
-        crypto_deltas = []
-        fiat_deltas = []
-
+    def get_transactions_dates(self):
+        dates = []
         for wallet in self.wallets:
-            deltas = list(wallet.get_delta_balance_by_transaction())
-            equivalents = [
-                {
-                    DATE_TIME_KEY: delta["transaction"].date,
-                    VALUE_KEY: wallet.get_equivalent(
-                        delta["transaction"].date,
-                        currency,
-                        delta[VALUE_KEY]
-                    )
-                } for delta in deltas
-            ]
+            dates += wallet.dates()
+        return sorted(dates)
 
-            if Coin(wallet.base_currency) in FIAT_COINS:
-                fiat_deltas += equivalents
-            else:
-                crypto_deltas += equivalents
-        return crypto_deltas, fiat_deltas
-
-    def get_balance_values(self, currency):
-        crypto_deltas, fiat_deltas = self.get_crypto_fiat_deltas(currency)
-        crypto_deltas = self.get_balances_from_deltas(crypto_deltas)
-        fiat_deltas = self.get_balances_from_deltas(fiat_deltas)
-        return crypto_deltas, fiat_deltas
-
-    def get_current_balance(self):
+    def get_current_balance(self, currency=DEFAULT_FIAT):
         balances = [
             {
                 "symbol": wallet.base_currency,
                 "balance": wallet.balance(),
-                "value": wallet.get_balance_equivalent_now()
+                "value": wallet.balance(currency, True)
             }
             for wallet in self.wallets
         ]
-        tot_balance = sum(
-            [
-                balance["value"] for balance in balances
-                if str(balance["value"]) != "nan"
-            ]
-        )
+        tot_balance = self.sum_total_balance(balances)
 
         for i, balance in enumerate(balances):  # add price and %
             balances[i]["price"] = \
-                float(balance["value"] / tot_balance) if \
-                    tot_balance != 0.0 else 0.0
+                float(balance["value"] / balance["balance"]) if \
+                    balance["balance"] != 0.0 else 0.0
             balances[i]["percentage"] = \
                 100.0 * min(1.0,
                             1.0 * float(balance["value"]) / tot_balance) if \
@@ -221,12 +176,32 @@ class Portfolio:
             })
         return balances
 
-    def get_balances(self):
-        dates = []
+    @staticmethod
+    def sum_total_balance(balances):
+        """
+        :param balances: [] of {}
+            List of raw balances
+        :return: float
+            Total balance (without counting NaN values)
+        """
+
+        return sum([
+            balance[VALUE_KEY] for balance in balances
+            if not is_nan(balance[VALUE_KEY])
+        ])
+
+    def get_crypto_fiat_balance(self, currency):
+        dates = self.get_transactions_dates()
+        crypto_values = np.zeros(len(dates))  # zeros
+        fiat_values = np.zeros(len(dates))
+
         for wallet in self.wallets:
-            dates += wallet.dates()
-        dates = sorted([dates])
-        # todo merge with raw plot methods
+            balances = wallet.get_balance_array_by_date(dates, currency)
+            if wallet.is_crypto():
+                crypto_values += balances
+            else:
+                fiat_values += balances
+        return dates, crypto_values.tolist(), fiat_values.tolist()
 
     def show_balance(self, last=None, save_to=None):
         """
@@ -240,12 +215,7 @@ class Portfolio:
 
         last = parse_balance(last) if last else None
         balances = self.get_current_balance()
-        total = sum(
-            [
-                balance["value"] for balance in balances
-                if str(balance["value"]) != "nan"
-            ]
-        )
+        total = self.sum_total_balance(balances)
         table = [
             [
                 str(balance["symbol"]),
