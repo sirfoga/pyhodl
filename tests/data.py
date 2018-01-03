@@ -20,6 +20,7 @@
 
 import unittest
 
+from pyhodl.config import FIAT_COINS
 from pyhodl.data.coins import Coin, CryptoCoin
 
 
@@ -58,6 +59,11 @@ class TestCoins(unittest.TestCase):
 
         btc_malformed.symbol = "btcccccc"
         self.assertTrue(btc_malformed == btc_very_malformed)
+
+    def test_in(self):
+        self.assertTrue("usd" in FIAT_COINS)
+        self.assertTrue("USD" in FIAT_COINS)
+        self.assertTrue(Coin("usd") in FIAT_COINS)
 
 
 def main():

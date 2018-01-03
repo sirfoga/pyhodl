@@ -29,7 +29,6 @@ import requests
 from hal.internet.web import get_tor_session, renew_connection
 
 from pyhodl.config import DATE_TIME_FORMAT, FIAT_COINS
-from pyhodl.data.coins import Coin
 
 
 def generate_dates(since, until, hours):
@@ -280,4 +279,4 @@ def is_crypto(coin):
         True iff coin is among crypto supported
     """
 
-    return not Coin(coin) in FIAT_COINS
+    return coin not in FIAT_COINS

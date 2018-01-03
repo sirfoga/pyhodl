@@ -33,7 +33,7 @@ class Wallet:
     """ A general wallet, tracking addition, deletions and fees """
 
     def __init__(self, base_currency):
-        self.base_currency = base_currency
+        self.base_currency = base_currency  # todo use Coin()
         self.transactions = []  # list of operations performed
         self.is_sorted = False
 
