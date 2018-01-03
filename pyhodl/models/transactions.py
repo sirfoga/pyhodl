@@ -113,7 +113,7 @@ class Transaction:
             if self.coin_sell == coin:
                 amount -= self.sell_amount
 
-            if self.commission.coin and self.commission.coin == coin:
+            if self.commission and self.commission.coin == coin:
                 amount -= self.commission.amount
         return amount
 
@@ -264,8 +264,9 @@ class Wallet:
         total = subtotals[-1][VALUE_KEY]  # amount of coins
 
         if now:  # convert to currency now
-            now = datetime.now()
-            price = get_price([self.base_currency], now, currency, tor=False)
+            price = get_price(
+                [self.base_currency], currency, datetime.now(), tor=False
+            )[self.base_currency]
             return float(price) * total
 
         if currency:  # convert to currency

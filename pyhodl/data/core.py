@@ -323,7 +323,7 @@ class BitfinexParser(CryptoParser):
         return False
 
     def build_exchange(self, exchange_name="bitfinex"):
-        return super(BitfinexParser, self).build_exchange(exchange_name)
+        return super().build_exchange(exchange_name)
 
 
 class CoinbaseParser(CryptoParser):
@@ -396,10 +396,10 @@ class CoinbaseParser(CryptoParser):
                           "of account", account)
 
     def build_exchange(self, exchange_name="coinbase"):
-        return super(CoinbaseParser, self).build_exchange(exchange_name)
+        return super().build_exchange(exchange_name)
 
 
-class GdaxParser(CryptoParser):
+class GdaxParser(CoinbaseParser):
     """ Parses Binance transactions data """
 
     def get_coins_amounts(self, raw):
@@ -431,15 +431,5 @@ class GdaxParser(CryptoParser):
     def is_successful(self, raw):
         return True  # always
 
-    def get_transactions_list(self):
-        raw = self.get_raw_data()
-        for account, transactions in raw.items():
-            for transaction in transactions:
-                try:
-                    yield self.parse_transaction(transaction)
-                except:
-                    print("Cannot parse transaction", transaction,
-                          "of account", account)
-
     def build_exchange(self, exchange_name="gdax"):
-        return super(GdaxParser, self).build_exchange(exchange_name)
+        return super().build_exchange(exchange_name)
