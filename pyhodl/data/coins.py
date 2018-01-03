@@ -37,6 +37,9 @@ class Coin:
 
         return False
 
+    def __str__(self):
+        return self.symbol
+
 
 class CryptoCoin(Coin):
     """ Crypto currency model """

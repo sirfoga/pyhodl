@@ -157,10 +157,10 @@ class Transaction:
 
         amount = 0.0
         if self.is_trade():
-            if self.coin_buy.get_symbol() == coin:
+            if self.coin_buy and self.coin_buy.get_symbol() == coin:
                 amount += self.coin_buy.get_amount()
 
-            if self.coin_sell.get_symbol() == coin:
+            if self.coin_sell and self.coin_sell.get_symbol() == coin:
                 amount -= self.coin_sell.get_amount()
         return amount
 
@@ -187,7 +187,8 @@ class Transaction:
         """
 
         amount = 0.0
-        if self.is_fee() and self.commission.coin.get_symbol() == coin:
+        if self.is_fee() and self.commission and \
+                        self.commission.coin.get_symbol() == coin:
             amount -= self.commission.coin.get_amount()
         return amount
 
@@ -200,10 +201,12 @@ class Transaction:
         """
 
         amount = 0.0
-        if self.is_deposit() and self.coin_buy.get_symbol() == coin:
+        if self.is_deposit() and self.coin_buy and \
+                        self.coin_buy.get_symbol() == coin:
             amount += self.coin_buy.get_amount()
 
-        if self.is_withdrawal() and self.coin_sell.get_symbol() == coin:
+        if self.is_withdrawal() and self.coin_sell and \
+                        self.coin_sell.get_symbol() == coin:
             amount -= self.coin_sell.get_amount()
         return amount
 
@@ -215,7 +218,6 @@ class Transaction:
             Amount of coin in transaction
         """
 
-        coin = Coin(coin)
         amount = self.get_amount_traded(coin)
         amount += self.get_amount_commission(coin)
         amount += self.get_amount_moved(coin)
