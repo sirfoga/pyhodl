@@ -136,12 +136,7 @@ class Portfolio:
             }
             for wallet in self.wallets
         ]
-        tot_balance = sum(
-            [
-                balance["value"] for balance in balances
-                if not is_nan(balance["value"])
-            ]
-        )
+        tot_balance = self.sum_total_balance(balances)
 
         for i, balance in enumerate(balances):  # add price and %
             balances[i]["price"] = \
@@ -181,6 +176,20 @@ class Portfolio:
             })
         return balances
 
+    @staticmethod
+    def sum_total_balance(balances):
+        """
+        :param balances: [] of {}
+            List of raw balances
+        :return: float
+            Total balance (without counting NaN values)
+        """
+
+        return sum([
+            balance[VALUE_KEY] for balance in balances
+            if not is_nan(balance[VALUE_KEY])
+        ])
+
     def get_crypto_fiat_balance(self, currency):
         dates = self.get_transactions_dates()
         crypto_values = np.zeros(len(dates))  # zeros
@@ -206,10 +215,7 @@ class Portfolio:
 
         last = parse_balance(last) if last else None
         balances = self.get_current_balance()
-        total = sum([
-            balance["value"] for balance in balances
-            if not is_nan(balance["value"])
-        ])
+        total = self.sum_total_balance(balances)
         table = [
             [
                 str(balance["symbol"]),
