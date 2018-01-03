@@ -1,10 +1,10 @@
 # Pyhodl
 
-[![Code Health](https://landscape.io/github/sirfoga/pyhodl/master/landscape.svg?style=flat)](https://landscape.io/github/sirfoga/pyhodl/master) [![BCH compliance](https://bettercodehub.com/edge/badge/sirfoga/pyhodl?branch=master)](https://bettercodehub.com/) [![Code Climate](https://lima.codeclimate.com/github/sirfoga/pyhodl/badges/gpa.svg)](https://codeclimate.com/github/sirfoga/pyhodl) ![pylint Score](https://mperlet.de/pybadge/badges/9.14.svg)
-
-[![Open Source Love](https://badges.frapsoft.com/os/v1/open-source.svg?v=103)](https://opensource.org/licenses/Apache-2.0) [![Contributions welcome](https://img.shields.io/badge/contributions-welcome-brightgreen.svg?style=flat)](https://github.com/MY_USERNAME/MY_REPOSITORY/issues) [![License](https://img.shields.io/badge/license-Apache%202.0-blue.svg)](https://www.apache.org/licenses/LICENSE-2.0)
-
 > Download, update, analyze and plot your crypto-transactions. Completely off-line and secure (you own your data). Made with love and crypto money.
+
+[![Code Health](https://landscape.io/github/sirfoga/pyhodl/master/landscape.svg?style=flat)](https://landscape.io/github/sirfoga/pyhodl/master) [![BCH compliance](https://bettercodehub.com/edge/badge/sirfoga/pyhodl?branch=master)](https://bettercodehub.com/) [![Code Climate](https://lima.codeclimate.com/github/sirfoga/pyhodl/badges/gpa.svg)](https://codeclimate.com/github/sirfoga/pyhodl) 
+
+![Python version](https://img.shields.io/badge/Python-3.5.2-blue.svg) ![pylint Score](https://mperlet.de/pybadge/badges/9.14.svg)
 
 ## Table of content
 

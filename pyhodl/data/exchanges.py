@@ -30,25 +30,56 @@ class BinanceParser(CryptoParser):
 
     def get_coins_amounts(self, raw):
         if self.is_trade(raw):
-            market = raw["symbol"]
-            if market.endswith("USDT"):
-                coin_buy, coin_sell = market.replace("USDT", ""), "USDT"
-
-            coin_buy, coin_sell = market[:-3], market[-3:]
-
-            amount_buy = float(raw["qty"])
-            amount_sell = float(raw["price"]) * amount_buy
-
-            if raw["isBuyer"]:
-                return coin_buy, amount_buy, coin_sell, amount_sell
-
-            return coin_sell, amount_sell, coin_buy, amount_buy
+            coin_buy, coin_sell = self.get_coins_traded(raw)
+            amount_buy, amount_sell = self.get_amount_traded(raw)
+            return coin_buy, amount_buy, coin_sell, amount_sell
         elif self.is_deposit(raw):
             return raw["asset"], float(raw["amount"]), None, 0
         elif self.is_withdrawal(raw):
             return None, 0, raw["asset"], float(raw["amount"])
 
         return None, 0, None, 0
+
+    def get_coins_traded(self, raw):
+        """
+        :param raw: {}
+            Raw details of transaction
+        :return: tuple (str, str)
+            Coin bought, coin sold, in case of trading data
+        """
+
+        if self.is_trade(raw):
+            market = raw["symbol"]
+            if market.endswith("USDT"):
+                coin_buy, coin_sell = market.replace("USDT", ""), "USDT"
+            else:
+                coin_buy, coin_sell = market[:-3], market[-3:]
+
+            if raw["isBuyer"]:
+                return coin_buy, coin_sell
+
+            return coin_sell, coin_buy
+
+        return None, None
+
+    def get_amount_traded(self, raw):
+        """
+        :param raw: {}
+            Raw details of transaction
+        :return: tuple (float, float)
+            Amount bought, amount sold in case of trading data
+        """
+
+        if self.is_trade(raw):
+            amount_buy = float(raw["qty"])
+            amount_sell = float(raw["price"]) * amount_buy
+
+            if raw["isBuyer"]:
+                return amount_buy, amount_sell
+
+            return amount_sell, amount_buy
+
+        return 0, 0
 
     def get_commission(self, raw):
         if "commissionAsset" in raw:
