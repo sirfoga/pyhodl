@@ -27,8 +27,8 @@ from pyhodl.config import DATE_TIME_KEY, VALUE_KEY, NAN, \
     DEFAULT_FIAT
 from pyhodl.data.balance import parse_balance, save_balance
 from pyhodl.models.wallets import Wallet
-from pyhodl.utils.dak import is_nan
 from pyhodl.utils.dates import datetime_to_str, get_delta_seconds
+from pyhodl.utils.misc import is_nan
 
 
 class CryptoExchange:

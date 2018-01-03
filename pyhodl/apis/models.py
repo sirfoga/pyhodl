@@ -19,7 +19,7 @@
 """ API client models to fetch data """
 
 from pyhodl.logs import Logger
-from pyhodl.utils.dak import download_with_tor, download
+from pyhodl.utils.misc import download_with_tor, download
 
 
 class AbstractApiClient(Logger):

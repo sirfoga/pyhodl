@@ -90,8 +90,8 @@ def handle_rate_limits(func, time_wait=60, max_attempts=2):
             try:
                 attempt_counter += 1
                 return func(*args, **kwargs)
-            except Exception as e:
-                if "429" in str(e) or "Connection refused" in str(e):
+            except Exception as exc:
+                if "429" in str(exc) or "Connection refused" in str(exc):
                     print(
                         function_name,
                         ">>> Attempt #", attempt_counter,
@@ -170,6 +170,17 @@ def download(url):
 
 
 def download_with_tor(url, tor_password, max_attempts):
+    """
+    :param url: str
+        Url to get
+    :param tor_password: str
+        Password to connect to tor proxy
+    :param max_attempts: int
+        Max number of attempts to do
+    :return: response
+        Response of request
+    """
+
     try:
         session = get_tor_session()
         session.headers = {
@@ -188,6 +199,21 @@ def download_with_tor(url, tor_password, max_attempts):
 
 
 def normalize(val, min_val, max_val, min_range=-1.0, max_range=1.0):
+    """
+    :param val: float
+        Value to normalize
+    :param min_val: float
+        Min value of value
+    :param max_val: float
+        Msx value of value
+    :param min_range: float
+        Min value of range
+    :param max_range: float
+        Max value of value
+    :return: float
+        Normalized var in range
+    """
+
     if val >= max_val:
         return max_range
 
@@ -199,6 +225,13 @@ def normalize(val, min_val, max_val, min_range=-1.0, max_range=1.0):
 
 
 def middle(lst):
+    """
+    :param lst: [] of *
+        List
+    :return: *
+        Object in the middle. In case of ambiguity, take the first one
+    """
+
     middle_point = len(lst) / 2
     return lst[middle_point]
 
