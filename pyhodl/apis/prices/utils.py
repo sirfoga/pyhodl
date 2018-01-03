@@ -18,7 +18,7 @@
 
 """ API requests for historical info """
 
-from pyhodl.apis.prices.models import CryptocompareClient, CoinmarketCapClient
+from pyhodl.apis.prices.clients import CryptocompareClient, CoinmarketCapClient
 from pyhodl.data.coins import Coin
 
 
