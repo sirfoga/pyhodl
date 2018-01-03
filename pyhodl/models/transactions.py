@@ -341,7 +341,16 @@ class Wallet:
                 filling_deltas.append(filling_deltas[-1])
         return filling_deltas
 
-    def get_balances_in_dates(self, dates):
+    def get_balances_in_dates(self, dates, currency=None):
+        """
+        :param dates: [] of datetime
+            List of dates
+        :param currency: str or None
+            Currency to convert balances to
+        :return: [] of {}
+            List of balance amount by date
+        """
+
         balances = sorted(
             self.get_balances_by_transaction(),
             key=lambda x: x["transaction"].date
@@ -349,6 +358,7 @@ class Wallet:
         balances_dates = [
             balance["transaction"].date for balance in balances
         ]
+
         filling_balances = []
         for date in dates:
             i = bisect(balances_dates, date)
@@ -364,4 +374,15 @@ class Wallet:
                 })
             else:
                 filling_balances.append(filling_balances[-1])
+
+        if currency:
+            filling_balances = [
+                self.get_equivalent(
+                    balance[DATE_TIME_KEY],
+                    currency,
+                    float(balance[VALUE_KEY])
+                )
+                for balance in filling_balances
+            ]
+
         return filling_balances

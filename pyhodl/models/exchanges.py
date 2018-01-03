@@ -161,6 +161,12 @@ class Portfolio:
                 crypto_deltas += equivalents
         return crypto_deltas, fiat_deltas
 
+    def get_transactions_dates(self):
+        dates = []
+        for wallet in self.wallets:
+            dates += wallet.dates()
+        return sorted(dates)
+
     def get_balance_values(self, currency):
         crypto_deltas, fiat_deltas = self.get_crypto_fiat_deltas(currency)
         crypto_deltas = self.get_balances_from_deltas(crypto_deltas)
@@ -221,12 +227,26 @@ class Portfolio:
             })
         return balances
 
-    def get_balances(self):
-        dates = []
+    def get_crypto_fiat_balance(self, currency):
+        dates = self.get_transactions_dates()
+        crypto_values = [0.0 for _ in range(len(dates))]
+        fiat_values = [0.0 for _ in range(len(dates))]
+
         for wallet in self.wallets:
-            dates += wallet.dates()
-        dates = sorted([dates])
-        # todo merge with raw plot methods
+            balances = wallet.get_balances_in_dates(dates)
+            for i, balance in enumerate(balances):
+                val = wallet.get_equivalent(
+                    balance[DATE_TIME_KEY],
+                    currency,
+                    float(balance[VALUE_KEY])
+                )
+
+                if str(val) != "nan":
+                    if Coin(wallet.base_currency) in FIAT_COINS:
+                        fiat_values[i] += val
+                    else:
+                        crypto_values[i] += val
+        return dates, crypto_values, fiat_values
 
     def show_balance(self, last=None, save_to=None):
         """

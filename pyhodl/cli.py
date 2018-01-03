@@ -30,7 +30,7 @@ from hal.streams.user import UserInput
 
 from pyhodl.apis.exchanges import API_CONFIG
 from pyhodl.apis.prices import get_market_cap, get_prices
-from pyhodl.charts.balances import OtherCurrencyPlotter
+from pyhodl.charts.balances import FiatPlotter
 from pyhodl.config import DATA_FOLDER, HISTORICAL_DATA_FOLDER
 from pyhodl.data.balance import get_balance_file
 from pyhodl.data.parsers import build_parser, build_exchanges
@@ -144,8 +144,8 @@ def plot(input_file, verbose):
     parser = build_parser(input_file)
     exchange = parser.build_exchange()
     wallets = exchange.build_wallets().values()
-    plotter = OtherCurrencyPlotter(wallets)
-    plotter.plot_total_balances()
+    plotter = FiatPlotter(wallets)
+    plotter.plot_crypto_fiat_balance()
     plotter.show("Balances from " + input_file)
 
 
