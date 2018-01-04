@@ -22,6 +22,7 @@ import functools
 import time
 from collections import Counter
 
+import numpy as np
 import requests
 from hal.internet.web import get_tor_session, renew_connection
 
@@ -256,3 +257,26 @@ def is_crypto(coin):
     """
 
     return coin not in FIAT_COINS
+
+
+def remove_same_coordinates(x, y):
+    """
+    :param x: [] of *
+        List of data on x-axis
+    :param y: [] of float
+        List of values
+    :return: tuple ([] of *, [] of float)
+        Original list minus the points with same x-coordinate
+    """
+
+    d = {}
+    for x_coord, y_coord in zip(x, y):
+        if x_coord not in d:  # not already in
+            d[x_coord] = [y_coord]
+        else:  # there was another point
+            d[x_coord].append(y_coord)  # create bucket
+
+    for x_coord, y_coord in d.items():  # manage buckets
+        d[x_coord] = np.average(y_coord)  # average of bucket
+
+    return list(d.keys()), list(d.values())

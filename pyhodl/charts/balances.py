@@ -24,11 +24,12 @@ from datetime import datetime
 import matplotlib.pyplot as plt
 import numpy as np
 from scipy.interpolate import spline  # todo fix deprecated
+from sklearn import neighbors
 
 from pyhodl.config import VALUE_KEY
 from pyhodl.core.models.exchanges import Portfolio
 from pyhodl.utils.dates import generate_dates, dates_to_floats, floats_to_dates
-from pyhodl.utils.misc import normalize
+from pyhodl.utils.misc import normalize, remove_same_coordinates
 
 
 class CryptoPlotter:
@@ -39,14 +40,43 @@ class CryptoPlotter:
         self.fig, self.axis = plt.subplots()
 
     @staticmethod
-    def compute_trend(x, y, new_points, smooth_points):
+    def compute_knn_trend(x, y, smooth_points):
         """
         :param x:[] of *
             X-axis data
         :param y: [] of float
             List of values
-        :param new_points: int
-            Number of points to generate
+        :param smooth_points: int
+            Number of points to interpolate
+        :return: tuple ([] of *, [] of float)
+            New dataset generated (with knn) values of new dataset
+        """
+
+        is_dates = isinstance(x[0], datetime)
+        if is_dates:
+            x = dates_to_floats(x)
+
+        n_neighbors = 11
+        weights = "uniform"
+        knn = neighbors.KNeighborsRegressor(n_neighbors, weights=weights)
+
+        x = np.array(x).reshape(-1, 1)
+        T = np.linspace(x.min(), x.max(), smooth_points)
+        T = np.array([T]).reshape(-1, 1)
+        y_ = knn.fit(x, y).predict(T)
+
+        if is_dates:
+            T = floats_to_dates(T[:, 0])
+
+        return T, y_
+
+    @staticmethod
+    def compute_trend(x, y, smooth_points):
+        """
+        :param x:[] of *
+            X-axis data
+        :param y: [] of float
+            List of values
         :param smooth_points: int
             Number of points to interpolate
         :return: tuple ([] of *, [] of float)
@@ -57,12 +87,16 @@ class CryptoPlotter:
         if is_dates:
             x = dates_to_floats(x)
 
-        x = np.array(x)
+        n_neighbors = 11
+        weights = "uniform"
+        knn = neighbors.KNeighborsRegressor(n_neighbors, weights=weights)
+
+        x, y = remove_same_coordinates(x, y)
         x_new = np.linspace(x.min(), x.max(), smooth_points)
         y_new = spline(x, y, x_new)
 
         if is_dates:
-            x_new = floats_to_dates(x_new)
+            T = floats_to_dates(T[:, 0])
 
         return x_new, y_new
 
@@ -80,12 +114,11 @@ class CryptoPlotter:
             Plot data
         """
 
-        plt.plot(x, y, label=label)
+        plt.plot(x, y, "-x", label=label)
         if with_trend:
-            smooth_points = 30
-            pred_points = 300
-            x_new, y_new = self.compute_trend(x, y, 1, smooth_points)
-            plt.plot(x_new, y_new, label="smooth")
+            smooth_points = 300
+            x_new, y_new = self.compute_trend(x, y, smooth_points)
+            plt.plot(x_new, y_new, label=label + " trend")
 
     @abc.abstractmethod
     def show(self, title, x_label="Time", y_label="Amount"):

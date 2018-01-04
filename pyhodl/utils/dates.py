@@ -53,8 +53,8 @@ def datetime_to_unix_timestamp_ms(date_time):
         Unix timestamp (milliseconds)
     """
 
-    return int(time.mktime(date_time.timetuple()) * 1e3 +
-               date_time.microsecond / 1e3)
+    seconds = datetime_to_unix_timestamp_s(datetime)
+    return int(seconds + date_time.microsecond / 1e3)
 
 
 def datetime_to_unix_timestamp_s(date_time):
@@ -65,7 +65,7 @@ def datetime_to_unix_timestamp_s(date_time):
         Unix timestamp (seconds)
     """
 
-    return int(time.mktime(date_time.timetuple()) * 1e3)
+    return int(time.mktime(date_time.timetuple()))
 
 
 def unix_timestamp_ms_to_datetime(milliseconds):
@@ -76,7 +76,18 @@ def unix_timestamp_ms_to_datetime(milliseconds):
         Date and time (UTC)
     """
 
-    date_time = datetime.fromtimestamp(float(milliseconds) / 1e3)
+    return unix_timestamp_s_to_datetime(milliseconds / 1e3)
+
+
+def unix_timestamp_s_to_datetime(seconds):
+    """
+    :param seconds: int
+        Unix timestamp (seconds)
+    :return: datetime
+        Date and time (UTC)
+    """
+
+    date_time = datetime.fromtimestamp(float(seconds))
     return localize(date_time)  # utc as default time zone
 
 
@@ -140,7 +151,7 @@ def dates_to_floats(lst):
     """
 
     return [
-        datetime_to_unix_timestamp_ms(date_time) for date_time in lst
+        datetime_to_unix_timestamp_s(date_time) for date_time in lst
     ]
 
 
@@ -153,5 +164,5 @@ def floats_to_dates(lst):
     """
 
     return [
-        unix_timestamp_ms_to_datetime(date_time) for date_time in lst
+        unix_timestamp_s_to_datetime(date_time) for date_time in lst
     ]
