@@ -129,3 +129,29 @@ def get_delta_seconds(first, second):
     """
 
     return (localize(first) - localize(second)).total_seconds()
+
+
+def dates_to_floats(lst):
+    """
+    :param lst: [] of datetime
+        List of dates
+    :return: [] of float
+        List of floats (seconds since epoch)
+    """
+
+    return [
+        datetime_to_unix_timestamp_ms(date_time) for date_time in lst
+    ]
+
+
+def floats_to_dates(lst):
+    """
+    :param lst: [] of float
+        List of floats (seconds since epoch)
+    :return: [] of datetime
+        List of dates
+    """
+
+    return [
+        unix_timestamp_ms_to_datetime(date_time) for date_time in lst
+    ]

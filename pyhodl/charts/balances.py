@@ -19,12 +19,15 @@
 """ Plot balances data with trends and stats """
 
 import abc
+from datetime import datetime
 
 import matplotlib.pyplot as plt
+import numpy as np
+from scipy.interpolate import spline  # todo fix deprecated
 
 from pyhodl.config import VALUE_KEY
 from pyhodl.core.models.exchanges import Portfolio
-from pyhodl.utils.dates import generate_dates
+from pyhodl.utils.dates import generate_dates, dates_to_floats, floats_to_dates
 from pyhodl.utils.misc import normalize
 
 
@@ -34,6 +37,55 @@ class CryptoPlotter:
     def __init__(self, wallets):
         self.wallets = wallets
         self.fig, self.axis = plt.subplots()
+
+    @staticmethod
+    def compute_trend(x, y, new_points, smooth_points):
+        """
+        :param x:[] of *
+            X-axis data
+        :param y: [] of float
+            List of values
+        :param new_points: int
+            Number of points to generate
+        :param smooth_points: int
+            Number of points to interpolate
+        :return: tuple ([] of *, [] of float)
+            New dataset generated and smoothed values of new dataset
+        """
+
+        is_dates = isinstance(x[0], datetime)
+        if is_dates:
+            x = dates_to_floats(x)
+
+        x = np.array(x)
+        x_new = np.linspace(x.min(), x.max(), smooth_points)
+        y_new = spline(x, y, x_new)
+
+        if is_dates:
+            x_new = floats_to_dates(x_new)
+
+        return x_new, y_new
+
+    def plot(self, x, y, label, with_trend=True):
+        """
+        :param x: [] of *
+            X-axis data
+        :param y: [] of float
+            List of values
+        :param label: str
+            Label of data points
+        :param with_trend: bool
+            True iff you want to plot also trend
+        :return: void
+            Plot data
+        """
+
+        plt.plot(x, y, label=label)
+        if with_trend:
+            smooth_points = 30
+            pred_points = 300
+            x_new, y_new = self.compute_trend(x, y, 1, smooth_points)
+            plt.plot(x_new, y_new, label="smooth")
 
     @abc.abstractmethod
     def show(self, title, x_label="Time", y_label="Amount"):
@@ -142,12 +194,7 @@ class FiatPlotter(BalancePlotter):
             balances = wallet.get_balance_by_date(dates, self.base_currency)
             label = "Value of " + wallet.base_currency + " (" + \
                     self.base_currency + ")"
-            plt.plot(
-                dates,
-                balances,
-                "-x",
-                label=label
-            )
+            self.plot(dates, balances, label)
 
     def plot_buy_sells(self, wallet):
         """
@@ -197,15 +244,15 @@ class FiatPlotter(BalancePlotter):
         dates, crypto_values, fiat_values = \
             self.portfolio.get_crypto_fiat_balance(self.base_currency)
 
-        plt.plot(
+        self.plot(
             dates, crypto_values,
             label="Crypto value of portfolio (" + self.base_currency + ")"
-        )  # plot crypto balances
+        )
 
-        plt.plot(
+        self.plot(
             dates, fiat_values,
             label="Fiat value of portfolio (" + self.base_currency + ")"
-        )  # plot crypto balances
+        )
 
     def show(self, title, x_label="Time", y_label="value"):
         super().show(title, x_label, self.base_currency + " " + y_label)
