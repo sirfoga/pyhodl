@@ -24,8 +24,9 @@ from datetime import datetime
 from hal.files.parsers import JSONParser
 from hal.files.save_as import write_dicts_to_json
 
-from pyhodl.config import DATA_FOLDER, DATE_TIME_KEY
-from pyhodl.utils import datetime_to_str, parse_datetime, is_nan
+from pyhodl.config import DATA_FOLDER, DATE_TIME_KEY, VALUE_KEY
+from pyhodl.utils.dates import parse_datetime, datetime_to_str
+from pyhodl.utils.misc import is_nan
 
 
 def get_balance_file(exchange):
@@ -70,7 +71,7 @@ def save_balance(balances, output_file, timestamp=datetime.now()):
 
     balances = [
         balance for balance in balances
-        if not is_nan(balance["value"])
+        if not is_nan(balance[VALUE_KEY])
     ]  # do not save
     data = {}
     for balance in balances:  # lst -> dict

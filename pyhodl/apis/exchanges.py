@@ -19,20 +19,14 @@
 """ Manage your APIs: add, edit, remove exchanges API """
 
 import abc
-import os
 
 from binance.client import Client as BinanceClient
-from ccxt import bitfinex as BitfinexClient
+from ccxt import bitfinex as bitfinex_client
 from coinbase.wallet.client import Client as CoinbaseClient
 from gdax.authenticated_client import AuthenticatedClient as GdaxClient
 
-from pyhodl.config import API_FOLDER
+from pyhodl.config import API_CONFIG
 from ..app import ConfigManager
-
-API_CONFIG = os.path.join(
-    API_FOLDER,
-    "config.json"
-)
 
 
 class ApiManager(ConfigManager):
@@ -113,7 +107,7 @@ class BitfinexApi(ApiConfig):
     """ Api config for Bitfinex exchange """
 
     def get_client(self):
-        return BitfinexClient({
+        return bitfinex_client({
             "apiKey": self.key,
             "secret": self.secret
         })

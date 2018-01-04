@@ -1,16 +1,16 @@
 # Pyhodl
 
-[![Code Health](https://landscape.io/github/sirfoga/pyhodl/master/landscape.svg?style=flat)](https://landscape.io/github/sirfoga/pyhodl/master) [![BCH compliance](https://bettercodehub.com/edge/badge/sirfoga/pyhodl?branch=master)](https://bettercodehub.com/) [![Code Climate](https://lima.codeclimate.com/github/sirfoga/pyhodl/badges/gpa.svg)](https://codeclimate.com/github/sirfoga/pyhodl) ![pylint Score](https://mperlet.de/pybadge/badges/9.14.svg)
-
-[![Open Source Love](https://badges.frapsoft.com/os/v1/open-source.svg?v=103)](https://opensource.org/licenses/Apache-2.0) [![Contributions welcome](https://img.shields.io/badge/contributions-welcome-brightgreen.svg?style=flat)](https://github.com/MY_USERNAME/MY_REPOSITORY/issues) [![License](https://img.shields.io/badge/license-Apache%202.0-blue.svg)](https://www.apache.org/licenses/LICENSE-2.0)
-
 > Download, update, analyze and plot your crypto-transactions. Completely off-line and secure (you own your data). Made with love and crypto money.
+
+[![Build Status](https://travis-ci.org/sirfoga/pyhodl.svg?branch=master)](https://travis-ci.org/sirfoga/pyhodl) [![CircleCI](https://circleci.com/gh/sirfoga/pyhodl.png)](https://circleci.com/gh/sirfoga/pyhodl) ![Python version](https://img.shields.io/badge/Python-3.5.2-blue.svg) 
+
+[![Code Health](https://landscape.io/github/sirfoga/pyhodl/master/landscape.svg?style=flat)](https://landscape.io/github/sirfoga/pyhodl/master) [![Codacy Badge](https://api.codacy.com/project/badge/Grade/1eff18395a134c9aa2d829fcb1f124bf)](https://www.codacy.com/app/sirfoga/pyhodl?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=sirfoga/pyhodl&amp;utm_campaign=Badge_Grade) ![pylint Score](https://mperlet.de/pybadge/badges/9.92.svg)
+
+[![BCH compliance](https://bettercodehub.com/edge/badge/sirfoga/pyhodl?branch=master)](https://bettercodehub.com/) [![Code Climate](https://lima.codeclimate.com/github/sirfoga/pyhodl/badges/gpa.svg)](https://codeclimate.com/github/sirfoga/pyhodl)
 
 ## Table of content
 
 - [Key Features](#key-features)
-- [Overview](#overview)
-- [Settings](#settings)
 - [Usage](#usage)
 - [Install](#install)
 - [Changelog](#changelog)
@@ -21,11 +21,11 @@
 
 ## Key Features
 
-* continuous (hourly) updates from your exchanges
+* continuous (hourly, daily, you-decide-when) updates from your exchanges
 * completely off-line
-* you own your data
+* **you** own your data
 * analyze profit and ROI of transactions
-* plot charts of your capital
+* plot charts (buy/sells, prices, market cap ...)
 * stats and trends
 * cross-OS
 * supported exchanges:
@@ -34,23 +34,12 @@
     - Coinbase
     - GDAX
     
-## Settings
-`pyhodl` needs general settings to run. For more information please refer to [the guide](WRITE_CONFIGS.md).
-
-
-## Overview
-`pyhodl` consists of 4 submodules:
-- `updater`: syncs local data with the transactions from your exchanges. Can run as daemon and can update every other minute.
-- `plotter`: creates charts with local data. Saves `.png` images too.
-- `stats`: Computes statistics and trends using local data. Correlations, future prices, trading analysis and so on-
-- `controller`: Manages your data, parses raw downloads and fix API errors. You cannot invoke this module directly.
-
 ## Usage
 
 ```bash
 $ pyhodl [options]
 ```
-
+To specify your settins, please refer to [this](WRITE_CONFIGS.md).
 To import your transactions, please refer to [the guide](IMPORT_DATA.md).
 
 ### Supported commands
@@ -95,6 +84,10 @@ optional arguments:
   -stats STATS         Computes statistics and trends using local data
   -verbose, --verbose  Increase verbosity
   -tor TOR             Connect to tor via this password (advanced)
+```
+To run the tests (please do):
+```bash
+python3 setup.py test
 ```
 
 ## Changelog

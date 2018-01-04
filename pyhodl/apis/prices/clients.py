@@ -16,127 +16,20 @@
 # limitations under the License.
 
 
-""" API requests for historical info """
-
-import abc
+""" API clients to fetch prices data """
 import os
-import time
 import urllib.parse
-import urllib.request
 from datetime import timedelta
 
-from hal.time.profile import get_time_eta, print_time_eta
-
-from pyhodl.app import get_coin_by_symbol
-from pyhodl.config import DATE_TIME_KEY, VALUE_KEY, NAN, FIAT_COINS
+from pyhodl.apis.models import TorApiClient
+from pyhodl.apis.prices.models import PricesApiClient
+from pyhodl.app import get_coin
+from pyhodl.config import FIAT_COINS, NAN, DATE_TIME_KEY, VALUE_KEY
 from pyhodl.data.coins import Coin
-from pyhodl.logs import Logger
-from pyhodl.utils import replace_items, \
-    datetime_to_unix_timestamp_ms, unix_timestamp_ms_to_datetime, download, \
-    download_with_tor, datetime_to_str, datetime_to_unix_timestamp_s, middle, \
-    generate_dates
-
-
-class AbstractApiClient(Logger):
-    """ Simple bare api client """
-
-    def __init__(self, base_url):
-        """
-        :param base_url: str
-            Base url for API calls
-        """
-
-        Logger.__init__(self)
-        self.base_url = base_url
-
-
-class PricesApiClient(AbstractApiClient):
-    """ Simple prices API client """
-
-    @abc.abstractmethod
-    def get_price(self, coins, date_time, **kwargs):
-        """
-        :param coins: [] of str
-            List of coins
-        :param date_time: datetime
-            Date and time to get price
-        :param kwargs: **
-            Extra args
-        :return: {}
-            Price of coins at specified date and time
-        """
-
-        return
-
-    def get_prices_by_date(self, coins, dates, **kwargs):
-        """
-        :param coins: [] of str
-            List of coins
-        :param dates: [] of datetime
-            Dates and times to get price
-        :param kwargs: **
-            Extra args
-        :return: [] of {}
-            Price of coins at specified date and time
-        """
-
-        start_time = time.time()
-        dates = list(dates)
-        for i, date in enumerate(dates):
-            try:
-                new_prices = self.get_price(coins, date, **kwargs)
-                new_prices[DATE_TIME_KEY] = datetime_to_str(date)
-                yield new_prices
-
-                self.log("got prices up to", date)
-                print_time_eta(get_time_eta(i + 1, len(dates), start_time))
-            except:
-                print("Failed getting prices for", date)
-
-    def get_prices(self, coins, **kwargs):
-        """
-        :param coins: [] of str
-            List of coins
-        :param kwargs: **
-            Extra args
-        :return: [] of {}
-            List of coin prices
-        """
-
-        if "dates" in kwargs:
-            dates = kwargs["dates"]
-        else:  # args since, until and hours provided
-            dates = generate_dates(
-                kwargs["since"],
-                kwargs["until"],
-                kwargs["hours"]
-            )
-
-        return list(
-            self.get_prices_by_date(coins, dates, **kwargs)
-        )
-
-
-class TorApiClient:
-    """ Access API methods via tor """
-
-    def __init__(self, tor=False):
-        self.tor = str(tor) if tor else None  # tor password
-        if self.tor:
-            print("Handling tor sessions with password:", self.tor)
-
-    def download(self, url):
-        """
-        :param url: str
-            Url to fetch
-        :return: response
-            Response downloaded with tor
-        """
-
-        if self.tor:
-            return download_with_tor(url, self.tor, 3)
-
-        return download(url)
+from pyhodl.utils.dates import generate_dates, datetime_to_unix_timestamp_ms, \
+    datetime_to_unix_timestamp_s, unix_timestamp_ms_to_datetime, \
+    datetime_to_str
+from pyhodl.utils.misc import replace_items, middle
 
 
 class CryptocompareClient(PricesApiClient, TorApiClient):
@@ -186,6 +79,59 @@ class CryptocompareClient(PricesApiClient, TorApiClient):
     def download(self, url):
         return super().download(url).json()  # parse as json
 
+    def fetch_raw_prices(self, coins, date_time, currency):
+        """
+        :param coins: [] of str
+            List of coins
+        :param date_time: datetime
+            Date and time to get price
+        :param currency: str
+            Currency to convert to
+        :return: {}
+            List of raw prices
+        """
+
+        if len(coins) <= self.MAX_COINS_PER_REQUEST:
+            url = self.get_api_url(
+                self._encode_coins(coins), date_time, currency=currency
+            )
+            result = self.download(url)
+            return result[currency]
+
+        long_data = self.fetch_raw_prices(
+            coins[self.MAX_COINS_PER_REQUEST:], date_time,
+            currency=currency
+        )  # get other data
+        data = self.fetch_raw_prices(
+            coins[:self.MAX_COINS_PER_REQUEST], date_time, currency=currency
+        )
+        return {**data, **long_data}  # merge dicts
+
+    def fetch_prices(self, coins, date_time, currency):
+        """
+        :param coins: [] of str
+            List of coins
+        :param date_time: datetime
+            Date and time to get price
+        :param currency: str
+            Currency to convert to
+        :return: {}
+            List of prices of each coin
+        """
+
+        data = self.fetch_raw_prices(coins, date_time, currency)
+        data = self._decode_coins(data)
+
+        for coin in coins:
+            if coin not in data:
+                data[coin] = NAN
+
+        for coin, price in data.items():
+            if price == 0.0:
+                data[coin] = NAN
+
+        return data
+
     def get_api_url(self, coins, date_time, **kwargs):
         """
         :param coins: [] of str
@@ -208,32 +154,11 @@ class CryptocompareClient(PricesApiClient, TorApiClient):
 
     def get_price(self, coins, date_time, **kwargs):
         currency = kwargs["currency"]
-        if len(coins) > self.MAX_COINS_PER_REQUEST:
-            data = self.get_price(
-                coins[self.MAX_COINS_PER_REQUEST:], date_time,
-                currency=currency
-            )
-        else:
-            data = {}
-
-        url = self.get_api_url(
-            self._encode_coins(coins[:self.MAX_COINS_PER_REQUEST]),
-            date_time, currency=currency
-        )
-        result = self.download(url)
-        values = result[currency]
-        for coin, price in values.items():
-            try:
-                price = float(1 / price)
-            except:
-                price = NAN
-            data[coin] = price
-        data = self._decode_coins(data)
-
-        for coin in coins:
-            if coin not in data:
-                data[coin] = NAN
-        return data
+        prices = self.fetch_raw_prices(coins, date_time, currency)
+        return {
+            coin: float(1 / price)  # e.g we want USD -> BTC, not BTC -> USD
+            for coin, price in prices.items()
+        }
 
 
 class CoinmarketCapClient(PricesApiClient, TorApiClient):
@@ -254,7 +179,7 @@ class CoinmarketCapClient(PricesApiClient, TorApiClient):
 
         # action is a coin
         return os.path.join(
-            "currencies", get_coin_by_symbol(action).name
+            "currencies", get_coin(action).name
         )
 
     def _create_url(self, action, since, until):
@@ -356,9 +281,15 @@ class CoinmarketCapClient(PricesApiClient, TorApiClient):
         return prices
 
     def get_prices(self, coins, **kwargs):
-        since = kwargs["since"] - self.TIME_FRAME
-        until = kwargs["until"] + self.TIME_FRAME
-        dates = list(generate_dates(since, until, hours=23))  # day intervals
+        if "dates" in kwargs:
+            dates = kwargs["dates"]
+        else:  # args since, until and hours provided
+            dates = generate_dates(
+                kwargs["since"] - self.TIME_FRAME,
+                kwargs["until"] + self.TIME_FRAME,
+                24  # day intervals
+            )
+
         prices = {
             coin: [] for coin in coins
         }  # get raw prices with 5 minutes interval time
@@ -385,75 +316,3 @@ class CoinmarketCapClient(PricesApiClient, TorApiClient):
                 price[DATE_TIME_KEY] = date
                 data.append(price)
         return data
-
-
-def get_market_cap(since, until):
-    """
-    :param since: datetime
-        Get data since this date
-    :param until: datetime
-        Get data until this date
-    :return: [] of {}
-        Crypto market cap at specified dates
-    """
-
-    client = CoinmarketCapClient()
-    return client.get_market_cap(since, until)
-
-
-def get_client(currency, tor):
-    """
-    :param currency: str
-        Currency to get price
-    :param tor: *
-        Tor arg
-    :return: ApiClient
-        Client to get price with
-    """
-
-    if Coin(currency) in CryptocompareClient.AVAILABLE_FIAT:
-        return CryptocompareClient(tor=tor)  # better client (use as default)
-
-    return CoinmarketCapClient(tor=tor)
-
-
-def get_prices(coins, currency, since, until, tor):
-    """
-    :param coins: [] of str
-        List of coins
-    :param currency: str
-        Convert prices to this currency
-    :param since: datetime
-        Get prices since this date
-    :param until: datetime
-        Get prices until this date
-    :param tor: str or None
-        Password to access tor proxy
-    :return: [] of {}
-        List of prices of coins at dates
-    """
-
-    client = get_client(currency, tor)
-    return client.get_prices(
-        coins, since=since, until=until, hours=6, currency=currency
-    )
-
-
-def get_price(coins, currency, date_time, tor):
-    """
-    :param coins: [] of str
-        List of coins
-    :param currency: str
-        Convert prices to this currency
-    :param date_time: datetime
-        Get prices on date
-    :param tor: str or None
-        Password to access tor proxy
-    :return: [] of {}
-        List of prices of coins at dates
-    """
-
-    client = get_client(currency, tor)
-    return client.get_price(
-        coins, date_time=date_time, currency=currency
-    )

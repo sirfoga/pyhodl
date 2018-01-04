@@ -20,8 +20,9 @@
 
 from hal.files.models.system import ls_recurse, is_file
 
-from .core import CryptoParser, BinanceParser, BitfinexParser, CoinbaseParser, \
-    GdaxParser
+from pyhodl.data.exchanges import BinanceParser, BitfinexParser, \
+    CoinbaseParser, GdaxParser
+from .core import CryptoParser
 
 
 def build_parser(input_file):
@@ -93,7 +94,7 @@ def get_transactions(input_folder):
         Transactions found in all files from folder
     """
 
-    parsers = build_parser(input_folder)
+    parsers = build_parsers(input_folder)
     transactions = []
     for parser in parsers:
         transactions += list(parser.get_transactions_list())

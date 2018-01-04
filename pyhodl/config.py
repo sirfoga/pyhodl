@@ -17,9 +17,21 @@
 
 
 """ App global configs and vars """
+
 import os
+from enum import Enum
 
 from pyhodl.data.coins import Coin, CoinsNamesTable
+
+
+class RunMode(Enum):
+    """ Run as ... """
+
+    PLOTTER = "plotter"
+    STATS = "stats"
+    DOWNLOAD_HISTORICAL = "download"
+    UPDATER = "update"
+
 
 APP_NAME = "Pyhodl"
 APP_SHORT_NAME = "pyhodl"
@@ -33,6 +45,10 @@ APP_FOLDER = os.path.join(
 API_FOLDER = os.path.join(
     APP_FOLDER,
     "api"
+)
+API_CONFIG = os.path.join(
+    API_FOLDER,
+    "config.json"
 )
 
 DATA_FOLDER = os.path.join(
@@ -61,3 +77,20 @@ COINS_DATABASE = os.path.join(
 FIAT_COINS = [Coin("USD"), Coin("EUR")]  # supported fiat coins
 DEFAULT_FIAT = "USD"
 CRYPTO_COINS = CoinsNamesTable(COINS_DATABASE).get_coins()
+
+DEFAULT_PATHS = {
+    RunMode.STATS: DATA_FOLDER,
+    RunMode.DOWNLOAD_HISTORICAL: HISTORICAL_DATA_FOLDER,
+    RunMode.UPDATER: API_CONFIG
+}
+
+
+def get_coin_historical_data_file(currency):
+    """
+    :param currency: str
+        Currency to get
+    :return: str
+        Path to file containing currency historical data
+    """
+
+    return os.path.join(HISTORICAL_DATA_FOLDER, currency.lower() + ".json")

@@ -19,14 +19,13 @@
 """ Parse raw data """
 
 import abc
-import ciso8601
 import os
-from datetime import datetime
 
 from hal.files.parsers import JSONParser
 
-from pyhodl.models.exchanges import CryptoExchange
-from pyhodl.models.transactions import TransactionType, Transaction, Commission
+from pyhodl.core.models.exchanges import CryptoExchange
+from pyhodl.core.models.transactions import TransactionType, Transaction, \
+    CoinAmount
 
 
 class CryptoParser:
@@ -94,7 +93,22 @@ class CryptoParser:
 
         return
 
-    @abc.abstractmethod
+    def get_coins_amount_moved(self, raw):
+        """
+        :param raw: {}
+            Raw details of transaction
+        :return: tuple (str, float, str, float)
+            Coin bought, amount bought, coin sold, amount sold in case of
+            deposit/withdraw data
+        """
+
+        currency, amount = self.get_coin_moved(raw)
+
+        if self.is_deposit(raw):
+            return currency, amount, None, 0
+
+        return None, 0, currency, amount
+
     def get_coins_amounts(self, raw):
         """
         :param raw: {}
@@ -103,7 +117,37 @@ class CryptoParser:
             Coin bought, amount bought, coin sold, amount sold
         """
 
-        return
+        if self.is_trade(raw):
+            return self.get_coins_amount_traded(raw)
+
+        return self.get_coins_amount_moved(raw)
+
+    @staticmethod
+    def get_coins_amount_traded(raw):
+        """
+        :param raw: {}
+            Raw details of transaction
+        :return: tuple (str, float, str, float)
+            Coin bought, amount bought, coin sold, amount sold in case of
+            trading data
+        """
+
+        return None, 0, None, 0
+
+    @abc.abstractmethod
+    def get_coin_moved(self, raw, coin_key="coin", amount_key="amount"):
+        """
+        :param raw: {}
+            Raw details of transaction
+        :param coin_key: str
+            Identify coin name in raw data
+        :param amount_key: str
+            Identify coin amount in raw data
+        :return: tuple (str, float)
+            Coin name and amount moved
+        """
+
+        return raw[coin_key], abs(float(raw[amount_key]))
 
     @abc.abstractmethod
     def get_date(self, raw):
@@ -154,13 +198,14 @@ class CryptoParser:
 
         coin_bought, amount_bought, coin_sold, amount_sold = \
             self.get_coins_amounts(raw)
+        coin_buy = CoinAmount(coin_bought, amount_bought, True) \
+            if coin_bought else None
+        coin_sell = CoinAmount(coin_sold, amount_sold, False) \
+            if coin_sold else None
 
         return Transaction(
-            raw,
-            coin_bought, amount_bought, coin_sold, amount_sold,
-            self.get_date(raw),
-            self.get_transaction_type(raw),
-            self.is_successful(raw),
+            raw, coin_buy, coin_sell, self.get_date(raw),
+            self.get_transaction_type(raw), self.is_successful(raw),
             self.get_commission(raw)
         )
 
@@ -172,10 +217,7 @@ class CryptoParser:
 
         raw = self.get_raw_data()
         for transaction in raw:
-            try:
-                yield self.parse_transaction(transaction)
-            except:
-                print("Cannot parse transaction", transaction)
+            yield self.parse_transaction(transaction)
 
     def build_exchange(self, exchange_name):
         """
@@ -189,247 +231,3 @@ class CryptoParser:
             list(self.get_transactions_list()),
             exchange_name
         )
-
-
-class BinanceParser(CryptoParser):
-    """ Parses Binance transactions data """
-
-    def get_coins_amounts(self, raw):
-        if self.is_trade(raw):
-            market = raw["symbol"]
-            if market.endswith("USDT"):
-                coin_buy, coin_sell = market.replace("USDT", ""), "USDT"
-
-            coin_buy, coin_sell = market[:-3], market[-3:]
-
-            amount_buy = float(raw["qty"])
-            amount_sell = float(raw["price"]) * amount_buy
-
-            if raw["isBuyer"]:
-                return coin_buy, amount_buy, coin_sell, amount_sell
-
-            return coin_sell, amount_sell, coin_buy, amount_buy
-        elif self.is_deposit(raw):
-            return raw["asset"], float(raw["amount"]), None, 0
-        elif self.is_withdrawal(raw):
-            return None, 0, raw["asset"], float(raw["amount"])
-
-        return None, 0, None, 0
-
-    def get_commission(self, raw):
-        if "commissionAsset" in raw:
-            return Commission(
-                raw,
-                raw["commissionAsset"],
-                float(raw["commission"]),
-                self.get_date(raw),
-                self.is_successful(raw)
-            )
-
-    def get_date(self, raw):
-        if self.is_trade(raw):
-            return datetime.fromtimestamp(
-                int(raw["time"]) / 1000  # ms -> s
-            )
-        elif self.is_deposit(raw):
-            return datetime.fromtimestamp(
-                int(raw["insertTime"]) / 1000  # ms -> s
-            )
-        elif self.is_withdrawal(raw):
-            return datetime.fromtimestamp(
-                int(raw["successTime"]) / 1000  # ms -> s
-            )
-
-    def is_successful(self, raw):
-        if self.is_trade(raw):
-            return "commission" in raw
-        elif self.is_deposit(raw):
-            return int(raw["status"]) == 1
-        elif self.is_withdrawal(raw):
-            return int(raw["status"]) == 6
-
-        return False
-
-    def is_trade(self, raw):
-        return "isBuyer" in raw
-
-    def is_deposit(self, raw):
-        return "insertTime" in raw
-
-    def is_withdrawal(self, raw):
-        return "applyTime" in raw
-
-    def build_exchange(self, exchange_name="binance"):
-        return super(BinanceParser, self).build_exchange(exchange_name)
-
-
-class BitfinexParser(CryptoParser):
-    """ Parses Binance transactions data """
-
-    def get_coins_amounts(self, raw):
-        if self.is_trade(raw):
-            coin_buy, coin_sell = raw["symbol"][:3], raw["symbol"][3:]
-            buy_amount = float(raw["amount"])
-            sell_amount = buy_amount * float(raw["price"])
-            if raw["type"] == "Buy":
-                return coin_buy, buy_amount, coin_sell, sell_amount
-
-            return coin_sell, sell_amount, coin_buy, buy_amount
-        elif self.is_deposit(raw):
-            return raw["currency"], float(raw["amount"]), None, 0
-        elif self.is_withdrawal(raw):
-            return None, 0, raw["currency"], float(raw["amount"])
-
-        return None, 0, None, 0
-
-    def is_trade(self, raw):
-        return raw["type"] == "Sell" or raw["type"] == "Buy"
-
-    def is_withdrawal(self, raw):
-        return raw["type"] == "WITHDRAWAL"
-
-    def get_commission(self, raw):
-        if self.is_trade(raw):
-            return Commission(
-                raw,
-                raw["fee_currency"],
-                abs(float(raw["fee_amount"])),
-                self.get_date(raw),
-                self.is_successful(raw)
-            )
-        elif self.is_deposit(raw) or self.is_trade(raw):
-            return Commission(
-                raw,
-                raw["currency"],
-                abs(float(raw["fee"])),
-                self.get_date(raw),
-                self.is_successful(raw)
-            )
-
-        return None
-
-    def get_date(self, raw):
-        return datetime.fromtimestamp(int(float(raw["timestamp"])))
-
-    def is_deposit(self, raw):
-        return raw["type"] == "DEPOSIT"
-
-    def is_successful(self, raw):
-        if self.is_trade(raw):
-            return float(raw["fee_amount"]) <= 0
-        elif self.is_deposit(raw) or self.is_withdrawal(raw):
-            return raw["status"] == "COMPLETED"
-
-        return False
-
-    def build_exchange(self, exchange_name="bitfinex"):
-        return super().build_exchange(exchange_name)
-
-
-class CoinbaseParser(CryptoParser):
-    """ Parses Coinbase transactions data """
-
-    def get_coins_amounts(self, raw):
-        if self.is_trade(raw):
-            coin, currency = \
-                raw["amount"]["currency"], raw["native_amount"]["currency"]
-            if coin != currency:  # otherwise just a fiat log to discard
-                if raw["type"] == "sell":
-                    return currency, \
-                           abs(float(raw["native_amount"]["amount"])), \
-                           coin, abs(float(raw["amount"]["amount"]))
-
-                return coin, abs(float(raw["amount"]["amount"])), \
-                       currency, abs(float(raw["native_amount"]["amount"]))
-
-            return None, 0, None, 0
-        elif self.is_deposit(raw):
-            return raw["amount"]["currency"], \
-                   abs(float(raw["amount"]["amount"])), None, 0
-        elif self.is_withdrawal(raw):
-            return None, 0, \
-                   raw["amount"]["currency"], \
-                   abs(float(raw["amount"]["amount"]))
-
-        return None, 0, None, 0
-
-    def is_trade(self, raw):
-        return raw["type"] == "buy" or raw["type"] == "sell"
-
-    def is_withdrawal(self, raw):
-        amount = float(raw["amount"]["amount"])
-        native_amount = float(raw["native_amount"]["amount"])
-        return amount < 0 and native_amount < 0
-
-    def get_commission(self, raw):
-        try:
-            commission_data = raw["network"]
-            return Commission(
-                commission_data,
-                commission_data["transaction_fee"]["currency"],
-                commission_data["transaction_fee"]["amount"],
-                self.get_date(raw),
-                commission_data["status"] == "confirmed"
-            )
-        except:
-            return None
-
-    def get_date(self, raw):
-        return ciso8601.parse_datetime(raw["updated_at"])
-
-    def is_deposit(self, raw):
-        amount = float(raw["amount"]["amount"])
-        native_amount = float(raw["native_amount"]["amount"])
-        return amount >= 0 and native_amount >= 0
-
-    def is_successful(self, raw):
-        return raw["status"] == "completed"
-
-    def get_transactions_list(self):
-        raw = self.get_raw_data()
-        for account, transactions in raw.items():
-            for transaction in transactions:
-                try:
-                    yield self.parse_transaction(transaction)
-                except:
-                    print("Cannot parse transaction", transaction,
-                          "of account", account)
-
-    def build_exchange(self, exchange_name="coinbase"):
-        return super().build_exchange(exchange_name)
-
-
-class GdaxParser(CoinbaseParser):
-    """ Parses Binance transactions data """
-
-    def get_coins_amounts(self, raw):
-        amount = float(raw["amount"])
-        coin = raw["currency"]
-
-        if amount >= 0:  # buy
-            return coin, abs(amount), None, 0
-
-        return None, 0, coin, abs(amount)
-
-    def is_trade(self, raw):
-        return "product_id" in raw["details"]
-
-    def is_withdrawal(self, raw):
-        return raw["type"] == "transfer" \
-               and raw["details"]["transfer_type"] == "withdraw"
-
-    def get_commission(self, raw):
-        return None  # by default no way to check if transaction has fee or not
-
-    def get_date(self, raw):
-        return ciso8601.parse_datetime(raw["created_at"])
-
-    def is_deposit(self, raw):
-        return raw["type"] == "transfer" \
-               and raw["details"]["transfer_type"] == "deposit"
-
-    def is_successful(self, raw):
-        return True  # always
-
-    def build_exchange(self, exchange_name="gdax"):
-        return super().build_exchange(exchange_name)

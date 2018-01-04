@@ -24,8 +24,8 @@ from bisect import bisect
 from hal.files.parsers import JSONParser
 
 from pyhodl.config import HISTORICAL_DATA_FOLDER, DATE_TIME_KEY, VALUE_KEY, \
-    INFINITY
-from pyhodl.utils import parse_datetime
+    INFINITY, get_coin_historical_data_file
+from pyhodl.utils.dates import parse_datetime
 
 
 class DatetimeTable(JSONParser):
@@ -47,8 +47,13 @@ class DatetimeTable(JSONParser):
             for item in self.get_content()
         }  # date -> raw dict
         self.dates = sorted(self.content.keys())  # sorted list of all dates
-
         self.max_error = float(max_error_search)  # seconds
+
+    def get_content(self):
+        if os.path.exists(self.path):
+            return super().get_content()
+
+        return {}
 
     def get_values_on(self, date_time):
         """
@@ -112,10 +117,10 @@ class MarketDataTable(DatetimeTable):
 class CoinPricesTable(DatetimeTable):
     """ Parse market data files """
 
-    def __init__(self, currency="USD"):
+    def __init__(self, currency):
         DatetimeTable.__init__(
             self,
-            os.path.join(HISTORICAL_DATA_FOLDER, currency.lower() + ".json"),
+            get_coin_historical_data_file(currency),
             24 * 60 * 60  # a day
         )
 
@@ -141,7 +146,7 @@ class CoinPricesTable(DatetimeTable):
         return None
 
 
-COINS_PRICES_TABLE = CoinPricesTable()
+COINS_PRICES_TABLE = CoinPricesTable("USD")
 
 
 def get_coin_prices_table(currency="USD"):

@@ -25,9 +25,10 @@ from hal.streams.pretty_table import pretty_format_table
 
 from pyhodl.config import DATE_TIME_KEY, VALUE_KEY, NAN, \
     DEFAULT_FIAT
+from pyhodl.core.models.wallets import Wallet
 from pyhodl.data.balance import parse_balance, save_balance
-from pyhodl.models.transactions import Wallet
-from pyhodl.utils import datetime_to_str, get_delta_seconds, is_nan
+from pyhodl.utils.dates import datetime_to_str, get_delta_seconds
+from pyhodl.utils.misc import is_nan
 
 
 class CryptoExchange:
@@ -95,21 +96,14 @@ class CryptoExchange:
             there
         """
 
-        wallets = {}
-        for transaction in self.transactions:
-            if transaction.successful:
-                # get coins involved
-                coin_buy, coin_sell, coin_fee = \
-                    transaction.coin_buy, transaction.coin_sell, \
-                    transaction.commission.coin if transaction.commission else None
+        wallets = {}  # get only successful transactions
+        transactions = self.get_transactions(lambda x: x.successful)
+        for transaction in transactions:
+            for coin in transaction.get_coins():
+                if coin not in wallets:
+                    wallets[coin] = Wallet(coin)
 
-                # update wallets
-                for coin in {coin_buy, coin_sell, coin_fee}:
-                    if coin and str(coin) != "None":
-                        if coin not in wallets:
-                            wallets[coin] = Wallet(coin)
-
-                        wallets[coin].add_transaction(transaction)
+                wallets[coin].add_transaction(transaction)
 
         return wallets
 
@@ -122,17 +116,27 @@ class Portfolio:
         self.portfolio_name = str(portfolio_name) if portfolio_name else None
 
     def get_transactions_dates(self):
+        """
+        :return: [] of datetime
+            List of all dates of all transactions of all wallets
+        """
+
         dates = []
         for wallet in self.wallets:
             dates += wallet.dates()
         return sorted(dates)
 
     def get_current_balance(self, currency=DEFAULT_FIAT):
+        """
+        :return: [] of {}
+            List of current balance by wallet
+        """
+
         balances = [
             {
                 "symbol": wallet.base_currency,
                 "balance": wallet.balance(),
-                "value": wallet.balance(currency, True)
+                VALUE_KEY: wallet.balance(currency, True)
             }
             for wallet in self.wallets
         ]
@@ -140,16 +144,16 @@ class Portfolio:
 
         for i, balance in enumerate(balances):  # add price and %
             balances[i]["price"] = \
-                float(balance["value"] / balance["balance"]) if \
+                float(balance[VALUE_KEY] / balance["balance"]) if \
                     balance["balance"] != 0.0 else 0.0
             balances[i]["percentage"] = \
                 100.0 * min(1.0,
-                            1.0 * float(balance["value"]) / tot_balance) if \
+                            1.0 * float(balance[VALUE_KEY]) / tot_balance) if \
                     tot_balance != 0.0 else 0.0
 
         balances = sorted([
             balance for balance in balances if float(balance["balance"]) > 0.0
-        ], key=lambda x: x["value"], reverse=True)
+        ], key=lambda x: x[VALUE_KEY], reverse=True)
 
         return balances
 
@@ -191,6 +195,11 @@ class Portfolio:
         ])
 
     def get_crypto_fiat_balance(self, currency):
+        """
+        :return: tuple ([] of datetime, [] of float, [] of float)
+            List of dates, balances of crypto coins and fiat balances
+        """
+
         dates = self.get_transactions_dates()
         crypto_values = np.zeros(len(dates))  # zeros
         fiat_values = np.zeros(len(dates))
@@ -220,18 +229,18 @@ class Portfolio:
             [
                 str(balance["symbol"]),
                 str(balance["balance"]),
-                str(balance["value"]) + " $",
+                str(balance[VALUE_KEY]) + " $",
                 str(balance["price"]) + " $",
                 str(balance["percentage"]) + " %",
                 str(
-                    float(balance["value"]) -
-                    float(last[balance["symbol"]]["value"])
+                    float(balance[VALUE_KEY]) -
+                    float(last[balance["symbol"]][VALUE_KEY])
                 ) + " $" if last and balance["symbol"] in last else "+/- 0 $",
                 str(
-                    100.0 * (float(balance["value"]) /
-                             float(last[balance["symbol"]]["value"]) - 1.0)
+                    100.0 * (float(balance[VALUE_KEY]) /
+                             float(last[balance["symbol"]][VALUE_KEY]) - 1.0)
                 ) + " %" if last and balance["symbol"] in last and float(
-                    last[balance["symbol"]]["value"]) != 0.0 else "+/- 0 %"
+                    last[balance["symbol"]][VALUE_KEY]) != 0.0 else "+/- 0 %"
             ] for balance in balances
         ]
         pretty_table = pretty_format_table(
@@ -254,7 +263,7 @@ class Portfolio:
 
             last_total_balance = sum(
                 [
-                    float(coin["value"])
+                    float(coin[VALUE_KEY])
                     for symbol, coin in last.items() if symbol != DATE_TIME_KEY
                 ]
             )

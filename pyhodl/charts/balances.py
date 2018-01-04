@@ -23,8 +23,9 @@ import abc
 import matplotlib.pyplot as plt
 
 from pyhodl.config import VALUE_KEY
-from pyhodl.models.exchanges import Portfolio
-from pyhodl.utils import generate_dates, normalize
+from pyhodl.core.models.exchanges import Portfolio
+from pyhodl.utils.dates import generate_dates
+from pyhodl.utils.misc import normalize
 
 
 class CryptoPlotter:
@@ -126,8 +127,7 @@ class FiatPlotter(BalancePlotter):
 
         self.base_currency = base_currency
         self.wallets_value = {
-            wallet.base_currency:
-                wallet.balance(self.base_currency)
+            wallet.base_currency: wallet.balance(self.base_currency)
             for wallet in self.wallets
         }
 
@@ -140,12 +140,13 @@ class FiatPlotter(BalancePlotter):
         dates = self.portfolio.get_transactions_dates()
         for wallet in self.wallets:
             balances = wallet.get_balance_by_date(dates, self.base_currency)
+            label = "Value of " + wallet.base_currency + " (" + \
+                    self.base_currency + ")"
             plt.plot(
                 dates,
                 balances,
                 "-x",
-                label="Value of " + wallet.base_currency + " (" +
-                      self.base_currency + ")"
+                label=label
             )
 
     def plot_buy_sells(self, wallet):
@@ -197,14 +198,12 @@ class FiatPlotter(BalancePlotter):
             self.portfolio.get_crypto_fiat_balance(self.base_currency)
 
         plt.plot(
-            dates,
-            crypto_values,
+            dates, crypto_values,
             label="Crypto value of portfolio (" + self.base_currency + ")"
         )  # plot crypto balances
 
         plt.plot(
-            dates,
-            fiat_values,
+            dates, fiat_values,
             label="Fiat value of portfolio (" + self.base_currency + ")"
         )  # plot crypto balances
 

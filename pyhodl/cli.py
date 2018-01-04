@@ -18,42 +18,25 @@
 
 """ Command-line interface to pyhodl """
 
-import optparse
+import argparse
 import os
 import time
 import traceback
 from datetime import timedelta
-from enum import Enum
 
 from hal.files.save_as import write_dicts_to_json
 from hal.streams.user import UserInput
 
-from pyhodl.apis.exchanges import API_CONFIG
-from pyhodl.apis.prices import get_market_cap, get_prices
+from pyhodl.apis.prices.utils import get_market_cap, get_price_on_dates
 from pyhodl.charts.balances import FiatPlotter
-from pyhodl.config import DATA_FOLDER, HISTORICAL_DATA_FOLDER
+from pyhodl.config import DEFAULT_PATHS, RunMode
+from pyhodl.core.models.exchanges import Portfolio
 from pyhodl.data.balance import get_balance_file
 from pyhodl.data.parsers import build_parser, build_exchanges
-from pyhodl.models.exchanges import Portfolio
 from pyhodl.stats.transactions import get_transactions_dates, \
     get_all_exchanges, get_all_coins
 from pyhodl.updater.core import Updater
-
-
-class RunMode(Enum):
-    """ Run as ... """
-
-    PLOTTER = "plotter"
-    STATS = "stats"
-    DOWNLOAD_HISTORICAL = "download"
-    UPDATER = "update"
-
-
-DEFAULT_PATHS = {
-    RunMode.STATS: DATA_FOLDER,
-    RunMode.DOWNLOAD_HISTORICAL: HISTORICAL_DATA_FOLDER,
-    RunMode.UPDATER: API_CONFIG
-}
+from pyhodl.utils.dates import generate_dates
 
 
 def create_args():
@@ -62,12 +45,12 @@ def create_args():
         Parser that handles cmd arguments.
     """
 
-    parser = optparse.OptionParser(
+    parser = argparse.ArgumentParser(
         usage="-[mode] -h/--help for full usage"
     )
 
     # run mode
-    parser.add_option(
+    parser.add_argument(
         "-m",
         "--mode",
         dest="mode",
@@ -76,7 +59,7 @@ def create_args():
     )
 
     # path
-    parser.add_option(
+    parser.add_argument(
         "-p",
         "--path",
         dest="path",
@@ -85,7 +68,7 @@ def create_args():
     )
 
     # extra options
-    parser.add_option(
+    parser.add_argument(
         "-t",
         "--tor",
         dest="tor",
@@ -94,7 +77,7 @@ def create_args():
     )
 
     # extra options
-    parser.add_option(
+    parser.add_argument(
         "-v",
         "--verbose",
         dest="verbose",
@@ -114,7 +97,7 @@ def parse_args(parser):
         Values of arguments.
     """
 
-    args = parser.parse_args()[0].__dict__
+    args = vars(parser.parse_args())
     options = {
         "run": RunMode(args["mode"]),
         "verbose": args["verbose"],
@@ -133,11 +116,29 @@ def parse_args(parser):
 
 
 def update(config_file, verbose):
+    """
+    :param config_file: str
+        Path to config file
+    :param verbose: bool
+        True iff you want verbose output
+    :return: void
+        Updates your local transactions and saves results
+    """
+
     driver = Updater(config_file, verbose)
     driver.run()
 
 
 def plot(input_file, verbose):
+    """
+    :param input_file: str
+        Path to input file
+    :param verbose: bool
+        True iff you want verbose output
+    :return: void
+        Shows plots with data parsed from input file
+    """
+
     if verbose:
         print("Getting balances from", input_file)
 
@@ -150,6 +151,13 @@ def plot(input_file, verbose):
 
 
 def show_exchange_balance(exchange):
+    """
+    :param exchange: CryptoExchange
+        Exchange to get balance of
+    :return: void
+        Prints balance of exchange
+    """
+
     print("\nExchange:", exchange.exchange_name.title())
 
     wallets = exchange.build_wallets()
@@ -160,6 +168,13 @@ def show_exchange_balance(exchange):
 
 
 def show_folder_balance(input_folder):
+    """
+    :param input_folder: str
+        Path to input folder
+    :return: void
+        Prints balance of wallets found in folder
+    """
+
     exchanges = build_exchanges(input_folder)
     total_value = 0.0
     for exchange in exchanges:
@@ -169,6 +184,19 @@ def show_folder_balance(input_folder):
 
 
 def download_market_cap(since, until, where_to, verbose):
+    """
+    :param since: datetime
+            Get data since this date
+    :param until: datetime
+        Get data until this date
+    :param where_to: str
+        Save data here
+    :param verbose: bool
+        True iff you want verbose output
+    :return: void
+        Downloads market cap data and saves results
+    """
+
     if verbose:
         print("Getting market cap since", since, "until", until)
 
@@ -183,14 +211,32 @@ def download_market_cap(since, until, where_to, verbose):
 
 def download_prices(coins, since, until, where_to, verbose, currency="USD",
                     tor=False):
+    """
+    :param coins: [] of str
+        List of coins to fetch
+    :param since: datetime
+            Get data since this date
+    :param until: datetime
+        Get data until this date
+    :param where_to: str
+        Save data here
+    :param verbose: bool
+        True iff you want verbose output
+    :param currency: str
+        Currency to get prices on
+    :param tor: str or None
+        Connect to tor proxy with this password
+    :return: void
+        Downloads prices and saves results
+    """
+
     if verbose:
         print("Getting historical prices for", len(coins), "coins")
 
     output_file = os.path.join(where_to, currency.lower() + ".json")
     extra_time = timedelta(hours=6)
-    data = get_prices(
-        coins, currency, since - extra_time, until + extra_time, tor
-    )
+    dates = list(generate_dates(since - extra_time, until + extra_time, 6))
+    data = get_price_on_dates(coins, currency, dates, tor)
     if data:
         write_dicts_to_json(data, output_file)
 
@@ -199,6 +245,11 @@ def download_prices(coins, since, until, where_to, verbose, currency="USD",
 
 
 def main():
+    """
+    :return: void
+        Parse args and run selected mode
+    """
+
     args = parse_args(create_args())
     run_mode, run_path, tor, verbose = \
         args["run"], args["path"], args["tor"], args["verbose"]
@@ -230,13 +281,13 @@ def main():
         print("Run `pyhodl --help` to get a list of options.")
 
 
-def handle_exception(e):
+def handle_exception(exc):
     """
     :return: void
         Tries to handle it
     """
 
-    print("[CRITICAL ERROR]:", str(e).replace("\n", ".") + "!!!")
+    print("[CRITICAL ERROR]:", str(exc).replace("\n", ".") + "!!!")
     print("pyhodl stopped abruptly, but your data is safe, don't worry.")
     user_input = UserInput()
     if user_input.get_yes_no("Want to fill a bug report?"):
@@ -257,8 +308,8 @@ def cli():
 
     try:
         main()
-    except Exception as e:
-        handle_exception(e)
+    except Exception as exc:
+        handle_exception(exc)
 
 
 if __name__ == '__main__':
