@@ -20,13 +20,13 @@
 
 import os
 import threading
-from datetime import datetime, timedelta
+from datetime import datetime
 
 from pyhodl.apis.exchanges import ApiManager
 from pyhodl.app import ConfigManager
 from pyhodl.config import DATA_FOLDER
 from pyhodl.updater.models import build_updater
-from pyhodl.utils.dates import parse_datetime, datetime_to_str
+from pyhodl.utils.dates import parse_datetime, datetime_to_str, parse_timedelta
 from pyhodl.utils.misc import get_actual_class_name
 
 UPDATE_CONFIG = os.path.join(
@@ -81,24 +81,7 @@ class UpdateManager(ConfigManager):
         """
 
         raw = self.get("interval")
-        tokens = ["s", "m", "h", "d", "w"]
-        time_token = 0.0
-        for tok in tokens:
-            if raw.endswith(tok):
-                time_token = float(raw.split(tok)[0])
-
-        if raw.endswith("s"):
-            return timedelta(seconds=time_token)
-        elif raw.endswith("m"):
-            return timedelta(minutes=time_token)
-        elif raw.endswith("h"):
-            return timedelta(hours=time_token)
-        elif raw.endswith("d"):
-            return timedelta(days=time_token)
-        elif raw.endswith("w"):
-            return timedelta(days=7 * time_token)
-        else:
-            raise ValueError("Cannot parse update interval", raw)
+        return parse_timedelta(raw)
 
     def save_time_update(self):
         """

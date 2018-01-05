@@ -166,3 +166,31 @@ def floats_to_dates(lst):
     return [
         unix_timestamp_s_to_datetime(date_time) for date_time in lst
     ]
+
+
+def parse_timedelta(raw):
+    """
+    :param raw: str
+        Time interval written in short format
+    :return: timedelta
+        Time delta
+    """
+
+    tokens = ["s", "m", "h", "d", "w"]
+    time_token = 0.0
+    for tok in tokens:
+        if raw.endswith(tok):
+            time_token = float(raw.split(tok)[0])
+
+    if raw.endswith("s"):
+        return timedelta(seconds=time_token)
+    elif raw.endswith("m"):
+        return timedelta(minutes=time_token)
+    elif raw.endswith("h"):
+        return timedelta(hours=time_token)
+    elif raw.endswith("d"):
+        return timedelta(days=time_token)
+    elif raw.endswith("w"):
+        return timedelta(days=7 * time_token)
+    else:
+        raise ValueError("Cannot parse update interval", raw)
