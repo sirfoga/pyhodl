@@ -20,9 +20,9 @@
 
 from hal.files.models.system import ls_recurse, is_file
 
-from pyhodl.data.exchanges import BinanceParser, BitfinexParser, \
+from pyhodl.data.parse.core import CryptoParser
+from pyhodl.data.parse.models import BinanceParser, BitfinexParser, \
     CoinbaseParser, GdaxParser
-from .core import CryptoParser
 
 
 def build_parser(input_file):
@@ -52,6 +52,14 @@ def build_parser(input_file):
             return BinanceParser(input_file)
 
     raise ValueError("Cannot identify parser for file", input_file)
+
+
+def get_parser_from_dict(raw_data):
+    """
+    :param raw_data: {}
+        Raw dict data
+    :return: CryptoParser
+    """
 
 
 def build_parsers(input_folder):

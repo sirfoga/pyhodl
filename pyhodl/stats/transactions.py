@@ -18,7 +18,7 @@
 
 """ Get transactions stats """
 
-from pyhodl.data.parsers import build_exchanges
+from pyhodl.data.parse.build import build_exchanges
 from pyhodl.updater.core import UpdateManager
 
 

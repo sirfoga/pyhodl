@@ -31,7 +31,7 @@ from pyhodl.charts.balances import FiatPlotter
 from pyhodl.config import DEFAULT_PATHS, RunMode
 from pyhodl.core.models.exchanges import Portfolio
 from pyhodl.data.balance import get_balance_file
-from pyhodl.data.parsers import build_parser, build_exchanges
+from pyhodl.data.parse.build import build_parser, build_exchanges
 from pyhodl.stats.transactions import get_transactions_dates, \
     get_all_exchanges, get_all_coins
 from pyhodl.updater.core import Updater
