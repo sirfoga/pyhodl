@@ -26,8 +26,6 @@ import numpy as np
 import requests
 from hal.internet.web import get_tor_session, renew_connection
 
-from pyhodl.config import FIAT_COINS, SHORT_DEC_FORMAT, LONG_DEC_FORMAT
-
 
 def get_full_lists(big_dict):
     """
@@ -137,6 +135,7 @@ def is_network_rate_error(exc):
         if key in str(exc):
             return True
     return False
+
 
 def get_and_sleep(symbols, fetcher, sleep_time, log_data):
     """
@@ -272,17 +271,6 @@ def is_nan(candidate):
     return str(candidate) == "nan"
 
 
-def is_crypto(coin):
-    """
-    :param coin: str or Coin
-        Coin to check
-    :return: bool
-        True iff coin is among crypto supported
-    """
-
-    return coin not in FIAT_COINS
-
-
 def remove_same_coordinates(x, y):
     """
     :param x: [] of *
@@ -318,3 +306,23 @@ def num_to_str(num, form="short"):
 
     form = SHORT_DEC_FORMAT if form == "short" else LONG_DEC_FORMAT
     return form.format(num)
+
+
+def do_any_are_in(candidates, bucket):
+    """
+    :param candidates: [] of *
+        List of objects
+    :param bucket: [] of *
+        List of objects
+    :return: bool
+        True iff any object of the first list is in bucket
+    """
+
+    for candidate in candidates:
+        if candidate in bucket:
+            return True
+    return False
+
+
+LONG_DEC_FORMAT = "{0:.5f}"
+SHORT_DEC_FORMAT = "{0:.3f}"

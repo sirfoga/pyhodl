@@ -115,7 +115,7 @@ class CryptoPlotter:
             Plot data
         """
 
-        plt.plot(x, y, "-x", label=label)
+        plt.plot(x, y, "-", label=label)
         if with_trend:
             smooth_points = 300
             x_new, y_new = CryptoPlotter.compute_trend(x, y, smooth_points)

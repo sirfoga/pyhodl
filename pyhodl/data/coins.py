@@ -20,6 +20,8 @@
 
 from hal.files.parsers import JSONParser
 
+from pyhodl.utils.misc import do_any_are_in
+
 
 class Coin:
     """ Model of a coin traded """
@@ -57,17 +59,18 @@ class CryptoCoin(Coin):
         if super().__eq__(other):
             return True
 
-        try_with_name = self.name and self.name == other.name
-        if try_with_name:
+        if self.name and self.name == other.name:
             return True
-        else:
-            if isinstance(other, CryptoCoin):
-                if self.name and self.name in other.other_names:
-                    return True
 
-                for name in self.other_names:
-                    if name in other.other_names:
-                        return True
+        return self.has_same_names(other)
+
+    def has_same_names(self, other):
+        if isinstance(other, CryptoCoin) and self.name:
+            if self.name in other.other_names:
+                return True
+
+            if do_any_are_in(self.other_names, other.other_names):
+                return True
 
         return False
 
