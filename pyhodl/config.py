@@ -62,8 +62,8 @@ HISTORICAL_DATA_FOLDER = os.path.join(
 
 DATE_TIME_FORMAT = "%Y-%m-%d %H:%M:%S %z"
 DATE_TIME_KEY = "datetime"
-LONG_DEC_FORMAT = "{0:.4f}"
-SHORT_DEC_FORMAT = "{0:.2f}"
+LONG_DEC_FORMAT = "{0:.5f}"
+SHORT_DEC_FORMAT = "{0:.3f}"
 VALUE_KEY = "val"
 INFINITY = float("inf")
 NAN = float("nan")

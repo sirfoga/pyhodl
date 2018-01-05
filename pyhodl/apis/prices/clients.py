@@ -80,6 +80,21 @@ class CryptocompareClient(PricesApiClient, TorApiClient):
     def download(self, url):
         return super().download(url).json()  # parse as json
 
+    @staticmethod
+    def _parse_result(result):
+        """
+        :param result: {}
+            Raw result of API
+        :return: {}
+            Dict with prices for each coin
+        """
+
+        values = list(result.values())[0]
+        if isinstance(values, dict):
+            return values
+
+        return result
+
     def fetch_raw_prices(self, coins, date_time, currency):
         """
         :param coins: [] of str
@@ -98,7 +113,7 @@ class CryptocompareClient(PricesApiClient, TorApiClient):
             )
             print(url)
             result = self.download(url)
-            return result[currency]
+            return self._parse_result(result)  # parse data
 
         long_data = self.fetch_raw_prices(
             coins[self.MAX_COINS_PER_REQUEST:], date_time,
@@ -134,7 +149,7 @@ class CryptocompareClient(PricesApiClient, TorApiClient):
 
         return data
 
-    def _create_url(self, coins, date_time, realtime=False, **kwargs):
+    def _create_url(self, coins, date_time, **kwargs):
         """
         :param coins: [] of str
             BTC, ETH ...
@@ -144,18 +159,25 @@ class CryptocompareClient(PricesApiClient, TorApiClient):
             Url to call
         """
 
-        if realtime:
+        now = datetime.now()
+        real_time_interval = 60 * 5  # 5 minutes
+        real_time = abs(get_delta_seconds(now, date_time)) < real_time_interval
+
+        if real_time:
             url = self.base_url + "price"
+            params = {
+                "fsym": str(kwargs["currency"]),
+                "tsyms": ",".join(coins)
+            }
         else:
             url = self.base_url + "pricehistorical"  # past data
-
-        params = urllib.parse.urlencode(
-            {
+            params = {
                 "fsym": str(kwargs["currency"]),
                 "tsyms": ",".join(coins),
                 "ts": datetime_to_unix_timestamp_s(date_time)
             }
-        )
+
+        params = urllib.parse.urlencode(params)
         url += "?%s" % params
         return url.replace("%2C", ",")
 
