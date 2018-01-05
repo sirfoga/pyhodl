@@ -39,7 +39,7 @@ def build_parser(input_file):
     if isinstance(raw_data, dict):  # dict
         parser = get_parser_from_dict(raw_data)
     else:  # list
-        parser = get_parser_from_dict(raw_data)
+        parser = get_parser_from_list(raw_data)
 
     if parser:
         return parser(input_file)
