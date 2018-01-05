@@ -64,18 +64,19 @@ class DatetimeTable(JSONParser):
         """
 
         bisect_insert = bisect(self.dates, date_time)
+
         low, high = bisect_insert - 1, bisect_insert  # 2 nearest dates
         low = self.dates[low] if low >= 0 else None
         high = self.dates[high - 1] if high <= len(self.dates) else None
+
         err_low = (date_time - low).total_seconds() if low else INFINITY
         err_high = (high - date_time).total_seconds() if low else INFINITY
+        errors = [err_low, err_high, self.max_error]
 
-        if err_low <= err_high and err_low <= self.max_error:
+        if min(errors) == err_low:
             return self.content[low]
-        elif err_high <= err_low and err_high <= self.max_error:
+        elif min(errors) == err_high:
             return self.content[high]
-
-        return None
 
     def get_values_between(self, since, until):
         """

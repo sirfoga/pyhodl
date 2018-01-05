@@ -230,26 +230,31 @@ class FiatPlotter(BalancePlotter):
                     self.base_currency + ")"
             self.plot(dates, balances, label)
 
-    def plot_buy_sells(self, wallet):
+    def plot_price(self, wallet, ):
         """
         :param wallet: Wallet
             Coin wallet to plot
         :return: void
-            Plots buy/sells points of coin against coin price
+            Plots price of coin wallet
         """
 
-        deltas = wallet.get_delta_by_transaction()
-        dates = list(generate_dates(
-            deltas[0]["transaction"].date,
-            deltas[-1]["transaction"].date,
-            hours=4
-        ))
+        dates = wallet.dates()
+        dates = list(generate_dates(dates[0], dates[-1], hours=4))
         price = wallet.get_price_on(dates, self.base_currency)
         self.plot(
             dates, price,
             wallet.base_currency + " " + self.base_currency + "price"
         )  # plot price
 
+    def plot_delta_buy_sells(self, wallet):
+        """
+        :param wallet: Wallet
+            Coin wallet to plot
+        :return: void
+            Plots buy/sells points of coin
+        """
+
+        deltas = wallet.get_delta_by_transaction()
         max_delta = max(abs(delta[VALUE_KEY]) for delta in deltas)
         for delta in deltas:  # plot buys/sells points
             val = delta[VALUE_KEY]
@@ -268,6 +273,17 @@ class FiatPlotter(BalancePlotter):
                 markersize=int(radius),
                 color=color
             )
+
+    def plot_buy_sells(self, wallet):
+        """
+        :param wallet: Wallet
+            Coin wallet to plot
+        :return: void
+            Plots buy/sells points of coin against coin price
+        """
+
+        self.plot_price(wallet)
+        self.plot_delta_buy_sells(wallet)
 
     def plot_crypto_fiat_balance(self):
         """
