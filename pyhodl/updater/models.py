@@ -18,35 +18,8 @@
 
 """ Concrete core of exchange updater """
 
-from binance.client import Client as BinanceClient
-from ccxt import bitfinex as bitfinex_client
-from coinbase.wallet.client import Client as CoinbaseClient
-from gdax.authenticated_client import AuthenticatedClient as GdaxClient
-
 from pyhodl.updater.updaters import ExchangeUpdater, INT_32_MAX
 from pyhodl.utils.misc import handle_rate_limits, get_and_sleep
-
-
-def build_updater(api_client, data_folder):
-    """
-    :param api_client: ApiClient
-        Client to get exchange data
-    :param data_folder: str
-        Folder where to save data
-    :return: ExchangeUpdater
-        Concrete updater
-    """
-
-    if isinstance(api_client, BinanceClient):
-        return BinanceUpdater(api_client, data_folder)
-    elif isinstance(api_client, bitfinex_client):
-        return BitfinexUpdater(api_client, data_folder)
-    elif isinstance(api_client, CoinbaseClient):
-        return CoinbaseUpdater(api_client, data_folder)
-    elif isinstance(api_client, GdaxClient):
-        return GdaxUpdater(api_client, data_folder)
-    else:
-        raise ValueError("Cannot infer type of API client")
 
 
 class BinanceUpdater(ExchangeUpdater):

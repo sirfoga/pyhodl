@@ -22,10 +22,16 @@ import os
 import threading
 from datetime import datetime
 
+from binance.client import Client as BinanceClient
+from ccxt import bitfinex as bitfinex_client
+from coinbase.wallet.client import Client as CoinbaseClient
+from gdax import AuthenticatedClient as GdaxClient
+
 from pyhodl.apis.exchanges import ApiManager
 from pyhodl.app import ConfigManager
 from pyhodl.config import DATA_FOLDER
-from pyhodl.updater.models import build_updater
+from pyhodl.updater.models import BinanceUpdater, BitfinexUpdater, \
+    CoinbaseUpdater, GdaxUpdater
 from pyhodl.utils.dates import parse_datetime, datetime_to_str, parse_timedelta
 from pyhodl.utils.misc import get_actual_class_name
 
@@ -159,3 +165,25 @@ class Updater:
                       get_actual_class_name(api))
             except:
                 print("Cannot authenticate client", get_actual_class_name(api))
+
+
+def build_updater(api_client, data_folder):
+    """
+    :param api_client: ApiClient
+        Client to get exchange data
+    :param data_folder: str
+        Folder where to save data
+    :return: ExchangeUpdater
+        Concrete updater
+    """
+
+    if isinstance(api_client, BinanceClient):
+        return BinanceUpdater(api_client, data_folder)
+    elif isinstance(api_client, bitfinex_client):
+        return BitfinexUpdater(api_client, data_folder)
+    elif isinstance(api_client, CoinbaseClient):
+        return CoinbaseUpdater(api_client, data_folder)
+    elif isinstance(api_client, GdaxClient):
+        return GdaxUpdater(api_client, data_folder)
+    else:
+        raise ValueError("Cannot infer type of API client")
