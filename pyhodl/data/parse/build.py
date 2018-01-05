@@ -37,34 +37,18 @@ def build_parser(input_file):
     raw_data = parser.get_raw_data()
 
     if isinstance(raw_data, dict):  # dict
-        parser = get_parser_from_dict(raw_data)
-    else:  # list
-        parser = get_parser_from_list(raw_data)
+        for _, raw_lst in raw_data.items():
+            if raw_lst:
+                raw_data = raw_lst
+
+    parser = get_parser(raw_data)
 
     if parser:
         return parser(input_file)
     raise ValueError("Cannot identify parser for file", input_file)
 
 
-def get_parser_from_dict(raw_data):
-    """
-    :param raw_data: {}
-        Raw data
-    :return: CryptoParser
-        Build parse from raw data
-    """
-
-    for _, raw_lst in raw_data.items():
-        if raw_lst:
-            raw_dict = raw_lst[0]
-            if "instant_exchange" in raw_dict:
-                return CoinbaseParser
-            elif "currency" in raw_dict:
-                return GdaxParser
-    return None
-
-
-def get_parser_from_list(raw_data):
+def get_parser(raw_data):
     """
     :param raw_data: []
         Raw data
@@ -73,7 +57,11 @@ def get_parser_from_list(raw_data):
     """
 
     raw_item = raw_data[0]
-    if "timestamp" in raw_item:
+    if "instant_exchange" in raw_item:
+        return CoinbaseParser
+    elif "currency" in raw_item:
+        return GdaxParser
+    elif "timestamp" in raw_item:
         return BitfinexParser
     elif "txId" in raw_item or "isBuyer" in raw_item:
         return BinanceParser
