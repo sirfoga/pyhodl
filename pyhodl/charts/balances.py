@@ -100,7 +100,8 @@ class CryptoPlotter:
 
         return x_new, y_new
 
-    def plot(self, x, y, label, with_trend=False):
+    @staticmethod
+    def plot(x, y, label, with_trend=False):
         """
         :param x: [] of *
             X-axis data
@@ -117,7 +118,7 @@ class CryptoPlotter:
         plt.plot(x, y, "-x", label=label)
         if with_trend:
             smooth_points = 300
-            x_new, y_new = self.compute_trend(x, y, smooth_points)
+            x_new, y_new = CryptoPlotter.compute_trend(x, y, smooth_points)
             plt.plot(x_new, y_new, label=label + " trend")
 
     @abc.abstractmethod
