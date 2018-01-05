@@ -37,6 +37,7 @@ from pyhodl.stats.transactions import get_transactions_dates, \
     get_all_exchanges, get_all_coins
 from pyhodl.updater.core import Updater
 from pyhodl.utils.dates import generate_dates
+from pyhodl.utils.misc import num_to_str
 
 
 def create_args():
@@ -181,7 +182,7 @@ def show_folder_balance(input_folder):
     for exchange in exchanges:
         exchange_value = show_exchange_balance(exchange)
         total_value += exchange_value
-    print("\nTotal value of all exchanges ~", total_value, "$")
+    print("\nTotal value of all exchanges ~", num_to_str(total_value), "$")
 
 
 def download_market_cap(since, until, where_to, verbose):

@@ -26,7 +26,7 @@ import numpy as np
 import requests
 from hal.internet.web import get_tor_session, renew_connection
 
-from pyhodl.config import FIAT_COINS
+from pyhodl.config import FIAT_COINS, SHORT_DEC_FORMAT, LONG_DEC_FORMAT
 
 
 def get_full_lists(big_dict):
@@ -280,3 +280,17 @@ def remove_same_coordinates(x, y):
         d[x_coord] = np.average(y_coord)  # average of bucket
 
     return list(d.keys()), list(d.values())
+
+
+def num_to_str(num, form="short"):
+    """
+    :param num: float
+        Number to convert to string
+    :param form: str
+        Format to use. Must be in ["short", "long"]
+    :return: str
+        Convert to str using the specified format
+    """
+
+    form = SHORT_DEC_FORMAT if form == "short" else LONG_DEC_FORMAT
+    return form.format(num)
