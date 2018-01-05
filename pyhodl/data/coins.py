@@ -20,7 +20,7 @@
 
 from hal.files.parsers import JSONParser
 
-from pyhodl.utils.misc import do_any_are_in
+from pyhodl.utils.lists import do_any_are_in
 
 
 class Coin:

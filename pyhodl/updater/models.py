@@ -19,7 +19,7 @@
 """ Concrete core of exchange updater """
 
 from pyhodl.updater.updaters import ExchangeUpdater, INT_32_MAX
-from pyhodl.utils.misc import handle_rate_limits, get_and_sleep
+from pyhodl.utils.network import handle_rate_limits, get_and_sleep
 
 
 class BinanceUpdater(ExchangeUpdater):

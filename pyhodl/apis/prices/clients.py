@@ -29,7 +29,7 @@ from pyhodl.config import FIAT_COINS, NAN, DATE_TIME_KEY, VALUE_KEY
 from pyhodl.data.coins import Coin
 from pyhodl.utils.dates import generate_dates, datetime_to_unix_timestamp_s, \
     unix_timestamp_ms_to_datetime, datetime_to_str, get_delta_seconds
-from pyhodl.utils.misc import replace_items, middle
+from pyhodl.utils.lists import replace_items, middle
 
 
 class CryptocompareClient(PricesApiClient, TorApiClient):
