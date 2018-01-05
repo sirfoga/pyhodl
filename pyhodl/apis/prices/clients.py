@@ -111,7 +111,6 @@ class CryptocompareClient(PricesApiClient, TorApiClient):
             url = self._create_url(
                 self._encode_coins(coins), date_time, currency=currency
             )
-            print(url)
             result = self.download(url)
             return self._parse_result(result)  # parse data
 

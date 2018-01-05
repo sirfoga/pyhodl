@@ -235,7 +235,7 @@ def download_prices(coins, since, until, where_to, verbose, currency="USD",
         print("Getting historical prices for", len(coins), "coins")
 
     output_file = os.path.join(where_to, currency.lower() + ".json")
-    dates = list(generate_dates(since, until, 12))
+    dates = list(generate_dates(since, until, 24))
     data = get_price_on_dates(coins, currency, dates, tor)
     if data:
         write_dicts_to_json(data, output_file)
