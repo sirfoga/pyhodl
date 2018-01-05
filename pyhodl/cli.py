@@ -184,6 +184,20 @@ def show_folder_balance(input_folder):
     print("\nTotal value of all exchanges ~", num_to_str(total_value), "$")
 
 
+def show_balance(run_path):
+    """
+    :param run_path: str
+        Path to download file to
+    :return: void
+        Prints balance of wallets found
+    """
+
+    if os.path.isfile(run_path):
+        show_exchange_balance(run_path)
+    else:
+        show_folder_balance(run_path)
+
+
 def download_market_cap(since, until, where_to, verbose):
     """
     :param since: datetime
@@ -244,6 +258,32 @@ def download_prices(coins, since, until, where_to, verbose, currency="USD",
         print("Saved historical prices to", output_file)
 
 
+def download_historical(run_path, verbose, tor):
+    """
+    :param run_path: str
+        Path to download file to
+    :param verbose: bool
+        True iff you want verbose output
+    :param tor: str or None
+        Connect to tor proxy with this password
+    :return: void
+        Downloads prices and saves results
+    """
+
+    exchanges = get_all_exchanges()
+    dates = get_transactions_dates(exchanges)
+    first_transaction, last_transaction = min(dates), max(dates)
+    coins = get_all_coins(exchanges)
+
+    download_prices(
+        coins, first_transaction, last_transaction, run_path, verbose,
+        tor=tor
+    )
+    download_market_cap(
+        first_transaction, last_transaction, run_path, verbose
+    )
+
+
 def main():
     """
     :return: void
@@ -252,33 +292,16 @@ def main():
 
     args = parse_args(create_args())
     run_mode, run_path, tor, verbose = \
-        args["run"], args["path"], args["tor"], args["verbose"]
+        args["run"], args["path"], args["tor"], args["verbose"]  # parse
 
-    if run_mode == RunMode.UPDATER:
+    if run_mode == RunMode.UPDATER:  # choose mode
         update(run_path, verbose)
     elif run_mode == RunMode.PLOTTER:
         plot(run_path, verbose)
     elif run_mode == RunMode.STATS:
-        if os.path.isfile(run_path):
-            show_exchange_balance(run_path)
-        else:
-            show_folder_balance(run_path)
+        show_balance(run_path)
     elif run_mode == RunMode.DOWNLOAD_HISTORICAL:
-        exchanges = get_all_exchanges()
-        dates = get_transactions_dates(exchanges)
-        first_transaction, last_transaction = min(dates), max(dates)
-        coins = get_all_coins(exchanges)
-
-        download_prices(
-            coins, first_transaction, last_transaction, run_path, verbose,
-            tor=tor
-        )
-        download_market_cap(
-            first_transaction, last_transaction, run_path, verbose
-        )
-    else:  # null run mode
-        print("You realize you just called `pyhodl` with no meaningful args?")
-        print("Run `pyhodl --help` to get a list of options.")
+        download_historical(run_path, verbose, tor)
 
 
 def handle_exception(exc):
