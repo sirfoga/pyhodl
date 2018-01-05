@@ -25,7 +25,7 @@ from datetime import datetime, timedelta
 from pyhodl.apis.exchanges import ApiManager
 from pyhodl.app import ConfigManager
 from pyhodl.config import DATA_FOLDER
-from pyhodl.updater.updaters import ExchangeUpdater
+from pyhodl.updater.models import build_updater
 from pyhodl.utils.dates import parse_datetime, datetime_to_str
 from pyhodl.utils.misc import get_actual_class_name
 
@@ -168,7 +168,7 @@ class Updater:
 
         for api in self.api_manager.get_all():
             try:
-                updater = ExchangeUpdater.build_updater(
+                updater = build_updater(
                     api.get_client(), DATA_FOLDER
                 )
                 self.api_updaters.append(updater)

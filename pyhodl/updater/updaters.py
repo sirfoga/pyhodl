@@ -42,8 +42,6 @@ class ExchangeUpdater(Logger):
             Number of seconds between 2 consecutive requests
         :param rate_limit_wait: int
             Number of seconds to wait if rate limit exceeded
-        :param page_limit: int
-            Limit of requests per page
         """
 
         Logger.__init__(self)

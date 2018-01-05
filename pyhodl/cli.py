@@ -146,7 +146,8 @@ def plot(input_file, verbose):
     exchange = parser.build_exchange()
     wallets = exchange.build_wallets().values()
     plotter = FiatPlotter(wallets)
-    plotter.plot_crypto_fiat_balance()
+    plotter.plot_buy_sells([wallet for wallet in wallets if
+                            wallet.base_currency == "TRX"][0])
     plotter.show("Balances from " + input_file)
 
 
