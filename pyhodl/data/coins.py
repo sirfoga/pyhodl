@@ -65,6 +65,13 @@ class CryptoCoin(Coin):
         return self.has_same_names(other)
 
     def has_same_names(self, other):
+        """
+        :param other: CryptoCoin
+            Other coin
+        :return: bool
+            True iff has same names (or other names)
+        """
+
         if isinstance(other, CryptoCoin) and self.name:
             if self.name in other.other_names:
                 return True

@@ -40,11 +40,11 @@ class CryptoPlotter:
         self.fig, self.axis = plt.subplots()
 
     @staticmethod
-    def compute_knn_trend(x, y, smooth_points):
+    def compute_knn_trend(x_data, y_val, smooth_points):
         """
-        :param x:[] of *
+        :param x_data:[] of *
             X-axis data
-        :param y: [] of float
+        :param y_val: [] of float
             List of values
         :param smooth_points: int
             Number of points to interpolate
@@ -52,30 +52,30 @@ class CryptoPlotter:
             New dataset generated (with knn) values of new dataset
         """
 
-        is_dates = isinstance(x[0], datetime)
+        is_dates = isinstance(x_data[0], datetime)
         if is_dates:
-            x = dates_to_floats(x)
+            x_data = dates_to_floats(x_data)
 
         n_neighbors = 11
         weights = "uniform"
         knn = neighbors.KNeighborsRegressor(n_neighbors, weights=weights)
 
-        x = np.array(x).reshape(-1, 1)
-        T = np.linspace(x.min(), x.max(), smooth_points)
-        T = np.array([T]).reshape(-1, 1)
-        y_ = knn.fit(x, y).predict(T)
+        x_data = np.array(x_data).reshape(-1, 1)
+        new_x = np.linspace(x_data.min(), x_data.max(), smooth_points)
+        new_x = np.array([new_x]).reshape(-1, 1)
+        y_prediction = knn.fit(x_data, y_val).predict(new_x)
 
         if is_dates:
-            T = floats_to_dates(T[:, 0])
+            new_x = floats_to_dates(new_x[:, 0])
 
-        return T, y_
+        return new_x, y_prediction
 
     @staticmethod
-    def compute_trend(x, y, smooth_points):
+    def compute_trend(x_data, y_val, smooth_points):
         """
-        :param x:[] of *
+        :param x_data:[] of *
             X-axis data
-        :param y: [] of float
+        :param y_val: [] of float
             List of values
         :param smooth_points: int
             Number of points to interpolate
@@ -83,17 +83,13 @@ class CryptoPlotter:
             New dataset generated and smoothed values of new dataset
         """
 
-        is_dates = isinstance(x[0], datetime)
+        is_dates = isinstance(x_data[0], datetime)
         if is_dates:
-            x = dates_to_floats(x)
+            x_data = dates_to_floats(x_data)
 
-        n_neighbors = 11
-        weights = "uniform"
-        knn = neighbors.KNeighborsRegressor(n_neighbors, weights=weights)
-
-        x, y = remove_same_coordinates(x, y)
-        x_new = np.linspace(x.min(), x.max(), smooth_points)
-        y_new = spline(x, y, x_new)
+        x_data, y_val = remove_same_coordinates(x_data, y_val)
+        x_new = np.linspace(x_data.min(), x_data.max(), smooth_points)
+        y_new = spline(x_data, y_val, x_new)
 
         if is_dates:
             x_new = floats_to_dates(x_new[:, 0])
@@ -101,11 +97,11 @@ class CryptoPlotter:
         return x_new, y_new
 
     @staticmethod
-    def plot(x, y, label, with_trend=False):
+    def plot(x_data, y_val, label, with_trend=False):
         """
-        :param x: [] of *
+        :param x_data: [] of *
             X-axis data
-        :param y: [] of float
+        :param y_val: [] of float
             List of values
         :param label: str
             Label of data points
@@ -115,10 +111,11 @@ class CryptoPlotter:
             Plot data
         """
 
-        plt.plot(x, y, "-", label=label)
+        plt.plot(x_data, y_val, "-", label=label)
         if with_trend:
             smooth_points = 300
-            x_new, y_new = CryptoPlotter.compute_trend(x, y, smooth_points)
+            x_new, y_new = CryptoPlotter.compute_trend(x_data, y_val,
+                                                       smooth_points)
             plt.plot(x_new, y_new, label=label + " trend")
 
     @abc.abstractmethod

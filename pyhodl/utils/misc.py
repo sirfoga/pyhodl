@@ -271,27 +271,27 @@ def is_nan(candidate):
     return str(candidate) == "nan"
 
 
-def remove_same_coordinates(x, y):
+def remove_same_coordinates(x_data, y_val):
     """
-    :param x: [] of *
+    :param x_data: [] of *
         List of data on x-axis
-    :param y: [] of float
+    :param y_val: [] of float
         List of values
     :return: tuple ([] of *, [] of float)
         Original list minus the points with same x-coordinate
     """
 
-    d = {}
-    for x_coord, y_coord in zip(x, y):
-        if x_coord not in d:  # not already in
-            d[x_coord] = [y_coord]
+    coordinates = {}
+    for x_coord, y_coord in zip(x_data, y_val):
+        if x_coord not in coordinates:  # not already in
+            coordinates[x_coord] = [y_coord]
         else:  # there was another point
-            d[x_coord].append(y_coord)  # create bucket
+            coordinates[x_coord].append(y_coord)  # create bucket
 
-    for x_coord, y_coord in d.items():  # manage buckets
-        d[x_coord] = np.average(y_coord)  # average of bucket
+    for x_coord, y_coord in coordinates.items():  # manage buckets
+        coordinates[x_coord] = np.average(y_coord)  # average of bucket
 
-    return list(d.keys()), list(d.values())
+    return list(coordinates.keys()), list(coordinates.values())
 
 
 def num_to_str(num, form="short"):
