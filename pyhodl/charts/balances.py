@@ -96,11 +96,11 @@ class CryptoPlotter:
         y_new = spline(x, y, x_new)
 
         if is_dates:
-            T = floats_to_dates(T[:, 0])
+            x_new = floats_to_dates(x_new[:, 0])
 
         return x_new, y_new
 
-    def plot(self, x, y, label, with_trend=True):
+    def plot(self, x, y, label, with_trend=False):
         """
         :param x: [] of *
             X-axis data
@@ -244,9 +244,9 @@ class FiatPlotter(BalancePlotter):
             hours=4
         ))
         price = wallet.get_price_on(dates, self.base_currency)
-        plt.plot(
+        self.plot(
             dates, price,
-            label=wallet.base_currency + " " + self.base_currency + "price"
+            wallet.base_currency + " " + self.base_currency + "price"
         )  # plot price
 
         max_delta = max(abs(delta[VALUE_KEY]) for delta in deltas)

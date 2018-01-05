@@ -54,7 +54,7 @@ def datetime_to_unix_timestamp_ms(date_time):
     """
 
     seconds = datetime_to_unix_timestamp_s(datetime)
-    return int(seconds + date_time.microsecond / 1e3)
+    return int(seconds * 1e3 + date_time.microsecond / 1e3)
 
 
 def datetime_to_unix_timestamp_s(date_time):

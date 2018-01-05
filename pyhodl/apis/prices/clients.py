@@ -17,6 +17,7 @@
 
 
 """ API clients to fetch prices data """
+
 import os
 import urllib.parse
 from datetime import timedelta
@@ -26,9 +27,8 @@ from pyhodl.apis.prices.models import PricesApiClient
 from pyhodl.app import get_coin
 from pyhodl.config import FIAT_COINS, NAN, DATE_TIME_KEY, VALUE_KEY
 from pyhodl.data.coins import Coin
-from pyhodl.utils.dates import generate_dates, datetime_to_unix_timestamp_ms, \
-    datetime_to_unix_timestamp_s, unix_timestamp_ms_to_datetime, \
-    datetime_to_str
+from pyhodl.utils.dates import generate_dates, datetime_to_unix_timestamp_s, \
+    unix_timestamp_ms_to_datetime, datetime_to_str
 from pyhodl.utils.misc import replace_items, middle
 
 
@@ -95,6 +95,7 @@ class CryptocompareClient(PricesApiClient, TorApiClient):
             url = self.get_api_url(
                 self._encode_coins(coins), date_time, currency=currency
             )
+            print(url)
             result = self.download(url)
             return result[currency]
 
@@ -156,7 +157,7 @@ class CryptocompareClient(PricesApiClient, TorApiClient):
         currency = kwargs["currency"]
         prices = self.fetch_raw_prices(coins, date_time, currency)
         return {
-            coin: float(1 / price)  # e.g we want USD -> BTC, not BTC -> USD
+            coin: float(1 / price) if price > 0 else 0  # convert from USD
             for coin, price in prices.items()
         }
 
@@ -183,8 +184,8 @@ class CoinmarketCapClient(PricesApiClient, TorApiClient):
         )
 
     def _create_url(self, action, since, until):
-        since = datetime_to_unix_timestamp_ms(since)  # to ms unix
-        until = datetime_to_unix_timestamp_ms(until)
+        since = datetime_to_unix_timestamp_s(since)  # to ms unix
+        until = datetime_to_unix_timestamp_s(until)
         return os.path.join(
             self.base_url,
             self._create_path(action),

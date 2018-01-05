@@ -22,7 +22,6 @@ import argparse
 import os
 import time
 import traceback
-from datetime import timedelta
 
 from hal.files.save_as import write_dicts_to_json
 from hal.streams.user import UserInput
@@ -236,8 +235,7 @@ def download_prices(coins, since, until, where_to, verbose, currency="USD",
         print("Getting historical prices for", len(coins), "coins")
 
     output_file = os.path.join(where_to, currency.lower() + ".json")
-    extra_time = timedelta(hours=6)
-    dates = list(generate_dates(since - extra_time, until + extra_time, 6))
+    dates = list(generate_dates(since, until, 12))
     data = get_price_on_dates(coins, currency, dates, tor)
     if data:
         write_dicts_to_json(data, output_file)

@@ -60,16 +60,18 @@ class PricesApiClient(AbstractApiClient):
 
         start_time = time.time()
         dates = list(dates)
+        prices = []
         for i, date in enumerate(dates):
             try:
                 new_prices = self.get_price(coins, date, **kwargs)
                 new_prices[DATE_TIME_KEY] = datetime_to_str(date)
-                yield new_prices
+                prices.append(new_prices)
 
                 self.log("got prices up to", date)
                 print_time_eta(get_time_eta(i + 1, len(dates), start_time))
             except:
                 print("Failed getting prices for", date)
+        return prices
 
     def get_prices(self, coins, **kwargs):
         """
@@ -81,15 +83,17 @@ class PricesApiClient(AbstractApiClient):
             List of coin prices
         """
 
-        if "dates" in kwargs:
-            dates = kwargs["dates"]
-        else:  # args since, until and hours provided
-            dates = generate_dates(
+        if "dates" not in kwargs:  # args since, until and hours provided
+            kwargs["dates"] = generate_dates(
                 kwargs["since"],
                 kwargs["until"],
                 kwargs["hours"]
             )
 
-        return list(
-            self.get_prices_by_date(coins, dates, **kwargs)
-        )
+        dates = kwargs["dates"]
+
+        for key in ["since", "until", "hours", "dates"]:
+            if key in kwargs:
+                del kwargs[key]
+
+        return self.get_prices_by_date(coins, dates, **kwargs)
