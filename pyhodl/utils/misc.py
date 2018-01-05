@@ -83,8 +83,7 @@ def handle_rate_limits(func, time_wait=60, max_attempts=2):
             handle rate limit of callback function
         """
 
-        function_name = str(func.__name__) + "(" + str(args) + "," + str(
-            kwargs) + ")"
+        function_name = callable_to_str(func, args, kwargs)
         attempt_counter = 0
 
         while attempt_counter < max_attempts:
@@ -92,7 +91,7 @@ def handle_rate_limits(func, time_wait=60, max_attempts=2):
                 attempt_counter += 1
                 return func(*args, **kwargs)
             except Exception as exc:
-                if "429" in str(exc) or "Connection refused" in str(exc):
+                if is_network_rate_error(exc):
                     print(
                         function_name,
                         ">>> Attempt #", attempt_counter,
@@ -105,14 +104,39 @@ def handle_rate_limits(func, time_wait=60, max_attempts=2):
                         time.sleep(time_wait * 1.1)  # extra seconds to be sure
                 else:
                     return None  # exception not rate limit related
-        print(
-            function_name,
-            "max number of attempts:", max_attempts, " reached!"
-        )
         return None
 
     return _handle_rate_limits
 
+
+def callable_to_str(func, args, kwargs):
+    """
+    :param func: callback function
+        Function to wrap
+    :param args: *
+        args for callback function
+    :param kwargs: **
+        kwargs for callback function
+    :return: str
+        Name of function
+    """
+
+    return str(func.__name__) + "(" + str(args) + "," + str(kwargs) + ")"
+
+
+def is_network_rate_error(exc):
+    """
+    :param exc: Exception
+        Exception thrown when requesting network resource
+    :return: bool
+        True iff exception tells you abused APIs
+    """
+
+    keys = ["429", "Connection refused"]
+    for key in keys:
+        if key in str(exc):
+            return True
+    return False
 
 def get_and_sleep(symbols, fetcher, sleep_time, log_data):
     """
