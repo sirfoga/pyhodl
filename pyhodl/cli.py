@@ -29,14 +29,13 @@ from hal.streams.user import UserInput
 from pyhodl.apis.prices.utils import get_market_cap, get_price_on_dates
 from pyhodl.charts.balances import FiatPlotter
 from pyhodl.config import DEFAULT_PATHS, RunMode
-from pyhodl.core.models.exchanges import Portfolio
-from pyhodl.data.balance import get_balance_file
-from pyhodl.data.parse.build import build_parser, build_exchanges
+from pyhodl.data.balance import show_exchange_balance, \
+    show_folder_balance
+from pyhodl.data.parse.build import build_parser
 from pyhodl.stats.transactions import get_transactions_dates, \
     get_all_exchanges, get_all_coins
 from pyhodl.updater.core import Updater
 from pyhodl.utils.dates import generate_dates
-from pyhodl.utils.misc import num_to_str
 
 
 def create_args():
@@ -149,39 +148,6 @@ def plot(input_file, verbose):
     plotter.plot_buy_sells([wallet for wallet in wallets if
                             wallet.base_currency == "BTC"][0])
     plotter.show("Balances from " + input_file)
-
-
-def show_exchange_balance(exchange):
-    """
-    :param exchange: CryptoExchange
-        Exchange to get balance of
-    :return: void
-        Prints balance of exchange
-    """
-
-    print("\nExchange:", exchange.exchange_name.title())
-
-    wallets = exchange.build_wallets()
-    portfolio = Portfolio(wallets.values())
-    last_balance = get_balance_file(exchange.exchange_name)
-    save_to = last_balance
-    return portfolio.show_balance(last_balance, save_to)
-
-
-def show_folder_balance(input_folder):
-    """
-    :param input_folder: str
-        Path to input folder
-    :return: void
-        Prints balance of wallets found in folder
-    """
-
-    exchanges = build_exchanges(input_folder)
-    total_value = 0.0
-    for exchange in exchanges:
-        exchange_value = show_exchange_balance(exchange)
-        total_value += exchange_value
-    print("\nTotal value of all exchanges ~", num_to_str(total_value), "$")
 
 
 def show_balance(run_path):

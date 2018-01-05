@@ -25,8 +25,10 @@ from hal.files.parsers import JSONParser
 from hal.files.save_as import write_dicts_to_json
 
 from pyhodl.config import DATA_FOLDER, DATE_TIME_KEY, VALUE_KEY
+from pyhodl.core.models.exchanges import Portfolio
+from pyhodl.data.parse.build import build_exchanges
 from pyhodl.utils.dates import parse_datetime, datetime_to_str
-from pyhodl.utils.misc import is_nan
+from pyhodl.utils.misc import is_nan, num_to_str
 
 
 def get_balance_file(exchange):
@@ -78,3 +80,36 @@ def save_balance(balances, output_file, timestamp=datetime.now()):
         data[balance["symbol"]] = balance
     data[DATE_TIME_KEY] = datetime_to_str(timestamp)
     write_dicts_to_json(data, output_file)
+
+
+def show_exchange_balance(exchange):
+    """
+    :param exchange: CryptoExchange
+        Exchange to get balance of
+    :return: void
+        Prints balance of exchange
+    """
+
+    print("\nExchange:", exchange.exchange_name.title())
+
+    wallets = exchange.build_wallets()
+    portfolio = Portfolio(wallets.values())
+    last_balance = get_balance_file(exchange.exchange_name)
+    save_to = last_balance
+    return portfolio.show_balance(last_balance, save_to)
+
+
+def show_folder_balance(input_folder):
+    """
+    :param input_folder: str
+        Path to input folder
+    :return: void
+        Prints balance of wallets found in folder
+    """
+
+    exchanges = build_exchanges(input_folder)
+    total_value = 0.0
+    for exchange in exchanges:
+        exchange_value = show_exchange_balance(exchange)
+        total_value += exchange_value
+    print("\nTotal value of all exchanges ~", num_to_str(total_value), "$")

@@ -167,6 +167,24 @@ class Updater:
                 print("Cannot authenticate client", get_actual_class_name(api))
 
 
+def get_updater(api_client):
+    """
+    :param api_client: ApiClient
+        Client to get exchange data
+    :return: ExchangeUpdater
+        Updates exchange
+    """
+
+    if isinstance(api_client, BinanceClient):
+        return BinanceUpdater
+    elif isinstance(api_client, bitfinex_client):
+        return BitfinexUpdater
+    elif isinstance(api_client, CoinbaseClient):
+        return CoinbaseUpdater
+    elif isinstance(api_client, GdaxClient):
+        return GdaxUpdater
+
+
 def build_updater(api_client, data_folder):
     """
     :param api_client: ApiClient
@@ -177,13 +195,8 @@ def build_updater(api_client, data_folder):
         Concrete updater
     """
 
-    if isinstance(api_client, BinanceClient):
-        return BinanceUpdater(api_client, data_folder)
-    elif isinstance(api_client, bitfinex_client):
-        return BitfinexUpdater(api_client, data_folder)
-    elif isinstance(api_client, CoinbaseClient):
-        return CoinbaseUpdater(api_client, data_folder)
-    elif isinstance(api_client, GdaxClient):
-        return GdaxUpdater(api_client, data_folder)
-    else:
-        raise ValueError("Cannot infer type of API client")
+    updater = get_updater(api_client)
+    if updater:
+        return updater(api_client, data_folder)
+
+    raise ValueError("Cannot infer type of API client")
