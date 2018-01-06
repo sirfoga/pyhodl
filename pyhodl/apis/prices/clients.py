@@ -25,7 +25,7 @@ from datetime import timedelta, datetime
 from pyhodl.apis.models import TorApiClient
 from pyhodl.apis.prices.models import PricesApiClient
 from pyhodl.app import get_coin
-from pyhodl.config import NAN, DATE_TIME_KEY, VALUE_KEY
+from pyhodl.config import NAN, DATE_TIME_KEY, VALUE_KEY, SECONDS_IN_MIN
 from pyhodl.data.coins import Coin, FIAT_COINS
 from pyhodl.utils.dates import generate_dates, datetime_to_unix_timestamp_s, \
     unix_timestamp_ms_to_datetime, datetime_to_str, get_delta_seconds
@@ -159,7 +159,7 @@ class CryptocompareClient(PricesApiClient, TorApiClient):
         """
 
         now = datetime.now()
-        real_time_interval = 60 * 5  # 5 minutes
+        real_time_interval = SECONDS_IN_MIN * 5  # 5 minutes
         real_time = abs(get_delta_seconds(now, date_time)) < real_time_interval
 
         if real_time:
@@ -390,7 +390,7 @@ class CryptonatorClient(PricesApiClient, TorApiClient):
 
     def get_price(self, coins, date_time, **kwargs):
         now = datetime.now()
-        real_time_interval = 60 * 10  # 10 minutes
+        real_time_interval = SECONDS_IN_MIN * 10  # 10 minutes
         if abs(get_delta_seconds(now, date_time)) > real_time_interval:
             raise ValueError(self.class_name, "does only real-time "
                                               "conversions!")

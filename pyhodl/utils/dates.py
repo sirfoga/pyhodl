@@ -23,7 +23,7 @@ from datetime import timedelta, datetime
 
 import pytz
 
-from pyhodl.config import DATE_TIME_FORMAT
+from pyhodl.config import DATE_TIME_FORMAT, SECONDS_IN_HOUR
 
 
 def generate_dates(since, until, hours):
@@ -140,6 +140,19 @@ def get_delta_seconds(first, second):
     """
 
     return (localize(first) - localize(second)).total_seconds()
+
+
+def get_delta_hours(first, second):
+    """
+    :param first: datetime
+        Date and time
+    :param second: datetime
+        Date and time to subtract to first
+    :return: int
+        Total difference in hours
+    """
+
+    return get_delta_seconds(first, second) / SECONDS_IN_HOUR
 
 
 def dates_to_floats(lst):

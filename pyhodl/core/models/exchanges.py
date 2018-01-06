@@ -27,9 +27,9 @@ from pyhodl.config import DATE_TIME_KEY, VALUE_KEY, NAN
 from pyhodl.core.models.wallets import Wallet
 from pyhodl.data.balance import parse_balance, save_balance
 from pyhodl.data.coins import DEFAULT_FIAT
-from pyhodl.utils.dates import datetime_to_str, get_delta_seconds
+from pyhodl.utils.dates import datetime_to_str, get_delta_hours
 from pyhodl.utils.misc import is_nan, num_to_str, get_relative_delta, \
-    get_relative_percentage
+    get_relative_percentage, get_ratio
 
 
 class CryptoExchange:
@@ -144,13 +144,14 @@ class Portfolio:
         tot_balance = self.sum_total_balance(balances)
 
         for i, balance in enumerate(balances):  # add price and %
-            balances[i]["price"] = \
-                float(balance[VALUE_KEY] / balance["balance"]) if \
-                    balance["balance"] != 0.0 else 0.0
-            balances[i]["percentage"] = \
-                100.0 * min(1.0,
-                            1.0 * float(balance[VALUE_KEY]) / tot_balance) if \
-                    tot_balance != 0.0 else 0.0
+            balances[i]["price"] = get_ratio(
+                balance[VALUE_KEY],
+                balance["balance"]
+            )
+            balances[i]["percentage"] = get_relative_percentage(
+                balance[VALUE_KEY],
+                tot_balance
+            )
 
         balances = sorted([
             balance for balance in balances if float(balance["balance"]) > 0.0
@@ -190,9 +191,12 @@ class Portfolio:
             Total balance (without counting NaN values)
         """
 
+        if isinstance(balances, dict):
+            return Portfolio.sum_total_balance(balances.values())
+
         return sum([
             balance[VALUE_KEY] for balance in balances
-            if not is_nan(balance[VALUE_KEY])
+            if isinstance(balance, dict) and not is_nan(balance[VALUE_KEY])
         ])
 
     def get_crypto_fiat_balance(self, currency):
@@ -233,33 +237,28 @@ class Portfolio:
         total = self.sum_total_balance(balances)
         print("Total value: ~", num_to_str(total), "$")
 
-        if last:
-            last_time = last[DATE_TIME_KEY]
-            time_elapsed = get_delta_seconds(now, last_time) / (60.0 * 60.0)
+        last_time = last[DATE_TIME_KEY] if last else None
+        time_elapsed = get_delta_hours(now, last_time) if last_time else None
+        if last and time_elapsed:
             print("As of last time", datetime_to_str(last_time), "(",
                   num_to_str(time_elapsed), "hours ago):")
 
-            last_total_balance = sum(
-                [
-                    float(coin[VALUE_KEY])
-                    for symbol, coin in last.items() if symbol != DATE_TIME_KEY
-                ]
+            last_total_balance = sum([
+                float(coin[VALUE_KEY])
+                for symbol, coin in last.items() if symbol != DATE_TIME_KEY
+            ])
+            delta = get_relative_delta(total, last_total_balance)
+            percentage = get_relative_percentage(
+                total,
+                last_total_balance
             )
-            delta = total - last_total_balance
-            percentage = abs(100.0 * (total / last_total_balance - 1.0)) if \
-                last_total_balance != 0.0 else 0.0
-            if delta >= 0:
-                print("+", num_to_str(delta), "$ (+",
-                      num_to_str(percentage), "%)")
-            else:
-                print("-", num_to_str(abs(delta)), "$ (-",
-                      num_to_str(percentage), "%)")
+            print(num_to_str(delta), "$ (" + num_to_str(percentage) + "%)")
 
         if save_to:
             save_balance(balances, save_to, timestamp=now)
 
         last_total = self.sum_total_balance(last) if last else None
-        return total, last_total
+        return total, last_total, last_time, time_elapsed
 
     @staticmethod
     def _pretty_balance(balances, last):

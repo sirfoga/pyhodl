@@ -21,7 +21,9 @@
 from pyhodl.core.models.exchanges import Portfolio
 from pyhodl.data.balance import get_balance_file
 from pyhodl.data.parse.build import build_exchanges
-from pyhodl.utils.misc import num_to_str
+from pyhodl.utils.dates import datetime_to_str
+from pyhodl.utils.misc import num_to_str, get_relative_delta, \
+    get_relative_percentage
 
 
 def show_exchange_balance(exchange):
@@ -52,10 +54,21 @@ def show_folder_balance(input_folder):
     exchanges = build_exchanges(input_folder)
     total_value = 0.0
     last_total = 0.0
+    last_time = None
+    time_elapsed = None
 
     for exchange in exchanges:
-        total, last = show_exchange_balance(exchange)
+        total, last, last_time, time_elapsed = show_exchange_balance(exchange)
         total_value += total
         last_total += last if last else 0.0
 
-    print("\nTotal value of all exchanges ~", num_to_str(total_value), "$")
+    delta = get_relative_delta(total_value, last_total)
+    percentage = get_relative_percentage(total_value, last_total)
+
+    print("\n")  # space between single exchanges and total value
+    if last_time and time_elapsed:
+        print("As of last time", datetime_to_str(last_time), "(",
+              num_to_str(time_elapsed), "hours ago):")
+
+    print("Total value: ~", num_to_str(total_value), "$")
+    print(num_to_str(delta), "$ (" + num_to_str(percentage) + "%)")

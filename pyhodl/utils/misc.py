@@ -126,7 +126,7 @@ def num_to_str(num, form="short"):
     return form.format(num)
 
 
-def get_relative_percentage(new, last):
+def get_ratio(new, last):
     """
     :param new: float
         New value
@@ -141,11 +141,28 @@ def get_relative_percentage(new, last):
 
     new = float(new)
     last = float(last)
-    if last == 0 and new != 0:
+    if last == 0.0 and new != 0.0:
         return INFINITY
 
-    ratio = (new / last - 1.0)
-    return 100.0 * ratio
+    if last == 0.0 and new == 0.0:
+        return 1.0
+
+    return new / last
+
+
+def get_relative_percentage(new, last):
+    """
+    :param new: float
+        New value
+    :param last: float
+        Last value
+    :return: float in [0, 100]
+        Percentage increase (or decrease) since last value
+    """
+
+    ratio = get_ratio(new, last)
+    relative_ratio = ratio - 1.0
+    return 100.0 * relative_ratio
 
 
 def get_relative_delta(new, last):
