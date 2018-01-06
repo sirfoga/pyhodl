@@ -7,3 +7,6 @@ machine:
     - cd pyhal
     - pip3 install .  # run local setup (pyhal)
     - cd ..  # return to root folder
+jobs:
+  build:
+    - pip3 install .  # run local setup
