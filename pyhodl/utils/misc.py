@@ -17,10 +17,12 @@
 
 
 """ Tools """
+from datetime import datetime
 
 import numpy as np
 
 from pyhodl.config import INFINITY
+from pyhodl.utils.dates import datetime_to_str, get_delta_hours
 
 LONG_DEC_FORMAT = "{0:.5f}"
 SHORT_DEC_FORMAT = "{0:.3f}"
@@ -182,3 +184,28 @@ def get_relative_delta(new, last):
         return 0.0
 
     return new - last
+
+
+def print_balance(total_value, delta, percentage, last_time):
+    """
+    :param total_value: float
+        Total value of balance
+    :param delta: float
+        Delta since last time
+    :param percentage: float
+        % since last time
+    :param last_time: datetime
+        Date of last balance report
+    :return: void
+        Prints balance
+    """
+
+    if last_time:
+        hours_elapsed = get_delta_hours(datetime.now(), last_time)
+        print("Since last time", datetime_to_str(last_time), "(",
+              num_to_str(hours_elapsed), "hours ago):")
+
+    print("Total value: ~",
+          num_to_str(total_value), "$")
+    print("Difference: ~",
+          num_to_str(delta), "$ (" + num_to_str(percentage) + "%)")

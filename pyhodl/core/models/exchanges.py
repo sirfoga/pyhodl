@@ -27,9 +27,8 @@ from pyhodl.config import DATE_TIME_KEY, VALUE_KEY, NAN
 from pyhodl.core.models.wallets import Wallet
 from pyhodl.data.balance import parse_balance, save_balance
 from pyhodl.data.coins import DEFAULT_FIAT
-from pyhodl.utils.dates import datetime_to_str, get_delta_hours
 from pyhodl.utils.misc import is_nan, num_to_str, get_relative_delta, \
-    get_relative_percentage, get_ratio
+    get_relative_percentage, get_ratio, print_balance
 
 
 class CryptoExchange:
@@ -231,34 +230,27 @@ class Portfolio:
         balances = self.get_current_balance()
         pretty_table = self._pretty_balance(balances, last)
         now = datetime.now()
-        print("As of", now, "you got")
+
         print(pretty_table)
-
-        total = self.sum_total_balance(balances)
-        print("Total value: ~", num_to_str(total), "$")
-
+        total_value = self.sum_total_balance(balances)
         last_time = last[DATE_TIME_KEY] if last else None
-        time_elapsed = get_delta_hours(now, last_time) if last_time else None
-        if last and time_elapsed:
-            print("As of last time", datetime_to_str(last_time), "(",
-                  num_to_str(time_elapsed), "hours ago):")
-
+        if last:
             last_total_balance = sum([
                 float(coin[VALUE_KEY])
                 for symbol, coin in last.items() if symbol != DATE_TIME_KEY
             ])
-            delta = get_relative_delta(total, last_total_balance)
+            delta = get_relative_delta(total_value, last_total_balance)
             percentage = get_relative_percentage(
-                total,
+                total_value,
                 last_total_balance
             )
-            print(num_to_str(delta), "$ (" + num_to_str(percentage) + "%)")
+            print_balance(total_value, delta, percentage, last_time)
 
         if save_to:
             save_balance(balances, save_to, timestamp=now)
 
         last_total = self.sum_total_balance(last) if last else None
-        return total, last_total, last_time, time_elapsed
+        return total_value, last_total, last_time
 
     @staticmethod
     def _pretty_balance(balances, last):
