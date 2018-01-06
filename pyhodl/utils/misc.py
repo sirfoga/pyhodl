@@ -17,6 +17,7 @@
 
 
 """ Tools """
+
 from datetime import datetime
 
 import numpy as np
@@ -135,7 +136,7 @@ def get_ratio(new, last):
     :param last: float
         Last value
     :return: float in [0, 100]
-        Percentage increase (or decrease) since last value
+       Ratio (with errors handling)
     """
 
     if new is None or last is None:  # cannot produce result
@@ -152,7 +153,7 @@ def get_ratio(new, last):
     return new / last
 
 
-def get_relative_percentage(new, last):
+def get_percentage(new, last):
     """
     :param new: float
         New value
@@ -160,6 +161,22 @@ def get_relative_percentage(new, last):
         Last value
     :return: float in [0, 100]
         Percentage increase (or decrease) since last value
+    """
+
+    ratio = abs(get_ratio(new, last))
+    percentage = min(ratio * 100.0, 100.0)  # in bounds
+    percentage = max(percentage, 0.0)
+    return percentage
+
+
+def get_relative_percentage(new, last):
+    """
+    :param new: float
+        New value
+    :param last: float
+        Last value
+    :return: float in [0, 100]
+        Percentage (with errors handling)
     """
 
     ratio = get_ratio(new, last)

@@ -28,7 +28,7 @@ from pyhodl.core.models.wallets import Wallet
 from pyhodl.data.balance import parse_balance, save_balance
 from pyhodl.data.coins import DEFAULT_FIAT
 from pyhodl.utils.misc import is_nan, num_to_str, get_relative_delta, \
-    get_relative_percentage, get_ratio, print_balance
+    get_relative_percentage, get_ratio, print_balance, get_percentage
 
 
 class CryptoExchange:
@@ -147,7 +147,7 @@ class Portfolio:
                 balance[VALUE_KEY],
                 balance["balance"]
             )
-            balances[i]["percentage"] = get_relative_percentage(
+            balances[i]["percentage"] = get_percentage(
                 balance[VALUE_KEY],
                 tot_balance
             )
