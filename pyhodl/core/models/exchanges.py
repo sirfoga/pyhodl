@@ -228,7 +228,7 @@ class Portfolio:
 
         last = parse_balance(last) if last else None
         balances = self.get_current_balance()
-        pretty_table = self._pretty_balance(balances, last)
+        pretty_table = self._pretty_balances(balances, last)
         now = datetime.now()
 
         print(pretty_table)
@@ -253,7 +253,7 @@ class Portfolio:
         return total_value, last_total, last_time
 
     @staticmethod
-    def _pretty_balance(balances, last):
+    def _pretty_balances(balances, last):
         """
         :param balances: [] of {}
             List of balances of each coin
@@ -264,25 +264,7 @@ class Portfolio:
         """
 
         table = [
-            [
-                str(balance["symbol"]),
-                num_to_str(balance["balance"]),
-                num_to_str(balance[VALUE_KEY]) + " $",
-                num_to_str(balance["price"]) + " $",
-                num_to_str(balance["percentage"]) + " %",
-                num_to_str(
-                    get_relative_delta(
-                        balance[VALUE_KEY],
-                        last[balance["symbol"]][VALUE_KEY]
-                    )
-                ) + " $" if last and balance["symbol"] in last else "+/- 0 $",
-                num_to_str(
-                    get_relative_percentage(
-                        balance[VALUE_KEY],
-                        last[balance["symbol"]][VALUE_KEY]
-                    )
-                ) + " %" if last and balance["symbol"] in last else "+/- 0 %"
-            ] for balance in balances
+            Portfolio._pretty_balance(balance, last) for balance in balances
         ]
         return pretty_format_table(
             [
@@ -290,3 +272,19 @@ class Portfolio:
                 "$ delta", "% delta"
             ], table
         )
+
+    @staticmethod
+    def _pretty_balance(balance, last):
+        current_val = balance[VALUE_KEY]
+        last_val = last[balance["symbol"]][VALUE_KEY] \
+            if last and balance["symbol"] in last else None
+
+        return [
+            str(balance["symbol"]),
+            num_to_str(balance["balance"]),
+            num_to_str(balance[VALUE_KEY]) + " $",
+            num_to_str(balance["price"]) + " $",
+            num_to_str(balance["percentage"]) + " %",
+            num_to_str(get_relative_delta(current_val, last_val)) + " $",
+            num_to_str(get_relative_percentage(current_val, last_val)) + " %"
+        ]
