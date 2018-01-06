@@ -18,35 +18,8 @@
 
 """ Concrete core of exchange updater """
 
-from binance.client import Client as BinanceClient
-from ccxt import bitfinex as bitfinex_client
-from coinbase.wallet.client import Client as CoinbaseClient
-from gdax.authenticated_client import AuthenticatedClient as GdaxClient
-
 from pyhodl.updater.updaters import ExchangeUpdater, INT_32_MAX
-from pyhodl.utils.misc import handle_rate_limits, get_and_sleep
-
-
-def build_updater(api_client, data_folder):
-    """
-    :param api_client: ApiClient
-        Client to get exchange data
-    :param data_folder: str
-        Folder where to save data
-    :return: ExchangeUpdater
-        Concrete updater
-    """
-
-    if isinstance(api_client, BinanceClient):
-        return BinanceUpdater(api_client, data_folder)
-    elif isinstance(api_client, bitfinex_client):
-        return BitfinexUpdater(api_client, data_folder)
-    elif isinstance(api_client, CoinbaseClient):
-        return CoinbaseUpdater(api_client, data_folder)
-    elif isinstance(api_client, GdaxClient):
-        return GdaxUpdater(api_client, data_folder)
-    else:
-        raise ValueError("Cannot infer type of API client")
+from pyhodl.utils.network import handle_rate_limits, get_and_sleep
 
 
 class BinanceUpdater(ExchangeUpdater):
@@ -250,22 +223,32 @@ class CoinbaseUpdater(ExchangeUpdater):
         }
         self.page_limit = 100  # reduced page limit for coinbase and gdax
 
+    def get_account_transactions(self, account_id):
+        """
+        :param account_id: str
+            Account to fetch
+        :return: [] of {}
+            List of transactions of account
+        """
+
+        raw_data = self.client.get_transactions(
+            account_id,
+            limit=self.page_limit
+        )
+        self.transactions[account_id] += raw_data["data"]
+
+        while "pagination" in raw_data:  # other transactions
+            raw_data = self.client.get_transaction(
+                raw_data["pagination"]["previous_uri"]
+            )
+            self.transactions[account_id] += raw_data["data"]
+
     def get_transactions(self):
         super().get_transactions()
         for account_id, account in self.accounts.items():
             self.log("Getting transaction history of account",
                      account["id"], "(" + account["balance"]["currency"] + ")")
-            raw_data = self.client.get_transactions(
-                account_id,
-                limit=self.page_limit
-            )
-            self.transactions[account_id] += raw_data["data"]
-
-            while "pagination" in raw_data:  # other transactions
-                raw_data = self.client.get_transaction(
-                    raw_data["pagination"]["previous_uri"]
-                )
-                self.transactions[account_id] += raw_data["data"]
+            self.get_account_transactions(account_id)
 
 
 class GdaxUpdater(ExchangeUpdater):
@@ -282,18 +265,28 @@ class GdaxUpdater(ExchangeUpdater):
             account_id: [] for account_id in self.accounts
         }
 
+    def get_account_transactions(self, account):
+        """
+        :param account: {}
+            Account to fetch
+        :return: [] of {}
+            List of transactions of account
+        """
+
+        transactions = []
+        pages = self.client.get_account_history(account["id"])
+        for page in pages:
+            transactions += page
+
+        if transactions:  # add currency symbol
+            for i, _ in enumerate(transactions):
+                transactions[i]["currency"] = account["currency"]
+        return transactions
+
     def get_transactions(self):
         super().get_transactions()
         for account_id, account in self.accounts.items():
             self.log("Getting transaction history of account",
                      account["id"], "(" + account["currency"] + ")")
-            pages = self.client.get_account_history(account_id)
-            transactions = []
-            for page in pages:
-                transactions += page
-
-            if transactions:  # add currency symbol
-                for i, _ in enumerate(transactions):
-                    transactions[i]["currency"] = account["currency"]
-
-            self.transactions[account_id] = transactions
+            self.transactions[account_id] = \
+                self.get_account_transactions(account)

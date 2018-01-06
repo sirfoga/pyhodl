@@ -23,12 +23,12 @@ from datetime import datetime
 import numpy as np
 from hal.streams.pretty_table import pretty_format_table
 
-from pyhodl.config import DATE_TIME_KEY, VALUE_KEY, NAN, \
-    DEFAULT_FIAT
+from pyhodl.config import DATE_TIME_KEY, VALUE_KEY, NAN
 from pyhodl.core.models.wallets import Wallet
 from pyhodl.data.balance import parse_balance, save_balance
+from pyhodl.data.coins import DEFAULT_FIAT
 from pyhodl.utils.dates import datetime_to_str, get_delta_seconds
-from pyhodl.utils.misc import is_nan
+from pyhodl.utils.misc import is_nan, num_to_str
 
 
 class CryptoExchange:
@@ -225,41 +225,17 @@ class Portfolio:
         last = parse_balance(last) if last else None
         balances = self.get_current_balance()
         total = self.sum_total_balance(balances)
-        table = [
-            [
-                str(balance["symbol"]),
-                str(balance["balance"]),
-                str(balance[VALUE_KEY]) + " $",
-                str(balance["price"]) + " $",
-                str(balance["percentage"]) + " %",
-                str(
-                    float(balance[VALUE_KEY]) -
-                    float(last[balance["symbol"]][VALUE_KEY])
-                ) + " $" if last and balance["symbol"] in last else "+/- 0 $",
-                str(
-                    100.0 * (float(balance[VALUE_KEY]) /
-                             float(last[balance["symbol"]][VALUE_KEY]) - 1.0)
-                ) + " %" if last and balance["symbol"] in last and float(
-                    last[balance["symbol"]][VALUE_KEY]) != 0.0 else "+/- 0 %"
-            ] for balance in balances
-        ]
-        pretty_table = pretty_format_table(
-            [
-                "symbol", "balance", "$ value", "$ price per coin", "%",
-                "$ delta", "% delta"
-            ], table
-        )
-
+        pretty_table = self._pretty_balance(balances, last)
         now = datetime.now()
         print("As of", now, "you got")
         print(pretty_table)
-        print("Total value: ~", total, "$")
+        print("Total value: ~", num_to_str(total), "$")
 
         if last:
             last_time = last[DATE_TIME_KEY]
             time_elapsed = get_delta_seconds(now, last_time) / (60.0 * 60.0)
             print("As of last time", datetime_to_str(last_time), "(",
-                  time_elapsed, "hours ago):")
+                  num_to_str(time_elapsed), "hours ago):")
 
             last_total_balance = sum(
                 [
@@ -271,11 +247,49 @@ class Portfolio:
             percentage = abs(100.0 * (total / last_total_balance - 1.0)) if \
                 last_total_balance != 0.0 else 0.0
             if delta >= 0:
-                print("+", delta, "$ (+", percentage, "%)")
+                print("+", num_to_str(delta), "$ (+",
+                      num_to_str(percentage), "%)")
             else:
-                print("-", abs(delta), "$ (-", percentage, "%)")
+                print("-", num_to_str(abs(delta)), "$ (-",
+                      num_to_str(percentage), "%)")
 
         if save_to:
             save_balance(balances, save_to, timestamp=now)
 
         return total
+
+    @staticmethod
+    def _pretty_balance(balances, last):
+        """
+        :param balances: [] of {}
+            List of balances of each coin
+        :param last: {}
+            Dict with last balance data
+        :return: str
+            Pretty table with balance data
+        """
+
+        table = [
+            [
+                str(balance["symbol"]),
+                num_to_str(balance["balance"]),
+                num_to_str(balance[VALUE_KEY]) + " $",
+                num_to_str(balance["price"]) + " $",
+                num_to_str(balance["percentage"]) + " %",
+                num_to_str(
+                    float(balance[VALUE_KEY]) -
+                    float(last[balance["symbol"]][VALUE_KEY])
+                ) + " $" if last and balance["symbol"] in last else "+/- 0 $",
+                num_to_str(
+                    100.0 * (float(balance[VALUE_KEY]) /
+                             float(last[balance["symbol"]][VALUE_KEY]) - 1.0)
+                ) + " %" if last and balance["symbol"] in last and float(
+                    last[balance["symbol"]][VALUE_KEY]) != 0.0 else "+/- 0 %"
+            ] for balance in balances
+        ]
+        return pretty_format_table(
+            [
+                "symbol", "balance", "$ value", "$ price per coin", "%",
+                "$ delta", "% delta"
+            ], table
+        )

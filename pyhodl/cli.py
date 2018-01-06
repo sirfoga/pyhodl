@@ -22,7 +22,6 @@ import argparse
 import os
 import time
 import traceback
-from datetime import timedelta
 
 from hal.files.save_as import write_dicts_to_json
 from hal.streams.user import UserInput
@@ -30,9 +29,9 @@ from hal.streams.user import UserInput
 from pyhodl.apis.prices.utils import get_market_cap, get_price_on_dates
 from pyhodl.charts.balances import FiatPlotter
 from pyhodl.config import DEFAULT_PATHS, RunMode
-from pyhodl.core.models.exchanges import Portfolio
-from pyhodl.data.balance import get_balance_file
-from pyhodl.data.parsers import build_parser, build_exchanges
+from pyhodl.core.tools.balance import show_exchange_balance, \
+    show_folder_balance
+from pyhodl.data.parse.build import build_parser
 from pyhodl.stats.transactions import get_transactions_dates, \
     get_all_exchanges, get_all_coins
 from pyhodl.updater.core import Updater
@@ -146,41 +145,23 @@ def plot(input_file, verbose):
     exchange = parser.build_exchange()
     wallets = exchange.build_wallets().values()
     plotter = FiatPlotter(wallets)
-    plotter.plot_crypto_fiat_balance()
+    plotter.plot_buy_sells([wallet for wallet in wallets if
+                            wallet.base_currency == "BTC"][0])
     plotter.show("Balances from " + input_file)
 
 
-def show_exchange_balance(exchange):
+def show_balance(run_path):
     """
-    :param exchange: CryptoExchange
-        Exchange to get balance of
+    :param run_path: str
+        Path to download file to
     :return: void
-        Prints balance of exchange
+        Prints balance of wallets found
     """
 
-    print("\nExchange:", exchange.exchange_name.title())
-
-    wallets = exchange.build_wallets()
-    portfolio = Portfolio(wallets.values())
-    last_balance = get_balance_file(exchange.exchange_name)
-    save_to = last_balance
-    return portfolio.show_balance(last_balance, save_to)
-
-
-def show_folder_balance(input_folder):
-    """
-    :param input_folder: str
-        Path to input folder
-    :return: void
-        Prints balance of wallets found in folder
-    """
-
-    exchanges = build_exchanges(input_folder)
-    total_value = 0.0
-    for exchange in exchanges:
-        exchange_value = show_exchange_balance(exchange)
-        total_value += exchange_value
-    print("\nTotal value of all exchanges ~", total_value, "$")
+    if os.path.isfile(run_path):
+        show_exchange_balance(run_path)
+    else:
+        show_folder_balance(run_path)
 
 
 def download_market_cap(since, until, where_to, verbose):
@@ -234,14 +215,39 @@ def download_prices(coins, since, until, where_to, verbose, currency="USD",
         print("Getting historical prices for", len(coins), "coins")
 
     output_file = os.path.join(where_to, currency.lower() + ".json")
-    extra_time = timedelta(hours=6)
-    dates = list(generate_dates(since - extra_time, until + extra_time, 6))
+    dates = list(generate_dates(since, until, 24))
     data = get_price_on_dates(coins, currency, dates, tor)
     if data:
         write_dicts_to_json(data, output_file)
 
     if verbose:
         print("Saved historical prices to", output_file)
+
+
+def download_historical(run_path, verbose, tor):
+    """
+    :param run_path: str
+        Path to download file to
+    :param verbose: bool
+        True iff you want verbose output
+    :param tor: str or None
+        Connect to tor proxy with this password
+    :return: void
+        Downloads prices and saves results
+    """
+
+    exchanges = get_all_exchanges()
+    dates = get_transactions_dates(exchanges)
+    first_transaction, last_transaction = min(dates), max(dates)
+    coins = get_all_coins(exchanges)
+
+    download_prices(
+        coins, first_transaction, last_transaction, run_path, verbose,
+        tor=tor
+    )
+    download_market_cap(
+        first_transaction, last_transaction, run_path, verbose
+    )
 
 
 def main():
@@ -252,33 +258,16 @@ def main():
 
     args = parse_args(create_args())
     run_mode, run_path, tor, verbose = \
-        args["run"], args["path"], args["tor"], args["verbose"]
+        args["run"], args["path"], args["tor"], args["verbose"]  # parse
 
-    if run_mode == RunMode.UPDATER:
+    if run_mode == RunMode.UPDATER:  # choose mode
         update(run_path, verbose)
     elif run_mode == RunMode.PLOTTER:
         plot(run_path, verbose)
     elif run_mode == RunMode.STATS:
-        if os.path.isfile(run_path):
-            show_exchange_balance(run_path)
-        else:
-            show_folder_balance(run_path)
+        show_balance(run_path)
     elif run_mode == RunMode.DOWNLOAD_HISTORICAL:
-        exchanges = get_all_exchanges()
-        dates = get_transactions_dates(exchanges)
-        first_transaction, last_transaction = min(dates), max(dates)
-        coins = get_all_coins(exchanges)
-
-        download_prices(
-            coins, first_transaction, last_transaction, run_path, verbose,
-            tor=tor
-        )
-        download_market_cap(
-            first_transaction, last_transaction, run_path, verbose
-        )
-    else:  # null run mode
-        print("You realize you just called `pyhodl` with no meaningful args?")
-        print("Run `pyhodl --help` to get a list of options.")
+        download_historical(run_path, verbose, tor)
 
 
 def handle_exception(exc):

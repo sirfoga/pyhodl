@@ -53,8 +53,8 @@ def datetime_to_unix_timestamp_ms(date_time):
         Unix timestamp (milliseconds)
     """
 
-    return int(time.mktime(date_time.timetuple()) * 1e3 +
-               date_time.microsecond / 1e3)
+    seconds = datetime_to_unix_timestamp_s(datetime)
+    return int(seconds * 1e3 + date_time.microsecond / 1e3)
 
 
 def datetime_to_unix_timestamp_s(date_time):
@@ -65,7 +65,7 @@ def datetime_to_unix_timestamp_s(date_time):
         Unix timestamp (seconds)
     """
 
-    return int(time.mktime(date_time.timetuple()) * 1e3)
+    return int(time.mktime(date_time.timetuple()))
 
 
 def unix_timestamp_ms_to_datetime(milliseconds):
@@ -76,7 +76,18 @@ def unix_timestamp_ms_to_datetime(milliseconds):
         Date and time (UTC)
     """
 
-    date_time = datetime.fromtimestamp(float(milliseconds) / 1e3)
+    return unix_timestamp_s_to_datetime(milliseconds / 1e3)
+
+
+def unix_timestamp_s_to_datetime(seconds):
+    """
+    :param seconds: int
+        Unix timestamp (seconds)
+    :return: datetime
+        Date and time (UTC)
+    """
+
+    date_time = datetime.fromtimestamp(float(seconds))
     return localize(date_time)  # utc as default time zone
 
 
@@ -129,3 +140,57 @@ def get_delta_seconds(first, second):
     """
 
     return (localize(first) - localize(second)).total_seconds()
+
+
+def dates_to_floats(lst):
+    """
+    :param lst: [] of datetime
+        List of dates
+    :return: [] of float
+        List of floats (seconds since epoch)
+    """
+
+    return [
+        datetime_to_unix_timestamp_s(date_time) for date_time in lst
+    ]
+
+
+def floats_to_dates(lst):
+    """
+    :param lst: [] of float
+        List of floats (seconds since epoch)
+    :return: [] of datetime
+        List of dates
+    """
+
+    return [
+        unix_timestamp_s_to_datetime(date_time) for date_time in lst
+    ]
+
+
+def parse_timedelta(raw):
+    """
+    :param raw: str
+        Time interval written in short format
+    :return: timedelta
+        Time delta
+    """
+
+    tokens = ["s", "m", "h", "d", "w"]
+    time_token = 0.0
+    for tok in tokens:
+        if raw.endswith(tok):
+            time_token = float(raw.split(tok)[0])
+
+    if raw.endswith("s"):
+        return timedelta(seconds=time_token)
+    elif raw.endswith("m"):
+        return timedelta(minutes=time_token)
+    elif raw.endswith("h"):
+        return timedelta(hours=time_token)
+    elif raw.endswith("d"):
+        return timedelta(days=time_token)
+    elif raw.endswith("w"):
+        return timedelta(days=7 * time_token)
+    else:
+        raise ValueError("Cannot parse update interval", raw)

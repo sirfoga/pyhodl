@@ -21,8 +21,6 @@
 import os
 from enum import Enum
 
-from pyhodl.data.coins import Coin, CoinsNamesTable
-
 
 class RunMode(Enum):
     """ Run as ... """
@@ -74,9 +72,6 @@ COINS_DATABASE = os.path.join(
     RAW_DATA_FOLDER,
     "coins.json"
 )
-FIAT_COINS = [Coin("USD"), Coin("EUR")]  # supported fiat coins
-DEFAULT_FIAT = "USD"
-CRYPTO_COINS = CoinsNamesTable(COINS_DATABASE).get_coins()
 
 DEFAULT_PATHS = {
     RunMode.STATS: DATA_FOLDER,

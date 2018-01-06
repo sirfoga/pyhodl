@@ -20,6 +20,9 @@
 
 from hal.files.parsers import JSONParser
 
+from pyhodl.config import COINS_DATABASE
+from pyhodl.utils.lists import do_any_are_in
+
 
 class Coin:
     """ Model of a coin traded """
@@ -57,17 +60,25 @@ class CryptoCoin(Coin):
         if super().__eq__(other):
             return True
 
-        try_with_name = self.name and self.name == other.name
-        if try_with_name:
+        if self.name and self.name == other.name:
             return True
-        else:
-            if isinstance(other, CryptoCoin):
-                if self.name and self.name in other.other_names:
-                    return True
 
-                for name in self.other_names:
-                    if name in other.other_names:
-                        return True
+        return self.has_same_names(other)
+
+    def has_same_names(self, other):
+        """
+        :param other: CryptoCoin
+            Other coin
+        :return: bool
+            True iff has same names (or other names)
+        """
+
+        if isinstance(other, CryptoCoin) and self.name:
+            if self.name in other.other_names:
+                return True
+
+            if do_any_are_in(self.other_names, other.other_names):
+                return True
 
         return False
 
@@ -97,3 +108,19 @@ class CoinsNamesTable(JSONParser):
                 other_names=raw["other_names"]
             ) for raw in self.content
         ]
+
+
+def is_crypto(coin):
+    """
+    :param coin: str or Coin
+        Coin to check
+    :return: bool
+        True iff coin is among crypto supported
+    """
+
+    return coin not in FIAT_COINS
+
+
+FIAT_COINS = [Coin("USD"), Coin("EUR")]  # supported fiat coins
+DEFAULT_FIAT = Coin("USD")
+CRYPTO_COINS = CoinsNamesTable(COINS_DATABASE).get_coins()

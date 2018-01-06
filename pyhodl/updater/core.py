@@ -20,13 +20,19 @@
 
 import os
 import threading
-from datetime import datetime, timedelta
+from datetime import datetime
+
+from binance.client import Client as BinanceClient
+from ccxt import bitfinex as bitfinex_client
+from coinbase.wallet.client import Client as CoinbaseClient
+from gdax import AuthenticatedClient as GdaxClient
 
 from pyhodl.apis.exchanges import ApiManager
 from pyhodl.app import ConfigManager
 from pyhodl.config import DATA_FOLDER
-from pyhodl.updater.updaters import ExchangeUpdater
-from pyhodl.utils.dates import parse_datetime, datetime_to_str
+from pyhodl.updater.models import BinanceUpdater, BitfinexUpdater, \
+    CoinbaseUpdater, GdaxUpdater
+from pyhodl.utils.dates import parse_datetime, datetime_to_str, parse_timedelta
 from pyhodl.utils.misc import get_actual_class_name
 
 UPDATE_CONFIG = os.path.join(
@@ -81,24 +87,7 @@ class UpdateManager(ConfigManager):
         """
 
         raw = self.get("interval")
-        tokens = ["s", "m", "h", "d", "w"]
-        time_token = 0.0
-        for tok in tokens:
-            if raw.endswith(tok):
-                time_token = float(raw.split(tok)[0])
-
-        if raw.endswith("s"):
-            return timedelta(seconds=time_token)
-        elif raw.endswith("m"):
-            return timedelta(minutes=time_token)
-        elif raw.endswith("h"):
-            return timedelta(hours=time_token)
-        elif raw.endswith("d"):
-            return timedelta(days=time_token)
-        elif raw.endswith("w"):
-            return timedelta(days=7 * time_token)
-        else:
-            raise ValueError("Cannot parse update interval", raw)
+        return parse_timedelta(raw)
 
     def save_time_update(self):
         """
@@ -168,7 +157,7 @@ class Updater:
 
         for api in self.api_manager.get_all():
             try:
-                updater = ExchangeUpdater.build_updater(
+                updater = build_updater(
                     api.get_client(), DATA_FOLDER
                 )
                 self.api_updaters.append(updater)
@@ -176,3 +165,38 @@ class Updater:
                       get_actual_class_name(api))
             except:
                 print("Cannot authenticate client", get_actual_class_name(api))
+
+
+def get_updater(api_client):
+    """
+    :param api_client: ApiClient
+        Client to get exchange data
+    :return: ExchangeUpdater
+        Updates exchange
+    """
+
+    if isinstance(api_client, BinanceClient):
+        return BinanceUpdater
+    elif isinstance(api_client, bitfinex_client):
+        return BitfinexUpdater
+    elif isinstance(api_client, CoinbaseClient):
+        return CoinbaseUpdater
+    elif isinstance(api_client, GdaxClient):
+        return GdaxUpdater
+
+
+def build_updater(api_client, data_folder):
+    """
+    :param api_client: ApiClient
+        Client to get exchange data
+    :param data_folder: str
+        Folder where to save data
+    :return: ExchangeUpdater
+        Concrete updater
+    """
+
+    updater = get_updater(api_client)
+    if updater:
+        return updater(api_client, data_folder)
+
+    raise ValueError("Cannot infer type of API client")

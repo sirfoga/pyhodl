@@ -17,28 +17,29 @@
 
 
 """ API clients to fetch prices data """
+
 import os
 import urllib.parse
-from datetime import timedelta
+from datetime import timedelta, datetime
 
 from pyhodl.apis.models import TorApiClient
 from pyhodl.apis.prices.models import PricesApiClient
 from pyhodl.app import get_coin
-from pyhodl.config import FIAT_COINS, NAN, DATE_TIME_KEY, VALUE_KEY
-from pyhodl.data.coins import Coin
-from pyhodl.utils.dates import generate_dates, datetime_to_unix_timestamp_ms, \
-    datetime_to_unix_timestamp_s, unix_timestamp_ms_to_datetime, \
-    datetime_to_str
-from pyhodl.utils.misc import replace_items, middle
+from pyhodl.config import NAN, DATE_TIME_KEY, VALUE_KEY
+from pyhodl.data.coins import Coin, FIAT_COINS
+from pyhodl.utils.dates import generate_dates, datetime_to_unix_timestamp_s, \
+    unix_timestamp_ms_to_datetime, datetime_to_str, get_delta_seconds
+from pyhodl.utils.lists import replace_items, middle
 
 
 class CryptocompareClient(PricesApiClient, TorApiClient):
     """ API interface for official cryptocompare.com APIs """
 
-    BASE_URL = "https://min-api.cryptocompare.com/data/pricehistorical"
+    BASE_URL = "https://min-api.cryptocompare.com/data/"
     MAX_COINS_PER_REQUEST = 6
     API_ENCODING = {
-        "IOTA": "IOT"
+        "IOTA": "IOT",
+        "WAV": "WAVES"
     }
     API_DECODING = {
         val: key for key, val in API_ENCODING.items()
@@ -79,6 +80,21 @@ class CryptocompareClient(PricesApiClient, TorApiClient):
     def download(self, url):
         return super().download(url).json()  # parse as json
 
+    @staticmethod
+    def _parse_result(result):
+        """
+        :param result: {}
+            Raw result of API
+        :return: {}
+            Dict with prices for each coin
+        """
+
+        values = list(result.values())[0]
+        if isinstance(values, dict):
+            return values
+
+        return result
+
     def fetch_raw_prices(self, coins, date_time, currency):
         """
         :param coins: [] of str
@@ -92,11 +108,11 @@ class CryptocompareClient(PricesApiClient, TorApiClient):
         """
 
         if len(coins) <= self.MAX_COINS_PER_REQUEST:
-            url = self.get_api_url(
+            url = self._create_url(
                 self._encode_coins(coins), date_time, currency=currency
             )
             result = self.download(url)
-            return result[currency]
+            return self._parse_result(result)  # parse data
 
         long_data = self.fetch_raw_prices(
             coins[self.MAX_COINS_PER_REQUEST:], date_time,
@@ -132,7 +148,7 @@ class CryptocompareClient(PricesApiClient, TorApiClient):
 
         return data
 
-    def get_api_url(self, coins, date_time, **kwargs):
+    def _create_url(self, coins, date_time, **kwargs):
         """
         :param coins: [] of str
             BTC, ETH ...
@@ -142,21 +158,33 @@ class CryptocompareClient(PricesApiClient, TorApiClient):
             Url to call
         """
 
-        params = urllib.parse.urlencode(
-            {
+        now = datetime.now()
+        real_time_interval = 60 * 5  # 5 minutes
+        real_time = abs(get_delta_seconds(now, date_time)) < real_time_interval
+
+        if real_time:
+            url = self.base_url + "price"
+            params = {
+                "fsym": str(kwargs["currency"]),
+                "tsyms": ",".join(coins)
+            }
+        else:
+            url = self.base_url + "pricehistorical"  # past data
+            params = {
                 "fsym": str(kwargs["currency"]),
                 "tsyms": ",".join(coins),
                 "ts": datetime_to_unix_timestamp_s(date_time)
             }
-        )
-        url = self.base_url + "?%s" % params
+
+        params = urllib.parse.urlencode(params)
+        url += "?%s" % params
         return url.replace("%2C", ",")
 
     def get_price(self, coins, date_time, **kwargs):
         currency = kwargs["currency"]
         prices = self.fetch_raw_prices(coins, date_time, currency)
         return {
-            coin: float(1 / price)  # e.g we want USD -> BTC, not BTC -> USD
+            coin: float(1 / price) if price > 0 else 0  # convert from USD
             for coin, price in prices.items()
         }
 
@@ -183,8 +211,19 @@ class CoinmarketCapClient(PricesApiClient, TorApiClient):
         )
 
     def _create_url(self, action, since, until):
-        since = datetime_to_unix_timestamp_ms(since)  # to ms unix
-        until = datetime_to_unix_timestamp_ms(until)
+        """
+        :param action: str
+            Action to take
+        :param since: datetime
+            Get data since this time
+        :param until: datetim
+            Get data until this time
+        :return: str
+            Url to get data
+        """
+
+        since = datetime_to_unix_timestamp_s(since)  # to ms unix
+        until = datetime_to_unix_timestamp_s(until)
         return os.path.join(
             self.base_url,
             self._create_path(action),
@@ -316,3 +355,44 @@ class CoinmarketCapClient(PricesApiClient, TorApiClient):
                 price[DATE_TIME_KEY] = date
                 data.append(price)
         return data
+
+
+class CryptonatorClient(PricesApiClient, TorApiClient):
+    """ Get cryptonator.com APIs data """
+
+    BASE_URL = "https://api.cryptonator.com/api/ticker/"
+    API_ENCODING = {
+        "IOTA": "IOT",
+        "WAV": "WAVES"
+    }
+    API_DECODING = {
+        val: key for key, val in API_ENCODING.items()
+    }
+
+    def __init__(self, base_url=BASE_URL, tor=False):
+        PricesApiClient.__init__(self, base_url)
+        TorApiClient.__init__(self, tor)
+
+    def download(self, url):
+        return super().download(url).json()  # parse as json
+
+    def _create_url(self, coin, currency):
+        """
+        :param coin: str
+            Coin to convert to currency
+        :param currency: str
+            Currency
+        :return: str
+            Url to get data
+        """
+
+        return self.base_url + coin.lower() + "-" + currency.lower()
+
+    def get_price(self, coins, date_time, **kwargs):
+        now = datetime.now()
+        real_time_interval = 60 * 10  # 10 minutes
+        if abs(get_delta_seconds(now, date_time)) > real_time_interval:
+            raise ValueError(self.class_name, "does only real-time "
+                                              "conversions!")
+
+        raise ValueError("Not fully implemented!")

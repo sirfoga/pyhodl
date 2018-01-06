@@ -22,8 +22,7 @@ from enum import Enum
 
 import pytz
 
-from pyhodl.config import FIAT_COINS
-from pyhodl.data.coins import Coin, CryptoCoin
+from pyhodl.data.coins import Coin, CryptoCoin, FIAT_COINS
 
 
 class TransactionType(Enum):
