@@ -1,0 +1,9 @@
+machine:
+  python:
+    version: 3.5
+  pre:
+    - pip3 install -U pip  # upgrade pip
+    - git clone https://github.com/sirfoga/pyhal
+    - cd pyhal
+    - pip3 install .  # run local setup (pyhal)
+    - cd ..  # return to root folder
