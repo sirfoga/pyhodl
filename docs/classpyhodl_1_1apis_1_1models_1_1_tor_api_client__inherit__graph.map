@@ -1,0 +1,5 @@
+<map id="pyhodl.apis.models.TorApiClient" name="pyhodl.apis.models.TorApiClient">
+<area shape="rect" id="node2" href="$classpyhodl_1_1apis_1_1prices_1_1clients_1_1_coinmarket_cap_client.html" title="pyhodl.apis.prices.clients.\lCoinmarketCapClient" alt="" coords="229,5,403,47"/>
+<area shape="rect" id="node3" href="$classpyhodl_1_1apis_1_1prices_1_1clients_1_1_cryptocompare_client.html" title="pyhodl.apis.prices.clients.\lCryptocompareClient" alt="" coords="229,71,403,112"/>
+<area shape="rect" id="node4" href="$classpyhodl_1_1apis_1_1prices_1_1clients_1_1_cryptonator_client.html" title="pyhodl.apis.prices.clients.\lCryptonatorClient" alt="" coords="229,136,403,177"/>
+</map>

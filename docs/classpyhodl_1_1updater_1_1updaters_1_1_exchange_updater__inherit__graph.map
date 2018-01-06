@@ -1,0 +1,7 @@
+<map id="pyhodl.updater.updaters.ExchangeUpdater" name="pyhodl.updater.updaters.ExchangeUpdater">
+<area shape="rect" id="node3" href="$classpyhodl_1_1updater_1_1models_1_1_binance_updater.html" title="pyhodl.updater.models.Binance\lUpdater" alt="" coords="401,5,605,47"/>
+<area shape="rect" id="node4" href="$classpyhodl_1_1updater_1_1models_1_1_bitfinex_updater.html" title="pyhodl.updater.models.Bitfinex\lUpdater" alt="" coords="403,71,604,112"/>
+<area shape="rect" id="node5" href="$classpyhodl_1_1updater_1_1models_1_1_coinbase_updater.html" title="pyhodl.updater.models.Coinbase\lUpdater" alt="" coords="397,136,609,177"/>
+<area shape="rect" id="node6" href="$classpyhodl_1_1updater_1_1models_1_1_gdax_updater.html" title="pyhodl.updater.models.Gdax\lUpdater" alt="" coords="409,201,597,243"/>
+<area shape="rect" id="node2" href="$classpyhodl_1_1logs_1_1_logger.html" title="pyhodl.logs.Logger" alt="" coords="5,111,136,138"/>
+</map>
