@@ -17,8 +17,12 @@
 
 
 """ Tools """
+from datetime import datetime
 
 import numpy as np
+
+from pyhodl.config import INFINITY
+from pyhodl.utils.dates import datetime_to_str, get_delta_hours
 
 LONG_DEC_FORMAT = "{0:.5f}"
 SHORT_DEC_FORMAT = "{0:.3f}"
@@ -122,3 +126,86 @@ def num_to_str(num, form="short"):
 
     form = SHORT_DEC_FORMAT if form == "short" else LONG_DEC_FORMAT
     return form.format(num)
+
+
+def get_ratio(new, last):
+    """
+    :param new: float
+        New value
+    :param last: float
+        Last value
+    :return: float in [0, 100]
+        Percentage increase (or decrease) since last value
+    """
+
+    if new is None or last is None:  # cannot produce result
+        return 0.0
+
+    new = float(new)
+    last = float(last)
+    if last == 0.0 and new != 0.0:
+        return INFINITY
+
+    if last == 0.0 and new == 0.0:
+        return 1.0
+
+    return new / last
+
+
+def get_relative_percentage(new, last):
+    """
+    :param new: float
+        New value
+    :param last: float
+        Last value
+    :return: float in [0, 100]
+        Percentage increase (or decrease) since last value
+    """
+
+    ratio = get_ratio(new, last)
+    relative_ratio = ratio - 1.0
+    return 100.0 * relative_ratio
+
+
+def get_relative_delta(new, last):
+    """
+    :param new: float
+        New value
+    :param last: float
+        Last value
+    :return: float
+        Increase (or decrease) since last value
+    """
+
+    new = float(new)
+    last = float(last)
+
+    if new is None or last is None:  # cannot produce result
+        return 0.0
+
+    return new - last
+
+
+def print_balance(total_value, delta, percentage, last_time):
+    """
+    :param total_value: float
+        Total value of balance
+    :param delta: float
+        Delta since last time
+    :param percentage: float
+        % since last time
+    :param last_time: datetime
+        Date of last balance report
+    :return: void
+        Prints balance
+    """
+
+    if last_time:
+        hours_elapsed = get_delta_hours(datetime.now(), last_time)
+        print("Since last time", datetime_to_str(last_time), "(",
+              num_to_str(hours_elapsed), "hours ago):")
+
+    print("Total value: ~",
+          num_to_str(total_value), "$")
+    print("Difference: ~",
+          num_to_str(delta), "$ (" + num_to_str(percentage) + "%)")

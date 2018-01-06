@@ -4,7 +4,10 @@ python:
   - "3.5"
 install:
   - "pip3 install -U pip"  # upgrade pip
-  - "pip3 install coveralls"  # for test coverage
+  - "git clone https://github.com/sirfoga/pyhal"
+  - "cd pyhal"
+  - "pip3 install ."  # run local setup (pyhal)
+  - "cd .."  # return to root folder
   - "pip3 install ."  # run local setup
 script:
   - "python3 setup.py test"

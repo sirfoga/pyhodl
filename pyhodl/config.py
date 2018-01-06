@@ -89,3 +89,8 @@ def get_coin_historical_data_file(currency):
     """
 
     return os.path.join(HISTORICAL_DATA_FOLDER, currency.lower() + ".json")
+
+
+# times
+SECONDS_IN_MIN = 60
+SECONDS_IN_HOUR = 60 * SECONDS_IN_MIN
