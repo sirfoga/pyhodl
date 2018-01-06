@@ -23,10 +23,10 @@ from datetime import datetime
 import numpy as np
 from hal.streams.pretty_table import pretty_format_table
 
-from pyhodl.config import DATE_TIME_KEY, VALUE_KEY, NAN, \
-    DEFAULT_FIAT
+from pyhodl.config import DATE_TIME_KEY, VALUE_KEY, NAN
 from pyhodl.core.models.wallets import Wallet
 from pyhodl.data.balance import parse_balance, save_balance
+from pyhodl.data.coins import DEFAULT_FIAT
 from pyhodl.utils.dates import datetime_to_str, get_delta_seconds
 from pyhodl.utils.misc import is_nan, num_to_str
 

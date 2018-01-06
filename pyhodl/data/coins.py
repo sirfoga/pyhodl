@@ -20,6 +20,7 @@
 
 from hal.files.parsers import JSONParser
 
+from pyhodl.config import COINS_DATABASE
 from pyhodl.utils.lists import do_any_are_in
 
 
@@ -107,3 +108,19 @@ class CoinsNamesTable(JSONParser):
                 other_names=raw["other_names"]
             ) for raw in self.content
         ]
+
+
+def is_crypto(coin):
+    """
+    :param coin: str or Coin
+        Coin to check
+    :return: bool
+        True iff coin is among crypto supported
+    """
+
+    return coin not in FIAT_COINS
+
+
+FIAT_COINS = [Coin("USD"), Coin("EUR")]  # supported fiat coins
+DEFAULT_FIAT = Coin("USD")
+CRYPTO_COINS = CoinsNamesTable(COINS_DATABASE).get_coins()

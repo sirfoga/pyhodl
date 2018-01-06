@@ -66,8 +66,6 @@ def get_parser(raw_data):
     elif "txId" in raw_item or "isBuyer" in raw_item:
         return BinanceParser
 
-    return None
-
 
 def build_parsers(input_folder):
     """

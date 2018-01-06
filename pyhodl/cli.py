@@ -29,7 +29,7 @@ from hal.streams.user import UserInput
 from pyhodl.apis.prices.utils import get_market_cap, get_price_on_dates
 from pyhodl.charts.balances import FiatPlotter
 from pyhodl.config import DEFAULT_PATHS, RunMode
-from pyhodl.data.balance import show_exchange_balance, \
+from pyhodl.core.tools.balance import show_exchange_balance, \
     show_folder_balance
 from pyhodl.data.parse.build import build_parser
 from pyhodl.stats.transactions import get_transactions_dates, \

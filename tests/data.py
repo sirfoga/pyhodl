@@ -20,8 +20,7 @@
 
 import unittest
 
-from pyhodl.config import FIAT_COINS
-from pyhodl.data.coins import Coin, CryptoCoin
+from pyhodl.data.coins import Coin, CryptoCoin, FIAT_COINS
 
 
 class TestCoins(unittest.TestCase):

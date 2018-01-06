@@ -24,7 +24,8 @@ from datetime import datetime
 import numpy as np
 
 from pyhodl.apis.prices.utils import get_price_on_date
-from pyhodl.config import VALUE_KEY, DATE_TIME_KEY, is_crypto
+from pyhodl.config import VALUE_KEY, DATE_TIME_KEY
+from pyhodl.data.coins import is_crypto
 from pyhodl.data.tables import get_coin_prices_table
 from pyhodl.utils.misc import is_nan
 

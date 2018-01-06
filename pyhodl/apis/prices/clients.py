@@ -25,8 +25,8 @@ from datetime import timedelta, datetime
 from pyhodl.apis.models import TorApiClient
 from pyhodl.apis.prices.models import PricesApiClient
 from pyhodl.app import get_coin
-from pyhodl.config import FIAT_COINS, NAN, DATE_TIME_KEY, VALUE_KEY
-from pyhodl.data.coins import Coin
+from pyhodl.config import NAN, DATE_TIME_KEY, VALUE_KEY
+from pyhodl.data.coins import Coin, FIAT_COINS
 from pyhodl.utils.dates import generate_dates, datetime_to_unix_timestamp_s, \
     unix_timestamp_ms_to_datetime, datetime_to_str, get_delta_seconds
 from pyhodl.utils.lists import replace_items, middle
