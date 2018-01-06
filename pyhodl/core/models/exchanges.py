@@ -28,7 +28,8 @@ from pyhodl.core.models.wallets import Wallet
 from pyhodl.data.balance import parse_balance, save_balance
 from pyhodl.data.coins import DEFAULT_FIAT
 from pyhodl.utils.dates import datetime_to_str, get_delta_seconds
-from pyhodl.utils.misc import is_nan, num_to_str
+from pyhodl.utils.misc import is_nan, num_to_str, get_relative_delta, \
+    get_relative_percentage
 
 
 class CryptoExchange:
@@ -224,11 +225,12 @@ class Portfolio:
 
         last = parse_balance(last) if last else None
         balances = self.get_current_balance()
-        total = self.sum_total_balance(balances)
         pretty_table = self._pretty_balance(balances, last)
         now = datetime.now()
         print("As of", now, "you got")
         print(pretty_table)
+
+        total = self.sum_total_balance(balances)
         print("Total value: ~", num_to_str(total), "$")
 
         if last:
@@ -256,7 +258,8 @@ class Portfolio:
         if save_to:
             save_balance(balances, save_to, timestamp=now)
 
-        return total
+        last_total = self.sum_total_balance(last) if last else None
+        return total, last_total
 
     @staticmethod
     def _pretty_balance(balances, last):
@@ -277,14 +280,17 @@ class Portfolio:
                 num_to_str(balance["price"]) + " $",
                 num_to_str(balance["percentage"]) + " %",
                 num_to_str(
-                    float(balance[VALUE_KEY]) -
-                    float(last[balance["symbol"]][VALUE_KEY])
+                    get_relative_delta(
+                        balance[VALUE_KEY],
+                        last[balance["symbol"]][VALUE_KEY]
+                    )
                 ) + " $" if last and balance["symbol"] in last else "+/- 0 $",
                 num_to_str(
-                    100.0 * (float(balance[VALUE_KEY]) /
-                             float(last[balance["symbol"]][VALUE_KEY]) - 1.0)
-                ) + " %" if last and balance["symbol"] in last and float(
-                    last[balance["symbol"]][VALUE_KEY]) != 0.0 else "+/- 0 %"
+                    get_relative_percentage(
+                        balance[VALUE_KEY],
+                        last[balance["symbol"]][VALUE_KEY]
+                    )
+                ) + " %" if last and balance["symbol"] in last else "+/- 0 %"
             ] for balance in balances
         ]
         return pretty_format_table(

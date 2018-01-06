@@ -51,7 +51,11 @@ def show_folder_balance(input_folder):
 
     exchanges = build_exchanges(input_folder)
     total_value = 0.0
+    last_total = 0.0
+
     for exchange in exchanges:
-        exchange_value = show_exchange_balance(exchange)
-        total_value += exchange_value
+        total, last = show_exchange_balance(exchange)
+        total_value += total
+        last_total += last if last else 0.0
+
     print("\nTotal value of all exchanges ~", num_to_str(total_value), "$")

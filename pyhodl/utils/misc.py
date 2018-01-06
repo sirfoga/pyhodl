@@ -20,6 +20,8 @@
 
 import numpy as np
 
+from pyhodl.config import INFINITY
+
 LONG_DEC_FORMAT = "{0:.5f}"
 SHORT_DEC_FORMAT = "{0:.3f}"
 
@@ -122,3 +124,44 @@ def num_to_str(num, form="short"):
 
     form = SHORT_DEC_FORMAT if form == "short" else LONG_DEC_FORMAT
     return form.format(num)
+
+
+def get_relative_percentage(new, last):
+    """
+    :param new: float
+        New value
+    :param last: float
+        Last value
+    :return: float in [0, 100]
+        Percentage increase (or decrease) since last value
+    """
+
+    if new is None or last is None:  # cannot produce result
+        return 0.0
+
+    new = float(new)
+    last = float(last)
+    if last == 0 and new != 0:
+        return INFINITY
+
+    ratio = (new / last - 1.0)
+    return 100.0 * ratio
+
+
+def get_relative_delta(new, last):
+    """
+    :param new: float
+        New value
+    :param last: float
+        Last value
+    :return: float
+        Increase (or decrease) since last value
+    """
+
+    new = float(new)
+    last = float(last)
+
+    if new is None or last is None:  # cannot produce result
+        return 0.0
+
+    return new - last
