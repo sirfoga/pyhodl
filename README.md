@@ -12,6 +12,7 @@
 
 - [Key Features](#key-features)
 - [Usage](#usage)
+- [Example](#example)
 - [Install](#install)
 - [Changelog](#changelog)
 - [Contribute](#contribute)
@@ -54,23 +55,24 @@ The following flags are supported:
 | `-t` | Connect to tor via this password (advanced) | any string |
 | `-v` | Increase verbosity | nothing, just add `-v` |
 
-### Example
+
+## Example
 A simple run with parameters like
 ```bash
 pyhodl -plot "~/.pyhodl/data/BitfinexUpdater.json" -verbose
 ```
-would result in a series of plot like this one:
+would result in a plot like this one:
 ![Example bitfinex](extra/buy_sells.jpg)
 
 while if you want to plot your gains against your total spent, just run
 ```bash
 -plot -verbose
 ```
+![Example bitfinex](extra/crypto_fiat_balance.jpg)
+
 
 ### Documentation
-If you want to browse the full documentation please go [here](https://sirfoga.github.io/pyhodl/), or clone [the repo](https://github.com/sirfoga/pyhodl) and navigate to the [index file](docs/index.html). 
-
-![Example bitfinex](extra/crypto_fiat_balance.jpg)
+If you want to browse the full documentation please go [here](https://sirfoga.github.io/pyhodl/), or clone [the repo](https://github.com/sirfoga/pyhodl) and navigate to the [index file](docs/index.html).
 
 
 ### API example
