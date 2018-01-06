@@ -39,7 +39,7 @@
 ```bash
 $ pyhodl [options]
 ```
-To specify your settins, please refer to [this](WRITE_CONFIGS.md).
+To specify your settings, please refer to [this](WRITE_CONFIGS.md).
 To import your transactions, please refer to [the guide](IMPORT_DATA.md).
 
 ### Supported commands
@@ -71,6 +71,16 @@ while if you want to plot your gains against your total spent, just run
 If you want to browse the full documentation please go [here](https://sirfoga.github.io/pyhodl/), or clone [the repo](https://github.com/sirfoga/pyhodl) and navigate to the [index file](docs/index.html). 
 
 ![Example bitfinex](extra/crypto_fiat_balance.jpg)
+
+
+### API example
+To show how simple it is, take a look at the code on how to produce the chart of the example:
+
+```python
+wallets = exchange.build_wallets().values()  # get wallets
+plotter = FiatPlotter(wallets)  # setup plot
+plotter.plot_buy_sells("XRP")  # plot buy/sells data
+```
 
 
 ## Install

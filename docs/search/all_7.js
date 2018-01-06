@@ -77,5 +77,6 @@ var searchData=
   ['get_5fvalue_5fon',['get_value_on',['../classpyhodl_1_1data_1_1tables_1_1_market_data_table.html#ae17553dc4477307bd3555d4363b8828c',1,'pyhodl.data.tables.MarketDataTable.get_value_on()'],['../classpyhodl_1_1data_1_1tables_1_1_coin_prices_table.html#ae7bce2d0d8e690902f2e46a20a868835',1,'pyhodl.data.tables.CoinPricesTable.get_value_on()']]],
   ['get_5fvalues_5fbetween',['get_values_between',['../classpyhodl_1_1data_1_1tables_1_1_datetime_table.html#ad0b8f26c7b90484b304650a8a5b73dd3',1,'pyhodl::data::tables::DatetimeTable']]],
   ['get_5fvalues_5fon',['get_values_on',['../classpyhodl_1_1data_1_1tables_1_1_datetime_table.html#ae218fd297678fa19e74f61c600b42608',1,'pyhodl::data::tables::DatetimeTable']]],
+  ['get_5fwallet_5fby_5fcoin',['get_wallet_by_coin',['../classpyhodl_1_1charts_1_1balances_1_1_crypto_plotter.html#a5796b10009024860cb438000d25f6f9f',1,'pyhodl::charts::balances::CryptoPlotter']]],
   ['get_5fwithdraw',['get_withdraw',['../classpyhodl_1_1updater_1_1models_1_1_binance_updater.html#a223cf39128aef5b8c8186cf1a2562581',1,'pyhodl::updater::models::BinanceUpdater']]]
 ];

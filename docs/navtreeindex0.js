@@ -83,9 +83,10 @@ var NAVTREEINDEX0 =
 "classpyhodl_1_1charts_1_1balances_1_1_balance_plotter.html#a9b7fccee6204ea3ebd5224ca49daa1c7":[1,0,0,2,0,0,0],
 "classpyhodl_1_1charts_1_1balances_1_1_balance_plotter.html#aa9e18b7cea1a2c87f9a9232bd8909325":[1,0,0,2,0,0,1],
 "classpyhodl_1_1charts_1_1balances_1_1_crypto_plotter.html":[1,0,0,2,0,1],
-"classpyhodl_1_1charts_1_1balances_1_1_crypto_plotter.html#a0d40e848a5c5170422b2aeb520bf3e63":[1,0,0,2,0,1,2],
-"classpyhodl_1_1charts_1_1balances_1_1_crypto_plotter.html#a8757830e3d493b01c0d4c4995adf2fe8":[1,0,0,2,0,1,1],
-"classpyhodl_1_1charts_1_1balances_1_1_crypto_plotter.html#aa68d46aea13fbc8494bc7c09a6b9e65b":[1,0,0,2,0,1,3],
+"classpyhodl_1_1charts_1_1balances_1_1_crypto_plotter.html#a0d40e848a5c5170422b2aeb520bf3e63":[1,0,0,2,0,1,3],
+"classpyhodl_1_1charts_1_1balances_1_1_crypto_plotter.html#a5796b10009024860cb438000d25f6f9f":[1,0,0,2,0,1,1],
+"classpyhodl_1_1charts_1_1balances_1_1_crypto_plotter.html#a8757830e3d493b01c0d4c4995adf2fe8":[1,0,0,2,0,1,2],
+"classpyhodl_1_1charts_1_1balances_1_1_crypto_plotter.html#aa68d46aea13fbc8494bc7c09a6b9e65b":[1,0,0,2,0,1,4],
 "classpyhodl_1_1charts_1_1balances_1_1_crypto_plotter.html#af5a5643d9af9da410042d4c2d38bb45d":[1,0,0,2,0,1,0],
 "classpyhodl_1_1charts_1_1balances_1_1_fiat_plotter.html":[1,0,0,2,0,2],
 "classpyhodl_1_1charts_1_1balances_1_1_fiat_plotter.html#a0b143a7bd5cc851a40b867498f69f75f":[1,0,0,2,0,2,5],
@@ -248,6 +249,5 @@ var NAVTREEINDEX0 =
 "classpyhodl_1_1data_1_1tables_1_1_datetime_table.html#a89083c9c66dd3ac86255ae541d3d26a8":[1,0,0,5,2,1,5],
 "classpyhodl_1_1data_1_1tables_1_1_datetime_table.html#ac85e7bc9600a0438c9116293ea9a1ef0":[1,0,0,5,2,1,6],
 "classpyhodl_1_1data_1_1tables_1_1_datetime_table.html#ad0b8f26c7b90484b304650a8a5b73dd3":[1,0,0,5,2,1,2],
-"classpyhodl_1_1data_1_1tables_1_1_datetime_table.html#ada1dafc374388d785eabd92ba856dacb":[1,0,0,5,2,1,0],
-"classpyhodl_1_1data_1_1tables_1_1_datetime_table.html#ae218fd297678fa19e74f61c600b42608":[1,0,0,5,2,1,3]
+"classpyhodl_1_1data_1_1tables_1_1_datetime_table.html#ada1dafc374388d785eabd92ba856dacb":[1,0,0,5,2,1,0]
 };

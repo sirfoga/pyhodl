@@ -138,6 +138,23 @@ class CryptoPlotter:
         plt.legend()  # build legend
         plt.show()
 
+    def get_wallet_by_coin(self, coin):
+        """
+        :param coin: str
+            Coin
+        :return: Wallet
+            Wallet with base coin specified
+        """
+
+        coin = coin.upper()
+        candidate = [
+            wallet for wallet in self.wallets if wallet.base_currency == coin
+        ]
+        if candidate:
+            return candidate[0]
+
+        raise ValueError("Cannot find wallet with coin", coin)
+
 
 class BalancePlotter(CryptoPlotter):
     """ Plots balance data of each coin for each date available """
@@ -227,7 +244,7 @@ class FiatPlotter(BalancePlotter):
                     self.base_currency + ")"
             self.plot(dates, balances, label)
 
-    def plot_price(self, wallet, ):
+    def plot_price(self, wallet):
         """
         :param wallet: Wallet
             Coin wallet to plot
@@ -278,6 +295,9 @@ class FiatPlotter(BalancePlotter):
         :return: void
             Plots buy/sells points of coin against coin price
         """
+
+        if isinstance(wallet, str):  # specified the coin of the wallet
+            wallet = self.get_wallet_by_coin(wallet)
 
         self.plot_price(wallet)
         self.plot_delta_buy_sells(wallet)
