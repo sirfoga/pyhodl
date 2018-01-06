@@ -46,13 +46,13 @@ To import your transactions, please refer to [the guide](IMPORT_DATA.md).
 
 The following flags are supported:
 
-| Flag | Description |
-| --- | --- |
-| `-hist HIST` | Downloads historical prices of your coins |
-| `-plot PLOT` | Creates charts of your data |
-| `-stats STATS` | Computes statistics and trends using local data |
-| `-verbose, --verbose` | Increase verbosity |
-| `-tor` | Connect to tor via this password (advanced) |
+| Flag | Description | Allowed attributes |
+| --- | --- | --- |
+| `-h` | show this help message and exit | None |
+| `-m` | Choose run mode | `{plotter,stats,download,update}` |
+| `-p` | Path to use as input | any OS existent path |
+| `-t` | Connect to tor via this password (advanced) | any string |
+| `-v` | Increase verbosity | nothing, just add `-v` |
 
 ### Example
 A simple run with parameters like
@@ -67,6 +67,9 @@ while if you want to plot your gains against your total spent, just run
 -plot -verbose
 ```
 
+### Documentation
+If you want to browse the full documentation please go [here](https://sirfoga.github.io/pyhodl/), or clone [the repo](https://github.com/sirfoga/pyhodl) and navigate to the [index file](docs/index.html). 
+
 ![Example bitfinex](extra/crypto_fiat_balance.jpg)
 
 
@@ -76,14 +79,12 @@ Just run `./install.sh` and test your installation with `pyhodl -h`. Should come
 usage: -[mode] -h/--help for full usage
 
 optional arguments:
-  -h, --help           show this help message and exit
-  -update, --update    Syncs local data with the transactions from your
-                       exchanges
-  -hist HIST           Downloads historical prices of your coins
-  -plot PLOT           Creates charts of your data
-  -stats STATS         Computes statistics and trends using local data
-  -verbose, --verbose  Increase verbosity
-  -tor TOR             Connect to tor via this password (advanced)
+  -h, --help            show this help message and exit
+  -m {plotter,stats,download,update}, --mode {plotter,stats,download,update}
+                        Run mode
+  -p PATH, --path PATH  Path to use as input
+  -t TOR, --tor TOR     Connect to tor via this password (advanced)
+  -v, --verbose         Increase verbosity
 ```
 To run the tests (please do):
 ```bash
