@@ -30,7 +30,7 @@ def get_full_lists(big_dict):
     """
 
     big_counter = Counter()
-    for key, inner_dict in big_dict.items():
+    for _, inner_dict in big_dict.items():
         big_counter += inner_dict
     all_keys = big_counter.keys()
     return {

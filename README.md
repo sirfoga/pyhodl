@@ -4,7 +4,7 @@
 
 [![Build Status](https://travis-ci.org/sirfoga/pyhodl.svg?branch=master)](https://travis-ci.org/sirfoga/pyhodl) [![CircleCI](https://circleci.com/gh/sirfoga/pyhodl.png)](https://circleci.com/gh/sirfoga/pyhodl) ![Python version](https://img.shields.io/badge/Python-3.5.2-blue.svg) 
 
-[![Code Health](https://landscape.io/github/sirfoga/pyhodl/master/landscape.svg?style=flat)](https://landscape.io/github/sirfoga/pyhodl/master) [![Codacy Badge](https://api.codacy.com/project/badge/Grade/1eff18395a134c9aa2d829fcb1f124bf)](https://www.codacy.com/app/sirfoga/pyhodl?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=sirfoga/pyhodl&amp;utm_campaign=Badge_Grade) ![pylint Score](https://mperlet.de/pybadge/badges/9.92.svg)
+[![Code Health](https://landscape.io/github/sirfoga/pyhodl/master/landscape.svg?style=flat)](https://landscape.io/github/sirfoga/pyhodl/master) [![Codacy Badge](https://api.codacy.com/project/badge/Grade/1eff18395a134c9aa2d829fcb1f124bf)](https://www.codacy.com/app/sirfoga/pyhodl?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=sirfoga/pyhodl&amp;utm_campaign=Badge_Grade) ![pylint Score](https://mperlet.de/pybadge/badges/9.88.svg)
 
 [![BCH compliance](https://bettercodehub.com/edge/badge/sirfoga/pyhodl?branch=master)](https://bettercodehub.com/) [![Code Climate](https://lima.codeclimate.com/github/sirfoga/pyhodl/badges/gpa.svg)](https://codeclimate.com/github/sirfoga/pyhodl)
 
