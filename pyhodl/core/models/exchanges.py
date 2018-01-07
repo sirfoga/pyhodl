@@ -214,7 +214,19 @@ class Portfolio:
                 crypto_values += balances
             else:
                 fiat_values += balances
-        return dates, crypto_values.tolist(), fiat_values.tolist()
+        return dates, crypto_values, fiat_values
+
+    def get_crypto_net_balance(self, currency):
+        """
+        :return: tuple ([] of datetime, [] of float)
+            List of dates, balances of crypto coins - fiat balances
+        """
+
+        dates, crypto_values, fiat_values = \
+            self.get_crypto_fiat_balance(currency)
+
+        crypto_net = crypto_values + fiat_values
+        return dates, crypto_net
 
     def show_balance(self, last=None, save_to=None):
         """

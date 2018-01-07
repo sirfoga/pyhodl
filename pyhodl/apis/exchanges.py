@@ -53,13 +53,6 @@ class ApiManager(ConfigManager):
 class ApiConfig:
     """ Config of API """
 
-    API_NAMES = {
-        "binance": BinanceApi,
-        "bitfinex": BitfinexApi,
-        "coinbase": CoinbaseApi,
-        "gdax": GdaxApi
-    }
-
     def __init__(self, raw):
         """
         :param raw: {}
@@ -87,11 +80,14 @@ class ApiConfig:
             ApiConfig
         """
 
-        raw_name = raw["name"]
-
-        if raw_name in self.API_NAMES:
-            api_name = self.API_NAMES[raw_name]
-            return api_name(raw)
+        if raw["name"] == "binance":
+            return BinanceApi(raw)
+        elif raw["name"] == "bitfinex":
+            return BitfinexApi(raw)
+        elif raw["name"] == "coinbase":
+            return CoinbaseApi(raw)
+        elif raw["name"] == "gdax":
+            return GdaxApi(raw)
 
         raise ValueError("Cannot infer type of API")
 

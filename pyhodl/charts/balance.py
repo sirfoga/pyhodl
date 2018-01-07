@@ -173,10 +173,10 @@ class FiatPlotter(BalancePlotter):
         self.plot_price(wallet)
         self.plot_delta_buy_sells(wallet)
 
-    def plot_crypto_fiat_balance(self):
+    def plot_account_value(self):
         """
         :return: void
-            Total balance for wach coin
+            Total balance for coin
         """
 
         dates, crypto_values, fiat_values = \
@@ -190,6 +190,22 @@ class FiatPlotter(BalancePlotter):
         self.plot(
             dates, fiat_values,
             label="Fiat value of portfolio (" + self.base_currency + ")"
+        )
+
+        self.plot_crypto_net()
+
+    def plot_crypto_net(self):
+        """
+        :return: void
+            Crypto net (bought - spent) of your portfolio
+        """
+
+        dates, crypto_net = \
+            self.portfolio.get_crypto_net_balance(self.base_currency)
+
+        self.plot(
+            dates, crypto_net,
+            label="Net value of portfolio (" + self.base_currency + ")"
         )
 
     def show(self, title, x_label="Time", y_label="value"):

@@ -145,7 +145,7 @@ def plot(input_file, verbose):
     exchange = parser.build_exchange()
     wallets = exchange.build_wallets().values()
     plotter = FiatPlotter(wallets)
-    plotter.plot_buy_sells("LSK")
+    plotter.plot_account_value()
     plotter.show("Balances from " + input_file)
 
 
