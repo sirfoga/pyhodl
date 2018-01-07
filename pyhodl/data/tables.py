@@ -78,6 +78,17 @@ class DatetimeTable(JSONParser):
         elif min(errors) == err_high:
             return self.content[high]
 
+    def get_values_on_dates(self, dates):
+        """
+        :param dates: [] of datetime
+            List of dates to fetch
+        :return: [] of float
+            List of values in dates
+        """
+
+        for date in dates:
+            yield self.get_values_on(date)
+
     def get_values_between(self, since, until):
         """
         :param since: datetime

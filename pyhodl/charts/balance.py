@@ -23,6 +23,7 @@ import matplotlib.pyplot as plt
 from pyhodl.charts.core import CryptoPlotter
 from pyhodl.config import VALUE_KEY
 from pyhodl.core.models.exchanges import Portfolio
+from pyhodl.data.tables import MarketDataTable
 from pyhodl.utils.dates import generate_dates
 from pyhodl.utils.misc import normalize
 
@@ -131,6 +132,21 @@ class FiatPlotter(BalancePlotter):
             wallet.base_currency + " " + self.base_currency + "price"
         )  # plot price
 
+    def plot_crypto_market_cap(self, dates):
+        """
+        :return: void
+            Plots crypto market cap
+        """
+
+        values = list(MarketDataTable().get_values_on_dates(dates))
+        values = [
+            val[VALUE_KEY] / 1e7 for val in values
+        ]
+        self.plot(
+            dates, values,
+            "Crypto market cap"
+        )  # plot price
+
     def plot_delta_buy_sells(self, wallet):
         """
         :param wallet: Wallet
@@ -194,8 +210,10 @@ class FiatPlotter(BalancePlotter):
 
         self.plot_crypto_net()
 
-    def plot_crypto_net(self):
+    def plot_crypto_net(self, with_market_cap=True):
         """
+        :param with_market_cap: bool
+            True iff you want to overlay market cap of cryptos
         :return: void
             Crypto net (bought - spent) of your portfolio
         """
@@ -207,6 +225,9 @@ class FiatPlotter(BalancePlotter):
             dates, crypto_net,
             label="Net value of portfolio (" + self.base_currency + ")"
         )
+
+        if with_market_cap:
+            self.plot_crypto_market_cap(dates)
 
     def show(self, title, x_label="Time", y_label="value"):
         super().show(title, x_label, self.base_currency + " " + y_label)
