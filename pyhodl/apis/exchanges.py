@@ -72,7 +72,8 @@ class ApiConfig:
 
         return
 
-    def build_api(self, raw):
+    @staticmethod
+    def build_api(raw):
         """
         :param raw: {}
             Api config

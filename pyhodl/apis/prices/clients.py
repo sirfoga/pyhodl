@@ -30,6 +30,7 @@ from pyhodl.data.coins import Coin, FIAT_COINS
 from pyhodl.utils.dates import generate_dates, datetime_to_unix_timestamp_s, \
     unix_timestamp_ms_to_datetime, datetime_to_str, get_delta_seconds
 from pyhodl.utils.lists import replace_items, middle
+from pyhodl.utils.misc import get_ratio
 
 
 class CryptocompareClient(PricesApiClient, TorApiClient):
@@ -184,8 +185,7 @@ class CryptocompareClient(PricesApiClient, TorApiClient):
         currency = kwargs["currency"]
         prices = self.fetch_raw_prices(coins, date_time, currency)
         return {
-            coin: float(1 / price) if price > 0 else 0  # convert from USD
-            for coin, price in prices.items()
+            coin: get_ratio(1, price) for coin, price in prices.items()
         }
 
 

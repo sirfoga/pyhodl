@@ -129,8 +129,25 @@ class BitfinexParser(CryptoParser):
     """ Parses Binance transactions data """
 
     @staticmethod
+    def fix_coin_name(coin):
+        """
+        :param coin: str
+            Raw coin name
+        :return: str
+            Coin name (fixed)
+        """
+
+        if coin.lower() == "dsh":
+            return "DASH"
+
+        return coin.upper()
+
+    @staticmethod
     def get_coins_amount_traded(raw):
         coin_buy, coin_sell = raw["symbol"][:3], raw["symbol"][3:]
+        coin_buy, coin_sell = \
+            BitfinexParser.fix_coin_name(coin_buy), \
+            BitfinexParser.fix_coin_name(coin_sell)
         buy_amount = float(raw["amount"])
         sell_amount = buy_amount * float(raw["price"])
         if raw["type"] == "Buy":

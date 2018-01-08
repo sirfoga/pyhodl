@@ -194,11 +194,11 @@ def get_relative_delta(new, last):
         Increase (or decrease) since last value
     """
 
-    new = float(new)
-    last = float(last)
-
     if new is None or last is None:  # cannot produce result
         return 0.0
+
+    new = float(new)
+    last = float(last)
 
     return new - last
 
