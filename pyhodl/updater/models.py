@@ -16,277 +16,76 @@
 # limitations under the License.
 
 
-""" Concrete core of exchange updater """
+""" Updates exchanges data """
 
-from pyhodl.updater.updaters import ExchangeUpdater, INT_32_MAX
-from pyhodl.utils.network import handle_rate_limits, get_and_sleep
+import abc
+import os
+
+from hal.files.save_as import write_dicts_to_json
+
+from pyhodl.logs import Logger
+
+INT_32_MAX = 2 ** 31 - 1
 
 
-class BinanceUpdater(ExchangeUpdater):
-    """ Updates Binance data """
+class ExchangeUpdater(Logger):
+    """ Abstract exchange updater """
 
-    def get_symbols_list(self):
+    def __init__(self, api_client, data_folder, rate_limit=1,
+                 rate_limit_wait=60):
         """
-        :return: [] of str
-            List of symbols (currencies)
-        """
-
-        symbols = self.client.get_all_tickers()
-        return [
-            symbol["symbol"] for symbol in symbols
-        ]
-
-    @handle_rate_limits
-    def get_deposits(self):
-        """
-        :return: [] of {}
-            List of exchange deposits
-        """
-
-        return self.client.get_deposit_history()["depositList"]
-
-    @handle_rate_limits
-    def get_withdraw(self):
-        """
-        :return: [] of {}
-            List of exchange withdrawals
+        :param api_client: ApiClient
+            Client with which to perform requests
+        :param data_folder: str
+            Folder where to save data
+        :param rate_limit: int
+            Number of seconds between 2 consecutive requests
+        :param rate_limit_wait: int
+            Number of seconds to wait if rate limit exceeded
         """
 
-        return self.client.get_withdraw_history()["withdrawList"]
+        Logger.__init__(self)
 
-    @handle_rate_limits
-    def get_all_transactions(self, symbol, from_id=0, page_size=500):
-        """
-        :return: [] of {}
-            List of exchange transactions
-        """
+        self.client = api_client
+        self.folder = data_folder
+        self.output_file = os.path.join(
+            self.folder,
+            self.class_name + ".json"
+        )
+        self.transactions = {}
+        self.rate = float(rate_limit)
+        self.rate_wait = float(rate_limit_wait)
+        self.page_limit = INT_32_MAX
 
-        trades = self.client.get_my_trades(symbol=symbol, fromId=from_id)
-        for i, _ in enumerate(trades):
-            trades[i]["symbol"] = symbol
-
-        if trades:  # if page returns some trades, search for others
-            last_id = trades[-1]["id"]
-            next_id = last_id + page_size + 1
-            new_trades = self.get_all_transactions(
-                symbol=symbol, from_id=next_id
-            )
-            if new_trades:
-                trades += new_trades
-
-        return trades
-
+    @abc.abstractmethod
     def get_transactions(self):
         """
-        :return: [] of {}
-            List of all exchange movements (transactions + deposits +
-            withdrawals)
+        :return: [] of Transaction
+            List of transactions found
         """
 
-        super().get_transactions()
-        transactions = get_and_sleep(
-            self.get_symbols_list(),
-            self.get_all_transactions,
-            self.rate,
-            "transactions"
-        )
-        self.transactions = \
-            transactions + self.get_deposits() + self.get_withdraw()
+        self.log("getting transactions")
 
-
-class BitfinexUpdater(ExchangeUpdater):
-    """ Updates Bitfinex data """
-
-    def get_symbols_list(self):
+    def save_data(self):
         """
-        :return: [] of str
-            List of symbols (markets) in exchange
+        :return: void
+            Saves transactions to file
         """
 
-        currencies = self.client.currencies
-        symbols = self.client.symbols
-        for i, symbol in enumerate(symbols):
-            coins = symbol.split("/")
-            symbols[i] = "".join([
-                currencies[coin]["id"] for coin in coins
-            ])
-        return symbols
+        if self.transactions:
+            self.log("saving data")
+            write_dicts_to_json(self.transactions, self.output_file)
 
-    def get_currencies_list(self):
+    def update(self, verbose):
         """
-        :return: [] of str
-            List of currencies in exchange
+        :param verbose: bool
+            True iff you want to increase verbosity
+        :return: void
+            Updates local transaction data and saves results
         """
 
-        currencies = self.client.currencies
-        currencies = [
-            value["id"] for key, value in currencies.items()
-        ]
-        return currencies
-
-    def fetch(self, data):
-        """
-        :param data: {}
-            Raw request
-        :return: response
-            Fetch with client
-        """
-
-        return self.client.fetch(
-            data["url"], headers=data["headers"], body=data["body"]
-        )
-
-    @handle_rate_limits
-    def get_all_movements(self, symbol):
-        """
-        :param symbol: str
-            Symbol to fetch
-        :return: [] of {}
-            List of deposits/withdrawals with symbol
-        """
-
-        data = self.client.sign(
-            "history/movements",
-            api="private",
-            params={
-                "currency": symbol,
-                "limit": self.page_limit
-            }
-        )
-        return self.fetch(data)
-
-    def get_movements(self):
-        """
-        :return: [] of {}
-            List of deposits and withdrawals
-        """
-
-        return get_and_sleep(
-            self.get_currencies_list(),
-            self.get_all_movements,
-            self.rate,
-            "movements"
-        )
-
-    @handle_rate_limits
-    def get_all_transactions(self, symbol):
-        """
-        :param symbol: str
-            Symbol to fetch
-        :return: [] of {}
-            List of transactions with symbol
-        """
-
-        data = self.client.sign(
-            "mytrades",
-            api="private",
-            params={
-                "symbol": symbol,
-                "limit_trades": INT_32_MAX
-            }
-        )
-        trades = self.fetch(data)
-        for i, _ in enumerate(trades):
-            trades[i]["symbol"] = symbol
-        return trades
-
-    def get_transactions(self):
-        super().get_transactions()
-        self.log(
-            "Total current balance:",
-            [
-                (key, val) for key, val
-                in self.client.fetch_balance()["total"].items()
-            ]
-        )
-
-        transactions = get_and_sleep(
-            self.get_symbols_list(),
-            self.get_all_transactions,
-            self.rate,
-            "transactions"
-        )
-        self.transactions = transactions + self.get_movements()
-
-
-class CoinbaseUpdater(ExchangeUpdater):
-    """ Updates Coinbase data """
-
-    def __init__(self, api_client, data_folder):
-        ExchangeUpdater.__init__(self, api_client, data_folder)
-        self.accounts = self.client.get_accounts()["data"]
-        self.accounts = {
-            account["id"]: account for account in self.accounts
-        }  # list -> dict
-        self.transactions = {
-            account_id: [] for account_id in self.accounts
-        }
-        self.page_limit = 100  # reduced page limit for coinbase and gdax
-
-    def get_account_transactions(self, account_id):
-        """
-        :param account_id: str
-            Account to fetch
-        :return: [] of {}
-            List of transactions of account
-        """
-
-        raw_data = self.client.get_transactions(
-            account_id,
-            limit=self.page_limit
-        )
-        self.transactions[account_id] += raw_data["data"]
-
-        while "pagination" in raw_data:  # other transactions
-            raw_data = self.client.get_transaction(
-                raw_data["pagination"]["previous_uri"]
-            )
-            self.transactions[account_id] += raw_data["data"]
-
-    def get_transactions(self):
-        super().get_transactions()
-        for account_id, account in self.accounts.items():
-            self.log("Getting transaction history of account",
-                     account["id"], "(" + account["balance"]["currency"] + ")")
-            self.get_account_transactions(account_id)
-
-
-class GdaxUpdater(ExchangeUpdater):
-    """ Updates Gdax data """
-
-    def __init__(self, api_client, data_folder):
-        ExchangeUpdater.__init__(self, api_client, data_folder)
-
-        self.accounts = self.client.get_accounts()
-        self.accounts = {
-            account["id"]: account for account in self.accounts
-        }  # list -> dict
-        self.transactions = {
-            account_id: [] for account_id in self.accounts
-        }
-
-    def get_account_transactions(self, account):
-        """
-        :param account: {}
-            Account to fetch
-        :return: [] of {}
-            List of transactions of account
-        """
-
-        transactions = []
-        pages = self.client.get_account_history(account["id"])
-        for page in pages:
-            transactions += page
-
-        if transactions:  # add currency symbol
-            for i, _ in enumerate(transactions):
-                transactions[i]["currency"] = account["currency"]
-        return transactions
-
-    def get_transactions(self):
-        super().get_transactions()
-        for account_id, account in self.accounts.items():
-            self.log("Getting transaction history of account",
-                     account["id"], "(" + account["currency"] + ")")
-            self.transactions[account_id] = \
-                self.get_account_transactions(account)
+        self.log("updating local data")
+        self.get_transactions()
+        self.save_data()
+        if verbose:
+            print(self.class_name, "Transactions written to", self.output_file)

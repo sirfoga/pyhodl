@@ -19,12 +19,12 @@
 """ Parse raw data """
 
 from hal.files.models.system import ls_recurse, is_file
+from pyhodl.data.parse.markets.binance import BinanceParser
+from pyhodl.data.parse.markets.bitfinex import BitfinexParser
+from pyhodl.data.parse.markets.coinbase import CoinbaseParser
+from pyhodl.data.parse.markets.gdax import GdaxParser
 
 from pyhodl.data.parse.core import CryptoParser
-from pyhodl.data.parse.markets.binance_parse import BinanceParser
-from pyhodl.data.parse.markets.bitfinex_parse import BitfinexParser
-from pyhodl.data.parse.markets.coinbase_parse import CoinbaseParser
-from pyhodl.data.parse.markets.gdax_parse import GdaxParser
 
 
 def build_parser(input_file):
