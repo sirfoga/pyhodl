@@ -16,177 +16,19 @@
 # limitations under the License.
 
 
-""" API clients to fetch prices data """
+""" API client to fetch data using Coinmarketcap endpoints """
 
 import os
-import urllib.parse
-from datetime import timedelta, datetime
+from datetime import timedelta
 
 from pyhodl.apis.models import TorApiClient
 from pyhodl.apis.prices.models import PricesApiClient
 from pyhodl.app import get_coin
-from pyhodl.config import NAN, DATE_TIME_KEY, VALUE_KEY, SECONDS_IN_MIN
-from pyhodl.data.coins import Coin, FIAT_COINS
-from pyhodl.utils.dates import generate_dates, datetime_to_unix_timestamp_s, \
-    unix_timestamp_ms_to_datetime, datetime_to_str, get_delta_seconds
-from pyhodl.utils.lists import replace_items, middle
-from pyhodl.utils.misc import get_ratio
-
-
-class CryptocompareClient(PricesApiClient, TorApiClient):
-    """ API interface for official cryptocompare.com APIs """
-
-    BASE_URL = "https://min-api.cryptocompare.com/data/"
-    MAX_COINS_PER_REQUEST = 6
-    API_ENCODING = {
-        "IOTA": "IOT",
-        "WAV": "WAVES"
-    }
-    API_DECODING = {
-        val: key for key, val in API_ENCODING.items()
-    }
-    AVAILABLE_FIAT = FIAT_COINS
-
-    def __init__(self, base_url=BASE_URL, tor=False):
-        PricesApiClient.__init__(self, base_url)
-        TorApiClient.__init__(self, tor)
-
-    def _encode_coins(self, coins):
-        """
-        :param coins: [] of str
-            BTC, ETH ...
-        :return: [] of str
-            Available coins
-        """
-
-        for key, val in self.API_ENCODING.items():
-            if key in coins:
-                coins = replace_items(coins, key, val)
-        return coins
-
-    def _decode_coins(self, data):
-        """
-        :param data: {}
-            Result of API calling
-        :return: {}
-            Original formatted data
-        """
-
-        for key, val in self.API_DECODING.items():
-            if key in data:
-                data[val] = data[key]
-                del data[key]
-        return data
-
-    def download(self, url):
-        return super().download(url).json()  # parse as json
-
-    @staticmethod
-    def _parse_result(result):
-        """
-        :param result: {}
-            Raw result of API
-        :return: {}
-            Dict with prices for each coin
-        """
-
-        values = list(result.values())[0]
-        if isinstance(values, dict):
-            return values
-
-        return result
-
-    def fetch_raw_prices(self, coins, date_time, currency):
-        """
-        :param coins: [] of str
-            List of coins
-        :param date_time: datetime
-            Date and time to get price
-        :param currency: str
-            Currency to convert to
-        :return: {}
-            List of raw prices
-        """
-
-        if len(coins) <= self.MAX_COINS_PER_REQUEST:
-            url = self._create_url(
-                self._encode_coins(coins), date_time, currency=currency
-            )
-            result = self.download(url)
-            return self._parse_result(result)  # parse data
-
-        long_data = self.fetch_raw_prices(
-            coins[self.MAX_COINS_PER_REQUEST:], date_time,
-            currency=currency
-        )  # get other data
-        data = self.fetch_raw_prices(
-            coins[:self.MAX_COINS_PER_REQUEST], date_time, currency=currency
-        )
-        return {**data, **long_data}  # merge dicts
-
-    def fetch_prices(self, coins, date_time, currency):
-        """
-        :param coins: [] of str
-            List of coins
-        :param date_time: datetime
-            Date and time to get price
-        :param currency: str
-            Currency to convert to
-        :return: {}
-            List of prices of each coin
-        """
-
-        data = self.fetch_raw_prices(coins, date_time, currency)
-        data = self._decode_coins(data)
-
-        for coin in coins:
-            if coin not in data:
-                data[coin] = NAN
-
-        for coin, price in data.items():
-            if price == 0.0:
-                data[coin] = NAN
-
-        return data
-
-    def _create_url(self, coins, date_time, **kwargs):
-        """
-        :param coins: [] of str
-            BTC, ETH ...
-        :param date_time: datetime
-            Date and time of price
-        :return: str
-            Url to call
-        """
-
-        now = datetime.now()
-        real_time_interval = SECONDS_IN_MIN * 5  # 5 minutes
-        real_time = abs(get_delta_seconds(now, date_time)) < real_time_interval
-
-        if real_time:
-            url = self.base_url + "price"
-            params = {
-                "fsym": str(kwargs["currency"]),
-                "tsyms": ",".join(coins)
-            }
-        else:
-            url = self.base_url + "pricehistorical"  # past data
-            params = {
-                "fsym": str(kwargs["currency"]),
-                "tsyms": ",".join(coins),
-                "ts": datetime_to_unix_timestamp_s(date_time)
-            }
-
-        params = urllib.parse.urlencode(params)
-        url += "?%s" % params
-        return url.replace("%2C", ",")
-
-    def get_price(self, coins, date_time, **kwargs):
-        currency = kwargs["currency"]
-        prices = self.fetch_raw_prices(coins, date_time, currency)
-        return {
-            coin: get_ratio(1, price) for coin, price in prices.items()
-        }
+from pyhodl.config import DATE_TIME_KEY, VALUE_KEY, NAN
+from pyhodl.data.coins import Coin
+from pyhodl.utils.dates import datetime_to_unix_timestamp_s, datetime_to_str, \
+    unix_timestamp_ms_to_datetime, generate_dates
+from pyhodl.utils.lists import middle
 
 
 class CoinmarketCapClient(PricesApiClient, TorApiClient):
@@ -355,44 +197,3 @@ class CoinmarketCapClient(PricesApiClient, TorApiClient):
                 price[DATE_TIME_KEY] = date
                 data.append(price)
         return data
-
-
-class CryptonatorClient(PricesApiClient, TorApiClient):
-    """ Get cryptonator.com APIs data """
-
-    BASE_URL = "https://api.cryptonator.com/api/ticker/"
-    API_ENCODING = {
-        "IOTA": "IOT",
-        "WAV": "WAVES"
-    }
-    API_DECODING = {
-        val: key for key, val in API_ENCODING.items()
-    }
-
-    def __init__(self, base_url=BASE_URL, tor=False):
-        PricesApiClient.__init__(self, base_url)
-        TorApiClient.__init__(self, tor)
-
-    def download(self, url):
-        return super().download(url).json()  # parse as json
-
-    def _create_url(self, coin, currency):
-        """
-        :param coin: str
-            Coin to convert to currency
-        :param currency: str
-            Currency
-        :return: str
-            Url to get data
-        """
-
-        return self.base_url + coin.lower() + "-" + currency.lower()
-
-    def get_price(self, coins, date_time, **kwargs):
-        now = datetime.now()
-        real_time_interval = SECONDS_IN_MIN * 10  # 10 minutes
-        if abs(get_delta_seconds(now, date_time)) > real_time_interval:
-            raise ValueError(self.class_name, "does only real-time "
-                                              "conversions!")
-
-        raise ValueError("Not fully implemented!")

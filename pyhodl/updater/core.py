@@ -27,7 +27,7 @@ from ccxt import bitfinex as bitfinex_client
 from coinbase.wallet.client import Client as CoinbaseClient
 from gdax import AuthenticatedClient as GdaxClient
 
-from pyhodl.apis.exchanges import ApiManager
+from pyhodl.apis.markets.models import ApiManager
 from pyhodl.app import ConfigManager
 from pyhodl.config import DATA_FOLDER
 from pyhodl.updater.models import BinanceUpdater, BitfinexUpdater, \

@@ -16,10 +16,10 @@
 # limitations under the License.
 
 
-""" API client core to fetch data """
+""" API models to fetch data """
 
 from pyhodl.logs import Logger
-from pyhodl.utils.network import download, download_with_tor
+from pyhodl.utils.network import download_with_tor, download
 
 
 class AbstractApiClient(Logger):

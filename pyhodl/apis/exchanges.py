@@ -18,79 +18,12 @@
 
 """ Manage your APIs: add, edit, remove exchanges API """
 
-import abc
-
 from binance.client import Client as BinanceClient
 from ccxt import bitfinex as bitfinex_client
 from coinbase.wallet.client import Client as CoinbaseClient
 from gdax.authenticated_client import AuthenticatedClient as GdaxClient
 
-from pyhodl.config import API_CONFIG
-from ..app import ConfigManager
-
-
-class ApiManager(ConfigManager):
-    """ Manages your API secrets """
-
-    def __init__(self, config_file=API_CONFIG):
-        ConfigManager.__init__(self, config_file)
-
-    def get(self, key):
-        out = super().get(key)
-        out["name"] = key
-        return ApiConfig.build_api(out)
-
-    def get_all(self):
-        """
-        :return: generator of API
-            Generate all APIs clients
-        """
-
-        for key in self.data:
-            yield self.get(key)
-
-
-class ApiConfig:
-    """ Config of API """
-
-    def __init__(self, raw):
-        """
-        :param raw: {}
-            Raw data
-        """
-
-        self.raw = raw
-        self.key = raw["key"]
-        self.secret = raw["secret"]
-
-    @abc.abstractmethod
-    def get_client(self):
-        """
-        :return: ApiClient
-            Api client
-        """
-
-        return
-
-    @staticmethod
-    def build_api(raw):
-        """
-        :param raw: {}
-            Api config
-        :return: ApiConfig concrete class
-            ApiConfig
-        """
-
-        if raw["name"] == "binance":
-            return BinanceApi(raw)
-        elif raw["name"] == "bitfinex":
-            return BitfinexApi(raw)
-        elif raw["name"] == "coinbase":
-            return CoinbaseApi(raw)
-        elif raw["name"] == "gdax":
-            return GdaxApi(raw)
-
-        raise ValueError("Cannot infer type of API")
+from pyhodl.apis.markets.models import ApiConfig
 
 
 class BinanceApi(ApiConfig):
