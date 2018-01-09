@@ -16,7 +16,7 @@
 # limitations under the License.
 
 
-""" API models to fetch data """
+""" API markets to fetch data """
 
 from pyhodl.logs import Logger
 from pyhodl.utils.network import download_with_tor, download

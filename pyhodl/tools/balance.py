@@ -18,7 +18,7 @@
 
 """ Analyze and print your balance data """
 
-from pyhodl.core.models.exchanges import Portfolio
+from pyhodl.core.portfolio import Portfolio
 from pyhodl.data.balance import get_balance_file
 from pyhodl.data.parse.build import build_exchanges
 from pyhodl.utils.misc import get_relative_delta, \

@@ -16,96 +16,18 @@
 # limitations under the License.
 
 
-""" Analyze transactions in exchanges """
+""" Analyze transactions in wallets """
 
 from datetime import datetime
 
 import numpy as np
 from hal.streams.pretty_table import pretty_format_table
 
-from pyhodl.config import DATE_TIME_KEY, VALUE_KEY, NAN
-from pyhodl.core.models.wallets import Wallet
+from pyhodl.config import VALUE_KEY, NAN, DATE_TIME_KEY
 from pyhodl.data.balance import parse_balance, save_balance
 from pyhodl.data.coins import DEFAULT_FIAT
-from pyhodl.utils.misc import is_nan, num_to_str, get_relative_delta, \
-    get_relative_percentage, get_ratio, print_balance, get_percentage
-
-
-class CryptoExchange:
-    """ Exchange dealing with crypto-coins """
-
-    def __init__(self, transactions, exchange_name):
-        """
-        :param transactions: [] of Transaction
-            List of transactions
-        """
-
-        self.transactions = transactions
-        if not self.transactions:
-            raise ValueError("Creating exchange with no past transaction!")
-        self.exchange_name = str(exchange_name)
-
-    def get_transactions_count(self):
-        """
-        :return: int
-            Number of transactions
-        """
-
-        return len(self.transactions)
-
-    def get_first_transaction(self):
-        """
-        :return: Transaction
-            First transaction done (with respect to time)
-        """
-
-        first = self.transactions[0]
-        for transaction in self.transactions:
-            if transaction.date < first.date:
-                first = transaction
-        return first
-
-    def get_last_transaction(self):
-        """
-        :return: Transaction
-            Last transaction done (with respect to time)
-        """
-
-        last = self.transactions[0]
-        for transaction in self.transactions:
-            if transaction.date > last.date:
-                last = transaction
-        return last
-
-    def get_transactions(self, rule):
-        """
-        :param rule: func
-            Evaluate this function on each transaction as a filter
-        :return: generator of [] of Transaction
-            List of transactions done between the dates
-        """
-
-        for transaction in self.transactions:
-            if rule(transaction):
-                yield transaction
-
-    def build_wallets(self):
-        """
-        :return: {} of str -> Wallet
-            Build a wallet for each currency traded and put trading history
-            there
-        """
-
-        wallets = {}  # get only successful transactions
-        transactions = self.get_transactions(lambda x: x.successful)
-        for transaction in transactions:
-            for coin in transaction.get_coins():
-                if coin not in wallets:
-                    wallets[coin] = Wallet(coin)
-
-                wallets[coin].add_transaction(transaction)
-
-        return wallets
+from pyhodl.utils.misc import get_ratio, get_percentage, is_nan, \
+    get_relative_delta, get_relative_percentage, print_balance, num_to_str
 
 
 class Portfolio:

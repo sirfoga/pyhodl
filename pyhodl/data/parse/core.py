@@ -23,8 +23,8 @@ import os
 
 from hal.files.parsers import JSONParser
 
-from pyhodl.core.models.exchanges import CryptoExchange
-from pyhodl.core.models.transactions import TransactionType, Transaction, \
+from pyhodl.core.exchanges import CryptoExchange
+from pyhodl.core.transactions import TransactionType, Transaction, \
     CoinAmount
 
 
