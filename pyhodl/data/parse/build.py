@@ -21,8 +21,10 @@
 from hal.files.models.system import ls_recurse, is_file
 
 from pyhodl.data.parse.core import CryptoParser
-from pyhodl.data.parse.models import BinanceParser, BitfinexParser, \
-    CoinbaseParser, GdaxParser
+from pyhodl.data.parse.markets.binance_parse import BinanceParser
+from pyhodl.data.parse.markets.bitfinex_parse import BitfinexParser
+from pyhodl.data.parse.markets.coinbase_parse import CoinbaseParser
+from pyhodl.data.parse.markets.gdax_parse import GdaxParser
 
 
 def build_parser(input_file):
