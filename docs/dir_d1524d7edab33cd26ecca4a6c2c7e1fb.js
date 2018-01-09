@@ -4,7 +4,7 @@ var dir_d1524d7edab33cd26ecca4a6c2c7e1fb =
     [ "charts", "dir_fb2630db98b712dad7ff972489af80f7.html", "dir_fb2630db98b712dad7ff972489af80f7" ],
     [ "core", "dir_85711e6e68e6afede9464930e8713ed2.html", "dir_85711e6e68e6afede9464930e8713ed2" ],
     [ "data", "dir_a7724a52bb51706e2a174d0b104aca0d.html", "dir_a7724a52bb51706e2a174d0b104aca0d" ],
-    [ "stats", "dir_893f6e2fd9aee9b8b84a52cb0d8ba53d.html", "dir_893f6e2fd9aee9b8b84a52cb0d8ba53d" ],
+    [ "tools", "dir_75b9cadeba1f6483a1c6195a74f8825d.html", "dir_75b9cadeba1f6483a1c6195a74f8825d" ],
     [ "updater", "dir_d6c9861aaaf5a5ebd5918c0cf54aba0b.html", "dir_d6c9861aaaf5a5ebd5918c0cf54aba0b" ],
     [ "utils", "dir_81800e38eb642bcbc37711812c42eb91.html", "dir_81800e38eb642bcbc37711812c42eb91" ],
     [ "__init__.py", "____init_____8py.html", null ],

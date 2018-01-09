@@ -1,5 +1,5 @@
 <map id="Graphical Class Hierarchy" name="Graphical Class Hierarchy">
-<area shape="rect" id="node1" href="$classpyhodl_1_1charts_1_1balances_1_1_crypto_plotter.html" title="pyhodl.charts.balances.Crypto\lPlotter" alt="" coords="5,5,204,47"/>
-<area shape="rect" id="node2" href="$classpyhodl_1_1charts_1_1balances_1_1_balance_plotter.html" title="pyhodl.charts.balances.Balance\lPlotter" alt="" coords="252,5,459,47"/>
-<area shape="rect" id="node3" href="$classpyhodl_1_1charts_1_1balances_1_1_fiat_plotter.html" title="pyhodl.charts.balances.Fiat\lPlotter" alt="" coords="507,5,689,47"/>
+<area shape="rect" id="node1" href="$classpyhodl_1_1charts_1_1core_1_1_crypto_plotter.html" title="pyhodl.charts.core.Crypto\lPlotter" alt="" coords="5,5,177,47"/>
+<area shape="rect" id="node2" href="$classpyhodl_1_1charts_1_1balance_1_1_balance_plotter.html" title="pyhodl.charts.balance.Balance\lPlotter" alt="" coords="225,5,425,47"/>
+<area shape="rect" id="node3" href="$classpyhodl_1_1charts_1_1balance_1_1_fiat_plotter.html" title="pyhodl.charts.balance.Fiat\lPlotter" alt="" coords="473,5,648,47"/>
 </map>

@@ -21,9 +21,9 @@ var hierarchy =
         [ "pyhodl.data.parse.models.GdaxParser", "classpyhodl_1_1data_1_1parse_1_1models_1_1_gdax_parser.html", null ]
       ] ]
     ] ],
-    [ "pyhodl.charts.balances.CryptoPlotter", "classpyhodl_1_1charts_1_1balances_1_1_crypto_plotter.html", [
-      [ "pyhodl.charts.balances.BalancePlotter", "classpyhodl_1_1charts_1_1balances_1_1_balance_plotter.html", [
-        [ "pyhodl.charts.balances.FiatPlotter", "classpyhodl_1_1charts_1_1balances_1_1_fiat_plotter.html", null ]
+    [ "pyhodl.charts.core.CryptoPlotter", "classpyhodl_1_1charts_1_1core_1_1_crypto_plotter.html", [
+      [ "pyhodl.charts.balance.BalancePlotter", "classpyhodl_1_1charts_1_1balance_1_1_balance_plotter.html", [
+        [ "pyhodl.charts.balance.FiatPlotter", "classpyhodl_1_1charts_1_1balance_1_1_fiat_plotter.html", null ]
       ] ]
     ] ],
     [ "pyhodl.logs.Logger", "classpyhodl_1_1logs_1_1_logger.html", [

@@ -22,15 +22,16 @@ var searchData=
   ['coinsnamestable',['CoinsNamesTable',['../classpyhodl_1_1data_1_1coins_1_1_coins_names_table.html',1,'pyhodl::data::coins']]],
   ['commission',['Commission',['../classpyhodl_1_1core_1_1models_1_1transactions_1_1_commission.html',1,'pyhodl::core::models::transactions']]],
   ['commission',['COMMISSION',['../classpyhodl_1_1core_1_1models_1_1transactions_1_1_transaction_type.html#aee4e1dc08b944d603ca711a16e0440ae',1,'pyhodl.core.models.transactions.TransactionType.COMMISSION()'],['../classpyhodl_1_1core_1_1models_1_1transactions_1_1_transaction.html#a126c49e0ca962373deb32fc21e802ea5',1,'pyhodl.core.models.transactions.Transaction.commission()']]],
-  ['compute_5fknn_5ftrend',['compute_knn_trend',['../classpyhodl_1_1charts_1_1balances_1_1_crypto_plotter.html#a1f33111eb46003565a34a13506d6c717',1,'pyhodl::charts::balances::CryptoPlotter']]],
-  ['compute_5ftrend',['compute_trend',['../classpyhodl_1_1charts_1_1balances_1_1_crypto_plotter.html#ae6e917d44bfce9ec5fb00b70c5fb55ce',1,'pyhodl::charts::balances::CryptoPlotter']]],
+  ['compute_5fknn_5ftrend',['compute_knn_trend',['../classpyhodl_1_1charts_1_1core_1_1_crypto_plotter.html#ae4624de3984b4cf44a4b46dcf2286b92',1,'pyhodl::charts::core::CryptoPlotter']]],
+  ['compute_5ftrend',['compute_trend',['../classpyhodl_1_1charts_1_1core_1_1_crypto_plotter.html#a4fb3bda94145b44308fdb505b7dc1c35',1,'pyhodl::charts::core::CryptoPlotter']]],
   ['config_2epy',['config.py',['../config_8py.html',1,'']]],
   ['config_5ffile',['config_file',['../classpyhodl_1_1app_1_1_config_manager.html#a400f8de67d210ba9255eaba190a39602',1,'pyhodl::app::ConfigManager']]],
   ['configmanager',['ConfigManager',['../classpyhodl_1_1app_1_1_config_manager.html',1,'pyhodl::app']]],
   ['content',['content',['../classpyhodl_1_1data_1_1coins_1_1_coins_names_table.html#a730e21dafdab106db17df6fae30cd029',1,'pyhodl.data.coins.CoinsNamesTable.content()'],['../classpyhodl_1_1data_1_1tables_1_1_datetime_table.html#a703c3ab39fe0bd8491bfab8f89c1a98e',1,'pyhodl.data.tables.DatetimeTable.content()']]],
   ['convert_5fto',['convert_to',['../classpyhodl_1_1core_1_1models_1_1wallets_1_1_wallet.html#a15c7fcc280773b686edf8beb7ffa25f6',1,'pyhodl::core::models::wallets::Wallet']]],
-  ['core_2epy',['core.py',['../data_2parse_2core_8py.html',1,'']]],
   ['core_2epy',['core.py',['../updater_2core_8py.html',1,'']]],
+  ['core_2epy',['core.py',['../data_2parse_2core_8py.html',1,'']]],
+  ['core_2epy',['core.py',['../charts_2core_8py.html',1,'']]],
   ['create_5fargs',['create_args',['../namespacepyhodl_1_1cli.html#a17d292b06ab1d407cb18ba38d81bcfe0',1,'pyhodl::cli']]],
   ['create_5fconfig',['create_config',['../classpyhodl_1_1app_1_1_config_manager.html#a667736bb2b54ba26f5d110524e1b13c9',1,'pyhodl::app::ConfigManager']]],
   ['create_5fworkplace',['create_workplace',['../namespacepyhodl_1_1app.html#a86faf18479d7b7a9398ddf35382925ba',1,'pyhodl::app']]],
@@ -40,5 +41,5 @@ var searchData=
   ['cryptoexchange',['CryptoExchange',['../classpyhodl_1_1core_1_1models_1_1exchanges_1_1_crypto_exchange.html',1,'pyhodl::core::models::exchanges']]],
   ['cryptonatorclient',['CryptonatorClient',['../classpyhodl_1_1apis_1_1prices_1_1clients_1_1_cryptonator_client.html',1,'pyhodl::apis::prices::clients']]],
   ['cryptoparser',['CryptoParser',['../classpyhodl_1_1data_1_1parse_1_1core_1_1_crypto_parser.html',1,'pyhodl::data::parse::core']]],
-  ['cryptoplotter',['CryptoPlotter',['../classpyhodl_1_1charts_1_1balances_1_1_crypto_plotter.html',1,'pyhodl::charts::balances']]]
+  ['cryptoplotter',['CryptoPlotter',['../classpyhodl_1_1charts_1_1core_1_1_crypto_plotter.html',1,'pyhodl::charts::core']]]
 ];

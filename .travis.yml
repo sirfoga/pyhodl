@@ -1,4 +1,5 @@
-sudo: false
+dist: trusty
+sudo: required
 language: "python"
 python:
   - "3.5"
@@ -13,3 +14,16 @@ script:
   - "python3 setup.py test"
 notifications:
   email: "false"  # no email notify
+
+addons:
+  sonarcloud:
+    organization: "sirfoga-github"
+    token:
+      secure: "UMUG8ARP280E9Nq9+r0OoaGNV2LrfJPk30BklaAshm883PfSAIb+DQ3HoqOp52GWKZ29+T3+x4F9MVbbeIVVn2WXEGkdpyHZxMXifvsPBzrKpwR07fTbSRt6dOmd9uJV0lE4912Gg9xjSTWB//Eae6+c9s0aN4mG337yg4VB4f6rLrMNwJWQmdMwklWWF+izAFdyU8pwovwRppy9U1oUdmoCmlnAnOJquG3ZPsCuhZI1juYETFhcGPLtmQApvP2QvAi+NPmsyD20849VKX9oIzBxd5f89G9KtCmaQRopX1f5blDjLUB/6eWXY/qYehkfuLglld6PHfgV12G5O4JU7r/lwTSYsH4wn9sHnswfxfadxIMKR/OHBhrQq0s9Ov2V/yQzvazdUjIdqIu6S1BY34fTVc+F0Mc3hKF4Iiog/jb1q0/n1dheQh904OD8bSTMCLKu2iNsStV6wh8w8Uaf6l5YdMD84fAz1EfcDisKobsgHXG5TXEoc1UzyBLf7T+Zx6aBWxaHbUasWHiARKDA0PO0EFne7USKpRTXonv50cMZ2hSYYiLAHlkmhDsbZ82IVjwiCAjpCzwKRV4h2jxmZEC1s+cFk7ntiLiDP7ccI5IaBFGe0j/K8+XWSdH7khiJKRseudzU3kqXGxC1Icx0ijnZ1VnfP5W4aU/jSP8cQBk="
+jdk:
+  - oraclejdk8
+script:
+  - sonar-scanner
+cache:
+  directories:
+    - '$HOME/.sonar/cache'

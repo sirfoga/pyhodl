@@ -15,5 +15,5 @@ var searchData=
   ['cryptoexchange',['CryptoExchange',['../classpyhodl_1_1core_1_1models_1_1exchanges_1_1_crypto_exchange.html',1,'pyhodl::core::models::exchanges']]],
   ['cryptonatorclient',['CryptonatorClient',['../classpyhodl_1_1apis_1_1prices_1_1clients_1_1_cryptonator_client.html',1,'pyhodl::apis::prices::clients']]],
   ['cryptoparser',['CryptoParser',['../classpyhodl_1_1data_1_1parse_1_1core_1_1_crypto_parser.html',1,'pyhodl::data::parse::core']]],
-  ['cryptoplotter',['CryptoPlotter',['../classpyhodl_1_1charts_1_1balances_1_1_crypto_plotter.html',1,'pyhodl::charts::balances']]]
+  ['cryptoplotter',['CryptoPlotter',['../classpyhodl_1_1charts_1_1core_1_1_crypto_plotter.html',1,'pyhodl::charts::core']]]
 ];
