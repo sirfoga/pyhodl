@@ -20,7 +20,10 @@
 
 import abc
 
-from pyhodl.apis.exchanges import BinanceApi, BitfinexApi, CoinbaseApi, GdaxApi
+from pyhodl.apis.markets.exchanges.binance import BinanceApi
+from pyhodl.apis.markets.exchanges.bitfinex import BitfinexApi
+from pyhodl.apis.markets.exchanges.coinbase import CoinbaseApi
+from pyhodl.apis.markets.exchanges.gdax import GdaxApi
 from pyhodl.app import ConfigManager
 from pyhodl.config import API_CONFIG
 

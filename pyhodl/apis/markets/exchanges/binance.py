@@ -17,3 +17,17 @@
 
 
 """ Collect data from Binance exchange """
+
+from binance.client import Client as BinanceClient
+
+from pyhodl.apis.markets.models import ApiConfig
+
+
+class BinanceApi(ApiConfig):
+    """ Api config for Binance exchange """
+
+    def get_client(self):
+        return BinanceClient(
+            self.key,
+            self.secret
+        )
