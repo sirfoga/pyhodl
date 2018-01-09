@@ -28,8 +28,8 @@ var NAVTREE =
 var NAVTREEINDEX =
 [
 "____init_____8py.html",
-"classpyhodl_1_1data_1_1tables_1_1_datetime_table.html#a703c3ab39fe0bd8491bfab8f89c1a98e",
-"namespacepyhodl_1_1data.html"
+"classpyhodl_1_1data_1_1tables_1_1_coin_prices_table.html#a7eb75b5fed6ca58cf3b2114942277f79",
+"namespacepyhodl_1_1api_1_1price_1_1coinmarketcap.html"
 ];
 
 var SYNCONMSG = 'click to disable panel synchronisation';

@@ -24,7 +24,7 @@ import time
 import requests
 from hal.internet.web import get_tor_session, renew_connection
 
-from pyhodl.utils.misc import callable_to_str
+from .misc import callable_to_str
 
 
 def handle_rate_limits(func, time_wait=60, max_attempts=2):

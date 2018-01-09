@@ -1,6 +1,6 @@
 var namespacepyhodl_1_1apis_1_1prices_1_1clients =
 [
-    [ "CoinmarketCapClient", "classpyhodl_1_1apis_1_1prices_1_1clients_1_1_coinmarket_cap_client.html", "classpyhodl_1_1apis_1_1prices_1_1clients_1_1_coinmarket_cap_client" ],
-    [ "CryptocompareClient", "classpyhodl_1_1apis_1_1prices_1_1clients_1_1_cryptocompare_client.html", "classpyhodl_1_1apis_1_1prices_1_1clients_1_1_cryptocompare_client" ],
-    [ "CryptonatorClient", "classpyhodl_1_1apis_1_1prices_1_1clients_1_1_cryptonator_client.html", "classpyhodl_1_1apis_1_1prices_1_1clients_1_1_cryptonator_client" ]
+    [ "coinmarketcap", "namespacepyhodl_1_1apis_1_1prices_1_1clients_1_1coinmarketcap.html", "namespacepyhodl_1_1apis_1_1prices_1_1clients_1_1coinmarketcap" ],
+    [ "cryptocompare", "namespacepyhodl_1_1apis_1_1prices_1_1clients_1_1cryptocompare.html", "namespacepyhodl_1_1apis_1_1prices_1_1clients_1_1cryptocompare" ],
+    [ "cryptonator", "namespacepyhodl_1_1apis_1_1prices_1_1clients_1_1cryptonator.html", "namespacepyhodl_1_1apis_1_1prices_1_1clients_1_1cryptonator" ]
 ];

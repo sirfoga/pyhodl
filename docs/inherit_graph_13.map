@@ -1,7 +1,6 @@
 <map id="Graphical Class Hierarchy" name="Graphical Class Hierarchy">
-<area shape="rect" id="node1" href="$classpyhodl_1_1data_1_1parse_1_1core_1_1_crypto_parser.html" title="pyhodl.data.parse.core.Crypto\lParser" alt="" coords="5,71,203,112"/>
-<area shape="rect" id="node2" href="$classpyhodl_1_1data_1_1parse_1_1models_1_1_binance_parser.html" title="pyhodl.data.parse.models.\lBinanceParser" alt="" coords="251,5,425,47"/>
-<area shape="rect" id="node3" href="$classpyhodl_1_1data_1_1parse_1_1models_1_1_bitfinex_parser.html" title="pyhodl.data.parse.models.\lBitfinexParser" alt="" coords="251,71,425,112"/>
-<area shape="rect" id="node4" href="$classpyhodl_1_1data_1_1parse_1_1models_1_1_coinbase_parser.html" title="pyhodl.data.parse.models.\lCoinbaseParser" alt="" coords="251,136,425,177"/>
-<area shape="rect" id="node5" href="$classpyhodl_1_1data_1_1parse_1_1models_1_1_gdax_parser.html" title="pyhodl.data.parse.models.\lGdaxParser" alt="" coords="473,136,648,177"/>
+<area shape="rect" id="node2" href="$classpyhodl_1_1data_1_1coins_1_1_coins_names_table.html" title="pyhodl.data.coins.CoinsNames\lTable" alt="" coords="149,5,353,47"/>
+<area shape="rect" id="node3" href="$classpyhodl_1_1data_1_1tables_1_1_datetime_table.html" title="pyhodl.data.tables.Datetime\lTable" alt="" coords="159,71,344,112"/>
+<area shape="rect" id="node4" href="$classpyhodl_1_1data_1_1tables_1_1_coin_prices_table.html" title="pyhodl.data.tables.CoinPrices\lTable" alt="" coords="401,37,597,79"/>
+<area shape="rect" id="node5" href="$classpyhodl_1_1data_1_1tables_1_1_market_data_table.html" title="pyhodl.data.tables.Market\lDataTable" alt="" coords="413,103,585,144"/>
 </map>

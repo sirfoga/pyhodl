@@ -27,15 +27,15 @@ from ccxt import bitfinex as bitfinex_client
 from coinbase.wallet.client import Client as CoinbaseClient
 from gdax import AuthenticatedClient as GdaxClient
 
-from pyhodl.apis.markets.models import ApiManager
+from pyhodl.api.markets.models import ApiManager
 from pyhodl.app import ConfigManager
 from pyhodl.config import DATA_FOLDER
-from pyhodl.updater.markets.binance import BinanceUpdater
-from pyhodl.updater.markets.bitfinex import BitfinexUpdater
-from pyhodl.updater.markets.coinbase import CoinbaseUpdater
-from pyhodl.updater.markets.gdax import GdaxUpdater
 from pyhodl.utils.dates import parse_datetime, datetime_to_str, parse_timedelta
 from pyhodl.utils.misc import get_actual_class_name
+from .markets.binance import BinanceUpdater
+from .markets.bitfinex import BitfinexUpdater
+from .markets.coinbase import CoinbaseUpdater
+from .markets.gdax import GdaxUpdater
 
 UPDATE_CONFIG = os.path.join(
     DATA_FOLDER,

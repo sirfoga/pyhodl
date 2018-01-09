@@ -1,6 +1,6 @@
 var dir_d1524d7edab33cd26ecca4a6c2c7e1fb =
 [
-    [ "apis", "dir_b50264f4e17e8b31b2b915025115f3ea.html", "dir_b50264f4e17e8b31b2b915025115f3ea" ],
+    [ "api", "dir_3cc4f6ae58b5ffeff8ddba4a09832931.html", "dir_3cc4f6ae58b5ffeff8ddba4a09832931" ],
     [ "charts", "dir_fb2630db98b712dad7ff972489af80f7.html", "dir_fb2630db98b712dad7ff972489af80f7" ],
     [ "core", "dir_85711e6e68e6afede9464930e8713ed2.html", "dir_85711e6e68e6afede9464930e8713ed2" ],
     [ "data", "dir_a7724a52bb51706e2a174d0b104aca0d.html", "dir_a7724a52bb51706e2a174d0b104aca0d" ],

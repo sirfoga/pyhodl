@@ -18,7 +18,7 @@
 
 """ Analyze transactions in exchanges """
 
-from pyhodl.core.wallets import Wallet
+from .wallets import Wallet
 
 
 class CryptoExchange:

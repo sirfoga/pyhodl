@@ -23,7 +23,7 @@ from datetime import datetime
 import numpy as np
 
 from pyhodl.config import INFINITY
-from pyhodl.utils.dates import datetime_to_str, get_delta_hours
+from .dates import datetime_to_str, get_delta_hours
 
 LONG_DEC_FORMAT = "{0:.5f}"
 SHORT_DEC_FORMAT = "{0:.3f}"

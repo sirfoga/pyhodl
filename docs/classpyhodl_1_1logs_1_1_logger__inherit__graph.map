@@ -1,12 +1,12 @@
 <map id="pyhodl.logs.Logger" name="pyhodl.logs.Logger">
-<area shape="rect" id="node2" href="$classpyhodl_1_1apis_1_1models_1_1_abstract_api_client.html" title="pyhodl.apis.models.Abstract\lApiClient" alt="" coords="184,104,371,145"/>
-<area shape="rect" id="node7" href="$classpyhodl_1_1updater_1_1updaters_1_1_exchange_updater.html" title="pyhodl.updater.updaters.\lExchangeUpdater" alt="" coords="195,201,360,243"/>
-<area shape="rect" id="node3" href="$classpyhodl_1_1apis_1_1prices_1_1models_1_1_prices_api_client.html" title="pyhodl.apis.prices.models.\lPricesApiClient" alt="" coords="436,71,613,112"/>
-<area shape="rect" id="node4" href="$classpyhodl_1_1apis_1_1prices_1_1clients_1_1_coinmarket_cap_client.html" title="pyhodl.apis.prices.clients.\lCoinmarketCapClient" alt="" coords="679,5,852,47"/>
-<area shape="rect" id="node5" href="$classpyhodl_1_1apis_1_1prices_1_1clients_1_1_cryptocompare_client.html" title="pyhodl.apis.prices.clients.\lCryptocompareClient" alt="" coords="679,71,852,112"/>
-<area shape="rect" id="node6" href="$classpyhodl_1_1apis_1_1prices_1_1clients_1_1_cryptonator_client.html" title="pyhodl.apis.prices.clients.\lCryptonatorClient" alt="" coords="679,136,852,177"/>
-<area shape="rect" id="node8" href="$classpyhodl_1_1updater_1_1models_1_1_binance_updater.html" title="pyhodl.updater.models.Binance\lUpdater" alt="" coords="423,136,627,177"/>
-<area shape="rect" id="node9" href="$classpyhodl_1_1updater_1_1models_1_1_bitfinex_updater.html" title="pyhodl.updater.models.Bitfinex\lUpdater" alt="" coords="424,201,625,243"/>
-<area shape="rect" id="node10" href="$classpyhodl_1_1updater_1_1models_1_1_coinbase_updater.html" title="pyhodl.updater.models.Coinbase\lUpdater" alt="" coords="419,267,631,308"/>
-<area shape="rect" id="node11" href="$classpyhodl_1_1updater_1_1models_1_1_gdax_updater.html" title="pyhodl.updater.models.Gdax\lUpdater" alt="" coords="431,332,619,373"/>
+<area shape="rect" id="node2" href="$classpyhodl_1_1api_1_1models_1_1_abstract_api_client.html" title="pyhodl.api.models.Abstract\lApiClient" alt="" coords="201,104,381,145"/>
+<area shape="rect" id="node7" href="$classpyhodl_1_1updater_1_1models_1_1_exchange_updater.html" title="pyhodl.updater.models.Exchange\lUpdater" alt="" coords="184,201,399,243"/>
+<area shape="rect" id="node3" href="$classpyhodl_1_1api_1_1price_1_1models_1_1_prices_api_client.html" title="pyhodl.api.price.models.\lPricesApiClient" alt="" coords="475,71,637,112"/>
+<area shape="rect" id="node4" href="$classpyhodl_1_1api_1_1price_1_1coinmarketcap_1_1_coinmarket_cap_client.html" title="pyhodl.api.price.coinmarketcap.\lCoinmarketCapClient" alt="" coords="713,5,920,47"/>
+<area shape="rect" id="node5" href="$classpyhodl_1_1api_1_1price_1_1cryptocompare_1_1_cryptocompare_client.html" title="pyhodl.api.price.cryptocompare.\lCryptocompareClient" alt="" coords="713,71,920,112"/>
+<area shape="rect" id="node6" href="$classpyhodl_1_1api_1_1price_1_1cryptonator_1_1_cryptonator_client.html" title="pyhodl.api.price.cryptonator.\lCryptonatorClient" alt="" coords="723,136,910,177"/>
+<area shape="rect" id="node8" href="$classpyhodl_1_1updater_1_1markets_1_1binance_1_1_binance_updater.html" title="pyhodl.updater.markets.binance.\lBinanceUpdater" alt="" coords="451,136,661,177"/>
+<area shape="rect" id="node9" href="$classpyhodl_1_1updater_1_1markets_1_1bitfinex_1_1_bitfinex_updater.html" title="pyhodl.updater.markets.bitfinex.\lBitfinexUpdater" alt="" coords="452,201,660,243"/>
+<area shape="rect" id="node10" href="$classpyhodl_1_1updater_1_1markets_1_1coinbase_1_1_coinbase_updater.html" title="pyhodl.updater.markets.coinbase.\lCoinbaseUpdater" alt="" coords="447,267,665,308"/>
+<area shape="rect" id="node11" href="$classpyhodl_1_1updater_1_1markets_1_1gdax_1_1_gdax_updater.html" title="pyhodl.updater.markets.gdax.\lGdaxUpdater" alt="" coords="459,332,653,373"/>
 </map>

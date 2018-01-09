@@ -1,4 +1,5 @@
 var searchData=
 [
-  ['network_2epy',['network.py',['../network_8py.html',1,'']]]
+  ['lists_2epy',['lists.py',['../lists_8py.html',1,'']]],
+  ['logs_2epy',['logs.py',['../logs_8py.html',1,'']]]
 ];

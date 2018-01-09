@@ -1,6 +1,11 @@
 # Change Log
 All notable changes to this project will be documented in this file.
 
+## 0.2.7 - 2018-01-09
+
+### Refactor
+- factory modules
+
 ## 0.2.6 - 2018-01-06
 
 ### Fixed

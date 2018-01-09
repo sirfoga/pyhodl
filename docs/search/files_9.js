@@ -1,6 +1,8 @@
 var searchData=
 [
-  ['tables_2epy',['tables.py',['../tables_8py.html',1,'']]],
-  ['transactions_2epy',['transactions.py',['../core_2models_2transactions_8py.html',1,'']]],
-  ['transactions_2epy',['transactions.py',['../tools_2transactions_8py.html',1,'']]]
+  ['misc_2epy',['misc.py',['../misc_8py.html',1,'']]],
+  ['models_2epy',['models.py',['../api_2models_8py.html',1,'']]],
+  ['models_2epy',['models.py',['../updater_2models_8py.html',1,'']]],
+  ['models_2epy',['models.py',['../api_2price_2models_8py.html',1,'']]],
+  ['models_2epy',['models.py',['../api_2markets_2models_8py.html',1,'']]]
 ];

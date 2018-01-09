@@ -1,0 +1,4 @@
+var namespacepyhodl_1_1apis_1_1prices_1_1clients_1_1coinmarketcap =
+[
+    [ "CoinmarketCapClient", "classpyhodl_1_1apis_1_1prices_1_1clients_1_1coinmarketcap_1_1_coinmarket_cap_client.html", "classpyhodl_1_1apis_1_1prices_1_1clients_1_1coinmarketcap_1_1_coinmarket_cap_client" ]
+];

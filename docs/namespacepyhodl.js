@@ -1,6 +1,6 @@
 var namespacepyhodl =
 [
-    [ "apis", "namespacepyhodl_1_1apis.html", "namespacepyhodl_1_1apis" ],
+    [ "api", "namespacepyhodl_1_1api.html", "namespacepyhodl_1_1api" ],
     [ "app", "namespacepyhodl_1_1app.html", "namespacepyhodl_1_1app" ],
     [ "charts", "namespacepyhodl_1_1charts.html", "namespacepyhodl_1_1charts" ],
     [ "config", "namespacepyhodl_1_1config.html", "namespacepyhodl_1_1config" ],

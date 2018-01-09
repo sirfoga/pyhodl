@@ -16,7 +16,7 @@
 # limitations under the License.
 
 
-""" Parser prices, market cap data and values downloaded with this app """
+""" Parser price, market cap data and values downloaded with this app """
 
 import os
 from bisect import bisect
@@ -164,9 +164,9 @@ COINS_PRICES_TABLE = CoinPricesTable("USD")
 def get_coin_prices_table(currency="USD"):
     """
     :param currency: str
-        Convert prices to this currency
+        Convert price to this currency
     :return: CoinPricesTable
-        Database of prices
+        Database of price
     """
 
     if currency == "USD":

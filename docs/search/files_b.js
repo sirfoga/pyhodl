@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['wallets_2epy',['wallets.py',['../wallets_8py.html',1,'']]]
+  ['portfolio_2epy',['portfolio.py',['../portfolio_8py.html',1,'']]]
 ];

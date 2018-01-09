@@ -23,7 +23,7 @@ from datetime import datetime
 
 import numpy as np
 
-from pyhodl.apis.prices.models import get_price_on_date
+from pyhodl.api.price.factory import get_price_on_date
 from pyhodl.config import VALUE_KEY, DATE_TIME_KEY
 from pyhodl.data.coins import is_crypto
 from pyhodl.data.tables import get_coin_prices_table
@@ -132,7 +132,7 @@ class Wallet:
         :param currency: str
             Currency to get price
         :return: [] of float
-            List of prices if coin converted to currency on those dates
+            List of price if coin converted to currency on those dates
         """
 
         return [

@@ -20,12 +20,12 @@
 
 import matplotlib.pyplot as plt
 
-from pyhodl.charts.core import CryptoPlotter
 from pyhodl.config import VALUE_KEY
 from pyhodl.core.portfolio import Portfolio
 from pyhodl.data.tables import MarketDataTable
 from pyhodl.utils.dates import generate_dates
 from pyhodl.utils.misc import normalize
+from .core import CryptoPlotter
 
 
 class BalancePlotter(CryptoPlotter):

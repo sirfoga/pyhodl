@@ -32,7 +32,7 @@
  <tr style="height: 56px;">
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">PyHodl
-   &#160;<span id="projectnumber">0.2.6</span>
+   &#160;<span id="projectnumber">0.2.7</span>
    </div>
    <div id="projectbrief">Framework to download, update, analyze and plot your crypto-transactions. Completely off-line and security-oriented.</div>
   </td>
@@ -106,7 +106,8 @@ $(document).ready(function(){initNavTree('namespacepyhodl_1_1apis_1_1prices_1_1m
 
 <div class="header">
   <div class="summary">
-<a href="#nested-classes">Classes</a>  </div>
+<a href="#nested-classes">Classes</a> &#124;
+<a href="#func-members">Functions</a>  </div>
   <div class="headertitle">
 <div class="title">pyhodl.apis.prices.models Namespace Reference</div>  </div>
 </div><!--header-->
@@ -116,7 +117,179 @@ $(document).ready(function(){initNavTree('namespacepyhodl_1_1apis_1_1prices_1_1m
 Classes</h2></td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classpyhodl_1_1apis_1_1prices_1_1models_1_1_prices_api_client.html">PricesApiClient</a></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="func-members"></a>
+Functions</h2></td></tr>
+<tr class="memitem:ac527fa0317099b3f7a9f85cbb41d915f"><td class="memItemLeft" align="right" valign="top">def&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacepyhodl_1_1apis_1_1prices_1_1models.html#ac527fa0317099b3f7a9f85cbb41d915f">get_market_cap</a> (since, until)</td></tr>
+<tr class="separator:ac527fa0317099b3f7a9f85cbb41d915f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aa2edee7dc69f5e88140302b9a05193f5"><td class="memItemLeft" align="right" valign="top">def&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacepyhodl_1_1apis_1_1prices_1_1models.html#aa2edee7dc69f5e88140302b9a05193f5">get_client</a> (currency, tor)</td></tr>
+<tr class="separator:aa2edee7dc69f5e88140302b9a05193f5"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a3727cb1fc1ea29e5132e3d26ecea75f7"><td class="memItemLeft" align="right" valign="top">def&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacepyhodl_1_1apis_1_1prices_1_1models.html#a3727cb1fc1ea29e5132e3d26ecea75f7">get_price_on_dates</a> (coins, currency, dates, tor)</td></tr>
+<tr class="separator:a3727cb1fc1ea29e5132e3d26ecea75f7"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:affc9ed21664f47c1b79f32e36636f2f3"><td class="memItemLeft" align="right" valign="top">def&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacepyhodl_1_1apis_1_1prices_1_1models.html#affc9ed21664f47c1b79f32e36636f2f3">get_price_on_date</a> (coins, currency, date_time, tor)</td></tr>
+<tr class="separator:affc9ed21664f47c1b79f32e36636f2f3"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
+<h2 class="groupheader">Function Documentation</h2>
+<a class="anchor" id="aa2edee7dc69f5e88140302b9a05193f5"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">def pyhodl.apis.prices.models.get_client </td>
+          <td>(</td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>currency</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>tor</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<pre class="fragment">:param currency: str
+    Currency to get price
+:param tor: *
+    Tor arg
+:return: ApiClient
+    Client to get price with
+</pre> 
+</div>
+</div>
+<a class="anchor" id="ac527fa0317099b3f7a9f85cbb41d915f"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">def pyhodl.apis.prices.models.get_market_cap </td>
+          <td>(</td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>since</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>until</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<pre class="fragment">:param since: datetime
+    Get data since this date
+:param until: datetime
+    Get data until this date
+:return: [] of {}
+    Crypto market cap at specified dates
+</pre> 
+</div>
+</div>
+<a class="anchor" id="affc9ed21664f47c1b79f32e36636f2f3"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">def pyhodl.apis.prices.models.get_price_on_date </td>
+          <td>(</td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>coins</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>currency</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>date_time</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>tor</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<pre class="fragment">:param coins: [] of str
+    List of coins
+:param currency: str
+    Convert prices to this currency
+:param date_time: datetime
+    Get prices on date
+:param tor: str or None
+    Password to access tor proxy
+:return: [] of {}
+    List of prices of coins at dates
+</pre> 
+</div>
+</div>
+<a class="anchor" id="a3727cb1fc1ea29e5132e3d26ecea75f7"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">def pyhodl.apis.prices.models.get_price_on_dates </td>
+          <td>(</td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>coins</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>currency</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>dates</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>tor</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<pre class="fragment">:param coins: [] of str
+    List of coins
+:param currency: str
+    Convert prices to this currency
+:param dates: [] of datetime
+    Get prices on these dates
+:param tor: str or None
+    Password to access tor proxy
+:return: [] of {}
+    List of prices of coins at dates
+</pre> 
+</div>
+</div>
 </div><!-- contents -->
 </div><!-- doc-content -->
 <!-- start footer part -->

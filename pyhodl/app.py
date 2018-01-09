@@ -23,8 +23,8 @@ import os
 from hal.files.parsers import JSONParser
 from hal.files.save_as import write_dicts_to_json
 
-from pyhodl.config import APP_FOLDER, API_FOLDER, DATA_FOLDER
-from pyhodl.data.coins import CryptoCoin, CRYPTO_COINS
+from .config import APP_FOLDER, API_FOLDER, DATA_FOLDER
+from .data.coins import CryptoCoin, CRYPTO_COINS
 
 
 class ConfigManager:

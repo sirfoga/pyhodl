@@ -1,0 +1,5 @@
+<map id="Graphical Class Hierarchy" name="Graphical Class Hierarchy">
+<area shape="rect" id="node2" href="$classpyhodl_1_1data_1_1parse_1_1markets_1_1binance_1_1_binance_parser.html" title="pyhodl.data.parse.markets.binance.\lBinanceParser" alt="" coords="155,5,385,47"/>
+<area shape="rect" id="node3" href="$classpyhodl_1_1data_1_1parse_1_1markets_1_1bitfinex_1_1_bitfinex_parser.html" title="pyhodl.data.parse.markets.bitfinex.\lBitfinexParser" alt="" coords="157,71,383,112"/>
+<area shape="rect" id="node4" href="$classpyhodl_1_1data_1_1parse_1_1markets_1_1coinbase_1_1_coinbase_parser.html" title="pyhodl.data.parse.markets.coinbase.\lCoinbaseParser" alt="" coords="152,136,388,177"/>
+</map>

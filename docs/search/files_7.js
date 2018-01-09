@@ -1,8 +1,6 @@
 var searchData=
 [
-  ['misc_2epy',['misc.py',['../misc_8py.html',1,'']]],
-  ['models_2epy',['models.py',['../apis_2prices_2models_8py.html',1,'']]],
-  ['models_2epy',['models.py',['../updater_2models_8py.html',1,'']]],
-  ['models_2epy',['models.py',['../data_2parse_2models_8py.html',1,'']]],
-  ['models_2epy',['models.py',['../apis_2models_8py.html',1,'']]]
+  ['gdax_2epy',['gdax.py',['../api_2markets_2gdax_8py.html',1,'']]],
+  ['gdax_2epy',['gdax.py',['../updater_2markets_2gdax_8py.html',1,'']]],
+  ['gdax_2epy',['gdax.py',['../data_2parse_2markets_2gdax_8py.html',1,'']]]
 ];

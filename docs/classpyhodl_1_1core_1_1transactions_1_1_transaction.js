@@ -1,0 +1,25 @@
+var classpyhodl_1_1core_1_1transactions_1_1_transaction =
+[
+    [ "__init__", "classpyhodl_1_1core_1_1transactions_1_1_transaction.html#a3d45ae7124efe8490e2737648c0ecf17", null ],
+    [ "__getitem__", "classpyhodl_1_1core_1_1transactions_1_1_transaction.html#a4a7e480264519829472d4b5f77766adf", null ],
+    [ "__str__", "classpyhodl_1_1core_1_1transactions_1_1_transaction.html#a8ec1975cb80aa3d3772a88d0bfda5c89", null ],
+    [ "get_amount", "classpyhodl_1_1core_1_1transactions_1_1_transaction.html#aabe565d7dcc39a82d8deeb5a338cbd64", null ],
+    [ "get_amount_buy_sell", "classpyhodl_1_1core_1_1transactions_1_1_transaction.html#ac04ca7c01d37c5a9a89272e4c6a9533f", null ],
+    [ "get_amount_commission", "classpyhodl_1_1core_1_1transactions_1_1_transaction.html#ae4fff27f5a700da7df59bb8d4b28d76c", null ],
+    [ "get_amount_moved", "classpyhodl_1_1core_1_1transactions_1_1_transaction.html#aad1a528d35455ea251c068ffbb461682", null ],
+    [ "get_amount_traded", "classpyhodl_1_1core_1_1transactions_1_1_transaction.html#a814b6011471fd1cd053c1c7d97039436", null ],
+    [ "get_attrs", "classpyhodl_1_1core_1_1transactions_1_1_transaction.html#acf136b0eb0bed7a155e8a34d4af59f9d", null ],
+    [ "get_coins", "classpyhodl_1_1core_1_1transactions_1_1_transaction.html#aefffb2920a7a794286615c8cc314a230", null ],
+    [ "has", "classpyhodl_1_1core_1_1transactions_1_1_transaction.html#a954b239ec333d660a73f65e2b0004660", null ],
+    [ "is_deposit", "classpyhodl_1_1core_1_1transactions_1_1_transaction.html#a341940255b1228bdf938634e3484e4ba", null ],
+    [ "is_fee", "classpyhodl_1_1core_1_1transactions_1_1_transaction.html#a7e0299e87c30ee9c9c6c4620b22fb2db", null ],
+    [ "is_trade", "classpyhodl_1_1core_1_1transactions_1_1_transaction.html#ac3b6f42ac82c2a23f4fcdaec9331abb8", null ],
+    [ "is_withdrawal", "classpyhodl_1_1core_1_1transactions_1_1_transaction.html#a2ce624f97729bbc3c21f2c244d0d1e88", null ],
+    [ "coin_buy", "classpyhodl_1_1core_1_1transactions_1_1_transaction.html#af0ea5541305897c89d66f563f94d7a24", null ],
+    [ "coin_sell", "classpyhodl_1_1core_1_1transactions_1_1_transaction.html#a6be0c0fd4c27507d545545f9c243e964", null ],
+    [ "commission", "classpyhodl_1_1core_1_1transactions_1_1_transaction.html#aaa055e9b0700ee98002c3b6cbc88dc30", null ],
+    [ "date", "classpyhodl_1_1core_1_1transactions_1_1_transaction.html#a212d7a5fcf429f3209f078259d4841a2", null ],
+    [ "raw", "classpyhodl_1_1core_1_1transactions_1_1_transaction.html#a792a67a7cc5f6b083b12e8755ed74fa7", null ],
+    [ "successful", "classpyhodl_1_1core_1_1transactions_1_1_transaction.html#a0359e3d41f18dcde730dcbcfd9085273", null ],
+    [ "transaction_type", "classpyhodl_1_1core_1_1transactions_1_1_transaction.html#a9816d7e3a84c9e2b4c870e0ddeddcf96", null ]
+];

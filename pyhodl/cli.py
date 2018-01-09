@@ -26,7 +26,7 @@ import traceback
 from hal.files.save_as import write_dicts_to_json
 from hal.streams.user import UserInput
 
-from pyhodl.apis.prices.models import get_market_cap, get_price_on_dates
+from pyhodl.api.price.factory import get_market_cap, get_price_on_dates
 from pyhodl.charts.balance import FiatPlotter
 from pyhodl.config import DEFAULT_PATHS, RunMode
 from pyhodl.data.parse.build import build_parser
@@ -203,15 +203,15 @@ def download_prices(coins, since, until, where_to, verbose, currency="USD",
     :param verbose: bool
         True iff you want verbose output
     :param currency: str
-        Currency to get prices on
+        Currency to get price on
     :param tor: str or None
         Connect to tor proxy with this password
     :return: void
-        Downloads prices and saves results
+        Downloads price and saves results
     """
 
     if verbose:
-        print("Getting historical prices for", len(coins), "coins")
+        print("Getting historical price for", len(coins), "coins")
 
     output_file = os.path.join(where_to, currency.lower() + ".json")
     dates = list(generate_dates(since, until, 24))
@@ -220,7 +220,7 @@ def download_prices(coins, since, until, where_to, verbose, currency="USD",
         write_dicts_to_json(data, output_file)
 
     if verbose:
-        print("Saved historical prices to", output_file)
+        print("Saved historical price to", output_file)
 
 
 def download_historical(run_path, verbose, tor):
@@ -232,7 +232,7 @@ def download_historical(run_path, verbose, tor):
     :param tor: str or None
         Connect to tor proxy with this password
     :return: void
-        Downloads prices and saves results
+        Downloads price and saves results
     """
 
     exchanges = get_all_exchanges()

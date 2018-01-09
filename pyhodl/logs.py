@@ -20,7 +20,7 @@
 
 from datetime import datetime
 
-from pyhodl.utils.misc import get_actual_class_name
+from .utils.misc import get_actual_class_name
 
 LOG_TIME_FORMAT = "%H:%M:%S"
 
