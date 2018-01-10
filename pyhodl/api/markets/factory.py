@@ -17,6 +17,8 @@
 
 
 """ Creates API client """
+from pyhodl.app import ConfigManager
+from pyhodl.config import API_CONFIG
 
 from .binance import BinanceApi
 from .bitfinex import BitfinexApi
@@ -42,3 +44,24 @@ def build_api(raw):
         return GdaxApi(raw)
 
     raise ValueError("Cannot infer type of API")
+
+
+class ApiManager(ConfigManager):
+    """ Manages your API secrets """
+
+    def __init__(self, config_file=API_CONFIG):
+        ConfigManager.__init__(self, config_file)
+
+    def get(self, key):
+        out = super().get(key)
+        out["name"] = key
+        return build_api(out)
+
+    def get_all(self):
+        """
+        :return: generator of API
+            Generate all APIs price
+        """
+
+        for key in self.data:
+            yield self.get(key)
