@@ -58,7 +58,7 @@ setup(
         "ccxt",
         "pytz",
         "requests",
-        "ciso8601",  # todo add "pyhal"
+        "ciso8601",
         "scipy",
         "sklearn"
     ],

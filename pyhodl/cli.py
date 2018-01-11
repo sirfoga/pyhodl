@@ -301,4 +301,4 @@ def cli():
 
 
 if __name__ == '__main__':
-    main()  # todo cli()
+    cli()
