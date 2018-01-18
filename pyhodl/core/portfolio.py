@@ -23,7 +23,7 @@ import numpy as np
 from pyhodl.config import VALUE_KEY, NAN, DATE_TIME_KEY
 from pyhodl.data.coins import DEFAULT_FIAT
 from pyhodl.utils.misc import get_ratio, get_percentage, is_nan, \
-    get_relative_delta, get_relative_percentage, print_balance
+    get_relative_delta, get_relative_percentage
 
 
 class Portfolio:
@@ -146,30 +146,28 @@ class Portfolio:
         crypto_net = crypto_values + fiat_values
         return dates, crypto_net
 
-    def get_balance(self, last=None):
+    def get_balance_info(self, last=None):
         """
-        :param save_to: str
-            Path to file where to save balance data
         :param last: str
             Path to file where to read balance data
-        :return: float
-            Total balance
+        :return: tuple
+            current balance, total value, last total value, delta, delta %
         """
 
         balances = self.get_current_balance()
         total_value = self.sum_total_balance(balances)
-        last_time = last[DATE_TIME_KEY] if last else None
+        delta, delta_percentage, last_total = None, None, None
+
         if last:
             last_total_balance = sum([
                 float(coin[VALUE_KEY])
                 for symbol, coin in last.items() if symbol != DATE_TIME_KEY
             ])
             delta = get_relative_delta(total_value, last_total_balance)
-            percentage = get_relative_percentage(
+            delta_percentage = get_relative_percentage(
                 total_value,
                 last_total_balance
             )
-            print_balance(total_value, delta, percentage, last_time)
+            last_total = self.sum_total_balance(last)
 
-        last_total = self.sum_total_balance(last) if last else None
-        return balances, total_value, last_total, last_time
+        return balances, total_value, last_total, delta, delta_percentage

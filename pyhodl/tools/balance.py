@@ -24,23 +24,27 @@ import colorama
 from colorama import Fore
 from hal.streams.pretty_table import pretty_format_table
 
-from pyhodl.config import VALUE_KEY
+from pyhodl.config import VALUE_KEY, DATE_TIME_KEY
 from pyhodl.core.portfolio import Portfolio
 from pyhodl.data.balance import get_balance_file, parse_balance, save_balance
 from pyhodl.data.parse.build import build_exchanges
 from pyhodl.utils.misc import get_relative_delta, \
-    get_relative_percentage, print_balance, num_to_str
+    get_relative_percentage, print_balance_info, num_to_str
 
 
 class Balance:
     """ Deal with exchanges, wallets balances """
 
-    def __init__(self, color=False):
+    def __init__(self, input_folder, color=False):
         """
-        :param color:
+        :param color: bool
+            True iff you want colorful output
         """
 
-    def show_from_folder(self, input_folder):
+        self.color = bool(color)
+        self.exchanges = build_exchanges(input_folder)
+
+    def print(self):
         """
         :param input_folder: str
             Path to input folder
@@ -48,13 +52,12 @@ class Balance:
             Prints balance of wallets found in folder
         """
 
-        exchanges = build_exchanges(input_folder)
         total_value = 0.0
         last_total = 0.0
         last_time = None
 
-        for exchange in exchanges:
-            total, last, last_time = Balance.show_exchange(exchange)
+        for exchange in self.exchanges:
+            total, last, last_time = self.print_exchange(exchange)
             total_value += total
             last_total += last if last else 0.0
 
@@ -62,10 +65,10 @@ class Balance:
         percentage = get_relative_percentage(total_value, last_total)
 
         print("\n")  # space between single exchanges and total value
-        print_balance(total_value, delta, percentage, last_time)
+        print_balance_info(total_value, delta, percentage, last_time,
+                           color=self.color)
 
-    @staticmethod
-    def _pretty_balances(balances, last, color=False):
+    def pretty_balances(self, balances, last):
         """
         :param balances: [] of {}
             List of balances of each coin
@@ -78,7 +81,7 @@ class Balance:
         table = [
             Balance._pretty_balance(balance, last) for balance in balances
         ]
-        if color:
+        if self.color:
             table = Balance._color_table(table, [5, 6])
 
         return pretty_format_table(
@@ -87,6 +90,48 @@ class Balance:
                 "$ delta", "% delta"
             ], table
         )
+
+    def print_exchange(self, exchange):
+        """
+        :param exchange: CryptoExchange
+            Exchange to get balance of
+        :return: void
+            Prints balance of exchange
+        """
+
+        print("\nExchange:", exchange.exchange_name.title())
+
+        portfolio = Portfolio(exchange.build_wallets().values())
+        last_file = get_balance_file(exchange.exchange_name)
+        last = parse_balance(last_file) if last_file else None
+        last_time = last[DATE_TIME_KEY] if last else None
+
+        balances, total_value, last_total, delta, delta_percentage = \
+            portfolio.get_balance_info(last)
+
+        print_balance_info(total_value, delta, delta_percentage, last_time,
+                           color=self.color)
+        print(self.pretty_balances(balances, last))
+
+        if last_file:  # save balance
+            save_balance(balances, last_file, timestamp=datetime.now())
+        return total_value, last_total, last_time
+
+    @staticmethod
+    def _pretty_balance(balance, last):
+        current_val = balance[VALUE_KEY]
+        last_val = last[balance["symbol"]][VALUE_KEY] \
+            if last and balance["symbol"] in last else None
+
+        return [
+            str(balance["symbol"]),
+            num_to_str(balance["balance"]),
+            num_to_str(balance[VALUE_KEY]),
+            num_to_str(balance["price"]),
+            num_to_str(balance["percentage"]),
+            num_to_str(get_relative_delta(current_val, last_val)),
+            num_to_str(get_relative_percentage(current_val, last_val))
+        ]
 
     @staticmethod
     def _color_table(table, floats, eps=1e-5):
@@ -121,42 +166,3 @@ class Balance:
                 color_row.append(val)
             color.append(color_row)
         return color
-
-    @staticmethod
-    def _pretty_balance(balance, last):
-        current_val = balance[VALUE_KEY]
-        last_val = last[balance["symbol"]][VALUE_KEY] \
-            if last and balance["symbol"] in last else None
-
-        return [
-            str(balance["symbol"]),
-            num_to_str(balance["balance"]),
-            num_to_str(balance[VALUE_KEY]),
-            num_to_str(balance["price"]),
-            num_to_str(balance["percentage"]),
-            num_to_str(get_relative_delta(current_val, last_val)),
-            num_to_str(get_relative_percentage(current_val, last_val))
-        ]
-
-    @staticmethod
-    def show_exchange(exchange):
-        """
-        :param exchange: CryptoExchange
-            Exchange to get balance of
-        :return: void
-            Prints balance of exchange
-        """
-
-        print("\nExchange:", exchange.exchange_name.title())
-
-        wallets = exchange.build_wallets()
-        portfolio = Portfolio(wallets.values())
-        last_file = get_balance_file(exchange.exchange_name)
-        last = parse_balance(last_file) if last_file else None
-        balances, total_value, last_total, last_time = portfolio.get_balance(
-            last)
-
-        if last_file:
-            save_balance(balances, last_file, timestamp=datetime.now())
-        print(Balance._pretty_balances(balances, last, color=True))
-        return total_value, last_total, last_time

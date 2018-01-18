@@ -156,10 +156,8 @@ def show_balance(run_path):
         Prints balance of wallets found
     """
 
-    if os.path.isfile(run_path):
-        Balance.show_exchange(run_path)
-    else:
-        Balance.show_from_folder(run_path)
+    balance = Balance(run_path, color=True)
+    balance.print()
 
 
 def download_market_cap(since, until, where_to, verbose):
