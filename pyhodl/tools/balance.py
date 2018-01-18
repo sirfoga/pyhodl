@@ -79,13 +79,16 @@ class Balance:
             for i, col in enumerate(row):
                 val = col
                 if i in floats:
-                    val = float(val)
-                    if val < -eps:
-                        val = Fore.RED + str(val) + Fore.RESET
-                    elif val > eps:
-                        val = Fore.GREEN + str(val) + Fore.RESET
-                    else:
-                        val = Fore.WHITE + str(val) + Fore.RESET
+                    try:
+                        val = float(val)
+                        if val < -eps:
+                            val = Fore.RED + str(val) + Fore.RESET
+                        elif val > eps:
+                            val = Fore.GREEN + str(val) + Fore.RESET
+                        else:
+                            val = Fore.WHITE + str(val) + Fore.RESET
+                    except:
+                        pass
                 color_row.append(val)
             color.append(color_row)
         return color
@@ -102,8 +105,8 @@ class Balance:
             num_to_str(balance[VALUE_KEY]),
             num_to_str(balance["price"]),
             num_to_str(balance["percentage"]),
-            num_to_str(get_relative_delta(current_val, last_val)) + " $",
-            num_to_str(get_relative_percentage(current_val, last_val)) + " %"
+            num_to_str(get_relative_delta(current_val, last_val)),
+            num_to_str(get_relative_percentage(current_val, last_val))
         ]
 
     @staticmethod
