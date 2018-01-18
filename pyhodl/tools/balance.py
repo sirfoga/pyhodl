@@ -134,7 +134,7 @@ class Balance:
         ]
 
     @staticmethod
-    def _color_table(table, floats, eps=1e-5):
+    def _color_table(table, floats, eps=1e-3):
         """
         :param table: [] of []
             Matrix

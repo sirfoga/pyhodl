@@ -1,12 +1,13 @@
 var hierarchy =
 [
     [ "pyhodl.api.markets.models.ApiConfig", "classpyhodl_1_1api_1_1markets_1_1models_1_1_api_config.html", null ],
+    [ "pyhodl.tools.balance.Balance", "classpyhodl_1_1tools_1_1balance_1_1_balance.html", null ],
     [ "pyhodl.data.coins.Coin", "classpyhodl_1_1data_1_1coins_1_1_coin.html", [
       [ "pyhodl.data.coins.CryptoCoin", "classpyhodl_1_1data_1_1coins_1_1_crypto_coin.html", null ]
     ] ],
     [ "pyhodl.core.transactions.CoinAmount", "classpyhodl_1_1core_1_1transactions_1_1_coin_amount.html", null ],
     [ "pyhodl.app.ConfigManager", "classpyhodl_1_1app_1_1_config_manager.html", [
-      [ "pyhodl.api.markets.models.ApiManager", "classpyhodl_1_1api_1_1markets_1_1models_1_1_api_manager.html", null ],
+      [ "pyhodl.api.markets.factory.ApiManager", "classpyhodl_1_1api_1_1markets_1_1factory_1_1_api_manager.html", null ],
       [ "pyhodl.updater.core.UpdateManager", "classpyhodl_1_1updater_1_1core_1_1_update_manager.html", null ]
     ] ],
     [ "pyhodl.core.exchanges.CryptoExchange", "classpyhodl_1_1core_1_1exchanges_1_1_crypto_exchange.html", null ],

@@ -230,7 +230,6 @@ def print_balance_info(total_value, delta, percentage, last_time, color=False):
     delta = num_to_str(delta)
     percentage = num_to_str(percentage)
     if color:  # colorful output
-        total_value = color_number(total_value)
         delta = color_number(delta)
         percentage = color_number(percentage)
 

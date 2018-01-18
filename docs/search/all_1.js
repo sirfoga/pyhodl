@@ -11,7 +11,7 @@ var searchData=
   ['api_5fmanager',['api_manager',['../classpyhodl_1_1updater_1_1core_1_1_updater.html#a5d6bd6229fcd3477f8cbd1aa06714703',1,'pyhodl::updater::core::Updater']]],
   ['api_5fupdaters',['api_updaters',['../classpyhodl_1_1updater_1_1core_1_1_updater.html#ae92f0323e892b4feb13b7c574298f5f7',1,'pyhodl::updater::core::Updater']]],
   ['apiconfig',['ApiConfig',['../classpyhodl_1_1api_1_1markets_1_1models_1_1_api_config.html',1,'pyhodl::api::markets::models']]],
-  ['apimanager',['ApiManager',['../classpyhodl_1_1api_1_1markets_1_1models_1_1_api_manager.html',1,'pyhodl::api::markets::models']]],
+  ['apimanager',['ApiManager',['../classpyhodl_1_1api_1_1markets_1_1factory_1_1_api_manager.html',1,'pyhodl::api::markets::factory']]],
   ['app_2epy',['app.py',['../app_8py.html',1,'']]],
   ['app_5ffolder',['APP_FOLDER',['../namespacepyhodl_1_1config.html#adaeb85931859c28a80116a1ddc967674',1,'pyhodl::config']]],
   ['app_5fname',['APP_NAME',['../namespacepyhodl_1_1config.html#a6b76be47d74b5afa589d8d38c08fd870',1,'pyhodl::config']]],

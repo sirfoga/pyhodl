@@ -15,7 +15,6 @@ var dir_f490e2f4e1723f3c3c3109e77ed88a48 =
       [ "GdaxApi", "classpyhodl_1_1api_1_1markets_1_1gdax_1_1_gdax_api.html", "classpyhodl_1_1api_1_1markets_1_1gdax_1_1_gdax_api" ]
     ] ],
     [ "models.py", "api_2markets_2models_8py.html", [
-      [ "ApiManager", "classpyhodl_1_1api_1_1markets_1_1models_1_1_api_manager.html", "classpyhodl_1_1api_1_1markets_1_1models_1_1_api_manager" ],
       [ "ApiConfig", "classpyhodl_1_1api_1_1markets_1_1models_1_1_api_config.html", "classpyhodl_1_1api_1_1markets_1_1models_1_1_api_config" ]
     ] ]
 ];

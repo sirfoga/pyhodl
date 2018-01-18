@@ -32,7 +32,7 @@
  <tr style="height: 56px;">
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">PyHodl
-   &#160;<span id="projectnumber">0.2.7</span>
+   &#160;<span id="projectnumber">0.2.8</span>
    </div>
    <div id="projectbrief">Framework to download, update, analyze and plot your crypto-transactions. Completely off-line and security-oriented.</div>
   </td>
@@ -135,8 +135,10 @@ Functions</h2></td></tr>
 <tr class="separator:abc5859ecaa5e711e57abf9f632277155"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a597dc39c06d9a90e5c6daf86fc7952c9"><td class="memItemLeft" align="right" valign="top">def&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacepyhodl_1_1utils_1_1misc.html#a597dc39c06d9a90e5c6daf86fc7952c9">get_relative_delta</a> (new, last)</td></tr>
 <tr class="separator:a597dc39c06d9a90e5c6daf86fc7952c9"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a2c6ceae227020380579cb104f35bcd56"><td class="memItemLeft" align="right" valign="top">def&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacepyhodl_1_1utils_1_1misc.html#a2c6ceae227020380579cb104f35bcd56">print_balance</a> (total_value, delta, percentage, last_time)</td></tr>
-<tr class="separator:a2c6ceae227020380579cb104f35bcd56"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aac7106bc060d1040b73143caa6130c25"><td class="memItemLeft" align="right" valign="top">def&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacepyhodl_1_1utils_1_1misc.html#aac7106bc060d1040b73143caa6130c25">print_balance_info</a> (total_value, delta, percentage, last_time, color=False)</td></tr>
+<tr class="separator:aac7106bc060d1040b73143caa6130c25"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:af49b5c2cf13e379134ddd975aed909f3"><td class="memItemLeft" align="right" valign="top">def&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacepyhodl_1_1utils_1_1misc.html#af49b5c2cf13e379134ddd975aed909f3">color_number</a> (number, low_color=Fore.RED, high_color=Fore.GREEN, default_color=Fore.WHITE, eps=1e-3)</td></tr>
+<tr class="separator:af49b5c2cf13e379134ddd975aed909f3"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="var-members"></a>
 Variables</h2></td></tr>
@@ -183,6 +185,62 @@ Variables</h2></td></tr>
     kwargs for callback function
 :return: str
     Name of function
+</pre> 
+</div>
+</div>
+<a class="anchor" id="af49b5c2cf13e379134ddd975aed909f3"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">def pyhodl.utils.misc.color_number </td>
+          <td>(</td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>number</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>low_color</em> = <code>Fore.RED</code>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>high_color</em> = <code>Fore.GREEN</code>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>default_color</em> = <code>Fore.WHITE</code>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>eps</em> = <code>1e-3</code>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<pre class="fragment">:param number: str or float
+    Number ot print
+:param low_color: int
+    Color to use with low numbers
+:param high_color: int
+    Color to use with high numbers
+:param default_color: int
+    Color to use with nor lor, nor high numbers
+:param eps: float
+    If number is &lt; eps, color with low, else color with high, else default
+:return: str
+    Colorful number
 </pre> 
 </div>
 </div>
@@ -442,12 +500,12 @@ Variables</h2></td></tr>
 </pre> 
 </div>
 </div>
-<a class="anchor" id="a2c6ceae227020380579cb104f35bcd56"></a>
+<a class="anchor" id="aac7106bc060d1040b73143caa6130c25"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">def pyhodl.utils.misc.print_balance </td>
+          <td class="memname">def pyhodl.utils.misc.print_balance_info </td>
           <td>(</td>
           <td class="paramtype">&#160;</td>
           <td class="paramname"><em>total_value</em>, </td>
@@ -468,7 +526,13 @@ Variables</h2></td></tr>
           <td class="paramkey"></td>
           <td></td>
           <td class="paramtype">&#160;</td>
-          <td class="paramname"><em>last_time</em>&#160;</td>
+          <td class="paramname"><em>last_time</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>color</em> = <code>False</code>&#160;</td>
         </tr>
         <tr>
           <td></td>
@@ -485,6 +549,8 @@ Variables</h2></td></tr>
     % since last time
 :param last_time: datetime
     Date of last balance report
+:param color: bool
+    True iff you want colorful output
 :return: void
     Prints balance
 </pre> 

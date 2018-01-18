@@ -32,7 +32,7 @@
  <tr style="height: 56px;">
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">PyHodl
-   &#160;<span id="projectnumber">0.2.7</span>
+   &#160;<span id="projectnumber">0.2.8</span>
    </div>
    <div id="projectbrief">Framework to download, update, analyze and plot your crypto-transactions. Completely off-line and security-oriented.</div>
   </td>
@@ -129,8 +129,8 @@ Public Member Functions</h2></td></tr>
 <tr class="separator:a1490d89e066615925f1fef4af0c058f9"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a60ec097ea0ad5aaff06fa6c85492cc65"><td class="memItemLeft" align="right" valign="top">def&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classpyhodl_1_1core_1_1portfolio_1_1_portfolio.html#a60ec097ea0ad5aaff06fa6c85492cc65">get_crypto_net_balance</a> (self, currency)</td></tr>
 <tr class="separator:a60ec097ea0ad5aaff06fa6c85492cc65"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ab8cbfe36ebaecda46ef0e25b31ab5730"><td class="memItemLeft" align="right" valign="top">def&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classpyhodl_1_1core_1_1portfolio_1_1_portfolio.html#ab8cbfe36ebaecda46ef0e25b31ab5730">show_balance</a> (self, last=None, save_to=None)</td></tr>
-<tr class="separator:ab8cbfe36ebaecda46ef0e25b31ab5730"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ad35b1a794a339c5a8e4ba5d35a1bcb59"><td class="memItemLeft" align="right" valign="top">def&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classpyhodl_1_1core_1_1portfolio_1_1_portfolio.html#ad35b1a794a339c5a8e4ba5d35a1bcb59">get_balance_info</a> (self, last=None)</td></tr>
+<tr class="separator:ad35b1a794a339c5a8e4ba5d35a1bcb59"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-static-methods"></a>
 Static Public Member Functions</h2></td></tr>
@@ -181,6 +181,36 @@ Public Attributes</h2></td></tr>
 </div>
 </div>
 <h2 class="groupheader">Member Function Documentation</h2>
+<a class="anchor" id="ad35b1a794a339c5a8e4ba5d35a1bcb59"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">def pyhodl.core.portfolio.Portfolio.get_balance_info </td>
+          <td>(</td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>self</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>last</em> = <code>None</code>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<pre class="fragment">:param last: str
+    Path to file where to read balance data
+:return: tuple
+    current balance, total value, last total value, delta, delta %
+</pre> 
+</div>
+</div>
 <a class="anchor" id="a71c4d0284c00a74fe4c2aefa4f4d5de1"></a>
 <div class="memitem">
 <div class="memproto">
@@ -308,44 +338,6 @@ Public Attributes</h2></td></tr>
 </div><div class="memdoc">
 <pre class="fragment">:return: [] of datetime
     List of all dates of all transactions of all wallets
-</pre> 
-</div>
-</div>
-<a class="anchor" id="ab8cbfe36ebaecda46ef0e25b31ab5730"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">def pyhodl.core.portfolio.Portfolio.show_balance </td>
-          <td>(</td>
-          <td class="paramtype">&#160;</td>
-          <td class="paramname"><em>self</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">&#160;</td>
-          <td class="paramname"><em>last</em> = <code>None</code>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">&#160;</td>
-          <td class="paramname"><em>save_to</em> = <code>None</code>&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<pre class="fragment">:param save_to: str
-    Path to file where to save balance data
-:param last: str
-    Path to file where to read balance data
-:return: float
-    Total balance
 </pre> 
 </div>
 </div>

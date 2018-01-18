@@ -14,5 +14,8 @@ var searchData=
   ['plot_5fdelta_5fbalances',['plot_delta_balances',['../classpyhodl_1_1charts_1_1balance_1_1_balance_plotter.html#a87572b0fcaef90d56f7a5f210e9ab0ac',1,'pyhodl::charts::balance::BalancePlotter']]],
   ['plot_5fdelta_5fbuy_5fsells',['plot_delta_buy_sells',['../classpyhodl_1_1charts_1_1balance_1_1_fiat_plotter.html#aaf87e94f57a7d1755e1eb56469a49a4c',1,'pyhodl::charts::balance::FiatPlotter']]],
   ['plot_5fprice',['plot_price',['../classpyhodl_1_1charts_1_1balance_1_1_fiat_plotter.html#a76231dbac34101906720a3319910a5ef',1,'pyhodl::charts::balance::FiatPlotter']]],
-  ['print_5fbalance',['print_balance',['../namespacepyhodl_1_1utils_1_1misc.html#a2c6ceae227020380579cb104f35bcd56',1,'pyhodl::utils::misc']]]
+  ['pretty_5fbalances',['pretty_balances',['../classpyhodl_1_1tools_1_1balance_1_1_balance.html#a18bec48d5f0be5d52bb983004e2ca0ac',1,'pyhodl::tools::balance::Balance']]],
+  ['print',['print',['../classpyhodl_1_1tools_1_1balance_1_1_balance.html#a25d1401795efa1bd201bac48db44c202',1,'pyhodl::tools::balance::Balance']]],
+  ['print_5fbalance_5finfo',['print_balance_info',['../namespacepyhodl_1_1utils_1_1misc.html#aac7106bc060d1040b73143caa6130c25',1,'pyhodl::utils::misc']]],
+  ['print_5fexchange',['print_exchange',['../classpyhodl_1_1tools_1_1balance_1_1_balance.html#a2dafe6185f231e0317b60be99e8c315d',1,'pyhodl::tools::balance::Balance']]]
 ];
