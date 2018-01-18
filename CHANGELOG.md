@@ -1,6 +1,11 @@
 # Change Log
 All notable changes to this project will be documented in this file.
 
+## 0.2.8 - 2018-01-18
+
+### Add
+- balance class
+
 ## 0.2.7 - 2018-01-09
 
 ### Refactor

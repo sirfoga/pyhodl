@@ -18,16 +18,12 @@
 
 """ Analyze transactions in wallets """
 
-from datetime import datetime
-
 import numpy as np
-from hal.streams.pretty_table import pretty_format_table
 
 from pyhodl.config import VALUE_KEY, NAN, DATE_TIME_KEY
-from pyhodl.data.balance import parse_balance, save_balance
 from pyhodl.data.coins import DEFAULT_FIAT
 from pyhodl.utils.misc import get_ratio, get_percentage, is_nan, \
-    get_relative_delta, get_relative_percentage, print_balance, num_to_str
+    get_relative_delta, get_relative_percentage, print_balance
 
 
 class Portfolio:
@@ -150,7 +146,7 @@ class Portfolio:
         crypto_net = crypto_values + fiat_values
         return dates, crypto_net
 
-    def show_balance(self, last=None, save_to=None):
+    def get_balance(self, last=None):
         """
         :param save_to: str
             Path to file where to save balance data
@@ -160,12 +156,7 @@ class Portfolio:
             Total balance
         """
 
-        last = parse_balance(last) if last else None
         balances = self.get_current_balance()
-        pretty_table = self._pretty_balances(balances, last)
-        now = datetime.now()
-
-        print(pretty_table)
         total_value = self.sum_total_balance(balances)
         last_time = last[DATE_TIME_KEY] if last else None
         if last:
@@ -180,45 +171,5 @@ class Portfolio:
             )
             print_balance(total_value, delta, percentage, last_time)
 
-        if save_to:
-            save_balance(balances, save_to, timestamp=now)
-
         last_total = self.sum_total_balance(last) if last else None
-        return total_value, last_total, last_time
-
-    @staticmethod
-    def _pretty_balances(balances, last):
-        """
-        :param balances: [] of {}
-            List of balances of each coin
-        :param last: {}
-            Dict with last balance data
-        :return: str
-            Pretty table with balance data
-        """
-
-        table = [
-            Portfolio._pretty_balance(balance, last) for balance in balances
-        ]
-        return pretty_format_table(
-            [
-                "symbol", "balance", "$ value", "$ price per coin", "%",
-                "$ delta", "% delta"
-            ], table
-        )
-
-    @staticmethod
-    def _pretty_balance(balance, last):
-        current_val = balance[VALUE_KEY]
-        last_val = last[balance["symbol"]][VALUE_KEY] \
-            if last and balance["symbol"] in last else None
-
-        return [
-            str(balance["symbol"]),
-            num_to_str(balance["balance"]),
-            num_to_str(balance[VALUE_KEY]) + " $",
-            num_to_str(balance["price"]) + " $",
-            num_to_str(balance["percentage"]) + " %",
-            num_to_str(get_relative_delta(current_val, last_val)) + " $",
-            num_to_str(get_relative_percentage(current_val, last_val)) + " %"
-        ]
+        return balances, total_value, last_total, last_time

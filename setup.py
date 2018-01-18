@@ -36,7 +36,7 @@ DESCRIPTION = \
 
 setup(
     name="pyhodl",
-    version="0.2.7",
+    version="0.2.8",
     author="sirfoga",
     author_email="sirfoga@protonmail.com",
     description=LITTLE_DESCRIPTION,
@@ -60,7 +60,7 @@ setup(
         "requests",
         "ciso8601",
         "scipy",
-        "sklearn"
+        "sklearn", 'colorama'
     ],
     entry_points={
         "console_scripts": ["pyhodl = pyhodl.cli:cli"]

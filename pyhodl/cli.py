@@ -1,7 +1,7 @@
 # !/usr/bin/python3
 # coding: utf_8
 
-# Copyright 2017-2018 Stefano Fogarollo
+# Copyright YYYY AUTHORS
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -30,8 +30,7 @@ from pyhodl.api.price.factory import get_market_cap, get_price_on_dates
 from pyhodl.charts.balance import FiatPlotter
 from pyhodl.config import DEFAULT_PATHS, RunMode
 from pyhodl.data.parse.build import build_parser
-from pyhodl.tools.balance import show_exchange_balance, \
-    show_folder_balance
+from pyhodl.tools.balance import Balance
 from pyhodl.tools.transactions import get_transactions_dates, \
     get_all_exchanges, get_all_coins
 from pyhodl.updater.core import Updater
@@ -158,9 +157,9 @@ def show_balance(run_path):
     """
 
     if os.path.isfile(run_path):
-        show_exchange_balance(run_path)
+        Balance.show_exchange(run_path)
     else:
-        show_folder_balance(run_path)
+        Balance.show_from_folder(run_path)
 
 
 def download_market_cap(since, until, where_to, verbose):
@@ -301,4 +300,4 @@ def cli():
 
 
 if __name__ == '__main__':
-    cli()
+    main()
