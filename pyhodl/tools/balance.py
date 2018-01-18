@@ -50,7 +50,7 @@ class Balance:
             Balance._pretty_balance(balance, last) for balance in balances
         ]
         if color:
-            table = Balance._color_table(table, [4, 5])
+            table = Balance._color_table(table, [5, 6])
 
         return pretty_format_table(
             [
@@ -79,13 +79,13 @@ class Balance:
             for i, col in enumerate(row):
                 val = col
                 if i in floats:
-                    val = float(val.replace("%", "").replace("$", ""))
+                    val = float(val)
                     if val < -eps:
                         val = Fore.RED + str(val) + Fore.RESET
                     elif val > eps:
                         val = Fore.GREEN + str(val) + Fore.RESET
                     else:
-                        val = str(val)
+                        val = Fore.WHITE + str(val) + Fore.RESET
                 color_row.append(val)
             color.append(color_row)
         return color
@@ -99,9 +99,9 @@ class Balance:
         return [
             str(balance["symbol"]),
             num_to_str(balance["balance"]),
-            num_to_str(balance[VALUE_KEY]) + " $",
-            num_to_str(balance["price"]) + " $",
-            num_to_str(balance["percentage"]) + " %",
+            num_to_str(balance[VALUE_KEY]),
+            num_to_str(balance["price"]),
+            num_to_str(balance["percentage"]),
             num_to_str(get_relative_delta(current_val, last_val)) + " $",
             num_to_str(get_relative_percentage(current_val, last_val)) + " %"
         ]
