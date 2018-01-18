@@ -35,6 +35,35 @@ from pyhodl.utils.misc import get_relative_delta, \
 class Balance:
     """ Deal with exchanges, wallets balances """
 
+    def __init__(self, color=False):
+        """
+        :param color:
+        """
+
+    def show_from_folder(self, input_folder):
+        """
+        :param input_folder: str
+            Path to input folder
+        :return: void
+            Prints balance of wallets found in folder
+        """
+
+        exchanges = build_exchanges(input_folder)
+        total_value = 0.0
+        last_total = 0.0
+        last_time = None
+
+        for exchange in exchanges:
+            total, last, last_time = Balance.show_exchange(exchange)
+            total_value += total
+            last_total += last if last else 0.0
+
+        delta = get_relative_delta(total_value, last_total)
+        percentage = get_relative_percentage(total_value, last_total)
+
+        print("\n")  # space between single exchanges and total value
+        print_balance(total_value, delta, percentage, last_time)
+
     @staticmethod
     def _pretty_balances(balances, last, color=False):
         """
@@ -131,28 +160,3 @@ class Balance:
             save_balance(balances, last_file, timestamp=datetime.now())
         print(Balance._pretty_balances(balances, last, color=True))
         return total_value, last_total, last_time
-
-    @staticmethod
-    def show_from_folder(input_folder):
-        """
-        :param input_folder: str
-            Path to input folder
-        :return: void
-            Prints balance of wallets found in folder
-        """
-
-        exchanges = build_exchanges(input_folder)
-        total_value = 0.0
-        last_total = 0.0
-        last_time = None
-
-        for exchange in exchanges:
-            total, last, last_time = Balance.show_exchange(exchange)
-            total_value += total
-            last_total += last if last else 0.0
-
-        delta = get_relative_delta(total_value, last_total)
-        percentage = get_relative_percentage(total_value, last_total)
-
-        print("\n")  # space between single exchanges and total value
-        print_balance(total_value, delta, percentage, last_time)

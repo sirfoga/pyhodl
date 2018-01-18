@@ -20,7 +20,9 @@
 
 from datetime import datetime
 
+import colorama
 import numpy as np
+from colorama import Fore
 
 from pyhodl.config import INFINITY
 from .dates import datetime_to_str, get_delta_hours
@@ -203,7 +205,7 @@ def get_relative_delta(new, last):
     return new - last
 
 
-def print_balance(total_value, delta, percentage, last_time):
+def print_balance(total_value, delta, percentage, last_time, color=False):
     """
     :param total_value: float
         Total value of balance
@@ -213,6 +215,8 @@ def print_balance(total_value, delta, percentage, last_time):
         % since last time
     :param last_time: datetime
         Date of last balance report
+    :param color: bool
+        True iff you want colorful output
     :return: void
         Prints balance
     """
@@ -222,7 +226,41 @@ def print_balance(total_value, delta, percentage, last_time):
         print("Since last time", datetime_to_str(last_time), "(",
               num_to_str(hours_elapsed), "hours ago):")
 
-    print("Total value: ~",
-          num_to_str(total_value), "$")
-    print("Difference: ~",
-          num_to_str(delta), "$ (" + num_to_str(percentage) + "%)")
+    total_value = num_to_str(total_value)
+    delta = num_to_str(delta)
+    if color:  # colorful output
+        total_value = color_number(total_value)
+        delta = color_number(delta)
+
+    print("Total value: ~", total_value, "$")
+    print("Difference: ~", delta, "$ (" + num_to_str(percentage) + "%)")
+
+
+def color_number(number, low_color=Fore.RED,
+                 high_color=Fore.GREEN, default_color=Fore.WHITE, eps=1e-3):
+    """
+    :param number: str or float
+        Number ot print
+    :param low_color: int
+        Color to use with low numbers
+    :param high_color: int
+        Color to use with high numbers
+    :param default_color: int
+        Color to use with nor lor, nor high numbers
+    :param eps: float
+        If number is < eps, color with low, else color with high, else default
+    :return: str
+        Colorful number
+    """
+
+    colorama.init()
+    number = float(number)
+    if number < -eps:
+        out = low_color
+    elif number > eps:
+        out = high_color
+    else:
+        out = default_color
+
+    out += str(number) + Fore.RESET
+    return out
