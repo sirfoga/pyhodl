@@ -2,7 +2,7 @@
 
 ## Updater config
 
-`Updater` config (located at `~home/.pyhodl/data/config.json`) store values like the data folder or how often to update your transactions
+`Updater` config (located at `~/.pyhodl/data/config.json`) store values like the data folder or how often to update your transactions
 ```json
 {
     "interval": "1h",
@@ -21,7 +21,7 @@ Supported options are:
 
 ## API configs
 
-`API` config is generally stored at `~home/.pyhodl/api/config.json`. A simple config file looks like
+`API` config is generally stored at `~/.pyhodl/api/config.json`. A simple config file looks like
 ```json
 {
   "binance": {

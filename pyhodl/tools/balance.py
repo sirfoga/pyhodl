@@ -42,12 +42,10 @@ class Balance:
         """
 
         self.color = bool(color)
-        self.exchanges = build_exchanges(input_folder)
+        self.exchanges = list(build_exchanges(input_folder))
 
     def print(self):
         """
-        :param input_folder: str
-            Path to input folder
         :return: void
             Prints balance of wallets found in folder
         """

@@ -127,7 +127,6 @@ class Updater:
         self.api_manager = ApiManager(config_file=config_file)
         self.api_updaters = []
         self.verbose = verbose
-
         self.build_updaters()
 
     def run(self):

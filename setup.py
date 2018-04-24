@@ -54,13 +54,13 @@ setup(
         "pandas",
         "coinbase",
         "python-binance",
-        "gdax",
-        "ccxt",
+        # "gdax",  # todo include
+        # "ccxt",
         "pytz",
-        "requests",
         "ciso8601",
         "scipy",
-        "sklearn", 'colorama'
+        "sklearn",
+        "colorama"
     ],
     entry_points={
         "console_scripts": ["pyhodl = pyhodl.cli:cli"]

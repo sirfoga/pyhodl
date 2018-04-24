@@ -127,6 +127,9 @@ def num_to_str(num, form="short"):
         Convert to str using the specified format
     """
 
+    if num is None:
+        return ""
+
     form = SHORT_DEC_FORMAT if form == "short" else LONG_DEC_FORMAT
     return form.format(num)
 
@@ -254,8 +257,12 @@ def color_number(number, low_color=Fore.RED,
         Colorful number
     """
 
+    try:
+        number = float(number)
+    except:
+        number = 0
+
     colorama.init()
-    number = float(number)
     if number < -eps:
         out = low_color
     elif number > eps:
