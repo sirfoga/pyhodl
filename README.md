@@ -1,15 +1,22 @@
-# Pyhodl
+<div align="center">
+<h1>pyhodl | Download, update, analyze and plot your crypto-transactions. Completely off-line and secure (you own your data).</h1>
+<em>Made with love and crypto money.</em></br></br>
+</div>
 
-> Download, update, analyze and plot your crypto-transactions. Completely off-line and secure (you own your data). Made with love and crypto money.
+<div align="center">
+<a href="https://travis-ci.org/sirfoga/pyhodl"><img alt="Build Status" src="https://travis-ci.org/sirfoga/pyhodl.svg?branch=master"></a> <a href="https://circleci.com/gh/sirfoga/pyhodl"><img alt="CircleCI" src="https://circleci.com/gh/sirfoga/pyhodl.png"></a>
+</div>
 
-[![Build Status](https://travis-ci.org/sirfoga/pyhodl.svg?branch=master)](https://travis-ci.org/sirfoga/pyhodl) [![CircleCI](https://circleci.com/gh/sirfoga/pyhodl.png)](https://circleci.com/gh/sirfoga/pyhodl) ![Python version](https://img.shields.io/badge/Python-3.5-blue.svg) 
+<div align="center">
+<a href="https://landscape.io/github/sirfoga/pyhodl/master"><img alt="Code Health" src="https://landscape.io/github/sirfoga/pyhodl/master/landscape.svg?style=flat"></a> <a href="https://bettercodehub.com/"><img alt="BCH compliance" src="https://bettercodehub.com/edge/badge/sirfoga/pyhodl?branch=master"></a> <a href="https://www.codacy.com/app/sirfoga/pyhodl?utm_source=github.com&amp;amp;utm_medium=referral&amp;amp;utm_content=sirfoga/pyhodl&amp;amp;utm_campaign=Badge_Grade"><img alt="Codacy Badge" src="https://api.codacy.com/project/badge/Grade/1eff18395a134c9aa2d829fcb1f124bf"></a> <a href="https://codeclimate.com/github/sirfoga/pyhodl"><img alt="Code Climate" src="https://lima.codeclimate.com/github/sirfoga/pyhodl/badges/gpa.svg"></a> <img alt="pylint Score" src="https://mperlet.de/pybadge/badges/9.88.svg"> <a href="https://bestpractices.coreinfrastructure.org/projects/1544"><img alt="CII Best Practices" src="https://bestpractices.coreinfrastructure.org/projects/1544/badge"></a>
+</div>
 
-[![Code Health](https://landscape.io/github/sirfoga/pyhodl/master/landscape.svg?style=flat)](https://landscape.io/github/sirfoga/pyhodl/master) 
-[![BCH compliance](https://bettercodehub.com/edge/badge/sirfoga/pyhodl?branch=master)](https://bettercodehub.com/) [![Codacy Badge](https://api.codacy.com/project/badge/Grade/1eff18395a134c9aa2d829fcb1f124bf)](https://www.codacy.com/app/sirfoga/pyhodl?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=sirfoga/pyhodl&amp;utm_campaign=Badge_Grade) [![Code Climate](https://lima.codeclimate.com/github/sirfoga/pyhodl/badges/gpa.svg)](https://codeclimate.com/github/sirfoga/pyhodl) ![pylint Score](https://mperlet.de/pybadge/badges/9.88.svg)
+<div align="center">
+<a href="https://app.fossa.io/projects/git%2Bhttps%3A%2F%2Fgithub.com%2Fsirfoga%2Fpyhal?ref=badge_shield"><img alt="FOSSA Status" src="https://app.fossa.io/api/projects/git%2Bhttps%3A%2F%2Fgithub.com%2Fsirfoga%2Fpyhal.svg?type=shield"></a> <a href="http://unlicense.org/"><img src="https://img.shields.io/badge/license-Unlicense-blue.svg"></a> <a href="https://opensource.org/licenses/Apache-2.0"><img alt="Open Source Love" src="https://badges.frapsoft.com/os/v1/open-source.svg?v=103"></a> <a href="https://github.com/sirfoga/pyhodl/issues"><img alt="Contributions welcome" src="https://img.shields.io/badge/contributions-welcome-brightgreen.svg?style=flat"></a>
+</div>
 
-[![CII Best Practices](https://bestpractices.coreinfrastructure.org/projects/1544/badge)](https://bestpractices.coreinfrastructure.org/projects/1544)
 
-## Table of content
+## Table of Contents
 
 - [Key Features](#key-features)
 - [Usage](#usage)
