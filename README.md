@@ -12,7 +12,7 @@
 
 <img alt="pylint Score" src="https://mperlet.de/pybadge/badges/9.88.svg"> <a href="https://bestpractices.coreinfrastructure.org/projects/1544"><img alt="CII Best Practices" src="https://bestpractices.coreinfrastructure.org/projects/1544/badge"></a> <a href="https://snyk.io/test/github/sirfoga/pyhodl"><img alt="Known Vulnerabilities" src="https://snyk.io/test/github/sirfoga/pyhodl/badge.svg"></a>
 
-<a href="https://app.fossa.io/projects/git%2Bhttps%3A%2F%2Fgithub.com%2Fsirfoga%2Fpyhodl?ref=badge_shield"><img alt="FOSSA Status" src="https://app.fossa.io/api/projects/git%2Bhttps%3A%2F%2Fgithub.com%2Fsirfoga%2Fpyhodl.svg?type=shield"></a> <a href="http://unlicense.org/"><img src="https://img.shields.io/badge/license-Unlicense-blue.svg"></a> <a href="https://github.com/sirfoga/pyhodl/issues"><img alt="Contributions welcome" src="https://img.shields.io/badge/contributions-welcome-brightgreen.svg?style=flat"></a>
+<a href="https://app.fossa.io/projects/git%2Bhttps%3A%2F%2Fgithub.com%2Fsirfoga%2Fpyhodl?ref=badge_shield"><img alt="FOSSA Status" src="https://app.fossa.io/api/projects/git%2Bhttps%3A%2F%2Fgithub.com%2Fsirfoga%2Fpyhodl.svg?type=shield"></a> <a href="https://opensource.org/licenses/MIT"><img src="https://img.shields.io/badge/License-MIT-blue.svg"></a> <a href="https://github.com/sirfoga/pyhodl/issues"><img alt="Contributions welcome" src="https://img.shields.io/badge/contributions-welcome-brightgreen.svg?style=flat"></a>
 </div>
 
 
