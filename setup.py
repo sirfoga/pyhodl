@@ -31,12 +31,14 @@ DESCRIPTION = \
     - $ pip3 install pyhodl  # via pip\n\
     \n\
     Questions and issues\n\n\
-    The Github issue tracker is only for bug reports and feature requests.\n\
-    License: Apache License Version 2.0, January 2004"
+    The Github issue tracker is only for bug reports and feature requests."
+
+VERSION = open("VERSION").readlines()[0]
+VERSION_NUMBER = VERSION.split(" ")[0]
 
 setup(
     name="pyhodl",
-    version="0.2.8",
+    version=VERSION_NUMBER,
     author="sirfoga",
     author_email="sirfoga@protonmail.com",
     description=LITTLE_DESCRIPTION,
@@ -54,8 +56,6 @@ setup(
         "pandas",
         "coinbase",
         "python-binance",
-        # "gdax",  # todo include
-        # "ccxt",
         "pytz",
         "ciso8601",
         "scipy",
