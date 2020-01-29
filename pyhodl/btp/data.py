@@ -3,8 +3,8 @@
 
 import json
 import pathlib
-from binance import helpers
 
+from binance import helpers
 
 DATA_FOLDER = pathlib.Path('/home/stefano/.local/bin/jh/_notebooks/binance-data')
 FILE_FORMATTER = 'Binance_{}_{}_{}-{}.json'
@@ -75,3 +75,18 @@ def get_klines(symbol, interval, start, end, folder=DATA_FOLDER):
     with open(in_f) as json_file:
         klines = json.load(json_file)
         return klines
+
+
+def get_data(ticker, ticker_interval, start_ticker, end_ticker):
+    # load dataset
+    data = get_klines(ticker, ticker_interval, start_ticker, end_ticker)
+
+    # parse
+    data = pd.DataFrame(data, columns=['Open time', 'Open', 'High', 'Low', 'Close', 'Volume', 'Close time',
+                                       'Quote asset volume',
+                                       'Number of trades', 'Taker buy base asset volume',
+                                       'Taker buy quote asset volume',
+                                       'Ignore'])
+    for column in data.columns:
+        data[column] = data[column].astype(np.float64)
+    data['Open time'] = pd.to_datetime(data['Open time'], unit='ms')
