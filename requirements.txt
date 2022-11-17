@@ -1,4 +1,4 @@
-setuptools>=39.0.1
+setuptools>=65.5.1
 numpy>=1.13.3
 colorama>=0.3.9
 matplotlib>=2.1.1
