@@ -9,3 +9,4 @@ PyHal>=10.0.6
 ccxt>=1.17.365
 ciso8601>=2.0.1
 scikit_learn>=0.20.0
+pillow>=10.0.1 # not directly required, pinned by Snyk to avoid a vulnerability
